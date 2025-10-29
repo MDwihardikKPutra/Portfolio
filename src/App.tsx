@@ -276,20 +276,20 @@ function App() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Profile Image */}
             <div className="flex justify-center lg:justify-end order-1 lg:order-2">
-              <div className="relative">
+              <div className="relative animate-slide-right">
                 <div
-                  className={`w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 backdrop-blur-xl border overflow-hidden transition-colors ${
+                  className={`w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 backdrop-blur-xl border overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl ${
                     isDarkMode ? "border-white/10" : "border-gray-200"
                   }`}
                 >
                   <img
                     src="/profile.jpg"
                     alt="Mokhamad Dwihardik Kusuma Putra"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                   />
                 </div>
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl"></div>
-                <div className="absolute -top-4 -left-4 w-32 h-32 bg-cyan-500/20 rounded-full blur-2xl"></div>
+                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl animate-pulse"></div>
+                <div className="absolute -top-4 -left-4 w-32 h-32 bg-cyan-500/20 rounded-full blur-2xl animate-pulse"></div>
               </div>
             </div>
 
@@ -318,8 +318,8 @@ function App() {
               >
                 Passionate IT professional with expertise in information
                 technology infrastructure, system administration, and network
-                management. Experienced in delivering innovative IT solutions and
-                managing end-to-end IT systems.
+                management. Experienced in delivering innovative IT solutions
+                and managing end-to-end IT systems.
               </p>
 
               {/* Quick Info */}
@@ -351,13 +351,13 @@ function App() {
               </div>
 
               {/* Social Links */}
-              <div className="flex gap-4 pt-4 justify-center lg:justify-start">
+              <div className="flex gap-4 pt-4 justify-center lg:justify-start animate-fade-in animate-delay-200">
                 <a
                   href="#"
-                  className={`p-3 border rounded-lg transition-all ${
+                  className={`p-3 border rounded-lg transition-all duration-300 hover:scale-110 hover:-translate-y-1 ${
                     isDarkMode
-                      ? "border-white/20 hover:bg-white/5 hover:border-white/40"
-                      : "border-gray-300 hover:bg-gray-100 hover:border-gray-400"
+                      ? "border-white/20 hover:bg-white/5 hover:border-white/40 hover:shadow-lg"
+                      : "border-gray-300 hover:bg-gray-100 hover:border-gray-400 hover:shadow-lg"
                   }`}
                 >
                   <Github size={20} />
@@ -366,20 +366,20 @@ function App() {
                   href="https://www.linkedin.com/in/mokhamad-dwihardik-kusuma-putra-470854190/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-3 border rounded-lg transition-all ${
+                  className={`p-3 border rounded-lg transition-all duration-300 hover:scale-110 hover:-translate-y-1 ${
                     isDarkMode
-                      ? "border-white/20 hover:bg-white/5 hover:border-white/40"
-                      : "border-gray-300 hover:bg-gray-100 hover:border-gray-400"
+                      ? "border-white/20 hover:bg-white/5 hover:border-blue-400/50 hover:shadow-lg hover:shadow-blue-400/20"
+                      : "border-gray-300 hover:bg-blue-50 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-400/20"
                   }`}
                 >
-                  <Linkedin size={20} />
+                  <Linkedin size={20} className="hover:text-blue-400 transition-colors" />
                 </a>
                 <a
                   href="mailto:ddiko105@gmail.com"
-                  className={`p-3 border rounded-lg transition-all ${
+                  className={`p-3 border rounded-lg transition-all duration-300 hover:scale-110 hover:-translate-y-1 ${
                     isDarkMode
-                      ? "border-white/20 hover:bg-white/5 hover:border-white/40"
-                      : "border-gray-300 hover:bg-gray-100 hover:border-gray-400"
+                      ? "border-white/20 hover:bg-white/5 hover:border-white/40 hover:shadow-lg"
+                      : "border-gray-300 hover:bg-gray-100 hover:border-gray-400 hover:shadow-lg"
                   }`}
                 >
                   <Mail size={20} />
@@ -387,28 +387,28 @@ function App() {
               </div>
 
               {/* CTA Buttons */}
-              <div className="flex flex-wrap items-center gap-4 pt-4 justify-center lg:justify-start">
+              <div className="flex flex-wrap items-center gap-4 pt-4 justify-center lg:justify-start animate-fade-in animate-delay-300">
                 <a
                   href="#work"
-                  className={`px-8 py-4 rounded-full font-medium transition-colors ${
+                  className={`px-8 py-4 rounded-full font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg ${
                     isDarkMode
-                      ? "bg-white text-black hover:bg-gray-200"
-                      : "bg-black text-white hover:bg-gray-800"
+                      ? "bg-white text-black hover:bg-gray-200 hover:shadow-white/20"
+                      : "bg-black text-white hover:bg-gray-800 hover:shadow-black/20"
                   }`}
                 >
                   Lihat Portfolio
                 </a>
                 <a
                   href="#contact"
-                  className={`px-8 py-4 border rounded-full font-medium transition-colors ${
+                  className={`px-8 py-4 border rounded-full font-medium transition-all duration-300 hover:scale-105 ${
                     isDarkMode
-                      ? "border-white/20 hover:bg-white/5"
-                      : "border-gray-300 hover:bg-gray-100"
+                      ? "border-white/20 hover:bg-white/5 hover:border-white/40"
+                      : "border-gray-300 hover:bg-gray-100 hover:border-gray-400"
                   }`}
                 >
                   Hubungi Saya
                 </a>
-                <button className="px-8 py-4 border border-blue-400/50 text-blue-400 rounded-full font-medium hover:bg-blue-400/10 transition-colors inline-flex items-center gap-2">
+                <button className="px-8 py-4 border border-blue-400/50 text-blue-400 rounded-full font-medium hover:bg-blue-400/10 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-400/30 inline-flex items-center gap-2">
                   <Download size={18} />
                   Unduh CV
                 </button>
@@ -418,13 +418,15 @@ function App() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <ChevronDown
-            size={32}
-            className={`transition-colors ${
-              isDarkMode ? "text-gray-600" : "text-gray-400"
-            }`}
-          />
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer">
+          <a href="#experience" className="block">
+            <ChevronDown
+              size={32}
+              className={`transition-all duration-300 hover:scale-125 ${
+                isDarkMode ? "text-gray-600 hover:text-blue-400" : "text-gray-400 hover:text-blue-500"
+              }`}
+            />
+          </a>
         </div>
       </section>
 
@@ -806,18 +808,19 @@ function App() {
             {projects.map((project, index) => (
               <div
                 key={index}
-                className={`group relative overflow-hidden rounded-2xl border transition-all duration-300 ${
+                className={`group relative overflow-hidden rounded-2xl border transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl animate-scale-in animate-delay-${index * 100} ${
                   isDarkMode
-                    ? "bg-zinc-900 border-white/10 hover:border-white/20"
-                    : "bg-white border-gray-300 hover:border-gray-400"
+                    ? "bg-zinc-900 border-white/10 hover:border-blue-400/50 hover:shadow-blue-400/10"
+                    : "bg-white border-gray-300 hover:border-blue-400 hover:shadow-blue-400/20"
                 }`}
               >
-                <div className="aspect-video overflow-hidden">
+                <div className="aspect-video overflow-hidden relative">
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
                 <div className="p-6 space-y-4">
                   <h3 className="text-2xl font-semibold">{project.title}</h3>
@@ -875,24 +878,25 @@ function App() {
             {skills.map((skillSet, index) => (
               <div
                 key={index}
-                className={`p-6 rounded-2xl border transition-colors ${
+                className={`p-6 rounded-2xl border transition-all duration-500 hover:-translate-y-2 hover:shadow-xl animate-slide-up animate-delay-${index * 100} ${
                   isDarkMode
-                    ? "bg-zinc-900 border-white/10 hover:border-white/20"
-                    : "bg-white border-gray-300 hover:border-gray-400"
+                    ? "bg-zinc-900 border-white/10 hover:border-blue-400/50 hover:bg-zinc-800/50"
+                    : "bg-white border-gray-300 hover:border-blue-400 hover:shadow-blue-400/20"
                 }`}
               >
-                <h3 className="text-xl font-semibold mb-4">
+                <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
                   {skillSet.category}
                 </h3>
                 <ul className="space-y-2">
                   {skillSet.items.map((item, itemIndex) => (
                     <li
                       key={itemIndex}
-                      className={`transition-colors ${
+                      className={`transition-all duration-300 hover:translate-x-2 hover:text-blue-400 ${
                         isDarkMode ? "text-gray-400" : "text-gray-600"
                       }`}
                     >
-                      {item}
+                      • {item}
                     </li>
                   ))}
                 </ul>
@@ -924,13 +928,13 @@ function App() {
           </p>
           <a
             href="mailto:ddiko105@gmail.com"
-            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full font-medium transition-colors ${
+            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full font-medium transition-all duration-300 hover:scale-110 hover:shadow-2xl animate-pulse-glow ${
               isDarkMode
                 ? "bg-white text-black hover:bg-gray-200"
                 : "bg-black text-white hover:bg-gray-800"
             }`}
           >
-            <Mail size={20} />
+            <Mail size={20} className="animate-bounce" />
             Kirim Email
           </a>
         </div>
