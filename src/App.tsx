@@ -283,8 +283,8 @@ function App() {
                   }`}
                 >
                   <img
-                    src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=800"
-                    alt="Profile"
+                    src="/profile.jpg"
+                    alt="Mokhamad Dwihardik Kusuma Putra"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -307,7 +307,7 @@ function App() {
                     isDarkMode ? "text-gray-400" : "text-gray-600"
                   }`}
                 >
-                  IT Engineer & Digital Creative
+                  IT Engineer
                 </p>
               </div>
 
@@ -317,8 +317,8 @@ function App() {
                 }`}
               >
                 Passionate IT professional with expertise in information
-                technology infrastructure, digital marketing, and creative
-                content. Experienced in delivering innovative solutions and
+                technology infrastructure, system administration, and network
+                management. Experienced in delivering innovative IT solutions and
                 managing end-to-end IT systems.
               </p>
 
