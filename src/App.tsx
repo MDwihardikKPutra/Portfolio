@@ -618,6 +618,88 @@ function App() {
                 </div>
 
               </div>
+
+              {/* Other Experience */}
+              <div className="space-y-6 mt-12 pt-8 border-t">
+                <div className="flex items-center gap-3 mb-6">
+                  <Award size={24} className="text-blue-400" />
+                  <h3 className="text-xl font-semibold">Pengalaman Tambahan</h3>
+                </div>
+
+                <div className="space-y-6">
+                  <div
+                    className={`relative pl-6 border-l-2 transition-colors ${
+                      isDarkMode ? "border-white/5" : "border-gray-200"
+                    }`}
+                  >
+                    <div
+                      className={`absolute -left-2 top-0 w-3 h-3 rounded-full transition-colors ${
+                        isDarkMode ? "bg-zinc-600" : "bg-gray-300"
+                      }`}
+                    ></div>
+                    <div className="space-y-2">
+                      <div
+                        className={`flex items-center gap-2 text-xs transition-colors ${
+                          isDarkMode ? "text-gray-500" : "text-gray-500"
+                        }`}
+                      >
+                        <Calendar size={14} />
+                        <span>Feb 2025 - Jun 2025</span>
+                      </div>
+                      <h4 className="text-lg font-semibold">
+                        Photography Editor
+                      </h4>
+                      <p className="text-blue-400 text-sm">WOF Wooden · Contract</p>
+                      <p
+                        className={`leading-relaxed text-sm transition-colors ${
+                          isDarkMode ? "text-gray-500" : "text-gray-600"
+                        }`}
+                      >
+                        Specialized in photo editing and visual content creation
+                        for wooden furniture products. Managed photography
+                        projects and enhanced product images for marketing
+                        materials. Based in Malang, East Java.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    className={`relative pl-6 border-l-2 transition-colors ${
+                      isDarkMode ? "border-white/5" : "border-gray-200"
+                    }`}
+                  >
+                    <div
+                      className={`absolute -left-2 top-0 w-3 h-3 rounded-full transition-colors ${
+                        isDarkMode ? "bg-zinc-600" : "bg-gray-300"
+                      }`}
+                    ></div>
+                    <div className="space-y-2">
+                      <div
+                        className={`flex items-center gap-2 text-xs transition-colors ${
+                          isDarkMode ? "text-gray-500" : "text-gray-500"
+                        }`}
+                      >
+                        <Calendar size={14} />
+                        <span>Jul 2023 - Dec 2023</span>
+                      </div>
+                      <h4 className="text-lg font-semibold">
+                        Digital Marketing Specialist
+                      </h4>
+                      <p className="text-blue-400 text-sm">Incbuss Creative · Contract</p>
+                      <p
+                        className={`leading-relaxed text-sm transition-colors ${
+                          isDarkMode ? "text-gray-500" : "text-gray-600"
+                        }`}
+                      >
+                        Developed and executed digital marketing strategies,
+                        managed social media campaigns, and created engaging
+                        content. Focused on brand growth and online presence
+                        optimization in Malang, East Java.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Education & Certifications */}
