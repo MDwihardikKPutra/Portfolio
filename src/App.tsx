@@ -32,11 +32,15 @@ function App() {
 
   // Auto slideshow for featured project images
   useEffect(() => {
-    const featuredProject = projects.find(p => p.featured);
-    if (featuredProject && featuredProject.images && featuredProject.images.length > 1) {
+    const featuredProject = projects.find((p) => p.featured);
+    if (
+      featuredProject &&
+      featuredProject.images &&
+      featuredProject.images.length > 1
+    ) {
       const interval = setInterval(() => {
-        setCurrentImageIndex((prevIndex) => 
-          (prevIndex + 1) % featuredProject.images.length
+        setCurrentImageIndex(
+          (prevIndex) => (prevIndex + 1) % featuredProject.images.length
         );
       }, 4000); // Change image every 4 seconds
 
@@ -55,42 +59,38 @@ function App() {
       title: "PT Puri Ganesha Engineering - Corporate Website",
       description:
         "Full-stack corporate website for leading Indonesian engineering consultancy. Features include project portfolio showcase, multi-portal system (Admin, Monitoring, Inventory), and comprehensive service presentation. Built with modern web technologies for optimal performance.",
-      images: [
-        "/pge-hero.png",
-        "/pge-project.png",
-        "/pge-aboutus.png"
-      ],
+      images: ["/pge-hero.png", "/pge-project.png", "/pge-aboutus.png"],
       tags: ["React", "Full-Stack", "Corporate Website", "Engineering"],
       link: "https://pg-engineering.com",
       featured: true,
     },
     {
-      title: "IT Infrastructure Management",
+      title: "PGE System - Enterprise Management Platform",
       description:
-        "Implementing and managing comprehensive IT infrastructure for engineering operations, ensuring seamless system performance and reliability.",
+        "Integrated Management Platform (v1.10.0) untuk mengelola workflow kritis kantor termasuk Manajemen Keuangan, Cuti, dan Monitoring Proyek. Dibangun dengan Laravel 11, Alpine.js, dan Tailwind CSS dengan database MySQL/PostgreSQL.",
       image:
         "https://images.pexels.com/photos/1181354/pexels-photo-1181354.jpeg?auto=compress&cs=tinysrgb&w=800",
-      tags: ["IT Infrastructure", "System Management", "Network Admin"],
+      tags: ["Laravel 11", "Enterprise Application", "Database Management"],
       link: "#",
       featured: false,
     },
     {
-      title: "Product Photography Portfolio",
+      title: "Network Infrastructure & Server Management",
       description:
-        "Professional product photography and editing for wooden furniture collections, creating stunning visual content for marketing campaigns.",
+        "Setup dan maintenance infrastruktur IT lengkap termasuk Ubuntu Server deployment, TrueNAS storage system, dan MikroTik RouterOS untuk network management dengan traffic shaping, VLAN, dan routing.",
       image:
-        "https://images.pexels.com/photos/1090638/pexels-photo-1090638.jpeg?auto=compress&cs=tinysrgb&w=800",
-      tags: ["Photography", "Photo Editing", "Adobe Suite"],
+        "https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=800",
+      tags: ["Linux Administration", "Network Management", "Server Deployment"],
       link: "#",
       featured: false,
     },
     {
-      title: "Digital Marketing Campaigns",
+      title: "Cloud Storage & Security Implementation",
       description:
-        "Strategic digital marketing initiatives and social media management, driving brand awareness and engagement across multiple platforms.",
+        "Implementasi solusi cloud storage terpusat dengan Nextcloud dan keamanan akses remote melalui Cloudflare Tunnel (Zero Trust). Deployment web ke production environment menggunakan cPanel dan VPS management.",
       image:
-        "https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg?auto=compress&cs=tinysrgb&w=800",
-      tags: ["Social Media", "Content Strategy", "SEO"],
+        "https://images.pexels.com/photos/6801874/pexels-photo-6801874.jpeg?auto=compress&cs=tinysrgb&w=800",
+      tags: ["Nextcloud", "Cloudflare Tunnel", "Cloud Security"],
       link: "#",
       featured: false,
     },
@@ -98,43 +98,53 @@ function App() {
 
   const skills = [
     {
-      category: "Information Technology",
+      category: "Backend Development",
       items: [
-        "IT Infrastructure",
-        "Computer Information Systems",
-        "System Administration",
-        "Network Management",
-        "Technical Support",
+        "Laravel 11",
+        "PHP",
+        "MySQL",
+        "PostgreSQL",
+        "RESTful API",
       ],
     },
     {
-      category: "Digital Marketing",
+      category: "Frontend Development",
       items: [
-        "Social Media Marketing",
-        "Content Strategy",
-        "SEO",
-        "Brand Management",
-        "Campaign Planning",
+        "React",
+        "Alpine.js",
+        "Tailwind CSS",
+        "Vite",
+        "JavaScript/TypeScript",
       ],
     },
     {
-      category: "Creative",
+      category: "System Administration",
       items: [
-        "Photography",
-        "Photo Editing",
-        "Adobe Photoshop",
-        "Adobe Lightroom",
-        "Visual Design",
+        "Ubuntu Server",
+        "Linux Administration",
+        "TrueNAS Scale",
+        "Server Deployment",
+        "System Maintenance",
       ],
     },
     {
-      category: "Technical Skills",
+      category: "Network & Infrastructure",
       items: [
-        "Windows Server",
-        "Linux",
-        "Microsoft Office",
-        "Google Workspace",
-        "Project Management",
+        "MikroTik RouterOS",
+        "Network Administration",
+        "VLAN Configuration",
+        "Traffic Shaping",
+        "Routing & Firewall",
+      ],
+    },
+    {
+      category: "Cloud & Security",
+      items: [
+        "Nextcloud",
+        "Cloudflare Tunnel",
+        "Zero Trust Security",
+        "cPanel",
+        "VPS Management",
       ],
     },
   ];
@@ -508,17 +518,29 @@ function App() {
                     <p className="text-blue-400">
                       PT Puri Ganesha Engineering · Contract
                     </p>
-                    <p
-                      className={`leading-relaxed transition-colors ${
+                    <div
+                      className={`leading-relaxed transition-colors space-y-3 ${
                         isDarkMode ? "text-gray-400" : "text-gray-600"
                       }`}
                     >
-                      Managing IT infrastructure and systems, implementing
-                      technology solutions, and providing technical support for
-                      engineering operations. Working on-site in Bandung, West
-                      Java.
-                    </p>
-                    <div className="flex flex-wrap gap-2 pt-2">
+                      <div>
+                        <p className="font-semibold text-white mb-2">Pengembangan Aplikasi Enterprise (Laravel/Vite Stack):</p>
+                        <p>Merancang dan mendeploy PGE System (v1.10.0), sebuah Integrated Management Platform komprehensif yang mengelola workflow kritis kantor (Manajemen Keuangan, Cuti, Monitoring Proyek), dikembangkan menggunakan Laravel 11 (PHP), Alpine.js/Tailwind CSS. Menguasai Database Management pada basis data relasional MySQL dan PostgreSQL.</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-white mb-2">Administrasi Server & OS Linux:</p>
+                        <p>Server Deployment (Ubuntu): Bertanggung jawab atas instalasi, konfigurasi, dan maintenance lingkungan server production berbasis Ubuntu Server untuk hosting aplikasi dan layanan. Storage System (TrueNAS): Merancang dan mengimplementasikan sistem penyimpanan terdistribusi dengan TrueNAS Scale pada custom-built hardware untuk sentralisasi data dan redundansi.</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-white mb-2">Manajemen Jaringan Lanjutan (MikroTik):</p>
+                        <p>Bertanggung jawab atas Network Administration menggunakan RouterOS (MikroTik), meliputi lalu lintas IP (traffic shaping), implementasi solusi Hotspot, VLAN segmentation, dan konfigurasi routing lanjutan.</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-white mb-2">Keamanan Data & Akses:</p>
+                        <p>Mengimplementasikan solusi cloud storage terpusat (Nextcloud) dengan mengamankan akses remote melalui Cloudflare Tunnel (Zero Trust). Menangani deployment web ke lingkungan Production dan VPS secara mandiri melalui akses cPanel.</p>
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2 pt-4">
                       <span
                         className={`px-2 py-1 text-xs border rounded transition-colors ${
                           isDarkMode
@@ -526,7 +548,7 @@ function App() {
                             : "bg-gray-100 border-gray-300"
                         }`}
                       >
-                        IT Infrastructure
+                        Laravel 11
                       </span>
                       <span
                         className={`px-2 py-1 text-xs border rounded transition-colors ${
@@ -535,7 +557,7 @@ function App() {
                             : "bg-gray-100 border-gray-300"
                         }`}
                       >
-                        Computer Information Systems
+                        MySQL/PostgreSQL
                       </span>
                       <span
                         className={`px-2 py-1 text-xs border rounded transition-colors ${
@@ -544,141 +566,57 @@ function App() {
                             : "bg-gray-100 border-gray-300"
                         }`}
                       >
-                        IT
+                        Ubuntu Server
+                      </span>
+                      <span
+                        className={`px-2 py-1 text-xs border rounded transition-colors ${
+                          isDarkMode
+                            ? "bg-white/5 border-white/10"
+                            : "bg-gray-100 border-gray-300"
+                        }`}
+                      >
+                        TrueNAS
+                      </span>
+                      <span
+                        className={`px-2 py-1 text-xs border rounded transition-colors ${
+                          isDarkMode
+                            ? "bg-white/5 border-white/10"
+                            : "bg-gray-100 border-gray-300"
+                        }`}
+                      >
+                        MikroTik RouterOS
+                      </span>
+                      <span
+                        className={`px-2 py-1 text-xs border rounded transition-colors ${
+                          isDarkMode
+                            ? "bg-white/5 border-white/10"
+                            : "bg-gray-100 border-gray-300"
+                        }`}
+                      >
+                        Nextcloud
+                      </span>
+                      <span
+                        className={`px-2 py-1 text-xs border rounded transition-colors ${
+                          isDarkMode
+                            ? "bg-white/5 border-white/10"
+                            : "bg-gray-100 border-gray-300"
+                        }`}
+                      >
+                        Cloudflare Tunnel
+                      </span>
+                      <span
+                        className={`px-2 py-1 text-xs border rounded transition-colors ${
+                          isDarkMode
+                            ? "bg-white/5 border-white/10"
+                            : "bg-gray-100 border-gray-300"
+                        }`}
+                      >
+                        cPanel
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div
-                  className={`relative pl-8 border-l-2 pb-8 transition-colors ${
-                    isDarkMode ? "border-white/10" : "border-gray-300"
-                  }`}
-                >
-                  <div
-                    className={`absolute -left-2 top-0 w-4 h-4 rounded-full transition-colors ${
-                      isDarkMode ? "bg-zinc-600" : "bg-gray-400"
-                    }`}
-                  ></div>
-                  <div className="space-y-2">
-                    <div
-                      className={`flex items-center gap-2 text-sm transition-colors ${
-                        isDarkMode ? "text-gray-400" : "text-gray-600"
-                      }`}
-                    >
-                      <Calendar size={16} />
-                      <span>Feb 2025 - Jun 2025</span>
-                    </div>
-                    <h4 className="text-xl font-semibold">
-                      Photography Editor
-                    </h4>
-                    <p className="text-blue-400">WOF Wooden · Contract</p>
-                    <p
-                      className={`leading-relaxed transition-colors ${
-                        isDarkMode ? "text-gray-400" : "text-gray-600"
-                      }`}
-                    >
-                      Specialized in photo editing and visual content creation
-                      for wooden furniture products. Managed photography
-                      projects and enhanced product images for marketing
-                      materials. Based in Malang, East Java.
-                    </p>
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      <span
-                        className={`px-2 py-1 text-xs border rounded transition-colors ${
-                          isDarkMode
-                            ? "bg-white/5 border-white/10"
-                            : "bg-gray-100 border-gray-300"
-                        }`}
-                      >
-                        Photography
-                      </span>
-                      <span
-                        className={`px-2 py-1 text-xs border rounded transition-colors ${
-                          isDarkMode
-                            ? "bg-white/5 border-white/10"
-                            : "bg-gray-100 border-gray-300"
-                        }`}
-                      >
-                        Photo Editing
-                      </span>
-                      <span
-                        className={`px-2 py-1 text-xs border rounded transition-colors ${
-                          isDarkMode
-                            ? "bg-white/5 border-white/10"
-                            : "bg-gray-100 border-gray-300"
-                        }`}
-                      >
-                        Visual Content
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  className={`relative pl-8 border-l-2 transition-colors ${
-                    isDarkMode ? "border-white/10" : "border-gray-300"
-                  }`}
-                >
-                  <div
-                    className={`absolute -left-2 top-0 w-4 h-4 rounded-full transition-colors ${
-                      isDarkMode ? "bg-zinc-600" : "bg-gray-400"
-                    }`}
-                  ></div>
-                  <div className="space-y-2">
-                    <div
-                      className={`flex items-center gap-2 text-sm transition-colors ${
-                        isDarkMode ? "text-gray-400" : "text-gray-600"
-                      }`}
-                    >
-                      <Calendar size={16} />
-                      <span>Jul 2023 - Dec 2023</span>
-                    </div>
-                    <h4 className="text-xl font-semibold">
-                      Digital Marketing Specialist
-                    </h4>
-                    <p className="text-blue-400">Incbuss Creative · Contract</p>
-                    <p
-                      className={`leading-relaxed transition-colors ${
-                        isDarkMode ? "text-gray-400" : "text-gray-600"
-                      }`}
-                    >
-                      Developed and executed digital marketing strategies,
-                      managed social media campaigns, and created engaging
-                      content. Focused on brand growth and online presence
-                      optimization in Malang, East Java.
-                    </p>
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      <span
-                        className={`px-2 py-1 text-xs border rounded transition-colors ${
-                          isDarkMode
-                            ? "bg-white/5 border-white/10"
-                            : "bg-gray-100 border-gray-300"
-                        }`}
-                      >
-                        Digital Marketing
-                      </span>
-                      <span
-                        className={`px-2 py-1 text-xs border rounded transition-colors ${
-                          isDarkMode
-                            ? "bg-white/5 border-white/10"
-                            : "bg-gray-100 border-gray-300"
-                        }`}
-                      >
-                        Social Media
-                      </span>
-                      <span
-                        className={`px-2 py-1 text-xs border rounded transition-colors ${
-                          isDarkMode
-                            ? "bg-white/5 border-white/10"
-                            : "bg-gray-100 border-gray-300"
-                        }`}
-                      >
-                        Photography
-                      </span>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -751,15 +689,14 @@ function App() {
                     >
                       <div className="space-y-2">
                         <h4 className="font-semibold">
-                          Information Technology
+                          Full-Stack Development
                         </h4>
                         <p
                           className={`text-sm transition-colors ${
                             isDarkMode ? "text-gray-400" : "text-gray-600"
                           }`}
                         >
-                          IT Infrastructure, Computer Information Systems,
-                          System Management
+                          Laravel, React, PHP, MySQL, PostgreSQL, RESTful API
                         </p>
                       </div>
                     </div>
@@ -772,14 +709,13 @@ function App() {
                       }`}
                     >
                       <div className="space-y-2">
-                        <h4 className="font-semibold">Digital Marketing</h4>
+                        <h4 className="font-semibold">System & Network Administration</h4>
                         <p
                           className={`text-sm transition-colors ${
                             isDarkMode ? "text-gray-400" : "text-gray-600"
                           }`}
                         >
-                          Social Media Marketing, Content Strategy, Brand
-                          Management
+                          Ubuntu Server, Linux, TrueNAS, MikroTik RouterOS, Network Management
                         </p>
                       </div>
                     </div>
@@ -792,13 +728,13 @@ function App() {
                       }`}
                     >
                       <div className="space-y-2">
-                        <h4 className="font-semibold">Creative Content</h4>
+                        <h4 className="font-semibold">Cloud & Security</h4>
                         <p
                           className={`text-sm transition-colors ${
                             isDarkMode ? "text-gray-400" : "text-gray-600"
                           }`}
                         >
-                          Photography, Photo Editing, Visual Design
+                          Nextcloud, Cloudflare Tunnel, Zero Trust, cPanel, VPS Management
                         </p>
                       </div>
                     </div>
@@ -871,9 +807,9 @@ function App() {
                             src={img}
                             alt={`${project.title} - Preview ${imgIndex + 1}`}
                             className={`absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-1000 ${
-                              imgIndex === currentImageIndex 
-                                ? 'opacity-100 z-10' 
-                                : 'opacity-0 z-0'
+                              imgIndex === currentImageIndex
+                                ? "opacity-100 z-10"
+                                : "opacity-0 z-0"
                             }`}
                           />
                         ))}
@@ -885,8 +821,8 @@ function App() {
                               onClick={() => setCurrentImageIndex(imgIndex)}
                               className={`w-2 h-2 rounded-full transition-all duration-300 ${
                                 imgIndex === currentImageIndex
-                                  ? 'bg-blue-500 w-8'
-                                  : 'bg-white/50 hover:bg-white/80'
+                                  ? "bg-blue-500 w-8"
+                                  : "bg-white/50 hover:bg-white/80"
                               }`}
                               aria-label={`Go to slide ${imgIndex + 1}`}
                             />
@@ -975,7 +911,7 @@ function App() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
             {skills.map((skillSet, index) => (
               <div
                 key={index}
