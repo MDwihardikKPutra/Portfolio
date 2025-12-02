@@ -1,94 +1,9 @@
-import { Github, Linkedin, Mail, ArrowRight, Menu, X, User, Briefcase, FolderKanban, Code, MessageSquare } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
+import { Github, Linkedin, Mail, ArrowRight, Sun, Moon } from "lucide-react";
+import { useState } from "react";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [buttonPosition, setButtonPosition] = useState({ x: 24, y: 24 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-  const [hasMoved, setHasMoved] = useState(false);
-  const [sidebarPosition, setSidebarPosition] = useState({ x: 24, y: 80 });
-  const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // Update sidebar position to follow button and stay within viewport
-  useEffect(() => {
-    const sidebarWidth = 200;
-    const sidebarHeight = 250; // approximate height
-    const buttonHeight = 48;
-    
-    let sidebarX = buttonPosition.x;
-    let sidebarY = buttonPosition.y + buttonHeight + 8;
-    
-    // Adjust horizontal position if sidebar would go off screen
-    if (sidebarX + sidebarWidth > window.innerWidth) {
-      sidebarX = window.innerWidth - sidebarWidth - 8;
-    }
-    if (sidebarX < 8) {
-      sidebarX = 8;
-    }
-    
-    // Adjust vertical position if sidebar would go off screen
-    if (sidebarY + sidebarHeight > window.innerHeight) {
-      sidebarY = buttonPosition.y - sidebarHeight - 8;
-    }
-    if (sidebarY < 8) {
-      sidebarY = 8;
-    }
-    
-    setSidebarPosition({ x: sidebarX, y: sidebarY });
-  }, [buttonPosition]);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isDragging) return;
-
-      setHasMoved(true);
-
-      const newX = e.clientX - dragOffset.x;
-      const newY = e.clientY - dragOffset.y;
-
-      // Get viewport dimensions
-      const maxX = window.innerWidth - (buttonRef.current?.offsetWidth || 48);
-      const maxY = window.innerHeight - (buttonRef.current?.offsetHeight || 48);
-
-      // Constrain to viewport bounds
-      const constrainedX = Math.max(0, Math.min(newX, maxX));
-      const constrainedY = Math.max(0, Math.min(newY, maxY));
-
-      setButtonPosition({ x: constrainedX, y: constrainedY });
-    };
-
-    const handleMouseUp = () => {
-      setIsDragging(false);
-      // Reset hasMoved after a short delay to allow click event
-      setTimeout(() => setHasMoved(false), 0);
-    };
-
-    if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
-    }
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [isDragging, dragOffset]);
-
-  const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      setDragOffset({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      });
-      setHasMoved(false);
-      setIsDragging(true);
-      // Close dropdown when starting to drag
-      setIsSidebarOpen(false);
-    }
-  };
 
   const projects = [
     {
@@ -176,154 +91,32 @@ function App() {
         isDarkMode ? "bg-[#0a0a0a] text-[#f5f5f5]" : "bg-white text-[#1a1a1a]"
       }`}
     >
-      {/* Floating Sidebar Button */}
-      <button
-        ref={buttonRef}
-        onMouseDown={handleMouseDown}
-        onClick={(e) => {
-          // Prevent click if we just finished dragging
-          if (!hasMoved) {
-            setIsSidebarOpen(!isSidebarOpen);
-          }
-        }}
-        style={{
-          position: "fixed",
-          left: `${buttonPosition.x}px`,
-          top: `${buttonPosition.y}px`,
-          cursor: isDragging ? "grabbing" : "grab",
-        }}
-        className={`p-3 rounded-full transition-all duration-300 ${
-          isDragging ? "scale-110 z-[60]" : "z-50"
-        } ${
-          isDarkMode
-            ? "bg-[#1a1a1a] text-[#f5f5f5] hover:bg-[#2a2a2a]"
-            : "bg-white text-[#1a1a1a] hover:bg-[#f5f5f5] shadow-lg"
-        }`}
-        aria-label="Toggle navigation"
-      >
-        {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
-      </button>
-
-      {/* Sidebar Navigation */}
-      <aside
-        style={{
-          position: "fixed",
-          left: `${sidebarPosition.x}px`,
-          top: `${sidebarPosition.y}px`,
-          transform: isSidebarOpen ? "scale(1) translateY(0)" : "scale(0.95) translateY(-10px)",
-        }}
-        className={`z-40 transition-all duration-300 ease-out ${
-          isSidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        } rounded-xl shadow-2xl overflow-hidden min-w-[220px]`}
-      >
-        <nav className="flex flex-col py-2">
-          <a
-            href="#about"
-            onClick={() => setIsSidebarOpen(false)}
-            className={`group flex items-center gap-3 px-4 py-3 text-sm font-medium transition-all duration-200 ${
-              isDarkMode
-                ? "text-[#a0a0a0] hover:bg-[#2a2a2a] hover:text-[#f5f5f5]"
-                : "text-[#666666] hover:bg-[#f5f5f5] hover:text-[#1a1a1a]"
-            }`}
-          >
-            <User
-              size={18}
-              className={`transition-transform duration-200 ${
-                isDarkMode
-                  ? "text-[#666666] group-hover:text-[#f5f5f5]"
-                  : "text-[#999999] group-hover:text-[#1a1a1a]"
-              } group-hover:scale-110`}
-            />
-            <span>About</span>
-          </a>
-          <a
-            href="#experience"
-            onClick={() => setIsSidebarOpen(false)}
-            className={`group flex items-center gap-3 px-4 py-3 text-sm font-medium transition-all duration-200 ${
-              isDarkMode
-                ? "text-[#a0a0a0] hover:bg-[#2a2a2a] hover:text-[#f5f5f5]"
-                : "text-[#666666] hover:bg-[#f5f5f5] hover:text-[#1a1a1a]"
-            }`}
-          >
-            <Briefcase
-              size={18}
-              className={`transition-transform duration-200 ${
-                isDarkMode
-                  ? "text-[#666666] group-hover:text-[#f5f5f5]"
-                  : "text-[#999999] group-hover:text-[#1a1a1a]"
-              } group-hover:scale-110`}
-            />
-            <span>Experience</span>
-          </a>
-          <a
-            href="#work"
-            onClick={() => setIsSidebarOpen(false)}
-            className={`group flex items-center gap-3 px-4 py-3 text-sm font-medium transition-all duration-200 ${
-              isDarkMode
-                ? "text-[#a0a0a0] hover:bg-[#2a2a2a] hover:text-[#f5f5f5]"
-                : "text-[#666666] hover:bg-[#f5f5f5] hover:text-[#1a1a1a]"
-            }`}
-          >
-            <FolderKanban
-              size={18}
-              className={`transition-transform duration-200 ${
-                isDarkMode
-                  ? "text-[#666666] group-hover:text-[#f5f5f5]"
-                  : "text-[#999999] group-hover:text-[#1a1a1a]"
-              } group-hover:scale-110`}
-            />
-            <span>Work</span>
-          </a>
-          <a
-            href="#skills"
-            onClick={() => setIsSidebarOpen(false)}
-            className={`group flex items-center gap-3 px-4 py-3 text-sm font-medium transition-all duration-200 ${
-              isDarkMode
-                ? "text-[#a0a0a0] hover:bg-[#2a2a2a] hover:text-[#f5f5f5]"
-                : "text-[#666666] hover:bg-[#f5f5f5] hover:text-[#1a1a1a]"
-            }`}
-          >
-            <Code
-              size={18}
-              className={`transition-transform duration-200 ${
-                isDarkMode
-                  ? "text-[#666666] group-hover:text-[#f5f5f5]"
-                  : "text-[#999999] group-hover:text-[#1a1a1a]"
-              } group-hover:scale-110`}
-            />
-            <span>Skills</span>
-          </a>
-          <a
-            href="#contact"
-            onClick={() => setIsSidebarOpen(false)}
-            className={`group flex items-center gap-3 px-4 py-3 text-sm font-medium transition-all duration-200 ${
-              isDarkMode
-                ? "text-[#a0a0a0] hover:bg-[#2a2a2a] hover:text-[#f5f5f5]"
-                : "text-[#666666] hover:bg-[#f5f5f5] hover:text-[#1a1a1a]"
-            }`}
-          >
-            <MessageSquare
-              size={18}
-              className={`transition-transform duration-200 ${
-                isDarkMode
-                  ? "text-[#666666] group-hover:text-[#f5f5f5]"
-                  : "text-[#999999] group-hover:text-[#1a1a1a]"
-              } group-hover:scale-110`}
-            />
-            <span>Contact</span>
-          </a>
-        </nav>
-      </aside>
 
       {/* Main Content Card - All in One */}
       <div className="pt-20 pb-20 px-6 lg:px-12">
         <div className="max-w-6xl mx-auto">
           {/* Single White Card Container */}
           <div
-            className={`rounded-2xl transition-all duration-300 ${
+            className={`rounded-2xl transition-all duration-300 relative ${
               isDarkMode ? "bg-[#1a1a1a]" : "bg-white"
             }`}
           >
+            {/* Dark/Light Mode Toggle Button */}
+            <button
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className={`absolute top-6 right-6 z-10 p-2.5 sm:p-3 rounded-full transition-all duration-300 ${
+                isDarkMode
+                  ? "bg-[#2a2a2a] text-[#f5f5f5] hover:bg-[#3a3a3a] active:bg-[#3a3a3a]"
+                  : "bg-[#f5f5f5] text-[#1a1a1a] hover:bg-[#e5e5e5] active:bg-[#e5e5e5] shadow-md"
+              }`}
+              aria-label="Toggle dark mode"
+            >
+              {isDarkMode ? (
+                <Sun size={18} className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
+              ) : (
+                <Moon size={18} className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
+              )}
+            </button>
             <div className="p-8 md:p-12 lg:p-16">
               {/* Hero Section */}
               <div
