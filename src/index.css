@@ -38,4 +38,52 @@
       transform: translateY(0);
     }
   }
+
+  /* Hover lift effect */
+  .hover-lift {
+    transition: transform 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+  }
+
+  /* Smooth scale on hover */
+  .hover-scale {
+    transition: transform 0.3s ease;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+
+  /* Glow effect */
+  .hover-glow {
+    transition: opacity 0.3s ease;
+  }
+
+  .hover-glow:hover {
+    opacity: 0.8;
+  }
+
+  /* Slide underline */
+  .hover-underline {
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .hover-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+  }
+
+  .hover-underline:hover::after {
+    width: 100%;
+  }
 }
