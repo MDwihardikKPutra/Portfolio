@@ -15,16 +15,21 @@ export const Home = ({ t, isDarkMode }: HomeProps) => {
   const iconStyle = isDarkMode
     ? "text-[#666666] hover:text-[#f5f5f5]"
     : "text-[#999999] hover:text-[#1a1a1a]";
+  const bgColor = isDarkMode ? "bg-[#0a0a0a]" : "bg-white";
+  const textColor = isDarkMode ? "text-[#f5f5f5]" : "text-[#1a1a1a]";
+  const textSecondaryColor = isDarkMode ? "text-[#a0a0a0]" : "text-[#4a4a4a]";
+  const buttonTextColor = isDarkMode ? "text-[#f5f5f5]" : "text-[#1a1a1a]";
+  const buttonHoverBg = isDarkMode ? "hover:bg-[#1a1a1a]" : "hover:bg-[#f5f5f5]";
 
   return (
-    <div className="h-screen h-[100dvh] bg-white text-[#1a1a1a] relative overflow-hidden flex flex-col w-full">
+    <div className={`h-screen h-[100dvh] ${bgColor} ${textColor} relative overflow-hidden flex flex-col w-full transition-colors duration-300`}>
       {/* Header - Minimal */}
       <header className="flex-shrink-0 px-8 lg:px-12 pt-8 pb-6">
         <div className="max-w-[1600px] mx-auto flex items-center justify-end">
           <div className="flex items-center gap-3">
             <motion.button
               onClick={toggleLanguage}
-              className="px-4 py-2 text-sm text-[#1a1a1a] hover:bg-[#f5f5f5] rounded-md transition-colors"
+              className={`px-4 py-2 text-sm ${buttonTextColor} ${buttonHoverBg} rounded-md transition-colors`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -32,7 +37,7 @@ export const Home = ({ t, isDarkMode }: HomeProps) => {
             </motion.button>
             <motion.button
               onClick={toggleDarkMode}
-              className="px-4 py-2 text-sm text-[#1a1a1a] hover:bg-[#f5f5f5] rounded-md transition-colors"
+              className={`px-4 py-2 text-sm ${buttonTextColor} ${buttonHoverBg} rounded-md transition-colors`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -69,7 +74,7 @@ export const Home = ({ t, isDarkMode }: HomeProps) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <p className="text-[clamp(0.875rem,1.5vw,1rem)] leading-[1.7] text-[#4a4a4a] font-light text-justify">
+              <p className={`text-[clamp(0.875rem,1.5vw,1rem)] leading-[1.7] ${textSecondaryColor} font-light text-justify`}>
                 Born in <span className="font-medium">Kediri</span> on May 2, <span className="font-medium">2001</span>, I moved to <span className="font-medium">Malang</span> during high school and have been living there since. I completed my secondary education at <span className="font-medium">Lab School UM</span>, majoring in Natural Sciences (<span className="font-medium">IPA</span>), and went on to pursue a <span className="font-medium">D4 in Informatics Engineering</span> at <span className="font-medium">State Polytechnic of Malang</span>, graduating in <span className="font-medium">2024</span> with a GPA of <span className="font-medium">3.42</span>.
               </p>
             </motion.div>
