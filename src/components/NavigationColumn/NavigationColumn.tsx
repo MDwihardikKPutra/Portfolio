@@ -88,7 +88,9 @@ export const NavigationColumn = ({ t, isDarkMode }: NavigationColumnProps) => {
             >
               <Link
                 to={item.path}
-                className={`text-xs md:text-sm font-normal text-center inline-block`}
+                className={`text-xs md:text-sm font-normal text-center inline-block transition-all duration-300 ${
+                  !isActive ? "hover:scale-110 hover:opacity-80" : ""
+                }`}
                 style={{
                   textDecoration: "none",
                   color: isActive
@@ -106,6 +108,8 @@ export const NavigationColumn = ({ t, isDarkMode }: NavigationColumnProps) => {
                   padding: "4px 8px",
                   borderRadius: "4px",
                   transition: "all 0.3s ease",
+                  cursor: "pointer",
+                  display: "inline-block",
                 }}
               >
                 {item.text}

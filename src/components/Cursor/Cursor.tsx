@@ -11,7 +11,8 @@ export const Cursor = ({ isDarkMode }: CursorProps) => {
   const [isHidden, setIsHidden] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
-  const [cursorPosition, setCursorPosition] = useState({ x: -100, y: -100 });
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     // Check if device supports touch
@@ -20,9 +21,20 @@ export const Cursor = ({ isDarkMode }: CursorProps) => {
     };
     
     setIsTouchDevice(checkTouchDevice());
+    setIsMounted(true);
+    
+    // Initialize cursor position to center of screen
+    if (typeof window !== 'undefined') {
+      setCursorPosition({ 
+        x: window.innerWidth / 2, 
+        y: window.innerHeight / 2 
+      });
+    }
   }, []);
 
   useEffect(() => {
+    if (isTouchDevice) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       setCursorPosition({ x: e.clientX, y: e.clientY });
       setIsHidden(false);
@@ -45,19 +57,21 @@ export const Cursor = ({ isDarkMode }: CursorProps) => {
     };
 
     // Check for interactive elements
-    const checkInteractive = (target: HTMLElement): boolean => {
+    const checkInteractive = (target: HTMLElement | null): boolean => {
+      if (!target) return false;
+      
       const tagName = target.tagName.toLowerCase();
       const isLink = tagName === "a" || target.closest("a") !== null;
       const isButton = tagName === "button" || target.closest("button") !== null;
       const isInput = ["input", "textarea", "select"].includes(tagName);
-      const hasOnClick = target.onclick !== null || target.getAttribute("onclick") !== null;
-      const computedStyle = window.getComputedStyle(target);
-      const isPointer = computedStyle.cursor === "pointer" || computedStyle.cursor === "grab";
-      const hasHoverEffect = target.classList.contains("hover:") || 
-                            target.closest("[class*='hover:']") !== null ||
-                            target.closest("motion.") !== null;
-
-      return isLink || isButton || isInput || hasOnClick || isPointer || hasHoverEffect;
+      
+      try {
+        const computedStyle = window.getComputedStyle(target);
+        const isPointer = computedStyle.cursor === "pointer" || computedStyle.cursor === "grab";
+        return isLink || isButton || isInput || isPointer;
+      } catch (e) {
+        return isLink || isButton || isInput;
+      }
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -71,41 +85,49 @@ export const Cursor = ({ isDarkMode }: CursorProps) => {
       setIsHovering(false);
     };
 
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseover", handleMouseOver);
-    document.addEventListener("mouseout", handleMouseOut);
-    document.addEventListener("mousedown", handleMouseDown);
-    document.addEventListener("mouseup", handleMouseUp);
-    document.body.addEventListener("mouseleave", handleMouseLeave);
-    document.body.addEventListener("mouseenter", handleMouseEnter);
+    // Use window instead of document for better compatibility
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("mouseover", handleMouseOver, { passive: true });
+    window.addEventListener("mouseout", handleMouseOut, { passive: true });
+    window.addEventListener("mousedown", handleMouseDown, { passive: true });
+    window.addEventListener("mouseup", handleMouseUp, { passive: true });
+    
+    const body = document.body;
+    if (body) {
+      body.addEventListener("mouseleave", handleMouseLeave, { passive: true });
+      body.addEventListener("mouseenter", handleMouseEnter, { passive: true });
+    }
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseover", handleMouseOver);
-      document.removeEventListener("mouseout", handleMouseOut);
-      document.removeEventListener("mousedown", handleMouseDown);
-      document.removeEventListener("mouseup", handleMouseUp);
-      document.body.removeEventListener("mouseleave", handleMouseLeave);
-      document.body.removeEventListener("mouseenter", handleMouseEnter);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseover", handleMouseOver);
+      window.removeEventListener("mouseout", handleMouseOut);
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
+      if (body) {
+        body.removeEventListener("mouseleave", handleMouseLeave);
+        body.removeEventListener("mouseenter", handleMouseEnter);
+      }
     };
-  }, []);
+  }, [isTouchDevice]);
 
-  // Don't render cursor on touch devices
-  if (isTouchDevice) {
+  // Don't render cursor on touch devices or before mount
+  if (isTouchDevice || !isMounted) {
     return null;
   }
 
   return (
     <>
       <div
-        className={`fixed top-0 left-0 pointer-events-none z-[9999] ${
+        className={`fixed pointer-events-none z-[10000] ${
           isHidden ? "opacity-0" : "opacity-100"
         }`}
         style={{
-          left: cursorPosition.x,
-          top: cursorPosition.y,
+          left: `${cursorPosition.x}px`,
+          top: `${cursorPosition.y}px`,
           transform: "translate(-50%, -50%)",
           transition: "opacity 0.2s ease",
+          willChange: "transform",
         }}
       >
         {/* Outer ring */}
@@ -129,14 +151,15 @@ export const Cursor = ({ isDarkMode }: CursorProps) => {
 
       {/* Inner dot */}
       <div
-        className={`fixed top-0 left-0 pointer-events-none z-[9999] ${
+        className={`fixed pointer-events-none z-[10000] ${
           isHidden ? "opacity-0" : "opacity-100"
         }`}
         style={{
-          left: cursorPosition.x,
-          top: cursorPosition.y,
+          left: `${cursorPosition.x}px`,
+          top: `${cursorPosition.y}px`,
           transform: "translate(-50%, -50%)",
           transition: "opacity 0.2s ease",
+          willChange: "transform",
         }}
       >
         <motion.div
