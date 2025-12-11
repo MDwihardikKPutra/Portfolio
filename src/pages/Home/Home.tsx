@@ -1,17 +1,17 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin } from "lucide-react";
 import type { Translations } from "../../translations";
-import { useLanguage } from "../../hooks/useLanguage";
 import { socialLinks } from "../../data";
 
 interface HomeProps {
   t: Translations;
   isDarkMode: boolean;
   toggleDarkMode: () => void;
+  toggleLanguage: () => void;
+  language: string;
 }
 
-export const Home = ({ t, isDarkMode, toggleDarkMode }: HomeProps) => {
-  const { language, toggleLanguage } = useLanguage();
+export const Home = ({ t, isDarkMode, toggleDarkMode, toggleLanguage, language }: HomeProps) => {
   const iconStyle = isDarkMode
     ? "text-[#666666] hover:text-[#f5f5f5]"
     : "text-[#999999] hover:text-[#1a1a1a]";

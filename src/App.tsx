@@ -13,11 +13,13 @@ const AnimatedRoutes = ({
   isDarkMode,
   language,
   toggleDarkMode,
+  toggleLanguage,
 }: {
   t: any;
   isDarkMode: boolean;
   language: string;
   toggleDarkMode: () => void;
+  toggleLanguage: () => void;
 }) => {
   const location = useLocation();
 
@@ -72,7 +74,7 @@ const AnimatedRoutes = ({
   return (
     <AnimatePresence mode="wait" initial={false}>
       <motion.div
-        key={location.pathname}
+        key={`${location.pathname}-${language}`}
         variants={pageVariants}
         initial="initial"
         animate="animate"
@@ -84,7 +86,7 @@ const AnimatedRoutes = ({
         className="h-full w-full origin-center overflow-hidden"
       >
         <Routes location={location}>
-          <Route path="/" element={<Home t={t} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
+          <Route path="/" element={<Home t={t} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLanguage={toggleLanguage} language={language} />} />
           <Route
             path="/work"
             element={
@@ -103,13 +105,13 @@ const AnimatedRoutes = ({
 
 function App() {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
-  const { language } = useLanguage();
+  const { language, toggleLanguage } = useLanguage();
   const t = translations[language];
 
   return (
     <BrowserRouter>
       <MainLayout t={t} isDarkMode={isDarkMode}>
-        <AnimatedRoutes t={t} isDarkMode={isDarkMode} language={language} toggleDarkMode={toggleDarkMode} />
+        <AnimatedRoutes t={t} isDarkMode={isDarkMode} language={language} toggleDarkMode={toggleDarkMode} toggleLanguage={toggleLanguage} />
       </MainLayout>
     </BrowserRouter>
   );
