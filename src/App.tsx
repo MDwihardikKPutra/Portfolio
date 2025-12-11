@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { useEffect } from "react";
 import { useDarkMode } from "./hooks/useDarkMode";
 import { useLanguage } from "./hooks/useLanguage";
 import { translations } from "./translations";
@@ -9,6 +10,7 @@ import { Work } from "./pages/Work/Work";
 import { Contact } from "./pages/Contact/Contact";
 import { Gallery } from "./pages/Gallery/Gallery";
 import { Landing } from "./pages/Landing/Landing";
+import { preloadGalleryImages } from "./utils/preloadImages";
 
 const AnimatedRoutes = ({
   t,
@@ -209,6 +211,11 @@ function App() {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const { language, toggleLanguage } = useLanguage();
   const t = translations[language];
+
+  // Preload gallery images on app mount
+  useEffect(() => {
+    preloadGalleryImages();
+  }, []);
 
   return (
     <BrowserRouter>

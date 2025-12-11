@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import type { Translations } from "../../translations";
+import { galleryPhotos } from "../../utils/preloadImages";
 
 interface GalleryProps {
   t: Translations;
@@ -13,18 +14,8 @@ export const Gallery = ({ t, isDarkMode }: GalleryProps) => {
   const textSecondaryColor = isDarkMode ? "text-[#a0a0a0]" : "text-[#666666]";
   const borderColor = isDarkMode ? "border-[#2a2a2a]" : "border-[#e5e5e5]";
 
-  // Photos from public/Gallery folder
-  const [photos] = useState<string[]>([
-    "/Gallery/imgi_440_2f7c22177718225.658c4f9026390.jpg",
-    "/Gallery/imgi_489_f2245c177718225.666eade4ca4bf.png",
-    "/Gallery/imgi_498_b94f29177718225.666eade4c8cca.png",
-    "/Gallery/imgi_516_e1f17b177718225.666eade4c87cd.png",
-    "/Gallery/imgi_588_313050177718225.666eade7d4dd0.png",
-    "/Gallery/imgi_624_c56c26177718225.666eadea3d400.png",
-    "/Gallery/imgi_651_5c8cc4177718225.67e0fca615e09.jpg",
-    "/Gallery/imgi_691_b98968177718225.67e0fca617465.jpg",
-    "/Gallery/imgi_983_ff56d9177718225.658c4f8f3f7ae.jpg",
-  ]);
+  // Photos from preloaded images
+  const [photos] = useState<string[]>(galleryPhotos);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -72,7 +63,6 @@ export const Gallery = ({ t, isDarkMode }: GalleryProps) => {
                 alt={`Photo ${index + 1}`}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 style={{ display: 'block', margin: 0, padding: 0 }}
-                loading="lazy"
                 onError={(e) => {
                   // Fallback to placeholder if image fails to load
                   const target = e.target as HTMLImageElement;

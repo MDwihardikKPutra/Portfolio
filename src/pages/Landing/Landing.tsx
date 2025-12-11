@@ -53,25 +53,25 @@ export const Landing = ({ t, isDarkMode }: LandingProps) => {
 
   return (
     <motion.div 
-      className={`h-screen h-[100dvh] ${bgColor} ${textColor} relative overflow-hidden w-full flex flex-col items-center justify-center px-4 md:px-0`}
+      className={`h-screen h-[100dvh] ${bgColor} ${textColor} relative overflow-hidden w-full flex flex-col items-center justify-center px-6 md:px-8 lg:px-0`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
       <motion.div 
-        className="text-center mb-8 md:mb-12 px-2"
+        className="text-center mb-10 md:mb-12 w-full max-w-[90vw] md:max-w-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1, duration: 0.3 }}
       >
-        <h1 className={`flex flex-wrap items-center justify-center gap-x-2 gap-y-1 md:gap-x-4 md:gap-y-2 ${textColor}`}>
+        <h1 className={`flex flex-wrap items-center justify-center gap-x-1.5 gap-y-0.5 md:gap-x-3 md:gap-y-1 lg:gap-x-4 lg:gap-y-2 ${textColor}`}>
           {words.map((word, index) => {
             const cleanWord = word.replace(/[.,]/g, ''); // Remove punctuation for comparison
             const isBold = cleanWord === "for" || cleanWord === "sure";
             return (
               <motion.span
                 key={`word-${index}`}
-                className={`text-[clamp(1.5rem,5vw,3.5rem)] md:text-[clamp(1.75rem,4.5vw,3.5rem)] ${isBold ? 'font-medium' : 'font-light'} tracking-[-0.04em] leading-none inline-flex items-center`}
+                className={`text-[clamp(1.25rem,6vw,2rem)] sm:text-[clamp(1.5rem,5vw,2.5rem)] md:text-[clamp(1.75rem,4.5vw,3.5rem)] ${isBold ? 'font-medium' : 'font-light'} tracking-[-0.02em] md:tracking-[-0.04em] leading-tight md:leading-none inline-flex items-center`}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
@@ -90,7 +90,7 @@ export const Landing = ({ t, isDarkMode }: LandingProps) => {
 
       {/* Loading Progress Bar */}
       <motion.div
-        className="w-56 md:w-64 lg:w-80 h-px relative px-4"
+        className="w-[280px] sm:w-64 md:w-72 lg:w-80 h-px relative"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.6 }}
