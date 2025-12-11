@@ -12,8 +12,9 @@ export const NavigationColumn = ({ t, isDarkMode }: NavigationColumnProps) => {
   const [activeSection, setActiveSection] = useState<string>("/");
 
   const navItems = [
-    { path: "/", text: "Home", sectionId: "home" },
+    { path: "/home", text: "Home", sectionId: "home" },
     { path: "/work", text: t.work, sectionId: "work" },
+    { path: "/gallery", text: t.gallery, sectionId: "gallery" },
     { path: "/contact", text: t.contact, sectionId: "contact" },
   ];
 

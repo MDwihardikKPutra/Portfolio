@@ -6,6 +6,7 @@ export interface Translations {
   work: string;
   skills: string;
   contact: string;
+  gallery: string;
   education: string;
   whoAmI: string;
   aboutText1: string;
@@ -13,6 +14,7 @@ export interface Translations {
   letsBuild: string;
   contactDesc: string;
   getInTouch: string;
+  thankYouMessage: string;
   selectedWork: string;
   projects: string;
   expertise: string;
@@ -77,12 +79,14 @@ export const translations: Record<Language, Translations> = {
     work: "Work",
     skills: "Skills",
     contact: "Contact",
+    gallery: "Gallery",
     education: "Education",
     whoAmI: "Who am I?",
     aboutText1:
       "Born in Kediri on May 2, 2001, I moved to Malang during high school and have been living there since. I completed my secondary education at Lab School UM, majoring in Natural Sciences (IPA), and went on to pursue a D4 in Informatics Engineering at State Polytechnic of Malang, graduating in 2024 with a GPA of 3.42.",
     contactMe: "Contact me",
     letsBuild: "Trying to do better",
+    thankYouMessage: "Thanks for coming, for sure",
     contactDesc:
       "Have a project in mind? I'm open to discussing new opportunities and technical collaborations.",
     getInTouch: "Get in Touch",
@@ -163,12 +167,14 @@ export const translations: Record<Language, Translations> = {
     work: "Proyek",
     skills: "Keahlian",
     contact: "Kontak",
+    gallery: "Galeri",
     education: "Pendidikan",
     whoAmI: "Siapa saya?",
     aboutText1:
       "Lahir di Kediri pada tanggal 2 Mei 2001, saya pindah ke Malang saat SMA dan menetap di sana hingga sekarang. Menyelesaikan pendidikan menengah di Lab School UM dengan mengambil jurusan IPA, kemudian melanjutkan pendidikan D4 Teknik Informatika di Politeknik Negeri Malang dan lulus pada tahun 2024 dengan IPK 3.42.",
     contactMe: "Hubungi saya",
     letsBuild: "Mencoba untuk menjadi lebih baik",
+    thankYouMessage: "Terima kasih sudah datang",
     contactDesc:
       "Ada proyek dalam pikiran? Saya terbuka untuk membahas peluang baru dan kolaborasi teknis.",
     getInTouch: "Hubungi Saya",

@@ -79,7 +79,7 @@ export const Contact = ({ t, isDarkMode }: ContactProps) => {
 
                   {/* to do */}
                   <motion.span
-                    className={`text-[clamp(1.25rem,3.5vw,2.75rem)] font-light ${textSecondaryColor} tracking-[-0.03em] leading-none italic inline-flex items-center`}
+                    className={`text-[clamp(1.75rem,4.5vw,3.5rem)] font-light ${textColor} tracking-[-0.04em] leading-none inline-flex items-center`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.6 }}
