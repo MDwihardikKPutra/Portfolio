@@ -19,6 +19,10 @@ export interface Translations {
   bachelorDegree: string;
   hello: string;
   anITEngineer: string;
+  firstName: string;
+  lastName: string;
+  lightMode: string;
+  darkMode: string;
   informationTechnologyEngineer: string;
   pgeCompany: string;
   jun2025Present: string;
@@ -88,6 +92,10 @@ export const translations: Record<Language, Translations> = {
     bachelorDegree: "Bachelor's Degree in Informatics Engineering",
     hello: "Hello, I am",
     anITEngineer: "An IT Engineer.",
+    firstName: "Mokhamad Dwihardik",
+    lastName: "Kusuma Putra",
+    lightMode: "Light",
+    darkMode: "Dark",
     informationTechnologyEngineer: "Information Technology Engineer",
     pgeCompany: "PT Puri Ganesha Engineering",
     jun2025Present: "Jun 2025 - Present",
@@ -170,6 +178,10 @@ export const translations: Record<Language, Translations> = {
     bachelorDegree: "Sarjana Terapan Teknik Informatika",
     hello: "Halo, saya",
     anITEngineer: "Seorang IT Engineer.",
+    firstName: "Mokhamad Dwihardik",
+    lastName: "Kusuma Putra",
+    lightMode: "Terang",
+    darkMode: "Gelap",
     informationTechnologyEngineer: "Information Technology Engineer",
     pgeCompany: "PT Puri Ganesha Engineering",
     jun2025Present: "Jun 2025 - Sekarang",

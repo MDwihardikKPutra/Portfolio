@@ -1,17 +1,17 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin } from "lucide-react";
 import type { Translations } from "../../translations";
-import { useDarkMode } from "../../hooks/useDarkMode";
 import { useLanguage } from "../../hooks/useLanguage";
+import { socialLinks } from "../../data";
 
 interface HomeProps {
   t: Translations;
   isDarkMode: boolean;
+  toggleDarkMode: () => void;
 }
 
-export const Home = ({ t, isDarkMode }: HomeProps) => {
+export const Home = ({ t, isDarkMode, toggleDarkMode }: HomeProps) => {
   const { language, toggleLanguage } = useLanguage();
-  const { toggleDarkMode } = useDarkMode();
   const iconStyle = isDarkMode
     ? "text-[#666666] hover:text-[#f5f5f5]"
     : "text-[#999999] hover:text-[#1a1a1a]";
@@ -41,7 +41,7 @@ export const Home = ({ t, isDarkMode }: HomeProps) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {isDarkMode ? "Light" : "Dark"}
+              {isDarkMode ? t.lightMode : t.darkMode}
             </motion.button>
           </div>
         </div>
@@ -60,8 +60,8 @@ export const Home = ({ t, isDarkMode }: HomeProps) => {
               transition={{ duration: 0.8, delay: 0.1 }}
             >
               <h1 className="text-[clamp(3.5rem,10vw,7rem)] font-light leading-none tracking-[-0.03em]">
-                <span className="font-medium text-[clamp(1.811rem,5.17vw,3.622rem)] block">Mokhamad Dwihardik</span>
-                <span className="font-medium text-[clamp(2.8rem,8vw,5.6rem)] block">Kusuma Putra</span>
+                <span className="font-medium text-[clamp(1.811rem,5.17vw,3.622rem)] block">{t.firstName}</span>
+                <span className="font-medium text-[clamp(2.8rem,8vw,5.6rem)] block">{t.lastName}</span>
               </h1>
             </motion.div>
           </div>
@@ -75,7 +75,7 @@ export const Home = ({ t, isDarkMode }: HomeProps) => {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <p className={`text-[clamp(0.875rem,1.5vw,1rem)] leading-[1.7] ${textSecondaryColor} font-light text-justify`}>
-                Born in <span className="font-medium">Kediri</span> on May 2, <span className="font-medium">2001</span>, I moved to <span className="font-medium">Malang</span> during high school and have been living there since. I completed my secondary education at <span className="font-medium">Lab School UM</span>, majoring in Natural Sciences (<span className="font-medium">IPA</span>), and went on to pursue a <span className="font-medium">D4 in Informatics Engineering</span> at <span className="font-medium">State Polytechnic of Malang</span>, graduating in <span className="font-medium">2024</span> with a GPA of <span className="font-medium">3.42</span>.
+                {t.aboutText1}
               </p>
             </motion.div>
           </div>
@@ -94,47 +94,33 @@ export const Home = ({ t, isDarkMode }: HomeProps) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <motion.a
-                href="https://github.com/ddiko105"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={iconStyle}
-                whileHover={{ scale: 1.2, rotate: 12 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <Github size={20} />
-              </motion.a>
-              <motion.a
-                href="https://www.linkedin.com/in/mokhamad-dwihardik-kusuma-putra-470854190/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={iconStyle}
-                whileHover={{ scale: 1.2, rotate: 12 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <Linkedin size={20} />
-              </motion.a>
-              <motion.a
-                href="https://medium.com/@ddiko105"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={iconStyle}
-                whileHover={{ scale: 1.2, rotate: 12 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
+              {socialLinks.map((social) => (
+                <motion.a
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={iconStyle}
+                  whileHover={{ scale: 1.2, rotate: 12 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  aria-label={social.name}
                 >
-                  <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z" />
-                </svg>
-              </motion.a>
+                  {social.icon === "github" && <Github size={20} />}
+                  {social.icon === "linkedin" && <Linkedin size={20} />}
+                  {social.icon === "medium" && (
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z" />
+                    </svg>
+                  )}
+                </motion.a>
+              ))}
             </motion.div>
             <div className="w-full max-w-[228px] aspect-[3/4] overflow-hidden">
               <motion.img

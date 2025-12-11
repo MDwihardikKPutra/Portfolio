@@ -58,6 +58,30 @@ export const getProjects = (language: Language): Project[] => {
   ];
 };
 
+export interface SocialLink {
+  name: string;
+  url: string;
+  icon: "github" | "linkedin" | "medium";
+}
+
+export const socialLinks: SocialLink[] = [
+  {
+    name: "GitHub",
+    url: "https://github.com/ddiko105",
+    icon: "github",
+  },
+  {
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/in/mokhamad-dwihardik-kusuma-putra-470854190/",
+    icon: "linkedin",
+  },
+  {
+    name: "Medium",
+    url: "https://medium.com/@ddiko105",
+    icon: "medium",
+  },
+];
+
 export const getSkills = (language: Language): SkillSet[] => {
   const t = translations[language];
 
