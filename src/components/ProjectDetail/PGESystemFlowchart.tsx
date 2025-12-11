@@ -5,22 +5,22 @@ interface PGESystemFlowchartProps {
 export const PGESystemFlowchart = ({ isDarkMode }: PGESystemFlowchartProps) => {
   return (
     <div
-      className={`mt-8 p-6 rounded-lg transition-colors ${
+      className={`p-4 rounded-lg transition-colors h-full flex flex-col min-h-0 overflow-hidden ${
         isDarkMode ? "bg-[#0a0a0a]" : "bg-[#f9f9f9]"
       }`}
     >
       <h3
-        className={`text-lg font-medium mb-6 transition-colors ${
+        className={`text-base font-medium mb-4 flex-shrink-0 transition-colors ${
           isDarkMode ? "text-white" : "text-black"
         }`}
       >
         PGE System Workflow
       </h3>
-      <div className="flowchart-container overflow-x-auto">
-        <div className="flex flex-col items-center gap-3 min-w-max mx-auto">
+      <div className="flowchart-container flex-1 min-h-0 overflow-hidden flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
           {/* Start */}
           <div
-            className={`px-5 py-2.5 rounded-lg font-medium text-sm transition-colors ${
+            className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
               isDarkMode
                 ? "bg-blue-900/30 text-blue-300 border border-blue-700"
                 : "bg-blue-50 text-blue-700 border border-blue-300"
@@ -37,7 +37,7 @@ export const PGESystemFlowchart = ({ isDarkMode }: PGESystemFlowchartProps) => {
 
           {/* Decision: Select Module */}
           <div
-            className={`px-5 py-2.5 rounded-lg font-medium text-sm transition-colors transform rotate-45 w-24 h-24 flex items-center justify-center ${
+            className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors transform rotate-45 w-24 h-24 flex items-center justify-center ${
               isDarkMode
                 ? "bg-yellow-900/30 text-yellow-300 border border-yellow-700"
                 : "bg-yellow-50 text-yellow-700 border border-yellow-300"
@@ -47,7 +47,7 @@ export const PGESystemFlowchart = ({ isDarkMode }: PGESystemFlowchartProps) => {
           </div>
 
           {/* Module Options */}
-          <div className="flex gap-4 mt-2 flex-wrap justify-center">
+          <div className="flex gap-3 mt-2 flex-wrap justify-center">
             <div className="flex flex-col items-center gap-2">
               <div
                 className={`px-4 py-2 rounded-lg font-medium text-xs transition-colors ${
@@ -68,8 +68,6 @@ export const PGESystemFlowchart = ({ isDarkMode }: PGESystemFlowchartProps) => {
                 }`}
               >
                 Payment Module
-                <br />
-                (SPD/Purchase/Vendor)
               </div>
             </div>
             <div className="flex flex-col items-center gap-2">
@@ -81,25 +79,13 @@ export const PGESystemFlowchart = ({ isDarkMode }: PGESystemFlowchartProps) => {
                 }`}
               >
                 Work Module
-                <br />
-                (Plan/Realization)
               </div>
             </div>
-          </div>
-
-          {/* Simplified flowchart - Full flowchart akan ditambahkan dari file backup */}
-          <div className="mt-6">
-            <p
-              className={`text-sm text-center transition-colors ${
-                isDarkMode ? "text-[#a0a0a0]" : "text-[#666666]"
-              }`}
-            >
-              Flowchart lengkap akan dimuat dari file backup
-            </p>
           </div>
         </div>
       </div>
     </div>
   );
 };
+
 

@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import type { Translations } from "../../translations";
 
 interface AboutProps {
@@ -6,19 +7,19 @@ interface AboutProps {
 }
 
 export const About = ({ t, isDarkMode }: AboutProps) => {
-  const borderStyle = isDarkMode ? "border-[#2a2a2a]" : "border-[#e5e5e5]";
+  const textColor = isDarkMode ? "text-[#f5f5f5]" : "text-[#1a1a1a]";
   const textStyle = isDarkMode ? "text-[#a0a0a0]" : "text-[#666666]";
 
   return (
-    <div className={`grid md:grid-cols-12 gap-12 items-start pb-16 border-b mb-16 transition-colors ${borderStyle}`}>
-      <div className="md:col-span-4">
-        <h2 className="text-2xl md:text-3xl font-medium mb-0">{t.whoAmI}</h2>
-      </div>
-      <div className="md:col-span-8">
-        <div className={`space-y-4 transition-colors ${textStyle}`}>
-          <p className="text-base leading-relaxed">{t.aboutText1}</p>
-          <p className="text-base leading-relaxed">{t.aboutText2}</p>
-        </div>
+    <div className={`flex flex-col h-full justify-center w-full ${textColor}`}>
+      <div className={`space-y-[clamp(0.5rem,1.5vh,1rem)] ${textStyle} text-center md:text-left`}>
+        <motion.p 
+          className="text-[clamp(0.875rem,1.8vw,1rem)] leading-relaxed cursor-default"
+          whileHover={{ x: 4, opacity: 0.9 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {t.aboutText1}
+        </motion.p>
       </div>
     </div>
   );

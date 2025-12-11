@@ -1,137 +1,115 @@
-import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { useDarkMode } from "./hooks/useDarkMode";
 import { useLanguage } from "./hooks/useLanguage";
 import { translations } from "./translations";
-import { getProjects, getSkills } from "./data";
-import { Hero } from "./components/Hero/Hero";
-import { About } from "./components/About/About";
-import { Experience } from "./components/Experience/Experience";
-import { Education } from "./components/Education/Education";
-import { Projects } from "./components/Projects/Projects";
-import { Skills } from "./components/Skills/Skills";
-import { Contact } from "./components/Contact/Contact";
-import { Footer } from "./components/Footer/Footer";
-import { ToggleButtons } from "./components/Header/ToggleButtons";
-import { ProjectDetail } from "./components/ProjectDetail/ProjectDetail";
+import { MainLayout } from "./components/Layout/MainLayout";
+import { Home } from "./pages/Home/Home";
+import { Work } from "./pages/Work/Work";
+import { Contact } from "./pages/Contact/Contact";
 
-function App() {
-  const { isDarkMode, toggleDarkMode } = useDarkMode();
-  const { language, toggleLanguage } = useLanguage();
+const AnimatedRoutes = ({
+  t,
+  isDarkMode,
+  language,
+}: {
+  t: any;
+  isDarkMode: boolean;
+  language: string;
+}) => {
+  const location = useLocation();
 
-  const [selectedProject, setSelectedProject] = useState<number | null>(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  // reset to first image when switching projects
-  useEffect(() => {
-    setCurrentImageIndex(0);
-  }, [selectedProject]);
-
-  const t = translations[language];
-  const projects = getProjects(language);
-  const skills = getSkills(language);
-
-  const selectedProjectData =
-    selectedProject !== null ? projects[selectedProject] : null;
-
-  const handlePreviousImage = () => {
-    if (
-      !selectedProjectData?.images ||
-      selectedProjectData.images.length === 0
-    ) {
-      return;
-    }
-    const imgCount = selectedProjectData.images.length;
-    const prevIndex =
-      currentImageIndex > 0 ? currentImageIndex - 1 : imgCount - 1;
-    setCurrentImageIndex(prevIndex);
-  };
-
-  const handleNextImage = () => {
-    if (
-      !selectedProjectData?.images ||
-      selectedProjectData.images.length === 0
-    ) {
-      return;
-    }
-    const imgCount = selectedProjectData.images.length;
-    const nextIndex = (currentImageIndex + 1) % imgCount;
-    setCurrentImageIndex(nextIndex);
-  };
-
-  const handleGoToImage = (idx: number) => {
-    setCurrentImageIndex(idx);
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      scale: 0.95,
+      y: 50,
+      rotateX: -10,
+      filter: "blur(20px)",
+    },
+    animate: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      rotateX: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.6,
+        ease: [0.34, 1.56, 0.64, 1] as [number, number, number, number],
+        filter: {
+          duration: 0.4,
+          ease: "easeOut",
+        },
+        rotateX: {
+          duration: 0.5,
+          ease: [0.34, 1.56, 0.64, 1] as [number, number, number, number],
+        },
+      },
+    },
+    exit: {
+      opacity: 0,
+      scale: 1.05,
+      y: -50,
+      rotateX: 10,
+      filter: "blur(20px)",
+      transition: {
+        duration: 0.5,
+        ease: [0.34, 1.56, 0.64, 1] as [number, number, number, number],
+        filter: {
+          duration: 0.3,
+          ease: "easeIn",
+        },
+        rotateX: {
+          duration: 0.4,
+          ease: [0.34, 1.56, 0.64, 1] as [number, number, number, number],
+        },
+      },
+    },
   };
 
   return (
-    <div
-      className={`min-h-screen transition-colors duration-300 ${
-        isDarkMode ? "bg-[#0a0a0a] text-[#f5f5f5]" : "bg-white text-[#1a1a1a]"
-      }`}
-    >
-      {/* Project Detail Page */}
-      {selectedProjectData ? (
-        <div className="pt-20 pb-20 px-6 lg:px-12">
-          <div className="max-w-6xl mx-auto">
-            <div
-              className={`rounded-2xl transition-all duration-300 relative ${
-                isDarkMode ? "bg-[#1a1a1a]" : "bg-white"
-              }`}
-            >
-              <ProjectDetail
-                project={selectedProjectData}
-                projectIndex={selectedProject || 0}
-                t={t}
-                isDarkMode={isDarkMode}
-                language={language}
-                currentImageIndex={currentImageIndex}
-                onBack={() => setSelectedProject(null)}
-                onDarkModeToggle={toggleDarkMode}
-                onLanguageToggle={toggleLanguage}
-                onPreviousImage={handlePreviousImage}
-                onNextImage={handleNextImage}
-                onGoToImage={handleGoToImage}
-              />
-            </div>
-          </div>
-        </div>
-      ) : (
-        /* Main Content Card */
-        <div className="pt-20 pb-20 px-6 lg:px-12">
-          <div className="max-w-6xl mx-auto">
-            <div
-              className={`rounded-2xl transition-all duration-300 relative ${
-                isDarkMode ? "bg-[#1a1a1a]" : "bg-white"
-              }`}
-            >
-              <div className="absolute top-6 right-6 z-10">
-                <ToggleButtons
-                  isDarkMode={isDarkMode}
-                  onDarkModeToggle={toggleDarkMode}
-                  language={language}
-                  onLanguageToggle={toggleLanguage}
-                  position="absolute"
-                />
-              </div>
-              <div className="p-8 md:p-12 lg:p-16">
-                <Hero t={t} isDarkMode={isDarkMode} />
-                <About t={t} isDarkMode={isDarkMode} />
-                <Experience t={t} isDarkMode={isDarkMode} />
-                <Education t={t} isDarkMode={isDarkMode} />
-                <Projects
-                  t={t}
-                  isDarkMode={isDarkMode}
-                  projects={projects}
-                  onProjectClick={setSelectedProject}
-                />
-                <Skills t={t} isDarkMode={isDarkMode} skills={skills} />
-                <Contact t={t} isDarkMode={isDarkMode} />
-                <Footer t={t} isDarkMode={isDarkMode} />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={location.pathname}
+        variants={pageVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        style={{
+          transformStyle: "preserve-3d",
+          perspective: "1000px",
+        }}
+        className="h-full w-full origin-center overflow-hidden"
+      >
+        <Routes location={location}>
+          <Route path="/" element={<Home t={t} isDarkMode={isDarkMode} />} />
+          <Route
+            path="/work"
+            element={
+              <Work t={t} isDarkMode={isDarkMode} language={language} />
+            }
+          />
+          <Route
+            path="/contact"
+            element={<Contact t={t} isDarkMode={isDarkMode} />}
+          />
+        </Routes>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
+
+function App() {
+  const { isDarkMode } = useDarkMode();
+  const { language } = useLanguage();
+  const t = translations[language];
+
+  return (
+    <BrowserRouter>
+      <MainLayout t={t} isDarkMode={isDarkMode}>
+        <AnimatedRoutes t={t} isDarkMode={isDarkMode} language={language} />
+      </MainLayout>
+    </BrowserRouter>
   );
 }
 

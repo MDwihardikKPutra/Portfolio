@@ -1,7 +1,6 @@
 import { ImageGallery } from "./ImageGallery";
 import type { Project } from "../../data";
 import type { Translations } from "../../translations";
-import { PGESystemFlowchart } from "./PGESystemFlowchart";
 
 interface PGESystemDetailProps {
   t: Translations;
@@ -22,93 +21,99 @@ export const PGESystemDetail = ({
   onNextImage,
   onGoToImage,
 }: PGESystemDetailProps) => {
+  const descColor = isDarkMode ? "text-[#a0a0a0]" : "text-[#666666]";
+  const borderColor = isDarkMode ? "border-[#2a2a2a]" : "border-[#e5e5e5]";
+
+  // Shortened text helper
+  const getShortText = (text: string, sentences: number = 1) => {
+    const parts = text.split(". ");
+    if (parts.length > sentences) {
+      return parts.slice(0, sentences).join(". ") + ".";
+    }
+    return text;
+  };
+
+  // More aggressive text shortening for compact layout
+  const getCompactText = (text: string, maxLength: number = 80) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength).trim() + "...";
+  };
+
   return (
-    <article className="max-w-4xl mx-auto">
-      {/* Background */}
-      <section className="mb-10 md:mb-14">
-        <h2 className="text-2xl md:text-3xl font-medium mb-3 text-left">
-          {t.background}
-        </h2>
-        <p
-          className={`text-base md:text-lg leading-loose text-justify transition-colors ${
-            isDarkMode ? "text-[#a0a0a0]" : "text-[#666666]"
-          }`}
-        >
-          {t.pgeBackground}
-        </p>
-      </section>
+    <div className="flex flex-col h-full min-h-0 overflow-hidden">
+      {/* Top Section: 3x3 Grid (20% height) */}
+      <div className="flex-[0.2] min-h-0 overflow-hidden mb-4">
+        <div className="grid grid-cols-3 grid-rows-2 gap-3 md:gap-4 h-full">
+          {/* Row 1 */}
+          <div className="flex flex-col space-y-2">
+            <div>
+              <h2 className="text-sm font-medium mb-1 text-left">
+                {t.background}
+              </h2>
+              <p className={`text-[10px] leading-tight transition-colors ${descColor}`}>
+                {getCompactText(getShortText(t.pgeBackground, 1), 60)}
+              </p>
+            </div>
+            <div>
+              <h2 className="text-sm font-medium mb-1 text-left">
+                {t.problems}
+              </h2>
+              <p className={`text-[10px] leading-tight transition-colors ${descColor}`}>
+                {getCompactText(getShortText(t.pgeProblems, 1), 60)}
+              </p>
+            </div>
+          </div>
 
-      {/* Problems */}
-      <section className="mb-10 md:mb-14">
-        <h2 className="text-2xl md:text-3xl font-medium mb-3 text-left">
-          {t.problems}
-        </h2>
-        <p
-          className={`text-base md:text-lg leading-loose text-justify transition-colors ${
-            isDarkMode ? "text-[#a0a0a0]" : "text-[#666666]"
-          }`}
-        >
-          {t.pgeProblems}
-        </p>
-      </section>
+          <div className="flex flex-col space-y-2">
+            <div>
+              <h2 className="text-sm font-medium mb-1 text-left">
+                {t.solutions}
+              </h2>
+              <p className={`text-[10px] leading-tight transition-colors ${descColor}`}>
+                {getCompactText("Nine core modules: Work, Leave, SPD, Purchase & Vendor Payment, Approval Center, Project Management, User & Role Management, Notifications, EAR module.", 60)}
+              </p>
+            </div>
+            <div>
+              <h2 className="text-sm font-medium mb-1 text-left">
+                {t.developmentProcess}
+              </h2>
+              <p className={`text-[10px] leading-tight transition-colors ${descColor}`}>
+                {getCompactText("Comprehensive planning, requirements gathering, system design documentation with ERD and flowcharts.", 60)}
+              </p>
+            </div>
+          </div>
 
-      {/* Solutions */}
-      <section className="mb-10 md:mb-14">
-        <h2 className="text-2xl md:text-3xl font-medium mb-3 text-right">
-          {t.solutions}
-        </h2>
-        <p
-          className={`text-base md:text-lg leading-loose text-justify transition-colors ${
-            isDarkMode ? "text-[#a0a0a0]" : "text-[#666666]"
-          }`}
-        >
-          {t.pgeSolutions}
-        </p>
-      </section>
+          <div className="flex flex-col space-y-2">
+            <div>
+              <h2 className="text-sm font-medium mb-1 text-left">
+                {t.finalOutput}
+              </h2>
+              <p className={`text-[10px] leading-tight transition-colors ${descColor}`}>
+                {getCompactText(getShortText(t.pgeOutput, 1), 60)}
+              </p>
+            </div>
+            <div>
+              <h2 className="text-sm font-medium mb-1 text-left">
+                {t.pgeTechStackTitle}
+              </h2>
+              <div className="space-y-1">
+                <p className={`text-[10px] leading-tight transition-colors ${descColor}`}>
+                  {getCompactText(t.pgeTechStack.backend.split(":")[1], 60)}
+                </p>
+                <p className={`text-[10px] leading-tight transition-colors ${descColor}`}>
+                  {getCompactText(t.pgeTechStack.frontend.split(":")[1], 60)}
+                </p>
+                <p className={`text-[10px] leading-tight transition-colors ${descColor}`}>
+                  {getCompactText(t.pgeTechStack.packages.split(":")[1], 60)}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      {/* Development Process */}
-      <section className="mb-10 md:mb-14">
-        <h2 className="text-2xl md:text-3xl font-medium mb-3 text-left">
-          {t.developmentProcess}
-        </h2>
-        <p
-          className={`text-base md:text-lg leading-loose text-justify transition-colors mb-4 ${
-            isDarkMode ? "text-[#a0a0a0]" : "text-[#666666]"
-          }`}
-        >
-          {t.pgeDevelopmentProcess}
-        </p>
-        <p
-          className={`text-base md:text-lg leading-loose text-justify transition-colors mb-4 ${
-            isDarkMode ? "text-[#a0a0a0]" : "text-[#666666]"
-          }`}
-        >
-          {t.pgeDevelopmentProcess2}
-        </p>
-        <p
-          className={`text-base md:text-lg leading-loose text-justify transition-colors mb-6 ${
-            isDarkMode ? "text-[#a0a0a0]" : "text-[#666666]"
-          }`}
-        >
-          {t.pgeDevelopmentProcess3}
-        </p>
-
-        {/* Flowchart Visualization */}
-        <PGESystemFlowchart isDarkMode={isDarkMode} />
-      </section>
-
-      {/* Final Output */}
-      <section className="mb-10 md:mb-14">
-        <h2 className="text-2xl md:text-3xl font-medium mb-3 text-left">
-          {t.finalOutput}
-        </h2>
-        <p
-          className={`text-base md:text-lg leading-loose text-justify transition-colors mb-6 ${
-            isDarkMode ? "text-[#a0a0a0]" : "text-[#666666]"
-          }`}
-        >
-          {t.pgeOutput}
-        </p>
+      {/* Bottom Section: Full Width Carousel (80% height) */}
+      <div className="flex-[0.8] min-h-0 overflow-hidden">
         {project.images && project.images.length > 0 && (
           <ImageGallery
             images={project.images}
@@ -120,37 +125,8 @@ export const PGESystemDetail = ({
             isDarkMode={isDarkMode}
           />
         )}
-      </section>
-
-      {/* Tech Stack */}
-      <section className="space-y-6">
-        <h2 className="text-3xl md:text-4xl font-medium mb-6 text-right">
-          {t.pgeTechStackTitle}
-        </h2>
-        <div className="space-y-4">
-          <p
-            className={`text-sm md:text-base leading-relaxed text-justify transition-colors ${
-              isDarkMode ? "text-[#a0a0a0]" : "text-[#666666]"
-            }`}
-          >
-            {t.pgeTechStack.backend}
-          </p>
-          <p
-            className={`text-sm md:text-base leading-relaxed text-justify transition-colors ${
-              isDarkMode ? "text-[#a0a0a0]" : "text-[#666666]"
-            }`}
-          >
-            {t.pgeTechStack.frontend}
-          </p>
-          <p
-            className={`text-sm md:text-base leading-relaxed text-justify transition-colors ${
-              isDarkMode ? "text-[#a0a0a0]" : "text-[#666666]"
-            }`}
-          >
-            {t.pgeTechStack.packages}
-          </p>
-        </div>
-      </section>
-    </article>
+      </div>
+    </div>
   );
 };
+

@@ -9,7 +9,6 @@ export interface Translations {
   education: string;
   whoAmI: string;
   aboutText1: string;
-  aboutText2: string;
   contactMe: string;
   letsBuild: string;
   contactDesc: string;
@@ -77,9 +76,7 @@ export const translations: Record<Language, Translations> = {
     education: "Education",
     whoAmI: "Who am I?",
     aboutText1:
-      "I earned my Bachelor's degree in Informatics Engineering from State Polytechnic of Malang in 2024 with a GPA of 3.42.",
-    aboutText2:
-      "As an IT Engineer, I focus on delivering scalable and maintainable technology solutions rooted in strategic thinking. I design and build enterprise applications and infrastructure systems aligned with organizational goals.",
+      "Born in Kediri on May 2, 2001, I moved to Malang during high school and have been living there since. I completed my secondary education at Lab School UM, majoring in Natural Sciences (IPA), and went on to pursue a D4 in Informatics Engineering at State Polytechnic of Malang, graduating in 2024 with a GPA of 3.42.",
     contactMe: "Contact me",
     letsBuild: "Let's build something powerful",
     contactDesc:
@@ -161,9 +158,7 @@ export const translations: Record<Language, Translations> = {
     education: "Pendidikan",
     whoAmI: "Siapa saya?",
     aboutText1:
-      "Saya meraih gelar Sarjana Terapan Teknik Informatika dari Politeknik Negeri Malang pada tahun 2024 dengan IPK 3.42.",
-    aboutText2:
-      "Sebagai IT Engineer, saya fokus pada penyediaan solusi teknologi yang scalable dan maintainable yang berakar pada pemikiran strategis. Saya merancang dan membangun aplikasi enterprise serta sistem infrastruktur yang selaras dengan tujuan organisasi.",
+      "Lahir di Kediri pada tanggal 2 Mei 2001, saya pindah ke Malang saat SMA dan menetap di sana hingga sekarang. Menyelesaikan pendidikan menengah di Lab School UM dengan mengambil jurusan IPA, kemudian melanjutkan pendidikan D4 Teknik Informatika di Politeknik Negeri Malang dan lulus pada tahun 2024 dengan IPK 3.42.",
     contactMe: "Hubungi saya",
     letsBuild: "Mari kita bangun sesuatu yang powerful",
     contactDesc:
@@ -238,4 +233,5 @@ export const translations: Record<Language, Translations> = {
       "PGE System menyatukan seluruh operasi dalam satu platform, menghilangkan data silo. Siklus approval dipercepat dengan persistensi data otomatis dan workflow terstruktur. Manajemen memperoleh visibilitas real-time terhadap aktivitas karyawan, sisa cuti, progress project, dan pembayaran melalui dashboard intuitif. Pelaporan terotomatisasi—laporan EAR, dokumen perjalanan dinas, purchase order, dan catatan pembayaran ter-generate otomatis. Audit trail lengkap memastikan transparansi dan akuntabilitas. Visibilitas yang ditingkatkan memungkinkan monitoring menyeluruh aktivitas, project, dan approval, meningkatkan pengambilan keputusan dan efisiensi organisasi.",
   },
 };
+
 

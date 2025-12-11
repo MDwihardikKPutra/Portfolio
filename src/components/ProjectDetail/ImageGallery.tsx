@@ -86,51 +86,67 @@ export const ImageGallery = ({
 
   return (
     <div
-      className="relative w-full mt-6"
+      className="relative w-full h-full flex flex-col min-h-0 overflow-hidden"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="relative rounded-lg overflow-hidden">
+      {/* Image Container */}
+      <div 
+        className="relative rounded-lg overflow-hidden flex-1 min-h-0 flex items-center justify-center"
+      >
         <img
           src={images[currentIndex]}
           alt={`${title} - Image ${currentIndex + 1}`}
-          className="w-full h-auto object-cover transition-opacity duration-500"
+          className="w-full h-full object-contain transition-all duration-500 ease-in-out"
         />
+        
         {images.length > 1 && (
           <>
+            {/* Navigation Buttons */}
             <button
               onClick={() => {
                 onPrevious();
                 handleManualNavigation();
               }}
-              className={`absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full transition-colors z-10 ${
+              className={`absolute left-2 top-1/2 -translate-y-1/2 p-2.5 rounded-full transition-all duration-200 z-10 ${
                 isDarkMode
-                  ? "bg-black/50 hover:bg-black/70 text-white"
-                  : "bg-white/50 hover:bg-white/70 text-black"
-              }`}
+                  ? "bg-black/80 hover:bg-black text-white backdrop-blur-sm"
+                  : "bg-white/80 hover:bg-white text-black backdrop-blur-sm"
+              } shadow-lg hover:scale-110`}
               aria-label="Previous image"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={() => {
                 onNext();
                 handleManualNavigation();
               }}
-              className={`absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full transition-colors z-10 ${
+              className={`absolute right-2 top-1/2 -translate-y-1/2 p-2.5 rounded-full transition-all duration-200 z-10 ${
                 isDarkMode
-                  ? "bg-black/50 hover:bg-black/70 text-white"
-                  : "bg-white/50 hover:bg-white/70 text-black"
-              }`}
+                  ? "bg-black/80 hover:bg-black text-white backdrop-blur-sm"
+                  : "bg-white/80 hover:bg-white text-black backdrop-blur-sm"
+              } shadow-lg hover:scale-110`}
               aria-label="Next image"
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-5 h-5" />
             </button>
+
+            {/* Image Counter */}
+            <div className={`absolute top-3 right-3 px-3 py-1.5 rounded-full text-xs font-medium z-10 ${
+              isDarkMode
+                ? "bg-black/80 text-white backdrop-blur-sm"
+                : "bg-white/80 text-black backdrop-blur-sm"
+            } shadow-lg`}>
+              {currentIndex + 1} / {images.length}
+            </div>
           </>
         )}
       </div>
+
+      {/* Indicator Dots */}
       {images.length > 1 && (
-        <div className="flex justify-center gap-2 mt-4">
+        <div className="flex justify-center items-center gap-2 mt-4 flex-shrink-0">
           {images.map((_, index) => (
             <button
               key={index}
@@ -138,14 +154,14 @@ export const ImageGallery = ({
                 onGoToImage(index);
                 handleManualNavigation();
               }}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              className={`rounded-full transition-all duration-300 ${
                 currentIndex === index
                   ? isDarkMode
-                    ? "bg-white w-8"
-                    : "bg-black w-8"
+                    ? "bg-white h-2 w-8"
+                    : "bg-black h-2 w-8"
                   : isDarkMode
-                  ? "bg-white/30"
-                  : "bg-black/30"
+                  ? "bg-white/40 h-2 w-2 hover:bg-white/60"
+                  : "bg-black/40 h-2 w-2 hover:bg-black/60"
               }`}
               aria-label={`Go to image ${index + 1}`}
             />
