@@ -8,6 +8,10 @@ export const useLanguage = () => {
     const saved = localStorage.getItem("language");
     if (saved && (saved === "en" || saved === "id")) {
       setLanguage(saved as Language);
+    } else {
+      // Ensure default is English if no valid language is saved
+      setLanguage("en");
+      localStorage.setItem("language", "en");
     }
   }, []);
 

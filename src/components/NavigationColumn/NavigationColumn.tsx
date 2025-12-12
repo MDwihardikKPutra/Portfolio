@@ -15,6 +15,7 @@ export const NavigationColumn = ({ t, isDarkMode }: NavigationColumnProps) => {
     { path: "/home", text: "Home", sectionId: "home" },
     { path: "/work", text: t.work, sectionId: "work" },
     { path: "/gallery", text: t.gallery, sectionId: "gallery" },
+    { path: "/essay", text: t.essay, sectionId: "essay" },
     { path: "/contact", text: t.contact, sectionId: "contact" },
   ];
 
@@ -24,11 +25,18 @@ export const NavigationColumn = ({ t, isDarkMode }: NavigationColumnProps) => {
     setActiveSection(currentPath);
   }, [location]);
 
+  // Hide navigation on essay detail pages
+  const isEssayDetail = location.pathname.startsWith("/essay/") && location.pathname !== "/essay";
+
+  if (isEssayDetail) {
+    return null;
+  }
+
   return (
     <>
       {/* Mobile Navigation - Bottom Bar */}
       <div 
-        className={`fixed bottom-0 left-0 right-0 z-50 flex md:hidden justify-center items-center pb-4 pt-2 ${
+        className={`fixed bottom-0 left-0 right-0 z-[100] flex md:hidden justify-center items-center pb-4 pt-2 ${
           isDarkMode ? "bg-[#0a0a0a]/80 backdrop-blur-sm" : "bg-white/80 backdrop-blur-sm"
         }`}
       >
@@ -63,7 +71,7 @@ export const NavigationColumn = ({ t, isDarkMode }: NavigationColumnProps) => {
 
       {/* Desktop Navigation */}
       <div 
-        className={`fixed bottom-0 left-0 right-0 z-50 hidden md:flex justify-center items-center pb-8 pt-4`}
+        className={`fixed bottom-0 left-0 right-0 z-[100] hidden md:flex justify-center items-center pb-8 pt-4`}
       >
         <div className="flex flex-row items-center gap-3 md:gap-4">
           {navItems.map((item) => {

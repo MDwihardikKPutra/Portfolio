@@ -35,6 +35,12 @@ export interface Translations {
   expDesc1: string;
   expDesc2: string;
   expDesc3: string;
+  wofWoodenCompany: string;
+  wofWoodenPosition: string;
+  wofWoodenDate: string;
+  wofWoodenDesc1: string;
+  wofWoodenDesc2: string;
+  wofWoodenDesc3: string;
   techStack: string;
   project1Category: string;
   project1Desc: string;
@@ -70,6 +76,8 @@ export interface Translations {
   pgeProblems: string;
   pgeSolutions: string;
   pgeOutput: string;
+  essay: string;
+  essayComingSoon: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -83,7 +91,7 @@ export const translations: Record<Language, Translations> = {
     education: "Education",
     whoAmI: "Who am I?",
     aboutText1:
-      "Born in Kediri on May 2, 2001, I moved to Malang during high school and have been living there since. I completed my secondary education at Lab School UM, majoring in Natural Sciences (IPA), and went on to pursue a D4 in Informatics Engineering at State Polytechnic of Malang, graduating in 2024 with a GPA of 3.42.",
+      "Born in Kediri on May 2, 2001, I completed my secondary education at Lab School UM with a concentration in Natural Sciences (IPA). I continued my studies in Informatics Engineering at the State Polytechnic of Malang, earning a D4 degree in 2024 with a GPA of 3.42. Alongside my academic journey, I cultivate a strong passion for photography, which plays a significant role in shaping my creative direction and professional interests. I also write essays, exploring various topics that complement my technical expertise and creative pursuits.",
     contactMe: "Contact me",
     letsBuild: "Trying to do better",
     thankYouMessage: "Thanks for coming, for sure",
@@ -113,6 +121,15 @@ export const translations: Record<Language, Translations> = {
       "Responsible for installation, configuration, and maintenance of Ubuntu Server production environments. Designed and implemented distributed storage systems with TrueNAS Scale.",
     expDesc3:
       "Network Administration using RouterOS (MikroTik), including traffic shaping, Hotspot solutions, VLAN segmentation, and advanced routing configurations.",
+    wofWoodenCompany: "WOF Wooden",
+    wofWoodenPosition: "Photographer",
+    wofWoodenDate: "Jan 2024 - May 2024",
+    wofWoodenDesc1:
+      "Developed and maintained company website using modern web technologies. Implemented responsive design and optimized website performance.",
+    wofWoodenDesc2:
+      "Provided technical support for IT infrastructure, troubleshooting hardware and software issues, and maintaining network systems.",
+    wofWoodenDesc3:
+      "Collaborated with team members to improve business processes through technology solutions and automation.",
     techStack: "Tech Stack",
     project1Category: "Corporate Website",
     project1Desc:
@@ -160,6 +177,8 @@ export const translations: Record<Language, Translations> = {
       "PGE System integrates nine core modules: Work Management for daily plans and progress tracking; Leave Management with auto-balance tracking and multi-layer approvals; SPD Management for business trips with cost calculations; Purchase & Vendor Payment with centralized approvals; unified Approval Center with real-time notifications; Project Management with granular access controls; User & Role Management with module-level permissions; real-time notifications and complete audit trails; and EAR module for automatic activity reports in daily, weekly, or monthly formats.",
     pgeOutput:
       "PGE System unified all operations in one platform, eliminating data silos. Approval cycles accelerated with automatic data persistence and structured workflows. Management gained real-time visibility into employee activities, leave balances, project progress, and payments through intuitive dashboards. Reporting automated—EAR reports, trip documents, purchase orders, and payment records generate automatically. Complete audit trails ensure transparency and accountability. Enhanced visibility enables comprehensive monitoring of activities, projects, and approvals, improving decision-making and organizational efficiency.",
+    essay: "Essay",
+    essayComingSoon: "Essays coming soon. Check back later for my thoughts and writings.",
   },
   id: {
     about: "Tentang",
@@ -171,7 +190,7 @@ export const translations: Record<Language, Translations> = {
     education: "Pendidikan",
     whoAmI: "Siapa saya?",
     aboutText1:
-      "Lahir di Kediri pada tanggal 2 Mei 2001, saya pindah ke Malang saat SMA dan menetap di sana hingga sekarang. Menyelesaikan pendidikan menengah di Lab School UM dengan mengambil jurusan IPA, kemudian melanjutkan pendidikan D4 Teknik Informatika di Politeknik Negeri Malang dan lulus pada tahun 2024 dengan IPK 3.42.",
+      "Lahir di Kediri pada tanggal 2 Mei 2001, saya menyelesaikan pendidikan menengah di Lab School UM dengan konsentrasi Ilmu Pengetahuan Alam (IPA). Saya melanjutkan studi di Teknik Informatika di Politeknik Negeri Malang, meraih gelar D4 pada tahun 2024 dengan IPK 3.42. Seiring dengan perjalanan akademik saya, saya mengembangkan minat yang kuat terhadap fotografi, yang memainkan peran penting dalam membentuk arah kreatif dan minat profesional saya. Saya juga menulis essay, mengeksplorasi berbagai topik yang melengkapi keahlian teknis dan minat kreatif saya.",
     contactMe: "Hubungi saya",
     letsBuild: "Mencoba untuk menjadi lebih baik",
     thankYouMessage: "Terima kasih sudah datang",
@@ -201,6 +220,15 @@ export const translations: Record<Language, Translations> = {
       "Bertanggung jawab atas instalasi, konfigurasi, dan pemeliharaan lingkungan produksi Ubuntu Server. Merancang dan mengimplementasikan sistem penyimpanan terdistribusi dengan TrueNAS Scale.",
     expDesc3:
       "Network Administration menggunakan RouterOS (MikroTik), termasuk traffic shaping, solusi Hotspot, segmentasi VLAN, dan konfigurasi routing lanjutan.",
+    wofWoodenCompany: "WOF Wooden",
+    wofWoodenPosition: "Photographer",
+    wofWoodenDate: "Jan 2024 - Mei 2024",
+    wofWoodenDesc1:
+      "Mengembangkan dan memelihara website perusahaan menggunakan teknologi web modern. Mengimplementasikan desain responsif dan mengoptimalkan performa website.",
+    wofWoodenDesc2:
+      "Memberikan dukungan teknis untuk infrastruktur IT, troubleshooting masalah hardware dan software, serta memelihara sistem jaringan.",
+    wofWoodenDesc3:
+      "Berkolaborasi dengan anggota tim untuk meningkatkan proses bisnis melalui solusi teknologi dan otomatisasi.",
     techStack: "Tech Stack",
     project1Category: "Website Perusahaan",
     project1Desc:
@@ -249,6 +277,8 @@ export const translations: Record<Language, Translations> = {
       "PGE System mengintegrasikan sembilan modul inti: Work Management untuk rencana harian dan tracking progress; Leave Management dengan tracking sisa cuti otomatis dan approval berlapis; SPD Management untuk perjalanan dinas dengan kalkulasi biaya; Purchase & Vendor Payment dengan approval terpusat; Approval Center terpadu dengan notifikasi real-time; Project Management dengan kontrol akses granular; User & Role Management dengan permission per modul; notifikasi real-time dan audit trail lengkap; serta modul EAR untuk laporan aktivitas otomatis dalam format harian, mingguan, atau bulanan.",
     pgeOutput:
       "PGE System menyatukan seluruh operasi dalam satu platform, menghilangkan data silo. Siklus approval dipercepat dengan persistensi data otomatis dan workflow terstruktur. Manajemen memperoleh visibilitas real-time terhadap aktivitas karyawan, sisa cuti, progress project, dan pembayaran melalui dashboard intuitif. Pelaporan terotomatisasi—laporan EAR, dokumen perjalanan dinas, purchase order, dan catatan pembayaran ter-generate otomatis. Audit trail lengkap memastikan transparansi dan akuntabilitas. Visibilitas yang ditingkatkan memungkinkan monitoring menyeluruh aktivitas, project, dan approval, meningkatkan pengambilan keputusan dan efisiensi organisasi.",
+    essay: "Essay",
+    essayComingSoon: "Essay akan segera hadir. Kembali lagi nanti untuk membaca pemikiran dan tulisan saya.",
   },
 };
 

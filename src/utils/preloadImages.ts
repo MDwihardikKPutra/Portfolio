@@ -11,6 +11,11 @@ export const galleryPhotos = [
   "/Gallery/imgi_983_ff56d9177718225.658c4f8f3f7ae.jpg",
 ];
 
+// Home page images
+export const homeImages = [
+  "/profile.jpg",
+];
+
 export const preloadGalleryImages = () => {
   // Preload using link tags for browser optimization
   galleryPhotos.forEach((src) => {
@@ -23,6 +28,23 @@ export const preloadGalleryImages = () => {
 
   // Also preload using Image objects to ensure images are actually loaded
   galleryPhotos.forEach((src) => {
+    const img = new Image();
+    img.src = src;
+  });
+};
+
+export const preloadHomeImages = () => {
+  // Preload home page images
+  homeImages.forEach((src) => {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = src;
+    document.head.appendChild(link);
+  });
+
+  // Also preload using Image objects to ensure images are actually loaded
+  homeImages.forEach((src) => {
     const img = new Image();
     img.src = src;
   });

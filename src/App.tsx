@@ -9,8 +9,10 @@ import { Home } from "./pages/Home/Home";
 import { Work } from "./pages/Work/Work";
 import { Contact } from "./pages/Contact/Contact";
 import { Gallery } from "./pages/Gallery/Gallery";
+import { Essay } from "./pages/Essay/Essay";
+import { EssayDetail } from "./pages/Essay/EssayDetail";
 import { Landing } from "./pages/Landing/Landing";
-import { preloadGalleryImages } from "./utils/preloadImages";
+import { preloadGalleryImages, preloadHomeImages } from "./utils/preloadImages";
 
 const AnimatedRoutes = ({
   t,
@@ -75,6 +77,14 @@ const AnimatedRoutes = ({
           <Route
             path="/gallery"
             element={<Gallery t={t} isDarkMode={isDarkMode} />}
+          />
+          <Route
+            path="/essay"
+            element={<Essay t={t} isDarkMode={isDarkMode} language={language} />}
+          />
+          <Route
+            path="/essay/:id"
+            element={<EssayDetail t={t} isDarkMode={isDarkMode} language={language} />}
           />
         </Routes>
       </motion.div>
@@ -141,7 +151,13 @@ const AppRoutes = ({
           <Route
             path="/*"
             element={
-              <MainLayout t={t} isDarkMode={isDarkMode}>
+              <MainLayout
+                t={t}
+                isDarkMode={isDarkMode}
+                toggleDarkMode={toggleDarkMode}
+                toggleLanguage={toggleLanguage}
+                language={language}
+              >
                 <AnimatedRoutes t={t} isDarkMode={isDarkMode} language={language} toggleDarkMode={toggleDarkMode} toggleLanguage={toggleLanguage} />
               </MainLayout>
             }
@@ -158,9 +174,10 @@ function App() {
   const { language, toggleLanguage } = useLanguage();
   const t = translations[language];
 
-  // Preload gallery images on app mount
+  // Preload images on app mount
   useEffect(() => {
     preloadGalleryImages();
+    preloadHomeImages();
   }, []);
 
   return (

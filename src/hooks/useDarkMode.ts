@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 export const useDarkMode = () => {
-  // Initialize with localStorage or system preference to avoid flash
+  // Initialize with localStorage, default to light mode
   const getInitialMode = (): boolean => {
     if (typeof window === 'undefined') return false;
     
@@ -10,11 +10,7 @@ export const useDarkMode = () => {
       return savedMode === "true";
     }
     
-    // check system preference as fallback
-    if (window.matchMedia) {
-      return window.matchMedia("(prefers-color-scheme: dark)").matches;
-    }
-    
+    // Default to light mode
     return false;
   };
 

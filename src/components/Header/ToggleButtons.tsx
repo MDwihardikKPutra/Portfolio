@@ -1,50 +1,44 @@
-import { Globe, Sun, Moon } from "lucide-react";
+import { motion } from "framer-motion";
+import type { Translations } from "../../translations";
 
 interface ToggleButtonsProps {
+  t: Translations;
   isDarkMode: boolean;
-  onDarkModeToggle: () => void;
-  language: "en" | "id";
-  onLanguageToggle: () => void;
-  position?: "absolute" | "relative";
+  toggleDarkMode: () => void;
+  toggleLanguage: () => void;
+  language: string;
 }
 
 export const ToggleButtons = ({
+  t,
   isDarkMode,
-  onDarkModeToggle,
+  toggleDarkMode,
+  toggleLanguage,
   language,
-  onLanguageToggle,
-  position = "absolute",
 }: ToggleButtonsProps) => {
-  let positionClasses = "relative inline-flex gap-4";
-  if (position === "absolute") {
-    positionClasses = "absolute top-6 right-6 z-10";
-  }
-
-  const buttonBaseStyle = isDarkMode
-    ? "bg-[#2a2a2a] text-[#f5f5f5] hover:bg-[#3a3a3a] active:bg-[#3a3a3a]"
-    : "bg-[#f5f5f5] text-[#1a1a1a] hover:bg-[#e5e5e5] active:bg-[#e5e5e5]";
+  const buttonTextColor = isDarkMode ? "text-[#f5f5f5]" : "text-[#1a1a1a]";
+  const buttonHoverBg = isDarkMode ? "hover:bg-[#1a1a1a]" : "hover:bg-[#f5f5f5]";
 
   return (
-    <div className={positionClasses}>
-      <button
-        onClick={onLanguageToggle}
-        className={`p-2.5 sm:p-3 rounded-full transition-all duration-300 hover-scale ${buttonBaseStyle}`}
-        aria-label="Toggle language"
-      >
-        <Globe size={18} className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
-      </button>
-      <button
-        onClick={onDarkModeToggle}
-        className={`p-2.5 sm:p-3 rounded-full transition-all duration-300 hover-scale hover:rotate-180 ${buttonBaseStyle}`}
-        aria-label="Toggle dark mode"
-      >
-        {isDarkMode ? (
-          <Sun size={18} className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
-        ) : (
-          <Moon size={18} className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
-        )}
-      </button>
-    </div>
+    <header className="flex-shrink-0 px-8 lg:px-12 pt-8 pb-6 absolute top-0 right-0 z-10">
+      <div className="flex items-center gap-3">
+        <motion.button
+          onClick={toggleLanguage}
+          className={`px-4 py-2 text-sm ${buttonTextColor} ${buttonHoverBg} rounded-md transition-colors`}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {language === "en" ? "ID" : "EN"}
+        </motion.button>
+        <motion.button
+          onClick={toggleDarkMode}
+          className={`px-4 py-2 text-sm ${buttonTextColor} ${buttonHoverBg} rounded-md transition-colors`}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {isDarkMode ? t.lightMode : t.darkMode}
+        </motion.button>
+      </div>
+    </header>
   );
 };
-
