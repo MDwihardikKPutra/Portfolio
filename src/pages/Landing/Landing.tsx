@@ -59,19 +59,19 @@ export const Landing = ({ t, isDarkMode }: LandingProps) => {
       transition={{ duration: 0.3 }}
     >
       <motion.div 
-        className="text-center mb-10 md:mb-12 w-full max-w-[90vw] md:max-w-none"
+        className="text-center mb-8 md:mb-12 w-full px-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1, duration: 0.3 }}
       >
-        <h1 className={`flex flex-wrap items-center justify-center gap-x-1.5 gap-y-0.5 md:gap-x-3 md:gap-y-1 lg:gap-x-4 lg:gap-y-2 ${textColor}`}>
+        <h1 className={`flex flex-wrap items-center justify-center gap-x-2 gap-y-1 md:gap-x-3 md:gap-y-1 lg:gap-x-4 lg:gap-y-2 ${textColor}`}>
           {words.map((word, index) => {
             const cleanWord = word.replace(/[.,]/g, ''); // Remove punctuation for comparison
             const isBold = cleanWord === "for" || cleanWord === "sure";
             return (
               <motion.span
                 key={`word-${index}`}
-                className={`text-[clamp(1.25rem,6vw,2rem)] sm:text-[clamp(1.5rem,5vw,2.5rem)] md:text-[clamp(1.75rem,4.5vw,3.5rem)] ${isBold ? 'font-medium' : 'font-light'} tracking-[-0.02em] md:tracking-[-0.04em] leading-tight md:leading-none inline-flex items-center`}
+                className={`text-[clamp(1.4rem,6.5vw,2.2rem)] md:text-[clamp(1.75rem,4.5vw,3.5rem)] ${isBold ? 'font-medium' : 'font-light'} tracking-[-0.01em] md:tracking-[-0.04em] leading-snug md:leading-none whitespace-nowrap`}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
