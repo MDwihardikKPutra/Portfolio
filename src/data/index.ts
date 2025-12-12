@@ -92,40 +92,20 @@ export const getSkills = (language: Language): SkillSet[] => {
     },
     {
       category: t.frontendDev,
-      items: ["React", "Alpine.js", "Tailwind CSS", "Vite", "TypeScript"],
+      items: ["React", "TypeScript", "Tailwind CSS", "Vite"],
     },
     {
       category: t.databaseMgmt,
       items: ["MySQL", "PostgreSQL"],
     },
     {
-      category: t.systemAdmin,
+      category: language === "en" ? "Infrastructure & Operations" : "Infrastruktur & Operasi",
       items: [
-        "Ubuntu Server",
-        "Linux Administration",
-        "TrueNAS Scale",
-        "Server Deployment",
-        "System Maintenance",
-      ],
-    },
-    {
-      category: t.networkMgmt,
-      items: [
+        "Linux Server Administration",
         "MikroTik RouterOS",
-        "Network Administration",
-        "VLAN Configuration",
-        "Traffic Shaping",
-        "Routing & Firewall",
-      ],
-    },
-    {
-      category: t.cloudSecurity,
-      items: [
-        "Nextcloud",
-        "Cloudflare Tunnel",
-        "Zero Trust Security",
-        "cPanel",
-        "VPS Management",
+        "TrueNAS Scale",
+        "Cloud Services & Security",
+        "Server Management",
       ],
     },
   ];

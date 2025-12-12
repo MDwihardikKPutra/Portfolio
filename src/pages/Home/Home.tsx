@@ -17,7 +17,7 @@ export const Home = ({ t, isDarkMode, toggleDarkMode, toggleLanguage, language }
     : "text-[#999999] hover:text-[#1a1a1a]";
   const bgColor = isDarkMode ? "bg-[#0a0a0a]" : "bg-white";
   const textColor = isDarkMode ? "text-[#f5f5f5]" : "text-[#1a1a1a]";
-  const textSecondaryColor = isDarkMode ? "text-[#a0a0a0]" : "text-[#4a4a4a]";
+  const textSecondaryColor = isDarkMode ? "text-white" : "text-black";
   const buttonTextColor = isDarkMode ? "text-[#f5f5f5]" : "text-[#1a1a1a]";
   const buttonHoverBg = isDarkMode ? "hover:bg-[#1a1a1a]" : "hover:bg-[#f5f5f5]";
 
@@ -133,8 +133,49 @@ export const Home = ({ t, isDarkMode, toggleDarkMode, toggleLanguage, language }
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <p className={`text-[clamp(0.875rem,1.5vw,1rem)] leading-[1.7] ${textSecondaryColor} font-light text-justify`}>
-                {t.aboutText1}
+              <p className={`text-sm leading-relaxed ${textSecondaryColor}`}>
+                {(() => {
+                  const boldTexts = ["Lab School UM", t.statePolytechnicMalang];
+                  let text = t.aboutText1;
+                  const parts = [];
+                  let lastIndex = 0;
+                  
+                  // Find all bold text positions
+                  const positions = [];
+                  boldTexts.forEach(boldText => {
+                    const index = text.indexOf(boldText, lastIndex);
+                    if (index !== -1) {
+                      positions.push({ index, text: boldText, length: boldText.length });
+                    }
+                  });
+                  
+                  // Sort by index
+                  positions.sort((a, b) => a.index - b.index);
+                  
+                  // Build parts array
+                  positions.forEach((pos, i) => {
+                    // Add text before bold
+                    if (pos.index > lastIndex) {
+                      parts.push({ text: text.substring(lastIndex, pos.index), bold: false });
+                    }
+                    // Add bold text
+                    parts.push({ text: pos.text, bold: true });
+                    lastIndex = pos.index + pos.length;
+                  });
+                  
+                  // Add remaining text
+                  if (lastIndex < text.length) {
+                    parts.push({ text: text.substring(lastIndex), bold: false });
+                  }
+                  
+                  return parts.map((part, index) => 
+                    part.bold ? (
+                      <span key={index} className="font-bold">{part.text}</span>
+                    ) : (
+                      <span key={index}>{part.text}</span>
+                    )
+                  );
+                })()}
               </p>
             </motion.div>
           </div>
