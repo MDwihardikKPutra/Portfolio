@@ -151,7 +151,7 @@
   }
 }
 
-/* Smooth scroll polyfill for better browser support */
+  /* Smooth scroll polyfill for better browser support */
 html {
   scroll-behavior: smooth;
 }
@@ -165,5 +165,52 @@ html {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Landing page loader */
+.loader {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: block;
+  animation: loader-dot 1.4s ease-in-out infinite both;
+}
+
+.loader span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loader span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+.loader span:nth-child(3) {
+  animation-delay: 0s;
+}
+
+.loader.light span {
+  background-color: #1a1a1a;
+}
+
+.loader.dark span {
+  background-color: #f5f5f5;
+}
+
+@keyframes loader-dot {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
   }
 }

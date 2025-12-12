@@ -30,47 +30,22 @@ const AnimatedRoutes = ({
   const pageVariants = {
     initial: {
       opacity: 0,
-      scale: 0.95,
-      y: 50,
-      rotateX: -10,
-      filter: "blur(20px)",
+      x: 20,
     },
     animate: {
       opacity: 1,
-      scale: 1,
-      y: 0,
-      rotateX: 0,
-      filter: "blur(0px)",
+      x: 0,
       transition: {
-        duration: 0.6,
-        ease: [0.34, 1.56, 0.64, 1] as [number, number, number, number],
-        filter: {
-          duration: 0.4,
-          ease: "easeOut",
-        },
-        rotateX: {
-          duration: 0.5,
-          ease: [0.34, 1.56, 0.64, 1] as [number, number, number, number],
-        },
+        duration: 0.4,
+        ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
       },
     },
     exit: {
       opacity: 0,
-      scale: 1.05,
-      y: -50,
-      rotateX: 10,
-      filter: "blur(20px)",
+      x: -20,
       transition: {
-        duration: 0.5,
-        ease: [0.34, 1.56, 0.64, 1] as [number, number, number, number],
-        filter: {
-          duration: 0.3,
-          ease: "easeIn",
-        },
-        rotateX: {
-          duration: 0.4,
-          ease: [0.34, 1.56, 0.64, 1] as [number, number, number, number],
-        },
+        duration: 0.3,
+        ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
       },
     },
   };
@@ -83,11 +58,7 @@ const AnimatedRoutes = ({
         initial="initial"
         animate="animate"
         exit="exit"
-        style={{
-          transformStyle: "preserve-3d",
-          perspective: "1000px",
-        }}
-        className="h-full w-full origin-center overflow-hidden"
+        className="h-full w-full"
       >
         <Routes location={location}>
           <Route path="/home" element={<Home t={t} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLanguage={toggleLanguage} language={language} />} />
@@ -129,65 +100,39 @@ const AppRoutes = ({
   const pageVariants = {
     initial: {
       opacity: 0,
-      scale: 0.95,
-      y: 50,
-      rotateX: -10,
-      filter: "blur(20px)",
+      x: 20,
     },
     animate: {
       opacity: 1,
-      scale: 1,
-      y: 0,
-      rotateX: 0,
-      filter: "blur(0px)",
+      x: 0,
       transition: {
-        duration: 0.6,
-        ease: [0.34, 1.56, 0.64, 1] as [number, number, number, number],
-        filter: {
-          duration: 0.4,
-          ease: "easeOut",
-        },
-        rotateX: {
-          duration: 0.5,
-          ease: [0.34, 1.56, 0.64, 1] as [number, number, number, number],
-        },
+        duration: 0.4,
+        ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
       },
     },
     exit: {
       opacity: 0,
-      scale: 1.05,
-      y: -50,
-      rotateX: 10,
-      filter: "blur(20px)",
+      x: -20,
       transition: {
-        duration: 0.5,
-        ease: [0.34, 1.56, 0.64, 1] as [number, number, number, number],
-        filter: {
-          duration: 0.3,
-          ease: "easeIn",
-        },
-        rotateX: {
-          duration: 0.4,
-          ease: [0.34, 1.56, 0.64, 1] as [number, number, number, number],
-        },
+        duration: 0.3,
+        ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
       },
     },
   };
 
+  const bgColor = isDarkMode ? "bg-[#0a0a0a]" : "bg-white";
+
   return (
-    <AnimatePresence mode="wait" initial={location.pathname === "/"}>
-      <motion.div
-        key={location.pathname}
-        variants={pageVariants}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        style={{
-          transformStyle: "preserve-3d",
-          perspective: "1000px",
-        }}
-        className="h-screen h-[100dvh] w-full"
-      >
+    <div className={`fixed inset-0 ${bgColor} transition-colors duration-300`}>
+      <AnimatePresence mode="wait" initial={location.pathname === "/"}>
+        <motion.div
+          key={location.pathname}
+          variants={pageVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          className="h-screen h-[100dvh] w-full"
+        >
         <Routes location={location}>
           <Route
             path="/"
@@ -202,8 +147,9 @@ const AppRoutes = ({
             }
           />
         </Routes>
-      </motion.div>
-    </AnimatePresence>
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 };
 

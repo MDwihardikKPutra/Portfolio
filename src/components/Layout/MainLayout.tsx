@@ -12,7 +12,7 @@ interface MainLayoutProps {
 export const MainLayout = ({ children, t, isDarkMode }: MainLayoutProps) => {
   return (
     <div
-      className={`h-screen h-[100dvh] transition-colors duration-500 overflow-hidden fixed inset-0 w-full ${
+      className={`h-screen h-[100dvh] transition-colors duration-300 overflow-hidden fixed inset-0 w-full ${
         isDarkMode ? "bg-[#0a0a0a] text-[#f5f5f5]" : "bg-white text-[#1a1a1a]"
       }`}
       style={{ overflowY: 'hidden', overflowX: 'hidden' }}
