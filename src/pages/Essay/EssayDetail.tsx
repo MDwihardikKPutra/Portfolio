@@ -45,8 +45,8 @@ export const EssayDetail = ({ t, isDarkMode, language }: EssayDetailProps) => {
 
   return (
     <div className={`h-full ${bgColor} ${textColor} overflow-hidden w-full relative`}>
-      <div className="h-full w-full px-8 lg:px-12 pt-16 pb-8 overflow-y-auto">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12 lg:gap-16">
+      <div className="h-full w-full px-4 sm:px-6 md:px-8 lg:px-12 pt-12 sm:pt-16 pb-8 overflow-y-auto">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 sm:gap-12 lg:gap-16">
           {/* Main Content */}
           <div className="max-w-[800px] w-full">
             {/* Back Button */}
@@ -54,13 +54,13 @@ export const EssayDetail = ({ t, isDarkMode, language }: EssayDetailProps) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="mb-8"
+              className="mb-6 sm:mb-8"
             >
               <Link
                 to="/essay"
-                className={`inline-flex items-center gap-2 text-sm ${textSecondaryColor} transition-all duration-300 ${hoverBg} -ml-2 pl-2 pr-3 py-1 rounded`}
+                className={`inline-flex items-center gap-2 text-xs sm:text-sm ${textSecondaryColor} transition-all duration-300 ${hoverBg} -ml-2 pl-2 pr-3 py-1 rounded`}
               >
-                <ArrowLeft size={16} />
+                <ArrowLeft size={14} className="sm:w-4 sm:h-4" />
                 <span>Back to Essays</span>
               </Link>
             </motion.div>
@@ -70,12 +70,12 @@ export const EssayDetail = ({ t, isDarkMode, language }: EssayDetailProps) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="mb-8"
+              className="mb-6 sm:mb-8"
             >
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-light mb-4 leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light mb-3 sm:mb-4 leading-tight">
                 {title}
               </h1>
-              <p className={`text-xs ${textSecondaryColor}`}>
+              <p className={`text-[10px] sm:text-xs ${textSecondaryColor}`}>
                 {new Date(essay.date).toLocaleDateString(language === "en" ? "en-US" : "id-ID", {
                   year: "numeric",
                   month: "long",
@@ -89,14 +89,14 @@ export const EssayDetail = ({ t, isDarkMode, language }: EssayDetailProps) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className={`border-t ${borderColor} pt-8`}
+              className={`border-t ${borderColor} pt-6 sm:pt-8`}
             >
-              <article className={`text-sm leading-relaxed ${textColor}`}>
+              <article className={`text-xs sm:text-sm leading-relaxed ${textColor}`}>
                 {content
                   .split("\n\n")
                   .filter((p) => p.trim().length > 0)
                   .map((paragraph, index) => (
-                    <p key={index} className="mb-6 last:mb-0">
+                    <p key={index} className="mb-4 sm:mb-6 last:mb-0">
                       {paragraph.trim()}
                     </p>
                   ))}

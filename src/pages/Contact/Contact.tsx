@@ -45,14 +45,14 @@ export const Contact = ({ t, isDarkMode }: ContactProps) => {
   return (
     <div className={`h-screen h-[100dvh] ${bgColor} ${textColor} relative overflow-hidden w-full`}>
       {/* Main Content */}
-      <div className="relative h-full w-full flex items-center justify-center px-8 lg:px-12 pb-20 md:pb-24">
+      <div className="relative h-full w-full flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 pb-20 md:pb-24">
         <motion.div
           className="max-w-[1400px] w-full mx-auto"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
             
             {/* Left Column - Title (Random Position) */}
             <motion.div
@@ -68,7 +68,7 @@ export const Contact = ({ t, isDarkMode }: ContactProps) => {
                 >
                   {/* Trying */}
                   <motion.span
-                    className={`text-[clamp(1.75rem,4.5vw,3.5rem)] font-light tracking-[-0.04em] leading-none inline-flex items-center`}
+                    className={`text-[clamp(1.5rem,4vw,3.5rem)] sm:text-[clamp(1.75rem,4.5vw,3.5rem)] font-light tracking-[-0.04em] leading-none inline-flex items-center`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1, duration: 0.6 }}
@@ -79,7 +79,7 @@ export const Contact = ({ t, isDarkMode }: ContactProps) => {
 
                   {/* to do */}
                   <motion.span
-                    className={`text-[clamp(1.75rem,4.5vw,3.5rem)] font-light ${textColor} tracking-[-0.04em] leading-none inline-flex items-center`}
+                    className={`text-[clamp(1.5rem,4vw,3.5rem)] sm:text-[clamp(1.75rem,4.5vw,3.5rem)] font-light ${textColor} tracking-[-0.04em] leading-none inline-flex items-center`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.6 }}
@@ -90,7 +90,7 @@ export const Contact = ({ t, isDarkMode }: ContactProps) => {
 
                   {/* better */}
                   <motion.span
-                    className={`text-[clamp(1.75rem,4.5vw,3.5rem)] font-medium tracking-[-0.04em] leading-none inline-flex items-center`}
+                    className={`text-[clamp(1.5rem,4vw,3.5rem)] sm:text-[clamp(1.75rem,4.5vw,3.5rem)] font-medium tracking-[-0.04em] leading-none inline-flex items-center`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.6 }}
@@ -109,7 +109,7 @@ export const Contact = ({ t, isDarkMode }: ContactProps) => {
             >
               {/* Email Button & Social Links */}
               <motion.div
-                className="flex flex-wrap items-center justify-start gap-4 md:gap-6"
+                className="flex flex-wrap items-center justify-start gap-3 sm:gap-4 md:gap-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.6 }}
@@ -117,16 +117,16 @@ export const Contact = ({ t, isDarkMode }: ContactProps) => {
                 {/* Email Button */}
                 <motion.a
                   href="mailto:ddiko105@gmail.com"
-                  className={`inline-flex items-center justify-center gap-3 px-8 py-4 ${buttonBg} ${buttonText} rounded-full text-[clamp(0.875rem,1.3vw,1rem)] font-medium transition-all duration-300 group`}
+                  className={`inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 ${buttonBg} ${buttonText} rounded-full text-xs sm:text-sm md:text-[clamp(0.875rem,1.3vw,1rem)] font-medium transition-all duration-300 group`}
                   whileHover={{ scale: 1.05, x: 5 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <Mail size={20} className="group-hover:rotate-12 transition-transform flex-shrink-0" />
+                  <Mail size={18} className="sm:w-5 sm:h-5 group-hover:rotate-12 transition-transform flex-shrink-0" />
                   {t.getInTouch}
                 </motion.a>
 
                 {/* Social Links */}
-                <div className="flex items-center justify-center gap-4">
+                <div className="flex items-center justify-center gap-3 sm:gap-4">
                   {socialLinks.map((social, index) => (
                     <motion.a
                       key={social.name}
@@ -147,12 +147,13 @@ export const Contact = ({ t, isDarkMode }: ContactProps) => {
                       }}
                       whileTap={{ scale: 0.9 }}
                     >
-                      {social.icon === "github" && <Github size={22} />}
-                      {social.icon === "linkedin" && <Linkedin size={22} />}
+                      {social.icon === "github" && <Github size={20} className="sm:w-[22px] sm:h-[22px]" />}
+                      {social.icon === "linkedin" && <Linkedin size={20} className="sm:w-[22px] sm:h-[22px]" />}
                       {social.icon === "medium" && (
                         <svg
-                          width="22"
-                          height="22"
+                          width="20"
+                          height="20"
+                          className="sm:w-[22px] sm:h-[22px]"
                           viewBox="0 0 24 24"
                           fill="currentColor"
                           xmlns="http://www.w3.org/2000/svg"
@@ -169,7 +170,7 @@ export const Contact = ({ t, isDarkMode }: ContactProps) => {
 
           {/* Footer - Bottom Right (Random Position) */}
           <motion.div
-            className={`absolute bottom-8 right-8 lg:right-12 ${accentColor} text-xs`}
+            className={`absolute bottom-4 right-4 sm:bottom-8 sm:right-8 lg:right-12 ${accentColor} text-[10px] sm:text-xs`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 0.6 }}

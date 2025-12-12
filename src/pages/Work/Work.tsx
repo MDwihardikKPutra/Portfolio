@@ -77,33 +77,33 @@ export const Work = ({ t, isDarkMode, language }: WorkProps) => {
 
   return (
     <div className={`h-screen h-[100dvh] ${bgColor} ${textColor} overflow-hidden w-full`}>
-      <div className="h-full w-full px-8 lg:px-12 pt-16 pb-20 md:pb-24 overflow-y-auto">
+      <div className="h-full w-full px-4 sm:px-6 md:px-8 lg:px-12 pt-12 sm:pt-16 pb-20 md:pb-24 overflow-y-auto">
         <div className="max-w-[1200px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-12 lg:gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-8 sm:gap-12 lg:gap-16">
             
             {/* Left Column */}
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {/* Experience */}
               <div>
-                <h2 className="text-base font-light mb-4">
+                <h2 className="text-sm sm:text-base font-light mb-3 sm:mb-4">
                   {t.experience}
                 </h2>
                 
                 {/* PGE Experience */}
-                <div className="mb-6">
+                <div className="mb-4 sm:mb-6">
                   <div className="mb-3">
-                    <div className={`text-xs ${dateColor} mb-1.5`}>
+                    <div className={`text-[10px] sm:text-xs ${dateColor} mb-1.5`}>
                       {t.jun2025Present}
                     </div>
-                    <h3 className="text-sm font-bold mb-1.5">
+                    <h3 className="text-xs sm:text-sm font-bold mb-1.5">
                       {t.informationTechnologyEngineer}
                     </h3>
-                    <p className={`text-xs font-bold ${textColor}`}>
+                    <p className={`text-[10px] sm:text-xs font-bold ${textColor}`}>
                       {t.pgeCompany}
                     </p>
                   </div>
 
-                  <div className={`space-y-1.5 text-xs leading-relaxed ${descColor}`}>
+                  <div className={`space-y-1.5 text-[10px] sm:text-xs leading-relaxed ${descColor}`}>
                     <p>
                       {makeBold(t.expDesc1, expBoldTexts).map((part, index) => 
                         part.bold ? (
@@ -135,20 +135,20 @@ export const Work = ({ t, isDarkMode, language }: WorkProps) => {
                 </div>
 
                 {/* WOF Wooden Experience */}
-                <div className="mb-6">
+                <div className="mb-4 sm:mb-6">
                   <div className="mb-3">
-                    <div className={`text-xs ${dateColor} mb-1.5`}>
+                    <div className={`text-[10px] sm:text-xs ${dateColor} mb-1.5`}>
                       {t.wofWoodenDate}
                     </div>
-                    <h3 className="text-sm font-bold mb-1.5">
+                    <h3 className="text-xs sm:text-sm font-bold mb-1.5">
                       {t.wofWoodenPosition}
                     </h3>
-                    <p className={`text-xs font-bold ${textColor}`}>
+                    <p className={`text-[10px] sm:text-xs font-bold ${textColor}`}>
                       {t.wofWoodenCompany}
                     </p>
                   </div>
 
-                  <div className={`space-y-1.5 text-xs leading-relaxed ${descColor}`}>
+                  <div className={`space-y-1.5 text-[10px] sm:text-xs leading-relaxed ${descColor}`}>
                     <p>{t.wofWoodenDesc1}</p>
                     <p>{t.wofWoodenDesc2}</p>
                     <p>{t.wofWoodenDesc3}</p>
@@ -158,20 +158,20 @@ export const Work = ({ t, isDarkMode, language }: WorkProps) => {
 
               {/* Projects */}
               <div>
-                <h2 className="text-base font-light mb-4">
+                <h2 className="text-sm sm:text-base font-light mb-3 sm:mb-4">
                   {t.selectedWork}
                 </h2>
 
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   {projects.map((project) => (
                     <div key={project.title}>
-                      <h3 className="text-sm font-bold mb-1.5">
+                      <h3 className="text-xs sm:text-sm font-bold mb-1.5">
                         {project.title}
                       </h3>
-                      <div className={`text-xs mb-1.5 ${dateColor}`}>
+                      <div className={`text-[10px] sm:text-xs mb-1.5 ${dateColor}`}>
                         {project.category}
                       </div>
-                      <p className={`text-xs leading-relaxed ${descColor}`}>
+                      <p className={`text-[10px] sm:text-xs leading-relaxed ${descColor}`}>
                         {project.description}
                       </p>
                     </div>
@@ -184,23 +184,23 @@ export const Work = ({ t, isDarkMode, language }: WorkProps) => {
             <div className={`hidden lg:block border-l border-dashed ${borderColor}`} />
 
             {/* Right Column - Skills */}
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6 mt-6 lg:mt-0">
               <div>
-                <h2 className="text-base font-light mb-4">
+                <h2 className="text-sm sm:text-base font-light mb-3 sm:mb-4">
                   {t.skills}
                 </h2>
 
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   {skills.map((skillSet) => (
                     <div key={skillSet.category}>
-                      <h3 className="text-xs font-bold mb-2">
+                      <h3 className="text-[10px] sm:text-xs font-bold mb-1.5 sm:mb-2">
                         {skillSet.category}
                       </h3>
-                      <ul className="space-y-1">
+                      <ul className="space-y-0.5 sm:space-y-1">
                         {skillSet.items.map((item) => (
                           <li
                             key={item}
-                            className={`text-xs ${descColor}`}
+                            className={`text-[10px] sm:text-xs ${descColor}`}
                           >
                             {item}
                           </li>
