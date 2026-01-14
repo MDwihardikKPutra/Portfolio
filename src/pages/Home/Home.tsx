@@ -19,9 +19,9 @@ export const Home = ({ t, isDarkMode, toggleDarkMode, toggleLanguage, language }
   return (
     <div className={`h-full ${bgColor} ${textColor} relative overflow-hidden flex flex-col w-full transition-colors duration-300`}>
       {/* Main Content */}
-      <div className="flex-1 flex items-center px-8 lg:px-12 pb-20 md:pb-24 min-h-0 pt-16">
+      <div className="flex-1 flex items-center px-4 sm:px-6 md:px-8 lg:px-12 pb-20 md:pb-24 min-h-0 pt-12 sm:pt-16">
         <div className="max-w-[1400px] w-full mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
             
             {/* Left Column - Text Content */}
             <div className="space-y-6">
@@ -31,7 +31,7 @@ export const Home = ({ t, isDarkMode, toggleDarkMode, toggleLanguage, language }
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.1 }}
               >
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-light leading-tight mb-6">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-tight mb-4 sm:mb-6">
                   <motion.span 
                     className="block cursor-default"
                     whileHover={{ x: 5, transition: { duration: 0.2 } }}
@@ -105,9 +105,9 @@ export const Home = ({ t, isDarkMode, toggleDarkMode, toggleLanguage, language }
             </div>
 
             {/* Right Column - Profile Image */}
-            <div className="flex justify-center lg:justify-end">
+            <div className="flex justify-center lg:justify-end mt-6 lg:mt-0">
               <motion.div
-                className="w-full max-w-[300px] lg:max-w-[400px]"
+                className="w-full max-w-[250px] sm:max-w-[300px] lg:max-w-[400px]"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.3 }}

@@ -20,11 +20,11 @@ export const ToggleButtons = ({
   const buttonHoverBg = isDarkMode ? "hover:bg-[#1a1a1a]" : "hover:bg-[#f5f5f5]";
 
   return (
-    <header className="flex-shrink-0 px-8 lg:px-12 pt-8 pb-6 absolute top-0 right-0 z-10">
-      <div className="flex items-center gap-3">
+    <header className="flex-shrink-0 px-4 sm:px-6 md:px-8 lg:px-12 pt-4 sm:pt-6 md:pt-8 pb-4 sm:pb-6 absolute top-0 right-0 z-10">
+      <div className="flex items-center gap-2 sm:gap-3">
         <motion.button
           onClick={toggleLanguage}
-          className={`px-4 py-2 text-sm ${buttonTextColor} ${buttonHoverBg} rounded-md transition-colors`}
+          className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm ${buttonTextColor} ${buttonHoverBg} rounded-md transition-colors`}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -32,7 +32,7 @@ export const ToggleButtons = ({
         </motion.button>
         <motion.button
           onClick={toggleDarkMode}
-          className={`px-4 py-2 text-sm ${buttonTextColor} ${buttonHoverBg} rounded-md transition-colors`}
+          className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm ${buttonTextColor} ${buttonHoverBg} rounded-md transition-colors whitespace-nowrap`}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >

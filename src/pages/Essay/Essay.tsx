@@ -20,14 +20,14 @@ export const Essay = ({ t, isDarkMode, language }: EssayProps) => {
 
   return (
     <div className={`h-full ${bgColor} ${textColor} overflow-hidden w-full`}>
-      <div className="h-full w-full px-6 lg:px-8 pt-8 pb-20 md:pb-24 overflow-y-auto">
+      <div className="h-full w-full px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-20 md:pb-24 overflow-y-auto">
         <div className="max-w-[1200px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-light mb-4">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light mb-3 sm:mb-4">
               {t.essay}
             </h1>
           </motion.div>
@@ -50,15 +50,15 @@ export const Essay = ({ t, isDarkMode, language }: EssayProps) => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: 0.05 + index * 0.05 }}
                   >
-                    <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-start justify-between gap-2 sm:gap-4">
                       <div className="flex-1 min-w-0">
-                        <h2 className="text-base md:text-lg font-light mb-1.5 line-clamp-1">
+                        <h2 className="text-sm sm:text-base md:text-lg font-light mb-1 sm:mb-1.5 line-clamp-1">
                           {language === "en" ? essay.title : essay.titleId}
                         </h2>
-                        <p className={`text-xs leading-relaxed ${textSecondaryColor} mb-2 line-clamp-2`}>
+                        <p className={`text-[10px] sm:text-xs leading-relaxed ${textSecondaryColor} mb-1.5 sm:mb-2 line-clamp-2`}>
                           {language === "en" ? essay.excerpt : essay.excerptId}
                         </p>
-                        <span className={`text-[10px] ${textSecondaryColor}`}>
+                        <span className={`text-[9px] sm:text-[10px] ${textSecondaryColor}`}>
                           {new Date(essay.date).toLocaleDateString(language === "en" ? "en-US" : "id-ID", {
                             year: "numeric",
                             month: "short",
@@ -72,7 +72,7 @@ export const Essay = ({ t, isDarkMode, language }: EssayProps) => {
               ))
             ) : (
               <div className={`border-t ${borderColor} pt-6`}>
-                <p className={`text-sm leading-relaxed ${textSecondaryColor}`}>
+                <p className={`text-xs sm:text-sm leading-relaxed ${textSecondaryColor}`}>
                   {t.essayComingSoon}
                 </p>
               </div>
