@@ -66,6 +66,9 @@ export const Experience = ({ t, isDarkMode }: ExperienceProps) => {
                 <p className="text-[clamp(0.875rem,1.8vw,1rem)] leading-relaxed">
                   {t.expDesc3}
                 </p>
+                <p className="text-[clamp(0.875rem,1.8vw,1rem)] leading-relaxed">
+                  {t.expDesc4}
+                </p>
               </div>
             </div>
 

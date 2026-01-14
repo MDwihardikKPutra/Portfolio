@@ -121,6 +121,8 @@ export const translations: Record<Language, Translations> = {
       "Responsible for installation, configuration, and maintenance of Ubuntu Server production environments. Designed and implemented distributed storage systems with TrueNAS Scale.",
     expDesc3:
       "Network Administration using RouterOS (MikroTik), including traffic shaping, Hotspot solutions, VLAN segmentation, and advanced routing configurations.",
+    expDesc4:
+      "Configured and maintained enterprise-scale network infrastructure using MikroTik (RouterOS), focusing on Traffic Shaping, IP Traffic Management, and Hotspot authentication. Managed wireless infrastructure and access points via the UniFi Controller (Ubiquiti) to ensure stable and secure connectivity. Executed advanced network designs including VLAN segmentation and internal routing protocols.",
     wofWoodenCompany: "Elux Space",
     wofWoodenPosition: "Internship Program UI/UX",
     wofWoodenDate: "Nov 2023 - Mar 2024",
@@ -139,7 +141,7 @@ export const translations: Record<Language, Translations> = {
       "Integrated Management Platform for managing critical office workflows.",
     project3Category: "System Management",
     project3Desc:
-      "Setup and maintenance of complete IT infrastructure including server deployment.",
+      "Configured and maintained enterprise-scale network infrastructure using MikroTik (RouterOS), focusing on Traffic Shaping, IP Traffic Management, and Hotspot authentication. Managed wireless infrastructure and access points via the UniFi Controller (Ubiquiti) to ensure stable and secure connectivity. Executed advanced network designs including VLAN segmentation and internal routing protocols.",
     backendDev: "Backend Development",
     frontendDev: "Frontend Development",
     databaseMgmt: "Database Management",
@@ -220,6 +222,8 @@ export const translations: Record<Language, Translations> = {
       "Bertanggung jawab atas instalasi, konfigurasi, dan pemeliharaan lingkungan produksi Ubuntu Server. Merancang dan mengimplementasikan sistem penyimpanan terdistribusi dengan TrueNAS Scale.",
     expDesc3:
       "Network Administration menggunakan RouterOS (MikroTik), termasuk traffic shaping, solusi Hotspot, segmentasi VLAN, dan konfigurasi routing lanjutan.",
+    expDesc4:
+      "Mengkonfigurasi dan memelihara infrastruktur jaringan skala enterprise menggunakan MikroTik (RouterOS), dengan fokus pada Traffic Shaping, Manajemen Lalu Lintas IP, dan autentikasi Hotspot. Mengelola infrastruktur nirkabel dan access point melalui UniFi Controller (Ubiquiti) untuk memastikan konektivitas yang stabil dan aman. Mengeksekusi desain jaringan canggih termasuk segmentasi VLAN dan protokol routing internal.",
     wofWoodenCompany: "Elux Space",
     wofWoodenPosition: "Internship Program UI/UX",
     wofWoodenDate: "Nov 2023 - Mar 2024",
@@ -238,7 +242,7 @@ export const translations: Record<Language, Translations> = {
       "Integrated Management Platform untuk mengelola alur kerja kantor yang kritis.",
     project3Category: "Manajemen Sistem",
     project3Desc:
-      "Setup dan pemeliharaan infrastruktur IT lengkap termasuk deployment server.",
+      "Mengkonfigurasi dan memelihara infrastruktur jaringan skala enterprise menggunakan MikroTik (RouterOS), dengan fokus pada Traffic Shaping, Manajemen Lalu Lintas IP, dan autentikasi Hotspot. Mengelola infrastruktur nirkabel dan access point melalui UniFi Controller (Ubiquiti) untuk memastikan konektivitas yang stabil dan aman. Mengeksekusi desain jaringan canggih termasuk segmentasi VLAN dan protokol routing internal.",
     backendDev: "Pengembangan Backend",
     frontendDev: "Pengembangan Frontend",
     databaseMgmt: "Manajemen Database",

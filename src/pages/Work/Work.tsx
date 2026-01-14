@@ -134,7 +134,7 @@ export const Work = ({ t, isDarkMode, language }: WorkProps) => {
                   </div>
                 </div>
 
-                {/* WOF Wooden Experience */}
+                {/* Elux Space Experience */}
                 <div className="mb-4 sm:mb-6">
                   <div className="mb-3">
                     <div className={`text-[10px] sm:text-xs ${dateColor} mb-1.5`}>
