@@ -164,7 +164,13 @@ export const Work = ({ t, isDarkMode, language }: WorkProps) => {
 
                 <div className="space-y-3">
                   {projects.map((project) => (
-                    <div key={project.title}>
+                    <a 
+                      key={project.title} 
+                      href={project.link} 
+                      target={project.link !== "#" ? "_blank" : "_self"} 
+                      rel={project.link !== "#" ? "noopener noreferrer" : ""}
+                      className="block p-4 rounded-lg transition-transform duration-200 hover:scale-[0.98]"
+                    >
                       <h3 className="text-sm font-bold mb-1.5">
                         {project.title}
                       </h3>
@@ -174,7 +180,7 @@ export const Work = ({ t, isDarkMode, language }: WorkProps) => {
                       <p className={`text-xs leading-relaxed ${descColor}`}>
                         {project.description}
                       </p>
-                    </div>
+                    </a>
                   ))}
                 </div>
               </div>
