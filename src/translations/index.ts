@@ -121,15 +121,15 @@ export const translations: Record<Language, Translations> = {
       "Responsible for installation, configuration, and maintenance of Ubuntu Server production environments. Designed and implemented distributed storage systems with TrueNAS Scale.",
     expDesc3:
       "Network Administration using RouterOS (MikroTik), including traffic shaping, Hotspot solutions, VLAN segmentation, and advanced routing configurations.",
-    wofWoodenCompany: "WOF Wooden",
-    wofWoodenPosition: "Photographer",
-    wofWoodenDate: "Jan 2024 - May 2024",
+    wofWoodenCompany: "Elux Space",
+    wofWoodenPosition: "Internship Program UI/UX",
+    wofWoodenDate: "Nov 2023 - Mar 2024",
     wofWoodenDesc1:
-      "Developed and maintained company website using modern web technologies. Implemented responsive design and optimized website performance.",
+      "Contributed to the design and development of user interfaces (UI) and user experiences (UX) for various digital products.",
     wofWoodenDesc2:
-      "Provided technical support for IT infrastructure, troubleshooting hardware and software issues, and maintaining network systems.",
+      "Assisted in conducting user research, creating wireframes, prototypes, and mockups.",
     wofWoodenDesc3:
-      "Collaborated with team members to improve business processes through technology solutions and automation.",
+      "Collaborated with cross-functional teams to ensure a user-centered design approach and translate concepts into intuitive designs.",
     techStack: "Tech Stack",
     project1Category: "Corporate Website",
     project1Desc:
@@ -220,15 +220,15 @@ export const translations: Record<Language, Translations> = {
       "Bertanggung jawab atas instalasi, konfigurasi, dan pemeliharaan lingkungan produksi Ubuntu Server. Merancang dan mengimplementasikan sistem penyimpanan terdistribusi dengan TrueNAS Scale.",
     expDesc3:
       "Network Administration menggunakan RouterOS (MikroTik), termasuk traffic shaping, solusi Hotspot, segmentasi VLAN, dan konfigurasi routing lanjutan.",
-    wofWoodenCompany: "WOF Wooden",
-    wofWoodenPosition: "Photographer",
-    wofWoodenDate: "Jan 2024 - Mei 2024",
+    wofWoodenCompany: "Elux Space",
+    wofWoodenPosition: "Internship Program UI/UX",
+    wofWoodenDate: "Nov 2023 - Mar 2024",
     wofWoodenDesc1:
-      "Mengembangkan dan memelihara website perusahaan menggunakan teknologi web modern. Mengimplementasikan desain responsif dan mengoptimalkan performa website.",
+      "Berkontribusi pada desain dan pengembangan antarmuka pengguna (UI) dan pengalaman pengguna (UX) untuk berbagai produk digital.",
     wofWoodenDesc2:
-      "Memberikan dukungan teknis untuk infrastruktur IT, troubleshooting masalah hardware dan software, serta memelihara sistem jaringan.",
+      "Membantu dalam melakukan riset pengguna, membuat wireframe, prototipe, dan mockup.",
     wofWoodenDesc3:
-      "Berkolaborasi dengan anggota tim untuk meningkatkan proses bisnis melalui solusi teknologi dan otomatisasi.",
+      "Berkolaborasi dengan tim lintas fungsional untuk memastikan pendekatan desain yang berpusat pada pengguna dan menerjemahkan konsep menjadi desain yang intuitif.",
     techStack: "Tech Stack",
     project1Category: "Website Perusahaan",
     project1Desc:

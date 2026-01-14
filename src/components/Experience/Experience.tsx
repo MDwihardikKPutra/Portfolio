@@ -45,9 +45,14 @@ export const Experience = ({ t, isDarkMode }: ExperienceProps) => {
                 <h3 className="text-[clamp(1.125rem,2.5vw,1.5rem)] font-medium">
                   {t.informationTechnologyEngineer}
                 </h3>
-                <p className={`text-[clamp(0.75rem,1.3vw,0.875rem)] ${dateColor}`}>
+                <a
+                  href="https://pg-engineering.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`text-[clamp(0.75rem,1.3vw,0.875rem)] ${dateColor} hover:underline`}
+                >
                   {t.pgeCompany}
-                </p>
+                </a>
               </div>
 
               {/* Descriptions */}
