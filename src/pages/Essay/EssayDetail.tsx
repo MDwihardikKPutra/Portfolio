@@ -91,7 +91,7 @@ export const EssayDetail = ({ t, isDarkMode, language }: EssayDetailProps) => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className={`border-t ${borderColor} pt-6 sm:pt-8`}
             >
-              <article className={`text-xs sm:text-sm leading-relaxed ${textColor}`}>
+              <article className={`text-xs sm:text-sm leading-relaxed ${textColor} text-justify`}>
                 {content
                   .split("\n\n")
                   .filter((p) => p.trim().length > 0)

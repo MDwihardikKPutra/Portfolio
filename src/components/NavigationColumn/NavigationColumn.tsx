@@ -13,7 +13,8 @@ export const NavigationColumn = ({ t, isDarkMode }: NavigationColumnProps) => {
 
   const navItems = [
     { path: "/home", text: "Home", sectionId: "home" },
-    { path: "/work", text: t.work, sectionId: "work" },
+    { path: "/experience", text: t.experience, sectionId: "experience" },
+    { path: "/projects", text: t.selectedWork, sectionId: "projects" },
     { path: "/gallery", text: t.gallery, sectionId: "gallery" },
     { path: "/essay", text: t.essay, sectionId: "essay" },
     { path: "/contact", text: t.contact, sectionId: "contact" },

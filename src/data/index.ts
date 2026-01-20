@@ -1,4 +1,5 @@
 import type { Language } from "../translations";
+export type { Language };
 import { translations } from "../translations";
 
 export interface Project {
@@ -53,6 +54,15 @@ export const getProjects = (language: Language): Project[] => {
         "https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=800",
       tags: ["Linux", "Network"],
       link: "#",
+      featured: true,
+    },
+    {
+      title: t.dataAnalystProjectTitle,
+      category: t.project4Category,
+      description: t.project4Desc,
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      tags: ["Python", "Data Analysis", "Pandas"],
+      link: "/projects/data-analyst",
       featured: true,
     },
   ];

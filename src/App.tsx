@@ -6,12 +6,14 @@ import { useLanguage } from "./hooks/useLanguage";
 import { translations } from "./translations";
 import { MainLayout } from "./components/Layout/MainLayout";
 import { Home } from "./pages/Home/Home";
-import { Work } from "./pages/Work/Work";
+import { ProjectsPage } from "./pages/ProjectsPage/ProjectsPage";
+import { ExperiencePage } from "./pages/ExperiencePage/ExperiencePage";
 import { Contact } from "./pages/Contact/Contact";
 import { Gallery } from "./pages/Gallery/Gallery";
 import { Essay } from "./pages/Essay/Essay";
 import { EssayDetail } from "./pages/Essay/EssayDetail";
 import { Landing } from "./pages/Landing/Landing";
+import { DataAnalystProjectPage } from "./pages/ProjectDetailPage/DataAnalystProjectPage";
 import { preloadGalleryImages, preloadHomeImages } from "./utils/preloadImages";
 
 const AnimatedRoutes = ({
@@ -64,12 +66,8 @@ const AnimatedRoutes = ({
       >
         <Routes location={location}>
           <Route path="/home" element={<Home t={t} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLanguage={toggleLanguage} language={language} />} />
-          <Route
-            path="/work"
-            element={
-              <Work t={t} isDarkMode={isDarkMode} language={language} />
-            }
-          />
+          <Route path="/experience" element={<ExperiencePage t={t} isDarkMode={isDarkMode} language={language} />} />
+          <Route path="/projects" element={<ProjectsPage t={t} isDarkMode={isDarkMode} language={language} />} />
           <Route
             path="/contact"
             element={<Contact t={t} isDarkMode={isDarkMode} />}
@@ -82,10 +80,14 @@ const AnimatedRoutes = ({
             path="/essay"
             element={<Essay t={t} isDarkMode={isDarkMode} language={language} />}
           />
-          <Route
-            path="/essay/:id"
-            element={<EssayDetail t={t} isDarkMode={isDarkMode} language={language} />}
-          />
+                 <Route
+                   path="/essay/:id"
+                   element={<EssayDetail t={t} isDarkMode={isDarkMode} language={language} />}
+                 />
+                 <Route
+                   path="/projects/data-analyst"
+                   element={<DataAnalystProjectPage t={t} isDarkMode={isDarkMode} language={language} />}
+                 />
         </Routes>
       </motion.div>
     </AnimatePresence>

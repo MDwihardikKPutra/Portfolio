@@ -55,7 +55,7 @@ export const Essay = ({ t, isDarkMode, language }: EssayProps) => {
                         <h2 className="text-sm sm:text-base md:text-lg font-light mb-1 sm:mb-1.5 line-clamp-1">
                           {language === "en" ? essay.title : essay.titleId}
                         </h2>
-                        <p className={`text-[10px] sm:text-xs leading-relaxed ${textSecondaryColor} mb-1.5 sm:mb-2 line-clamp-2`}>
+                        <p className={`text-[10px] sm:text-xs leading-relaxed ${textSecondaryColor} mb-1.5 sm:mb-2 line-clamp-2 text-justify`}>
                           {language === "en" ? essay.excerpt : essay.excerptId}
                         </p>
                         <span className={`text-[9px] sm:text-[10px] ${textSecondaryColor}`}>

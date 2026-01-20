@@ -35,6 +35,7 @@ export interface Translations {
   expDesc1: string;
   expDesc2: string;
   expDesc3: string;
+  expDesc4: string;
   wofWoodenCompany: string;
   wofWoodenPosition: string;
   wofWoodenDate: string;
@@ -48,6 +49,39 @@ export interface Translations {
   project2Desc: string;
   project3Category: string;
   project3Desc: string;
+  project4Category: string;
+  project4Desc: string;
+  dataAnalystProjectTitle: string;
+  dataAnalystProjectRole: string;
+  dataAnalystProjectTools: string;
+  executiveSummary: string;
+  projectObjective: string;
+  dataAnalystExecutiveSummary: string;
+  dataAnalystObjective1: string;
+  dataAnalystObjective2: string;
+  dataAnalystObjective3: string;
+  dataAnalystObjective4: string;
+  dataAnalystDataEngineeringProcessTitle: string;
+  dataAnalystDataEngineeringProcess1: string;
+  dataAnalystDataEngineeringProcess2: string;
+  dataAnalystDataEngineeringProcess3: string;
+  dataAnalystKeyInsightsResultsTitle: string;
+  dataAnalystInsightARiskTitle: string;
+  dataAnalystInsightARiskFindings: string;
+  dataAnalystInsightARiskAnalysis: string;
+  dataAnalystInsightBMarketTitle: string;
+  dataAnalystInsightBMarketFindings: string;
+  dataAnalystInsightBMarketAnalysis: string;
+  dataAnalystInsightCWholesaleTitle: string;
+  dataAnalystInsightCWholesaleFindings: string;
+  dataAnalystInsightCWholesaleAnalysis: string;
+  dataAnalystInsightDFinancialTitle: string;
+  dataAnalystInsightDFinancialFindings: string;
+  dataAnalystInsightDFinancialAnalysis: string;
+  dataAnalystBusinessRecommendationsTitle: string;
+  dataAnalystRecommendation1: string;
+  dataAnalystRecommendation2: string;
+  dataAnalystRecommendation3: string;
   backendDev: string;
   frontendDev: string;
   databaseMgmt: string;
@@ -91,7 +125,7 @@ export const translations: Record<Language, Translations> = {
     education: "Education",
     whoAmI: "Who am I?",
     aboutText1:
-      "Born in Kediri on May 2, 2001, I completed my secondary education at Lab School UM with a concentration in Natural Sciences (IPA). I continued my studies in Informatics Engineering at the State Polytechnic of Malang, earning a D4 degree in 2024 with a GPA of 3.42. Alongside my academic journey, I cultivate a strong passion for photography, which plays a significant role in shaping my creative direction and professional interests. I also write essays, exploring various topics that complement my technical expertise and creative pursuits.",
+      "I completed my studies in Informatics Engineering at the State Polytechnic of Malang, earning a D4 degree in 2024 with a GPA of 3.42. Alongside my academic journey, I cultivate a strong passion for photography, which plays a significant role in shaping my creative direction and professional interests. I also write essays, exploring various topics that complement my technical expertise and creative pursuits.",
     contactMe: "Contact me",
     letsBuild: "Trying to do better",
     thankYouMessage: "Thanks for coming, for sure",
@@ -108,7 +142,7 @@ export const translations: Record<Language, Translations> = {
     lastName: "Kusuma Putra",
     lightMode: "Light",
     darkMode: "Dark",
-    informationTechnologyEngineer: "Information Technology Engineer",
+    informationTechnologyEngineer: "IT Officer",
     pgeCompany: "PT Puri Ganesha Engineering",
     jun2025Present: "Jun 2025 - Present",
     d4InformationTechnology: "D4, Information Technology",
@@ -116,16 +150,15 @@ export const translations: Record<Language, Translations> = {
     statePolytechnicMalang: "State Polytechnic of Malang",
     gpa: "GPA: 3.42",
     expDesc1:
-      "Designed and deployed PGE System (v1.10.0), a comprehensive Integrated Management Platform managing critical office workflows. Mastered Database Management on relational databases MySQL and PostgreSQL.",
+      "Designed and deployed PGE System (v1.10.0), a comprehensive Integrated Management Platform managing critical office workflows.",
     expDesc2:
-      "Responsible for installation, configuration, and maintenance of Ubuntu Server production environments. Designed and implemented distributed storage systems with TrueNAS Scale.",
+      "Network Engineering using RouterOS (MikroTik), including traffic shaping, Hotspot solutions, VLAN segmentation, and advanced routing configurations.",
     expDesc3:
-      "Network Administration using RouterOS (MikroTik), including traffic shaping, Hotspot solutions, VLAN segmentation, and advanced routing configurations.",
-    expDesc4:
-      "Configured and maintained enterprise-scale network infrastructure using MikroTik (RouterOS), focusing on Traffic Shaping, IP Traffic Management, and Hotspot authentication. Managed wireless infrastructure and access points via the UniFi Controller (Ubiquiti) to ensure stable and secure connectivity. Executed advanced network designs including VLAN segmentation and internal routing protocols.",
+      "Server Administration using Ubuntu for local web deployment, and Data Storage Server management using Synology NAS.",
+    expDesc4: "Network Administration using RouterOS (MikroTik).",
     wofWoodenCompany: "Elux Space",
-    wofWoodenPosition: "Internship Program UI/UX",
-    wofWoodenDate: "Nov 2023 - Mar 2024",
+    wofWoodenPosition: "UI/UX Internship",
+    wofWoodenDate: "Aug 2023 - Feb 2024",
     wofWoodenDesc1:
       "Contributed to the design and development of user interfaces (UI) and user experiences (UX) for various digital products.",
     wofWoodenDesc2:
@@ -142,6 +175,58 @@ export const translations: Record<Language, Translations> = {
     project3Category: "System Management",
     project3Desc:
       "Configured and maintained enterprise-scale network infrastructure using MikroTik (RouterOS), focusing on Traffic Shaping, IP Traffic Management, and Hotspot authentication. Managed wireless infrastructure and access points via the UniFi Controller (Ubiquiti) to ensure stable and secure connectivity. Executed advanced network designs including VLAN segmentation and internal routing protocols.",
+    project4Category: "Data Analysis & Strategy",
+    project4Desc: "E-Commerce Data Strategy: Market Insights & Payment Risk Analysis 2024-2025",
+    dataAnalystProjectTitle: "E-Commerce Data Strategy",
+    dataAnalystProjectRole: "Role: System Analyst & Data Engineer",
+    dataAnalystProjectTools: "Tools: Python (Pandas), Google Colab, Tabulate",
+    executiveSummary: "Executive Summary",
+    projectObjective: "Project Objective",
+    dataAnalystExecutiveSummary:
+      "This project analyzes a 20,848-row e-commerce transaction dataset to identify customer shopping behavior and operational risks. The main issues addressed are the high cancellation rates for certain payment methods and market potential mapping based on geographical regions to improve marketing and logistics strategy efficiency.",
+    dataAnalystObjective1:
+      "Analyze the correlation between Payment Methods and Order Cancellation Rates.",
+    dataAnalystObjective2:
+      "Identify Provinces with the largest payment contribution for market mapping.",
+    dataAnalystObjective3:
+      "Find product categories most frequently purchased in Bulk (High Quantity).",
+    dataAnalystObjective4:
+      "Evaluate the impact of Shipping Costs on total buyer expenditure.",
+    dataAnalystDataEngineeringProcessTitle: "3. Data Engineering Process (The \"How\")",
+    dataAnalystDataEngineeringProcess1:
+      "Before analysis, raw data was cleaned through several technical stages:",
+    dataAnalystDataEngineeringProcess2:
+      "Data Splitting: Breaking down the product_categories column containing multi-categories into single rows so that each category is accurately counted (Explode logic).",
+    dataAnalystDataEngineeringProcess3:
+      "Data Standardization: Standardizing the writing of province names and product categories. Feature Engineering: Creating new columns Cancellation Rate (%) and grouping order statuses into 'Completed' vs 'Cancelled'.",
+    dataAnalystKeyInsightsResultsTitle: "4. Key Insights & Results",
+    dataAnalystInsightARiskTitle: "A. Payment Risk Analysis",
+    dataAnalystInsightARiskFindings:
+      "Findings: Payment methods via Indomaret/i.Saku and Alfamart have the highest cancellation rates (reaching ~48%).",
+    dataAnalystInsightARiskAnalysis:
+      "Analysis: This indicates that Over-the-Counter methods carry a significant ghosting risk compared to digital methods.",
+    dataAnalystInsightBMarketTitle: "B. Regional Market Dominance",
+    dataAnalystInsightBMarketFindings:
+      "Findings: [Mention Top Province Name from Your SS] province contributes the highest revenue.",
+    dataAnalystInsightBMarketAnalysis:
+      "Analysis: Market concentration is still very strong in this region, indicating the need for stock optimization in the nearest regional warehouse.",
+    dataAnalystInsightCWholesaleTitle: "C. Favorite Wholesale Products",
+    dataAnalystInsightCWholesaleFindings:
+      "Findings: [Mention Top Category from Your SS] category is purchased with the highest average quantity per transaction.",
+    dataAnalystInsightCWholesaleAnalysis:
+      "Analysis: This product has Reseller-friendly characteristics, suitable for \"Buy More Save More\" campaigns.",
+    dataAnalystInsightDFinancialTitle: "D. Financial Impact (Shipping & Discounts)",
+    dataAnalystInsightDFinancialFindings:
+      "Findings: The average shipping cost paid by buyers is [Fill Number from SS], which contributes [Fill %] to the total expenditure.",
+    dataAnalystInsightDFinancialAnalysis:
+      "Analysis: Shipping costs are still a major consideration factor for buyers.",
+    dataAnalystBusinessRecommendationsTitle: "5. Business Recommendations",
+    dataAnalystRecommendation1:
+      "Payment Optimization: Provide incentives such as small discounts or coins for digital payment users (ShopeePay/SeaBank) to shift customers away from high-risk Indomaret/Alfamart methods.",
+    dataAnalystRecommendation2:
+      "Logistics Strategy: Consider a transit warehouse in the [Top Province] region to reduce shipping costs that currently burden buyers.",
+    dataAnalystRecommendation3:
+      "Product Campaigns: Create special bundling packages for wholesale product categories to increase average transaction value (Basket Size).",
     backendDev: "Backend Development",
     frontendDev: "Frontend Development",
     databaseMgmt: "Database Management",
@@ -192,7 +277,7 @@ export const translations: Record<Language, Translations> = {
     education: "Pendidikan",
     whoAmI: "Siapa saya?",
     aboutText1:
-      "Lahir di Kediri pada tanggal 2 Mei 2001, saya menyelesaikan pendidikan menengah di Lab School UM dengan konsentrasi Ilmu Pengetahuan Alam (IPA). Saya melanjutkan studi di Teknik Informatika di Politeknik Negeri Malang, meraih gelar D4 pada tahun 2024 dengan IPK 3.42. Seiring dengan perjalanan akademik saya, saya mengembangkan minat yang kuat terhadap fotografi, yang memainkan peran penting dalam membentuk arah kreatif dan minat profesional saya. Saya juga menulis essay, mengeksplorasi berbagai topik yang melengkapi keahlian teknis dan minat kreatif saya.",
+      "Saya menyelesaikan pendidikan di Teknik Informatika di Politeknik Negeri Malang, meraih gelar D4 pada tahun 2024 dengan IPK 3.42. Seiring dengan perjalanan akademik saya, saya mengembangkan minat yang kuat terhadap fotografi, yang memainkan peran penting dalam membentuk arah kreatif dan minat profesional saya. Saya juga menulis essay, mengeksplorasi berbagai topik yang melengkapi keahlian teknis dan minat kreatif saya.",
     contactMe: "Hubungi saya",
     letsBuild: "Mencoba untuk menjadi lebih baik",
     thankYouMessage: "Terima kasih sudah datang",
@@ -209,7 +294,7 @@ export const translations: Record<Language, Translations> = {
     lastName: "Kusuma Putra",
     lightMode: "Terang",
     darkMode: "Gelap",
-    informationTechnologyEngineer: "Information Technology Engineer",
+    informationTechnologyEngineer: "IT Officer",
     pgeCompany: "PT Puri Ganesha Engineering",
     jun2025Present: "Jun 2025 - Sekarang",
     d4InformationTechnology: "D4, Teknik Informatika",
@@ -217,22 +302,21 @@ export const translations: Record<Language, Translations> = {
     statePolytechnicMalang: "Politeknik Negeri Malang",
     gpa: "IPK: 3.42",
     expDesc1:
-      "Merancang dan mengimplementasikan PGE System (v1.10.0), sebuah Integrated Management Platform yang komprehensif untuk mengelola alur kerja kantor yang kritis. Menguasai Database Management pada database relasional MySQL dan PostgreSQL.",
+      "Merancang dan menerapkan Sistem PGE (v1.10.0), Platform Manajemen Terintegrasi komprehensif yang mengelola alur kerja kantor yang kritis.",
     expDesc2:
-      "Bertanggung jawab atas instalasi, konfigurasi, dan pemeliharaan lingkungan produksi Ubuntu Server. Merancang dan mengimplementasikan sistem penyimpanan terdistribusi dengan TrueNAS Scale.",
+      "Network Engineering menggunakan RouterOS (MikroTik), termasuk traffic shaping, solusi Hotspot, segmentasi VLAN, dan konfigurasi routing tingkat lanjut.",
     expDesc3:
-      "Network Administration menggunakan RouterOS (MikroTik), termasuk traffic shaping, solusi Hotspot, segmentasi VLAN, dan konfigurasi routing lanjutan.",
-    expDesc4:
-      "Mengkonfigurasi dan memelihara infrastruktur jaringan skala enterprise menggunakan MikroTik (RouterOS), dengan fokus pada Traffic Shaping, Manajemen Lalu Lintas IP, dan autentikasi Hotspot. Mengelola infrastruktur nirkabel dan access point melalui UniFi Controller (Ubiquiti) untuk memastikan konektivitas yang stabil dan aman. Mengeksekusi desain jaringan canggih termasuk segmentasi VLAN dan protokol routing internal.",
+      "Administrasi Server menggunakan Ubuntu untuk deployment web lokal, serta pengelolaan Data Storage Server menggunakan Synology NAS.",
+    expDesc4: "Administrasi Jaringan menggunakan RouterOS (MikroTik).",
     wofWoodenCompany: "Elux Space",
-    wofWoodenPosition: "Internship Program UI/UX",
-    wofWoodenDate: "Nov 2023 - Mar 2024",
+    wofWoodenPosition: "UI/UX Internship",
+    wofWoodenDate: "Agu 2023 - Feb 2024",
     wofWoodenDesc1:
       "Berkontribusi pada desain dan pengembangan antarmuka pengguna (UI) dan pengalaman pengguna (UX) untuk berbagai produk digital.",
     wofWoodenDesc2:
       "Membantu dalam melakukan riset pengguna, membuat wireframe, prototipe, dan mockup.",
     wofWoodenDesc3:
-      "Berkolaborasi dengan tim lintas fungsional untuk memastikan pendekatan desain yang berpusat pada pengguna dan menerjemahkan konsep menjadi desain yang intuitif.",
+      "Berkolaborasi dengan tim lintas fungsi untuk memastikan pendekatan desain yang berpusat pada pengguna dan menerjemahkan konsep menjadi desain yang intuitif.",
     techStack: "Tech Stack",
     project1Category: "Website Perusahaan",
     project1Desc:
@@ -243,6 +327,58 @@ export const translations: Record<Language, Translations> = {
     project3Category: "Manajemen Sistem",
     project3Desc:
       "Mengkonfigurasi dan memelihara infrastruktur jaringan skala enterprise menggunakan MikroTik (RouterOS), dengan fokus pada Traffic Shaping, Manajemen Lalu Lintas IP, dan autentikasi Hotspot. Mengelola infrastruktur nirkabel dan access point melalui UniFi Controller (Ubiquiti) untuk memastikan konektivitas yang stabil dan aman. Mengeksekusi desain jaringan canggih termasuk segmentasi VLAN dan protokol routing internal.",
+    project4Category: "Analisis & Strategi Data",
+    project4Desc: "Strategi Data E-Commerce: Analisis Risiko Pembayaran & Wawasan Pasar 2024-2025",
+    dataAnalystProjectTitle: "E-Commerce Market Insights & Payment Risk Analysis 2024-2025",
+    dataAnalystProjectRole: "Peran: System Analyst & Data Engineer",
+    dataAnalystProjectTools: "Alat: Python (Pandas), Google Colab, Tabulate",
+    executiveSummary: "Ringkasan Eksekutif",
+    projectObjective: "Tujuan Proyek",
+    dataAnalystExecutiveSummary:
+      "Proyek ini menganalisis dataset transaksi e-commerce sebesar 20.848 baris untuk mengidentifikasi perilaku belanja pelanggan dan risiko operasional. Masalah utama yang dibedah adalah tingginya angka pembatalan pada metode pembayaran tertentu dan pemetaan potensi pasar berdasarkan wilayah geografis guna meningkatkan efisiensi strategi marketing dan logistik.",
+    dataAnalystObjective1:
+      "Menganalisis korelasi antara Metode Pembayaran dengan Tingkat Pembatalan Pesanan.",
+    dataAnalystObjective2:
+      "Mengidentifikasi Provinsi dengan kontribusi pembayaran terbesar untuk pemetaan pasar.",
+    dataAnalystObjective3:
+      "Menemukan kategori produk yang paling sering dibeli secara Grosir (High Quantity).",
+    dataAnalystObjective4:
+      "Mengevaluasi dampak Biaya Ongkos Kirim terhadap total pengeluaran pembeli.",
+    dataAnalystDataEngineeringProcessTitle: "3. Proses Rekayasa Data (The \"How\")",
+    dataAnalystDataEngineeringProcess1:
+      "Sebelum analisis dilakukan, data mentah dibersihkan melalui beberapa tahap teknis:",
+    dataAnalystDataEngineeringProcess2:
+      "Data Splitting: Memecah kolom product_categories yang berisi multi-kategori menjadi baris tunggal agar setiap kategori terhitung secara akurat (Explode logic).",
+    dataAnalystDataEngineeringProcess3:
+      "Data Standardization: Menyeragamkan penulisan nama provinsi dan kategori produk. Feature Engineering: Membuat kolom baru Tingkat Pembatalan (%) dan mengelompokkan status pesanan menjadi 'Selesai' vs 'Batal'.",
+    dataAnalystKeyInsightsResultsTitle: "4. Wawasan Utama & Hasil",
+    dataAnalystInsightARiskTitle: "A. Analisis Risiko Pembayaran",
+    dataAnalystInsightARiskFindings:
+      "Temuan: Metode pembayaran melalui Indomaret/i.Saku dan Alfamart memiliki tingkat pembatalan tertinggi (mencapai ~48%).",
+    dataAnalystInsightARiskAnalysis:
+      "Analisis: Hal ini menunjukkan bahwa metode Over-the-Counter memiliki risiko ghosting yang besar dibandingkan metode digital.",
+    dataAnalystInsightBMarketTitle: "B. Dominasi Pasar Regional",
+    dataAnalystInsightBMarketFindings:
+      "Temuan: Provinsi [Sebutkan Nama Provinsi Teratas dari SS Anda] memberikan kontribusi pendapatan tertinggi.",
+    dataAnalystInsightBMarketAnalysis:
+      "Analisis: Konsentrasi pasar masih sangat kuat di wilayah ini, menunjukkan perlunya optimasi stok di gudang regional terdekat.",
+    dataAnalystInsightCWholesaleTitle: "C. Produk Favorit Grosir",
+    dataAnalystInsightCWholesaleFindings:
+      "Temuan: Kategori [Sebutkan Kategori Teratas dari SS Anda] dibeli dengan rata-rata kuantitas tertinggi per transaksi.",
+    dataAnalystInsightCWholesaleAnalysis:
+      "Analisis: Produk ini memiliki karakteristik Reseller-friendly, cocok untuk kampanye \"Beli Banyak Lebih Murah\".",
+    dataAnalystInsightDFinancialTitle: "D. Dampak Finansial (Ongkir & Diskon)",
+    dataAnalystInsightDFinancialFindings:
+      "Temuan: Rata-rata beban ongkir yang dibayar pembeli adalah [Isi Angka dari SS], yang berkontribusi sebesar [Isi %] terhadap total belanja.",
+    dataAnalystInsightDFinancialAnalysis:
+      "Analisis: Biaya pengiriman masih menjadi faktor pertimbangan besar bagi pembeli.",
+    dataAnalystBusinessRecommendationsTitle: "5. Rekomendasi Bisnis",
+    dataAnalystRecommendation1:
+      "Optimasi Pembayaran: Memberikan insentif berupa diskon kecil atau koin bagi pengguna metode digital (ShopeePay/SeaBank) untuk mengalihkan pelanggan dari metode Indomaret/Alfamart yang berisiko batal tinggi.",
+    dataAnalystRecommendation2:
+      "Strategi Logistik: Mempertimbangkan gudang transit di wilayah [Provinsi Teratas] untuk menekan biaya ongkir yang saat ini masih membebani pembeli.",
+    dataAnalystRecommendation3:
+      "Kampanye Produk: Membuat paket bundling khusus untuk kategori produk grosir guna meningkatkan nilai transaksi rata-rata (Basket Size).",
     backendDev: "Pengembangan Backend",
     frontendDev: "Pengembangan Frontend",
     databaseMgmt: "Manajemen Database",
