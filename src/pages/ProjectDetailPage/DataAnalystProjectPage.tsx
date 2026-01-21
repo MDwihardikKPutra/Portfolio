@@ -54,6 +54,17 @@ export const DataAnalystProjectPage = ({
             </h1>
             <div className={`text-xs sm:text-sm ${textSecondaryColor} space-y-2`}>
               <p>{t.dataAnalystProjectTools}</p>
+              <p>
+                {t.dataSource}:{" "}
+                <a
+                  href="https://www.kaggle.com/datasets/bakitacos/indonesia-e-commerce-sales-and-shipping-20232025"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`border-b border-gray-300 dark:border-gray-700 hover:border-gray-900 dark:hover:border-gray-100 transition-colors pb-0.5`}
+                >
+                  Kaggle - Indonesia E-Commerce Sales and Shipping 2023-2025
+                </a>
+              </p>
             </div>
           </motion.div>
 
@@ -67,7 +78,7 @@ export const DataAnalystProjectPage = ({
             {/* Executive Summary */}
             <section>
               <h3 className="text-sm sm:text-base font-bold mb-3 uppercase tracking-wider opacity-80">
-                1. {t.executiveSummary || "Executive Summary"}
+                {t.executiveSummary || "Executive Summary"}
               </h3>
               <p className={`text-xs sm:text-sm leading-relaxed ${textSecondaryColor} text-justify`}>
                 {t.dataAnalystExecutiveSummary}
@@ -77,7 +88,7 @@ export const DataAnalystProjectPage = ({
             {/* Project Objective */}
             <section>
               <h3 className="text-sm sm:text-base font-bold mb-3 uppercase tracking-wider opacity-80">
-                2. {t.projectObjective || "Project Objectives"}
+                {t.projectObjective || "Project Objectives"}
               </h3>
               <ul className={`text-xs sm:text-sm leading-relaxed ${textSecondaryColor} list-disc list-inside space-y-2 ml-2`}>
                 <li>{t.dataAnalystObjective1}</li>
@@ -163,11 +174,11 @@ export const DataAnalystProjectPage = ({
                   </div>
                   <div className={`space-y-6 text-sm sm:text-base leading-relaxed ${textSecondaryColor}`}>
                     <div>
-                      <span className={`font-semibold block mb-2 ${textColor}`}>Findings</span>
+                      <span className={`font-semibold block mb-2 ${textColor}`}>{t.findings}</span>
                       <p className="text-justify">{t.dataAnalystInsightARiskFindings.replace("Findings:", "").replace("Temuan:", "").trim()}</p>
                     </div>
                     <div>
-                      <span className={`font-semibold block mb-2 ${textColor}`}>Analysis</span>
+                      <span className={`font-semibold block mb-2 ${textColor}`}>{t.analysis}</span>
                       <p className="text-justify">{t.dataAnalystInsightARiskAnalysis.replace("Analysis:", "").replace("Analisis:", "").trim()}</p>
                     </div>
                   </div>
@@ -247,11 +258,11 @@ export const DataAnalystProjectPage = ({
                   </div>
                   <div className={`space-y-6 text-sm sm:text-base leading-relaxed ${textSecondaryColor}`}>
                     <div>
-                      <span className={`font-semibold block mb-2 ${textColor}`}>Findings</span>
+                      <span className={`font-semibold block mb-2 ${textColor}`}>{t.findings}</span>
                       <p className="text-justify">{t.dataAnalystInsightBMarketFindings.replace("Findings:", "").replace("Temuan:", "").trim()}</p>
                     </div>
                     <div>
-                      <span className={`font-semibold block mb-2 ${textColor}`}>Analysis</span>
+                      <span className={`font-semibold block mb-2 ${textColor}`}>{t.analysis}</span>
                       <p className="text-justify">{t.dataAnalystInsightBMarketAnalysis.replace("Analysis:", "").replace("Analisis:", "").trim()}</p>
                     </div>
                   </div>
@@ -321,11 +332,11 @@ export const DataAnalystProjectPage = ({
                   </div>
                   <div className={`space-y-6 text-sm sm:text-base leading-relaxed ${textSecondaryColor}`}>
                     <div>
-                      <span className={`font-semibold block mb-2 ${textColor}`}>Findings</span>
+                      <span className={`font-semibold block mb-2 ${textColor}`}>{t.findings}</span>
                       <p className="text-justify">{t.dataAnalystInsightCWholesaleFindings.replace("Findings:", "").replace("Temuan:", "").trim()}</p>
                     </div>
                     <div>
-                      <span className={`font-semibold block mb-2 ${textColor}`}>Analysis</span>
+                      <span className={`font-semibold block mb-2 ${textColor}`}>{t.analysis}</span>
                       <p className="text-justify">{t.dataAnalystInsightCWholesaleAnalysis.replace("Analysis:", "").replace("Analisis:", "").trim()}</p>
                     </div>
                   </div>
@@ -369,11 +380,11 @@ export const DataAnalystProjectPage = ({
 
                   <div className={`space-y-6 text-sm sm:text-base leading-relaxed ${textSecondaryColor}`}>
                     <div>
-                      <span className={`font-semibold block mb-2 ${textColor}`}>Findings</span>
+                      <span className={`font-semibold block mb-2 ${textColor}`}>{t.findings}</span>
                       <p className="text-justify">{t.dataAnalystInsightDFinancialFindings.replace("Findings:", "").replace("Temuan:", "").trim()}</p>
                     </div>
                     <div>
-                      <span className={`font-semibold block mb-2 ${textColor}`}>Analysis</span>
+                      <span className={`font-semibold block mb-2 ${textColor}`}>{t.analysis}</span>
                       <p className="text-justify">{t.dataAnalystInsightDFinancialAnalysis.replace("Analysis:", "").replace("Analisis:", "").trim()}</p>
                     </div>
                   </div>
