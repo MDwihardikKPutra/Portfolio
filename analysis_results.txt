@@ -1,0 +1,57 @@
+Total Rows: 20848
+Unique Order Statuses: ['Selesai' 'Batal'
+ 'Pesanan diterima, namun Pembeli masih dapat mengajukan pengembalian hingga 2025-12-06.'
+ 'Sedang Dikirim'
+ 'Pesanan diterima, namun Pembeli masih dapat mengajukan pengembalian hingga 2025-12-05.'
+ 'Pesanan diterima, namun Pembeli masih dapat mengajukan pengembalian hingga 2025-12-07.'
+ 'Pesanan diterima, namun Pembeli masih dapat mengajukan pengembalian hingga 2025-12-09.'
+ 'Telah Dikirim'
+ 'Pesanan diterima, namun Pembeli masih dapat mengajukan pengembalian hingga 2025-12-08.'
+ 'Pesanan diterima, namun Pembeli masih dapat mengajukan pengembalian hingga 2025-12-10.'
+ 'Pesanan diterima, namun Pembeli masih dapat mengajukan pengembalian hingga 2025-12-11.']
+
+--- Status Pesanan Distribution ---
+Status Pesanan
+Selesai                                                                                   17768
+Batal                                                                                      2830
+Sedang Dikirim                                                                               59
+Pesanan diterima, namun Pembeli masih dapat mengajukan pengembalian hingga 2025-12-08.       38
+Pesanan diterima, namun Pembeli masih dapat mengajukan pengembalian hingga 2025-12-06.       34
+Pesanan diterima, namun Pembeli masih dapat mengajukan pengembalian hingga 2025-12-07.       34
+Telah Dikirim                                                                                30
+Pesanan diterima, namun Pembeli masih dapat mengajukan pengembalian hingga 2025-12-05.       25
+Pesanan diterima, namun Pembeli masih dapat mengajukan pengembalian hingga 2025-12-09.       22
+Pesanan diterima, namun Pembeli masih dapat mengajukan pengembalian hingga 2025-12-10.        6
+Pesanan diterima, namun Pembeli masih dapat mengajukan pengembalian hingga 2025-12-11.        2
+Name: count, dtype: int64
+
+--- 1. Payment Risk Analysis (Top 5 Highest Cancellation Rate) ---
+                           total_orders  cancelled_orders  cancellation_rate
+Metode Pembayaran                                                           
+Mitra Shopee                          1                 1             100.00
+Indomaret/i.Saku                     43                21              48.84
+Alfamart/Alfamidi/Dan+Dan            36                17              47.22
+BCA OneKlik                           3                 1              33.33
+Online Payment                     3170               588              18.55
+
+--- 2. Regional Market Dominance (Top 5 Provinces by Revenue) ---
+       Provinsi  Total Pembayaran
+8    JAWA BARAT         276992073
+2        BANTEN         177861752
+5   DKI JAKARTA         135164841
+9   JAWA TENGAH         100114044
+10   JAWA TIMUR          95478924
+
+--- 3. Favorite Wholesale Products (Top 5 by Avg Qty) ---
+                                                                                                                                                                                                      product_categories  total_qty
+351                                                                                                                                                                         Celengan, Nampan / Tray, Pisau / Alat Potong      53.00
+279                                                                                                                                           Botol / Gelas / Mug, Mangkok Sambal / Saus, Other, Peralatan Makan, Piring      45.00
+550                                                                                                                                                         Mangkok, Mangkok Sambal / Saus, Nampan / Tray, Other, Piring      27.00
+171                                                                                                                                                Baskom / Mangkok Besar, Botol / Gelas / Mug, Peralatan Makan, Spatula      25.00
+4    Aksesoris ID Card, Bangku / Kursi Kecil, Botol / Gelas / Mug, Mangkok Sambal / Saus, Nampan / Tray, Peralatan Makan, Perlengkapan Packing, Plastik / Wadah Plastik, Saringan / Strainer, Talenan, Toples / Sealware      22.00
+
+--- 4. Financial Impact ---
+Total Revenue: 1,056,651,631
+Total Shipping Paid: 87,352,926
+Average Shipping Cost per Order: 4,189.99
+Shipping Cost Contribution to Expenditure: 8.27%

@@ -16,6 +16,8 @@ export interface Translations {
   getInTouch: string;
   thankYouMessage: string;
   selectedWork: string;
+  sectionTitleProject: string;
+  sectionTitlePersonalProject: string;
   projects: string;
   expertise: string;
   bachelorDegree: string;
@@ -79,9 +81,11 @@ export interface Translations {
   dataAnalystInsightDFinancialFindings: string;
   dataAnalystInsightDFinancialAnalysis: string;
   dataAnalystBusinessRecommendationsTitle: string;
+  dataAnalystRecommendationsIntro: string;
   dataAnalystRecommendation1: string;
   dataAnalystRecommendation2: string;
   dataAnalystRecommendation3: string;
+  dataAnalystRecommendation4: string;
   backendDev: string;
   frontendDev: string;
   databaseMgmt: string;
@@ -133,6 +137,8 @@ export const translations: Record<Language, Translations> = {
       "Have a project in mind? I'm open to discussing new opportunities and technical collaborations.",
     getInTouch: "Get in Touch",
     selectedWork: "Project Experience",
+    sectionTitleProject: "Project",
+    sectionTitlePersonalProject: "Personal Project",
     projects: "03 Projects",
     expertise: "Expertise",
     bachelorDegree: "Bachelor's Degree in Informatics Engineering",
@@ -176,8 +182,8 @@ export const translations: Record<Language, Translations> = {
     project3Desc:
       "Configured and maintained enterprise-scale network infrastructure using MikroTik (RouterOS), focusing on Traffic Shaping, IP Traffic Management, and Hotspot authentication. Managed wireless infrastructure and access points via the UniFi Controller (Ubiquiti) to ensure stable and secure connectivity. Executed advanced network designs including VLAN segmentation and internal routing protocols.",
     project4Category: "Data Analysis & Strategy",
-    project4Desc: "E-Commerce Data Strategy: Market Insights & Payment Risk Analysis 2024-2025",
-    dataAnalystProjectTitle: "E-Commerce Data Strategy",
+    project4Desc: "E-Commerce Market Insights & Payment Risk Analysis 2024-2025",
+    dataAnalystProjectTitle: "E-Commerce Market Insights & Payment Risk Analysis 2024-2025",
     dataAnalystProjectRole: "Role: System Analyst & Data Engineer",
     dataAnalystProjectTools: "Tools: Python (Pandas), Google Colab, Tabulate",
     executiveSummary: "Executive Summary",
@@ -199,34 +205,33 @@ export const translations: Record<Language, Translations> = {
       "Data Splitting: Breaking down the product_categories column containing multi-categories into single rows so that each category is accurately counted (Explode logic).",
     dataAnalystDataEngineeringProcess3:
       "Data Standardization: Standardizing the writing of province names and product categories. Feature Engineering: Creating new columns Cancellation Rate (%) and grouping order statuses into 'Completed' vs 'Cancelled'.",
-    dataAnalystKeyInsightsResultsTitle: "4. Key Insights & Results",
+    dataAnalystKeyInsightsResultsTitle: "3. Key Insights & Results",
     dataAnalystInsightARiskTitle: "A. Payment Risk Analysis",
     dataAnalystInsightARiskFindings:
-      "Findings: Payment methods via Indomaret/i.Saku and Alfamart have the highest cancellation rates (reaching ~48%).",
+      "Answering the correlation analysis: There is a strong relationship between payment method and cancellation rate. OTC methods (Indomaret/Alfamart) show the highest risk with ~48% cancellation, whereas digital payments (ShopeePay) are much safer with only 18% cancellation.",
     dataAnalystInsightARiskAnalysis:
-      "Analysis: This indicates that Over-the-Counter methods carry a significant ghosting risk compared to digital methods.",
+      "Why is this happening? Over-the-counter (OTC) payments create a gap between ordering and paying. Customers order now, but pay later at the store. This makes it easy for them to cancel without penalty. Digital payments require immediate payment, so customers are more committed. For the business, this is a serious issue because nearly 50% of OTC orders never become real sales, making inventory planning difficult. Recommendation: offer small incentives (discounts, cashback) to encourage customers to use digital payments instead.",
     dataAnalystInsightBMarketTitle: "B. Regional Market Dominance",
     dataAnalystInsightBMarketFindings:
-      "Findings: [Mention Top Province Name from Your SS] province contributes the highest revenue.",
+      "Regarding market mapping: West Java is identified as the province with the largest payment contribution (Rp 277M, 26% share), followed by Banten and Jakarta. This confirms that the majority of revenue and market power is concentrated in the western Java region.",
     dataAnalystInsightBMarketAnalysis:
-      "Analysis: Market concentration is still very strong in this region, indicating the need for stock optimization in the nearest regional warehouse.",
+      "This concentration is actually both good and bad. Good: we can optimize logistics by placing warehouses in West Java and Banten to serve most customers quickly and cheaply. Bad: we're too dependent on one region. The 'Others' category (44.2%) shows there's demand across many provinces, but it's scattered. Strategy: focus warehouse optimization in Java for quick wins, then gradually expand to other high-potential regions like Sumatra and Sulawesi to diversify revenue sources.",
     dataAnalystInsightCWholesaleTitle: "C. Favorite Wholesale Products",
     dataAnalystInsightCWholesaleFindings:
-      "Findings: [Mention Top Category from Your SS] category is purchased with the highest average quantity per transaction.",
+      "For high-quantity wholesale purchases: 'Home & Kitchen' is the #1 category (avg 53 units/transaction), specifically items like Piggy Banks and Trays. 'Tableware' is #2 (45 units). These categories are the primary drivers of bulk volume.",
     dataAnalystInsightCWholesaleAnalysis:
-      "Analysis: This product has Reseller-friendly characteristics, suitable for \"Buy More Save More\" campaigns.",
+      "These products are popular with resellers because they're cheap, everyone needs them, and they sell quickly. The high quantities (53 units) confirm these buyers are mostly resellers, not regular consumers. Business opportunity: create 'Buy More, Save More' promotions to encourage even larger orders. Also consider bundling related items together (e.g., trays + utensils set) to increase order value and make shopping easier for resellers.",
     dataAnalystInsightDFinancialTitle: "D. Financial Impact (Shipping & Discounts)",
     dataAnalystInsightDFinancialFindings:
-      "Findings: The average shipping cost paid by buyers is [Fill Number from SS], which contributes [Fill %] to the total expenditure.",
+      "Evaluating shipping impact: Shipping costs (Rp 4,190 avg) account for 8.27% of total buyer expenditure. This 8% cost is a significant portion relative to product price, confirming that logistics fees have a major impact on the total checkout value.",
     dataAnalystInsightDFinancialAnalysis:
-      "Analysis: Shipping costs are still a major consideration factor for buyers.",
-    dataAnalystBusinessRecommendationsTitle: "5. Business Recommendations",
-    dataAnalystRecommendation1:
-      "Payment Optimization: Provide incentives such as small discounts or coins for digital payment users (ShopeePay/SeaBank) to shift customers away from high-risk Indomaret/Alfamart methods.",
-    dataAnalystRecommendation2:
-      "Logistics Strategy: Consider a transit warehouse in the [Top Province] region to reduce shipping costs that currently burden buyers.",
-    dataAnalystRecommendation3:
-      "Product Campaigns: Create special bundling packages for wholesale product categories to increase average transaction value (Basket Size).",
+      "In e-commerce, shipping cost can make or break a sale. For budget-conscious buyers (especially resellers buying in bulk), an extra 8% can push them to competitors offering free shipping. This is especially critical since we know OTC payment users (who cancel more often) are already price-sensitive. Solutions: 1) Place warehouses in West Java to reduce shipping distance and cost, 2) Offer 'Free shipping above Rp 50,000' to encourage larger orders, 3) Negotiate better rates with shipping partners for bulk shipments.",
+    dataAnalystBusinessRecommendationsTitle: "4. Business Recommendations",
+    dataAnalystRecommendationsIntro: "Based on the transaction data processing results, here are several strategic recommendations that can be applied:",
+    dataAnalystRecommendation1: "Based on the analyzed data showing a very high cancellation rate for cash/OTC payment methods like Indomaret and Alfamart (reaching ~48%), the recommendation is to provide special incentives for digital payments (such as coin cashback or direct discounts) to encourage instant payment commitment and minimize the risk of uncompleted orders.",
+    dataAnalystRecommendation2: "Based on the analyzed data showing revenue concentration reaching 55% in West Java, Banten, and Jakarta, the recommendation is to strengthen logistics infrastructure by building a Regional Fulfillment Center in the West Java area to shorten delivery distances, suppress operational costs, and accelerate delivery time to customers.",
+    dataAnalystRecommendation3: "Based on the analyzed data showing strong wholesale purchasing characteristics in the Home Supplies category (with an average above 50 units per transaction), the recommendation is to launch a Tiered Pricing feature specifically for bulk purchases to maintain the loyalty of reseller buyer groups and increase sales volume per transaction.",
+    dataAnalystRecommendation4: "Based on the analyzed data showing shipping costs contributing ~8% to total buyer expenditure, the recommendation is to implement a shipping subsidy strategy with a certain minimum spending threshold (Threshold Free Shipping) to eliminate shipping cost barriers while motivating customers to increase their shopping quantity.",
     backendDev: "Backend Development",
     frontendDev: "Frontend Development",
     databaseMgmt: "Database Management",
@@ -285,6 +290,8 @@ export const translations: Record<Language, Translations> = {
       "Ada proyek dalam pikiran? Saya terbuka untuk membahas peluang baru dan kolaborasi teknis.",
     getInTouch: "Hubungi Saya",
     selectedWork: "Pengalaman Proyek",
+    sectionTitleProject: "Proyek",
+    sectionTitlePersonalProject: "Proyek Personal",
     projects: "03 Proyek",
     expertise: "Keahlian",
     bachelorDegree: "Sarjana Terapan Teknik Informatika",
@@ -332,8 +339,8 @@ export const translations: Record<Language, Translations> = {
     dataAnalystProjectTitle: "E-Commerce Market Insights & Payment Risk Analysis 2024-2025",
     dataAnalystProjectRole: "Peran: System Analyst & Data Engineer",
     dataAnalystProjectTools: "Alat: Python (Pandas), Google Colab, Tabulate",
-    executiveSummary: "Ringkasan Eksekutif",
-    projectObjective: "Tujuan Proyek",
+    executiveSummary: "1. Ringkasan Eksekutif",
+    projectObjective: "2. Tujuan Proyek",
     dataAnalystExecutiveSummary:
       "Proyek ini menganalisis dataset transaksi e-commerce sebesar 20.848 baris untuk mengidentifikasi perilaku belanja pelanggan dan risiko operasional. Masalah utama yang dibedah adalah tingginya angka pembatalan pada metode pembayaran tertentu dan pemetaan potensi pasar berdasarkan wilayah geografis guna meningkatkan efisiensi strategi marketing dan logistik.",
     dataAnalystObjective1:
@@ -351,34 +358,33 @@ export const translations: Record<Language, Translations> = {
       "Data Splitting: Memecah kolom product_categories yang berisi multi-kategori menjadi baris tunggal agar setiap kategori terhitung secara akurat (Explode logic).",
     dataAnalystDataEngineeringProcess3:
       "Data Standardization: Menyeragamkan penulisan nama provinsi dan kategori produk. Feature Engineering: Membuat kolom baru Tingkat Pembatalan (%) dan mengelompokkan status pesanan menjadi 'Selesai' vs 'Batal'.",
-    dataAnalystKeyInsightsResultsTitle: "4. Wawasan Utama & Hasil",
+    dataAnalystKeyInsightsResultsTitle: "3. Wawasan Utama & Hasil",
     dataAnalystInsightARiskTitle: "A. Analisis Risiko Pembayaran",
     dataAnalystInsightARiskFindings:
-      "Temuan: Metode pembayaran melalui Indomaret/i.Saku dan Alfamart memiliki tingkat pembatalan tertinggi (mencapai ~48%).",
+      "Menjawab analisis korelasi: Terdapat hubungan kuat antara metode pembayaran dengan tingkat pembatalan. Metode OTC (Indomaret/Alfamart) memiliki risiko tertinggi (~48% batal), sedangkan pembayaran digital jauh lebih aman (hanya 18% batal).",
     dataAnalystInsightARiskAnalysis:
-      "Analisis: Hal ini menunjukkan bahwa metode Over-the-Counter memiliki risiko ghosting yang besar dibandingkan metode digital.",
+      "Mengapa hal ini terjadi? Pembayaran OTC (Over-the-Counter) menciptakan jarak antara pemesanan dengan pembayaran. Customer pesan sekarang, bayar nanti di toko. Ini membuat mereka mudah membatalkan tanpa konsekuensi. Pembayaran digital membutuhkan pembayaran langsung, sehingga customer lebih berkomitmen. Bagi bisnis, ini masalah serius karena hampir 50% pesanan OTC tidak pernah jadi penjualan nyata, membuat perencanaan inventori sulit. Rekomendasi: berikan insentif kecil (diskon, cashback) untuk mendorong customer menggunakan pembayaran digital.",
     dataAnalystInsightBMarketTitle: "B. Dominasi Pasar Regional",
     dataAnalystInsightBMarketFindings:
-      "Temuan: Provinsi [Sebutkan Nama Provinsi Teratas dari SS Anda] memberikan kontribusi pendapatan tertinggi.",
+      "Terkait pemetaan pasar: Jawa Barat teridentifikasi sebagai provinsi dengan kontribusi pembayaran terbesar (Rp 277 Juta, 26% share), diikuti Banten dan Jakarta. Ini mengonfirmasi bahwa mayoritas pendapatan terpusat di wilayah Jawa bagian barat.",
     dataAnalystInsightBMarketAnalysis:
-      "Analisis: Konsentrasi pasar masih sangat kuat di wilayah ini, menunjukkan perlunya optimasi stok di gudang regional terdekat.",
+      "Konsentrasi ini sebenarnya ada sisi baik dan buruknya. Baik: kita bisa optimalkan logistik dengan menempatkan gudang di Jawa Barat dan Banten untuk melayani mayoritas customer dengan cepat dan murah. Buruk: kita terlalu bergantung pada satu wilayah. Kategori 'Lainnya' (44,2%) menunjukkan ada permintaan di banyak provinsi, tapi tersebar. Strategi: fokus optimasi gudang di Jawa untuk hasil cepat, lalu bertahap ekspansi ke wilayah potensial lain seperti Sumatera dan Sulawesi untuk diversifikasi pendapatan.",
     dataAnalystInsightCWholesaleTitle: "C. Produk Favorit Grosir",
     dataAnalystInsightCWholesaleFindings:
-      "Temuan: Kategori [Sebutkan Kategori Teratas dari SS Anda] dibeli dengan rata-rata kuantitas tertinggi per transaksi.",
+      "Mengenai kategori Grosir (High Quantity): 'Perlengkapan Rumah' adalah kategori #1 yang paling sering dibeli massal (rata-rata 53 unit/transaksi), khususnya Celestengan dan Nampan. 'Peralatan Makan' ada di posisi #2 (45 unit). Kategori ini adalah penggerak utama volume grosir.",
     dataAnalystInsightCWholesaleAnalysis:
-      "Analisis: Produk ini memiliki karakteristik Reseller-friendly, cocok untuk kampanye \"Beli Banyak Lebih Murah\".",
+      "Produk-produk ini populer di kalangan reseller karena murah, semua orang butuh, dan cepat laku. Jumlah tinggi (53 unit) mengkonfirmasi pembeli ini kebanyakan reseller, bukan konsumen biasa. Peluang bisnis: buat promo 'Beli Banyak Lebih Hemat' untuk mendorong pesanan lebih besar. Pertimbangkan juga bundling produk terkait (misal: nampan + set alat makan) untuk tingkatkan nilai pesanan dan permudah belanja reseller.",
     dataAnalystInsightDFinancialTitle: "D. Dampak Finansial (Ongkir & Diskon)",
     dataAnalystInsightDFinancialFindings:
-      "Temuan: Rata-rata beban ongkir yang dibayar pembeli adalah [Isi Angka dari SS], yang berkontribusi sebesar [Isi %] terhadap total belanja.",
+      "Evaluasi dampak ongkos kirim: Biaya kirim (rata-rata Rp 4.190) menyumbang 8,27% dari total pengeluaran pembeli. Porsi 8% ini cukup signifikan dibandingkan harga produk, mengonfirmasi bahwa biaya logistik berdampak besar terhadap nilai total checkout.",
     dataAnalystInsightDFinancialAnalysis:
-      "Analisis: Biaya pengiriman masih menjadi faktor pertimbangan besar bagi pembeli.",
-    dataAnalystBusinessRecommendationsTitle: "5. Rekomendasi Bisnis",
-    dataAnalystRecommendation1:
-      "Optimasi Pembayaran: Memberikan insentif berupa diskon kecil atau koin bagi pengguna metode digital (ShopeePay/SeaBank) untuk mengalihkan pelanggan dari metode Indomaret/Alfamart yang berisiko batal tinggi.",
-    dataAnalystRecommendation2:
-      "Strategi Logistik: Mempertimbangkan gudang transit di wilayah [Provinsi Teratas] untuk menekan biaya ongkir yang saat ini masih membebani pembeli.",
-    dataAnalystRecommendation3:
-      "Kampanye Produk: Membuat paket bundling khusus untuk kategori produk grosir guna meningkatkan nilai transaksi rata-rata (Basket Size).",
+      "Di e-commerce, ongkir bisa jadi penentu jadi atau batalnya pembelian. Untuk pembeli budget terbatas (terutama reseller yang beli massal), tambahan 8% bisa membuat mereka pindah ke kompetitor yang tawarkan gratis ongkir. Ini sangat krusial mengingat kita tahu pengguna OTC payment (yang banyak batal) sudah sensitif terhadap harga. Solusi: 1) Tempatkan gudang di Jawa Barat untuk kurangi jarak dan biaya kirim, 2) Tawarkan 'Gratis ongkir di atas Rp 50.000' untuk dorong pesanan lebih besar, 3) Negosiasi tarif lebih baik dengan partner pengiriman untuk kiriman massal.",
+    dataAnalystBusinessRecommendationsTitle: "4. Rekomendasi Bisnis",
+    dataAnalystRecommendationsIntro: "Berdasarkan hasil pengolahan data transaksi yang telah dilakukan, berikut adalah beberapa rekomendasi strategis yang dapat diterapkan:",
+    dataAnalystRecommendation1: "Berdasarkan data yang telah dianalisis yaitu adanya tingkat pembatalan yang sangat tinggi pada metode pembayaran tunai/OTC seperti Indomaret dan Alfamart (mencapai ~48%), rekomendasi yang bisa dilakukan adalah memberikan insentif khusus untuk pembayaran digital (seperti cashback koin atau diskon langsung) guna mendorong komitmen pembayaran instan dan meminimalisir risiko pesanan yang tidak terselesaikan.",
+    dataAnalystRecommendation2: "Berdasarkan data yang telah dianalisis yaitu pemusatan pendapatan yang mencapai 55% di wilayah Jawa Barat, Banten, dan Jakarta, rekomendasi yang bisa dilakukan adalah memperkuat infrastruktur logistik dengan membangun Regional Fulfillment Center di area Jawa Barat untuk memperpendek jarak pengiriman, menekan biaya operasional, dan mempercepat waktu sampai ke tangan pelanggan.",
+    dataAnalystRecommendation3: "Berdasarkan data yang telah dianalisis yaitu kuatnya karakteristik pembelian grosir pada kategori Perlengkapan Rumah (dengan rerata di atas 50 unit per transaksi), rekomendasi yang bisa dilakukan adalah meluncurkan fitur Tiered Pricing atau harga bertingkat khusus untuk pembelian dalam jumlah besar guna menjaga loyalitas kelompok pembeli reseller dan meningkatkan volume penjualan per transaksi.",
+    dataAnalystRecommendation4: "Berdasarkan data yang telah dianalisis yaitu beban biaya pengiriman yang berkontribusi sebesar ~8% terhadap total pengeluaran pembeli, rekomendasi yang bisa dilakukan adalah menerapkan strategi subsidi ongkir dengan ambang batas minimum belanja tertentu (Threshold Free Shipping) untuk menghilangkan hambatan biaya kirim sekaligus memotivasi pelanggan agar menambah jumlah belanjaan mereka.",
     backendDev: "Pengembangan Backend",
     frontendDev: "Pengembangan Frontend",
     databaseMgmt: "Manajemen Database",
@@ -421,5 +427,3 @@ export const translations: Record<Language, Translations> = {
     essayComingSoon: "Essay akan segera hadir. Kembali lagi nanti untuk membaca pemikiran dan tulisan saya.",
   },
 };
-
-

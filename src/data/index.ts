@@ -11,6 +11,7 @@ export interface Project {
   tags: string[];
   link: string;
   featured: boolean;
+  type: "project" | "personal";
 }
 
 export interface SkillSet {
@@ -30,6 +31,7 @@ export const getProjects = (language: Language): Project[] => {
       tags: ["React", "Full-Stack"],
       link: "https://pg-engineering.com",
       featured: true,
+      type: "project",
     },
     {
       title: "PGE System",
@@ -45,6 +47,7 @@ export const getProjects = (language: Language): Project[] => {
       tags: ["Laravel 11", "Enterprise"],
       link: "#",
       featured: true,
+      type: "project",
     },
     {
       title: "Network Infrastructure",
@@ -55,6 +58,7 @@ export const getProjects = (language: Language): Project[] => {
       tags: ["Linux", "Network"],
       link: "#",
       featured: true,
+      type: "project",
     },
     {
       title: t.dataAnalystProjectTitle,
@@ -64,6 +68,7 @@ export const getProjects = (language: Language): Project[] => {
       tags: ["Python", "Data Analysis", "Pandas"],
       link: "/projects/data-analyst",
       featured: true,
+      type: "personal",
     },
   ];
 };

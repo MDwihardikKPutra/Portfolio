@@ -1,0 +1,19 @@
+0: ﻿order_id
+1: total_qty
+2: total_weight_gr
+3: total_returned_qty
+4: Total Diskon
+5: product_categories
+6: num_product_categories
+7: Status Pesanan
+8: Alasan Pembatalan
+9: Opsi Pengiriman
+10: Metode Pembayaran
+11: Kota/Kabupaten
+12: Provinsi
+13: Ongkos Kirim Dibayar oleh Pembeli
+14: Estimasi Potongan Biaya Pengiriman
+15: Total Pembayaran
+16: Perkiraan Ongkos Kirim
+17: Waktu Pesanan Dibuat
+18: source_file
