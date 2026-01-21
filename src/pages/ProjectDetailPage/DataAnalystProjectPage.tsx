@@ -114,7 +114,7 @@ export const DataAnalystProjectPage = ({
 
                   {/* Chart Container - Payment Risk Trends */}
                   <div className="mb-8">
-                    <h5 className={`text-sm font-semibold mb-4 ${textSecondaryColor}`}>Cancellation Rate by Method (%)</h5>
+                    <h5 className={`text-sm font-semibold mb-4 ${textSecondaryColor}`}>{t.cancellationRateByMethod}</h5>
                     <div style={{ width: '100%', height: 320 }}>
                       <ResponsiveContainer>
                         <BarChart
@@ -161,7 +161,7 @@ export const DataAnalystProjectPage = ({
                                     <p className={`text-2xl font-bold ${textColor}`}>
                                       {payload[0].value}%
                                     </p>
-                                    <p className="text-xs text-rose-500 font-medium">cancel rate</p>
+                                    <p className="text-xs text-rose-500 font-medium">{t.cancelRate}</p>
                                   </div>
                                 );
                               }
@@ -187,14 +187,14 @@ export const DataAnalystProjectPage = ({
                       <table className="w-full text-sm text-left whitespace-nowrap">
                         <thead className="border-b border-gray-200 dark:border-neutral-800">
                           <tr>
-                            <th className={`p-4 font-semibold ${textColor}`}>Payment Method</th>
-                            <th className={`p-4 text-right font-semibold ${textColor}`}>Total Order</th>
-                            <th className={`p-4 text-right font-semibold ${textColor}`}>Success</th>
-                            <th className={`p-4 text-right font-semibold text-rose-500`}>Cancelled</th>
-                            <th className={`p-4 text-right font-semibold ${textColor}`}>Cancel Rate</th>
-                            <th className={`p-4 text-right font-semibold ${textColor}`}>Gross Value</th>
-                            <th className={`p-4 text-right font-semibold text-rose-500`}>Rev. Loss</th>
-                            <th className={`p-4 text-right font-bold ${textColor}`}>Realized Rev.</th>
+                            <th className={`p-4 font-semibold ${textColor}`}>{t.paymentMethod}</th>
+                            <th className={`p-4 text-right font-semibold ${textColor}`}>{t.totalOrder}</th>
+                            <th className={`p-4 text-right font-semibold ${textColor}`}>{t.success}</th>
+                            <th className={`p-4 text-right font-semibold text-rose-500`}>{t.cancelled}</th>
+                            <th className={`p-4 text-right font-semibold ${textColor}`}>{t.cancelRate}</th>
+                            <th className={`p-4 text-right font-semibold ${textColor}`}>{t.grossValue}</th>
+                            <th className={`p-4 text-right font-semibold text-rose-500`}>{t.revenueLoss}</th>
+                            <th className={`p-4 text-right font-bold ${textColor}`}>{t.realizedRevenue}</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 dark:divide-neutral-800">
@@ -229,7 +229,7 @@ export const DataAnalystProjectPage = ({
                           {/* COD */}
                           <tr className="group hover:bg-gray-50 dark:hover:bg-neutral-900/50 transition-colors">
                             <td className={`p-4 font-medium ${textColor}`}>
-                              COD (Bayar di Tempat)
+                              {t.bayarDiTempat}
                             </td>
                             <td className={`p-4 text-right font-mono ${textSecondaryColor}`}>11,538</td>
                             <td className={`p-4 text-right font-mono ${textSecondaryColor}`}>9,994</td>
@@ -254,7 +254,7 @@ export const DataAnalystProjectPage = ({
 
                           {/* ShopeePay */}
                           <tr className="group hover:bg-gray-50 dark:hover:bg-neutral-900/50 transition-colors">
-                            <td className={`p-4 font-medium ${textColor}`}>Saldo ShopeePay</td>
+                            <td className={`p-4 font-medium ${textColor}`}>{t.shopeePayBalance}</td>
                             <td className={`p-4 text-right font-mono ${textSecondaryColor}`}>3,692</td>
                             <td className={`p-4 text-right font-mono ${textSecondaryColor}`}>3,370</td>
                             <td className={`p-4 text-right font-mono font-medium text-rose-500`}>322</td>
@@ -334,7 +334,7 @@ export const DataAnalystProjectPage = ({
                               { name: 'Jawa Barat', value: 26.2, fill: 'url(#blueGradient)' },
                               { name: 'Banten', value: 16.8, fill: 'url(#violetGradient)' },
                               { name: 'Jakarta', value: 12.8, fill: 'url(#cyanGradient)' },
-                              { name: 'Others', value: 44.2, fill: 'url(#slateGradient)' },
+                              { name: t.others, value: 44.2, fill: 'url(#slateGradient)' },
                             ]}
                             cx="50%"
                             cy="50%"
@@ -380,9 +380,9 @@ export const DataAnalystProjectPage = ({
                       <table className="w-full text-sm text-left">
                         <thead>
                           <tr className={`border-b ${isDarkMode ? 'border-neutral-800' : 'border-gray-100'}`}>
-                            <th className={`pb-2 font-medium ${textSecondaryColor}`}>Province</th>
-                            <th className={`pb-2 text-right font-medium ${textSecondaryColor}`}>Revenue</th>
-                            <th className={`pb-2 text-right font-medium ${textSecondaryColor}`}>Share</th>
+                            <th className={`pb-2 font-medium ${textSecondaryColor}`}>{t.province}</th>
+                            <th className={`pb-2 text-right font-medium ${textSecondaryColor}`}>{t.revenue}</th>
+                            <th className={`pb-2 text-right font-medium ${textSecondaryColor}`}>{t.share}</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-neutral-800">
@@ -402,7 +402,7 @@ export const DataAnalystProjectPage = ({
                             <td className={`py-3 text-right font-medium ${textColor}`}>12.8%</td>
                           </tr>
                           <tr className="group">
-                            <td className={`py-3 ${textColor} opacity-60`}>Others</td>
+                            <td className={`py-3 ${textColor} opacity-60`}>{t.others}</td>
                             <td className={`py-3 text-right ${textSecondaryColor} opacity-60`}>Rp 470M</td>
                             <td className={`py-3 text-right font-medium ${textColor} opacity-60`}>44.2%</td>
                           </tr>
@@ -415,11 +415,11 @@ export const DataAnalystProjectPage = ({
                   <div className="space-y-4">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                       <div>
-                        <h5 className={`text-sm font-semibold ${textColor}`}>Ringkasan Analisis Regional dan Risiko</h5>
-                        <p className={`text-xs ${textSecondaryColor}`}>Kombinasi metrik performa, risiko operasional, dan komposisi metode pembayaran per provinsi.</p>
+                        <h5 className={`text-sm font-semibold ${textColor}`}>{t.regionalAnalysisTitle}</h5>
+                        <p className={`text-xs ${textSecondaryColor}`}>{t.regionalAnalysisSubtitle}</p>
                       </div>
                       <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-blue-50 dark:bg-blue-900/10 md:hidden animate-pulse self-start">
-                        <span className="text-[10px] font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wider">Geser Tabel</span>
+                        <span className="text-[10px] font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wider">{t.slideTable}</span>
                         <svg className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
@@ -431,21 +431,21 @@ export const DataAnalystProjectPage = ({
                         <thead>
                           <tr className="bg-gray-50/80 dark:bg-neutral-900/50">
                             <th className={`sticky left-0 z-20 p-3 font-semibold ${textColor} border-r border-b border-gray-200 dark:border-neutral-800 bg-gray-50 dark:bg-[#0a0a0a]`} rowSpan={2}>
-                              Province
+                              {t.province}
                             </th>
-                            <th className={`p-2 text-center font-semibold ${textColor} border-r border-b border-gray-200 dark:border-neutral-800`} colSpan={3}>Performance Overview</th>
-                            <th className={`p-2 text-center font-semibold text-rose-500 border-r border-b border-gray-200 dark:border-neutral-800`} colSpan={1}>Risk Profile</th>
-                            <th className={`p-2 text-center font-semibold ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'} border-b border-gray-200 dark:border-neutral-800`} colSpan={4}>Payment Method Mix (%)</th>
+                            <th className={`p-2 text-center font-semibold ${textColor} border-r border-b border-gray-200 dark:border-neutral-800`} colSpan={3}>{t.performanceOverview}</th>
+                            <th className={`p-2 text-center font-semibold text-rose-500 border-r border-b border-gray-200 dark:border-neutral-800`} colSpan={1}>{t.riskProfile}</th>
+                            <th className={`p-2 text-center font-semibold ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'} border-b border-gray-200 dark:border-neutral-800`} colSpan={4}>{t.paymentMethodMix}</th>
                           </tr>
                           <tr className="bg-gray-50/80 dark:bg-neutral-900/50 text-[11px] uppercase tracking-wider">
-                            <th className={`p-2 text-right font-medium ${textSecondaryColor} border-b border-gray-200 dark:border-neutral-800`}>Orders</th>
-                            <th className={`p-2 text-right font-medium ${textSecondaryColor} border-b border-gray-200 dark:border-neutral-800`}>Revenue</th>
-                            <th className={`p-2 text-right font-medium ${textSecondaryColor} border-r border-b border-gray-200 dark:border-neutral-800`}>AOV</th>
-                            <th className={`p-2 text-right font-medium ${textSecondaryColor} border-r border-b border-gray-200 dark:border-neutral-800`}>Cancel Rate</th>
-                            <th className={`p-2 text-right font-medium ${isDarkMode ? 'text-emerald-500/80' : 'text-emerald-600/80'} border-b border-gray-200 dark:border-neutral-800`}>Digital</th>
-                            <th className={`p-2 text-right font-medium ${textSecondaryColor} border-b border-gray-200 dark:border-neutral-800`}>COD</th>
-                            <th className={`p-2 text-right font-medium text-rose-500/80 border-b border-gray-200 dark:border-neutral-800`}>OTC</th>
-                            <th className={`p-2 text-right font-medium ${textSecondaryColor} border-b border-gray-200 dark:border-neutral-800`}>Bank</th>
+                            <th className={`p-2 text-right font-medium ${textSecondaryColor} border-b border-gray-200 dark:border-neutral-800`}>{t.orders}</th>
+                            <th className={`p-2 text-right font-medium ${textSecondaryColor} border-b border-gray-200 dark:border-neutral-800`}>{t.revenue}</th>
+                            <th className={`p-2 text-right font-medium ${textSecondaryColor} border-r border-b border-gray-200 dark:border-neutral-800`}>{t.aov}</th>
+                            <th className={`p-2 text-right font-medium ${textSecondaryColor} border-r border-b border-gray-200 dark:border-neutral-800`}>{t.cancelRate}</th>
+                            <th className={`p-2 text-right font-medium ${isDarkMode ? 'text-emerald-500/80' : 'text-emerald-600/80'} border-b border-gray-200 dark:border-neutral-800`}>{t.digital}</th>
+                            <th className={`p-2 text-right font-medium ${textSecondaryColor} border-b border-gray-200 dark:border-neutral-800`}>{t.cod}</th>
+                            <th className={`p-2 text-right font-medium text-rose-500/80 border-b border-gray-200 dark:border-neutral-800`}>{t.otc}</th>
+                            <th className={`p-2 text-right font-medium ${textSecondaryColor} border-b border-gray-200 dark:border-neutral-800`}>{t.bank}</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 dark:divide-neutral-800">
@@ -518,23 +518,11 @@ export const DataAnalystProjectPage = ({
                   <div className={`pt-6 border-t ${isDarkMode ? 'border-neutral-800' : 'border-gray-100'}`}>
                     <div className="space-y-4">
                       <div>
-                        <span className={`text-xs font-bold uppercase tracking-wider mb-2 block ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>Analisis Regional dan Risiko Operasional</span>
+                        <span className={`text-xs font-bold uppercase tracking-wider mb-2 block ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>{t.analysis}</span>
                         <div className={`text-sm leading-relaxed ${textSecondaryColor} text-justify space-y-4`}>
-                          <p>
-                            Berdasarkan analisis Order Volume, AOV, Cancellation Rate, dan Payment Method Mix per provinsi, dapat disimpulkan bahwa kekuatan pasar utama berada pada klaster Pulau Jawa, khususnya Jawa Barat, Banten, dan DKI Jakarta. Ketiga wilayah ini bukan unggul karena nilai transaksi yang lebih tinggi, melainkan karena volume pesanan yang besar dengan karakter transaksi yang relatif homogen. AOV yang konsisten di seluruh provinsi inti menunjukkan bahwa perilaku belanja pelanggan serupa, sehingga pertumbuhan revenue di Jawa lebih ditentukan oleh kapasitas pemrosesan order dan kecepatan fulfillment dibandingkan diferensiasi produk atau harga berbasis wilayah.
-                          </p>
-                          <p>
-                            Dari sisi risiko operasional, tingkat pembatalan yang relatif seragam di seluruh provinsi menegaskan bahwa faktor geografis bukan penyebab utama pembatalan pesanan. Risiko pembatalan lebih bersifat sistemik dan berkaitan erat dengan struktur pembayaran, khususnya dominasi metode COD yang mencapai lebih dari separuh transaksi di hampir semua wilayah. Hal ini mengindikasikan bahwa upaya penurunan cancel rate akan lebih efektif jika difokuskan pada kebijakan dan insentif metode pembayaran secara nasional, bukan dengan pendekatan regional atau pembatasan wilayah tertentu.
-                          </p>
-                          <p>
-                            Secara strategis, konsentrasi pasar di Jawa memberikan keunggulan operasional jangka pendek karena memungkinkan optimalisasi logistik, penempatan gudang, dan pengelolaan inventori yang lebih efisien dengan dampak cepat terhadap biaya dan service level. Namun, konsentrasi ini juga menciptakan risiko ketergantungan pada satu klaster volume, bukan karena perbedaan karakter pasar, melainkan karena akumulasi permintaan di satu wilayah geografis. Oleh karena itu, Jawa perlu diposisikan sebagai backbone operasional utama, sementara wilayah di luar Jawa diperlakukan sebagai opsi pertumbuhan jangka menengah hingga panjang.
-                          </p>
-                          <p>
-                            Kategori Lainnya yang menyumbang porsi revenue signifikan menunjukkan bahwa permintaan nasional sudah terbentuk, namun masih terfragmentasi. Dengan karakter AOV, cancel rate, dan payment mix yang relatif seragam, ekspansi ke luar Jawa sebaiknya dilakukan secara bertahap dengan pendekatan berbasis volume, dimulai dari provinsi yang mulai menunjukkan konsistensi permintaan. Pendekatan ini memungkinkan diversifikasi pendapatan tanpa mengorbankan efisiensi operasional yang telah dicapai di Jawa.
-                          </p>
-                          <p>
-                            Secara keseluruhan, data mendukung kesimpulan bahwa prioritas strategis perusahaan saat ini adalah memperkuat efisiensi dan kualitas revenue di klaster Jawa melalui optimasi logistik dan pergeseran metode pembayaran ke kanal digital, sambil menyiapkan fondasi ekspansi nasional yang terukur dan berisiko rendah.
-                          </p>
+                          {t.dataAnalystInsightBMarketAnalysis.split('\n\n').map((para, index) => (
+                            <p key={index}>{para}</p>
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -593,7 +581,7 @@ export const DataAnalystProjectPage = ({
                                   <div className={`p-4 rounded-xl shadow-lg border backdrop-blur-sm ${isDarkMode ? 'bg-neutral-900/90 border-neutral-800' : 'bg-white/90 border-slate-100'}`}>
                                     <p className={`text-xs font-semibold mb-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{label}</p>
                                     <p className={`text-xl font-bold ${textColor} text-indigo-500`}>
-                                      {payload[0].value} <span className="text-sm text-gray-400">units</span>
+                                      {payload[0].value} <span className="text-sm text-gray-400">{t.units}</span>
                                     </p>
                                   </div>
                                 );
@@ -614,31 +602,30 @@ export const DataAnalystProjectPage = ({
                       </ResponsiveContainer>
                     </div>
 
-                    {/* Table Side */}
                     <div className="flex flex-col justify-center">
-                      <table className="w-full text-sm text-left">
+                      <table className="w-full text-sm text-left border-collapse">
                         <thead>
-                          <tr className={`border-b ${isDarkMode ? 'border-neutral-800' : 'border-gray-100'}`}>
-                            <th className={`pb-2 font-medium ${textSecondaryColor}`}>Product Category</th>
-                            <th className={`pb-2 text-right font-medium ${textSecondaryColor}`}>Avg Qty</th>
+                          <tr className={`border-b ${isDarkMode ? 'border-neutral-800' : 'border-gray-200'}`}>
+                            <th className={`pb-3 font-semibold ${textColor}`}>{t.productCategory}</th>
+                            <th className={`pb-3 text-right font-semibold ${textColor}`}>{t.avgQty}</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-neutral-800">
-                          <tr className="group">
-                            <td className={`py-3 ${textColor} font-medium`}>Celengan, Tray, Pisau</td>
-                            <td className={`py-3 text-right font-medium ${textColor}`}>53</td>
+                          <tr className="hover:bg-gray-50/50 dark:hover:bg-neutral-900/30 transition-colors">
+                            <td className={`py-4 ${textColor} font-medium`}>Celengan, Tray, Pisau</td>
+                            <td className={`py-4 text-right font-mono font-bold ${textColor}`}>53</td>
                           </tr>
-                          <tr className="group">
-                            <td className={`py-3 ${textColor}`}>Botol/Gelas, Mangkok</td>
-                            <td className={`py-3 text-right ${textSecondaryColor}`}>45</td>
+                          <tr className="hover:bg-gray-50/50 dark:hover:bg-neutral-900/30 transition-colors">
+                            <td className={`py-4 ${textColor}`}>Botol/Gelas, Mangkok</td>
+                            <td className={`py-4 text-right font-mono ${textSecondaryColor}`}>45</td>
                           </tr>
-                          <tr className="group">
-                            <td className={`py-3 ${textColor} opacity-80`}>Mangkok, Piring</td>
-                            <td className={`py-3 text-right ${textSecondaryColor} opacity-80`}>27</td>
+                          <tr className="hover:bg-gray-50/50 dark:hover:bg-neutral-900/30 transition-colors">
+                            <td className={`py-4 ${textColor} opacity-80`}>Mangkok, Piring</td>
+                            <td className={`py-4 text-right font-mono ${textSecondaryColor} opacity-80`}>27</td>
                           </tr>
-                          <tr className="group">
-                            <td className={`py-3 ${textColor} opacity-60`}>Baskom, Spatula</td>
-                            <td className={`py-3 text-right ${textSecondaryColor} opacity-60`}>25</td>
+                          <tr className="hover:bg-gray-50/50 dark:hover:bg-neutral-900/30 transition-colors">
+                            <td className={`py-4 ${textColor} opacity-60`}>Baskom, Spatula</td>
+                            <td className={`py-4 text-right font-mono ${textSecondaryColor} opacity-60`}>25</td>
                           </tr>
                         </tbody>
                       </table>
@@ -670,47 +657,53 @@ export const DataAnalystProjectPage = ({
                   </div>
 
                   {/* Detailed Financial Table: Discount Impact Analysis */}
-                  <div className="mb-8 overflow-hidden rounded-xl bg-gray-50 dark:bg-neutral-900/50">
-                    <table className="w-full text-sm text-left">
-                      <thead className="border-b border-gray-100 dark:border-neutral-800">
-                        <tr>
-                          <th className={`p-4 font-semibold ${textColor}`}>Performance Metric</th>
-                          <th className={`p-4 text-right font-medium ${textSecondaryColor}`}>Non-Discount (Baseline)</th>
-                          <th className={`p-4 text-right font-bold ${textColor}`}>With Discount (Promo)</th>
-                          <th className={`p-4 text-right font-semibold ${textColor}`}>Correlation / Impact</th>
+                  <div className="mb-8 overflow-x-auto rounded-xl border border-gray-200 dark:border-neutral-800 shadow-sm relative">
+                    <table className="w-full text-sm text-left whitespace-nowrap border-separate border-spacing-0">
+                      <thead>
+                        <tr className="bg-gray-50/80 dark:bg-neutral-900/50">
+                          <th className={`p-4 font-semibold ${textColor} border-b border-gray-200 dark:border-neutral-800`}>{t.performanceMetric}</th>
+                          <th className={`p-4 text-right font-medium ${textSecondaryColor} border-b border-gray-200 dark:border-neutral-800`}>{t.nonDiscountBaseline}</th>
+                          <th className={`p-4 text-right font-bold ${textColor} border-b border-gray-200 dark:border-neutral-800`}>{t.withDiscountPromo}</th>
+                          <th className={`p-4 text-right font-semibold ${textColor} border-b border-gray-200 dark:border-neutral-800`}>{t.correlationImpact}</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-gray-100 dark:divide-neutral-800">
+                      <tbody className="divide-y divide-gray-200 dark:divide-neutral-800">
                         {/* Row 1: AOV */}
-                        <tr className="group hover:bg-gray-50 dark:hover:bg-neutral-900/50 transition-colors">
-                          <td className={`p-4 font-medium ${textColor}`}>Avg. Order Value (Basket Size)</td>
+                        <tr className="hover:bg-gray-50/50 dark:hover:bg-neutral-900/30 transition-colors">
+                          <td className={`p-4 font-medium ${textColor}`}>{t.basketSize}</td>
                           <td className={`p-4 text-right font-mono ${textSecondaryColor}`}>Rp 49,212</td>
                           <td className={`p-4 text-right font-mono font-bold ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>Rp 276,528</td>
-                          <td className={`p-4 text-right font-bold text-emerald-500`}>+461% Lift</td>
+                          <td className="p-4 text-right">
+                            <span className="px-2 py-1 rounded text-xs font-bold bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">+{t.lift} 461%</span>
+                          </td>
                         </tr>
 
                         {/* Row 2: Shipping Ratio */}
-                        <tr className="group hover:bg-white dark:hover:bg-neutral-900 transition-colors">
-                          <td className={`p-4 font-medium ${textColor}`}>Shipping Cost (%)</td>
+                        <tr className="hover:bg-gray-50/50 dark:hover:bg-neutral-900/30 transition-colors">
+                          <td className={`p-4 font-medium ${textColor}`}>{t.shippingCostPercent}</td>
                           <td className={`p-4 text-right font-mono ${textSecondaryColor}`}>8.3% of Spend</td>
                           <td className={`p-4 text-right font-mono font-bold ${textColor}`}>7.4% of Spend</td>
-                          <td className={`p-4 text-right text-xs ${textSecondaryColor}`}>More efficient (-0.9%)</td>
+                          <td className="p-4 text-right">
+                            <span className={`px-2 py-1 rounded text-[10px] font-medium ${isDarkMode ? 'bg-neutral-800 text-neutral-400' : 'bg-gray-100 text-gray-500'}`}>{t.moreEfficient} (-0.9%)</span>
+                          </td>
                         </tr>
 
                         {/* Row 3: Absolute Shipping */}
-                        <tr className="group hover:bg-white dark:hover:bg-neutral-900 transition-colors">
-                          <td className={`p-4 font-medium ${textColor}`}>Avg. Shipping Fee Paid</td>
+                        <tr className="hover:bg-gray-50/50 dark:hover:bg-neutral-900/30 transition-colors">
+                          <td className={`p-4 font-medium ${textColor}`}>{t.shippingFeePaid}</td>
                           <td className={`p-4 text-right font-mono ${textSecondaryColor}`}>Rp 4,084</td>
                           <td className={`p-4 text-right font-mono font-bold ${textColor}`}>Rp 20,452</td>
-                          <td className={`p-4 text-right text-xs ${textSecondaryColor}`}>Volume driven increase</td>
+                          <td className="p-4 text-right">
+                            <span className={`px-2 py-1 rounded text-[10px] font-medium ${isDarkMode ? 'bg-neutral-800 text-neutral-400' : 'bg-gray-100 text-gray-500'}`}>{t.volumeDrivenIncrease}</span>
+                          </td>
                         </tr>
 
                         {/* Row 4: Sample Size */}
-                        <tr>
-                          <td className={`p-4 text-xs ${textSecondaryColor}`}>Sample Segment Size</td>
+                        <tr className="opacity-60 italic grayscale-[0.5]">
+                          <td className={`p-4 text-xs ${textSecondaryColor}`}>{t.sampleSize}</td>
                           <td className={`p-4 text-right text-xs ${textSecondaryColor}`}>20,713 Trans (99.4%)</td>
                           <td className={`p-4 text-right text-xs ${textSecondaryColor}`}>135 Trans (0.6%)</td>
-                          <td className={`p-4 text-right text-xs ${textSecondaryColor}`}>High growth potential</td>
+                          <td className={`p-4 text-right text-xs ${textSecondaryColor}`}>{t.highGrowthPotential}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -721,9 +714,11 @@ export const DataAnalystProjectPage = ({
                     <div className="space-y-4">
                       <div>
                         <span className={`text-xs font-bold uppercase tracking-wider mb-2 block ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>{t.analysis}</span>
-                        <p className={`text-sm leading-relaxed ${textSecondaryColor} text-justify`}>
-                          {t.dataAnalystInsightDFinancialAnalysis.replace("Analysis:", "").replace("Analisis:", "").trim()}
-                        </p>
+                        <div className={`text-sm leading-relaxed ${textSecondaryColor} text-justify space-y-4`}>
+                          {t.dataAnalystInsightDFinancialAnalysis.split('\n\n').map((para, index) => (
+                            <p key={index}>{para}</p>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -739,15 +734,30 @@ export const DataAnalystProjectPage = ({
               <p className={`mb-8 text-justify text-sm sm:text-base leading-relaxed ${textSecondaryColor}`}>
                 {t.dataAnalystRecommendationsIntro}
               </p>
-              <div className="space-y-6">
-                {[1, 2, 3, 4].map((num) => (
-                  <div key={num} className={`flex gap-4 text-sm sm:text-base leading-relaxed ${textSecondaryColor}`}>
-                    <span className={`font-bold ${textColor} flex-shrink-0`}>{num}.</span>
-                    <p className="text-justify">
-                      {t[`dataAnalystRecommendation${num}` as keyof typeof t] as string}
-                    </p>
-                  </div>
-                ))}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[1, 2, 3, 4].map((num) => {
+                  const icons = [
+                    <svg key="i1" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>,
+                    <svg key="i2" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
+                    <svg key="i3" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>,
+                    <svg key="i4" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+                  ];
+                  return (
+                    <div key={num} className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-neutral-900/40 border-neutral-800 hover:bg-neutral-900/60' : 'bg-gray-50/50 border-gray-100 hover:bg-gray-50'} transition-all group`}>
+                      <div className="flex gap-4">
+                        <div className={`p-2.5 rounded-xl flex-shrink-0 ${isDarkMode ? 'bg-indigo-900/30 text-indigo-400 group-hover:bg-indigo-900/50' : 'bg-indigo-50 text-indigo-600 group-hover:bg-indigo-100'} transition-colors`}>
+                          {icons[num - 1]}
+                        </div>
+                        <div className="space-y-2">
+                          <span className={`text-[10px] font-bold uppercase tracking-widest ${isDarkMode ? 'text-indigo-400/70' : 'text-indigo-500/70'}`}>{t.recommendation} #{num}</span>
+                          <p className={`text-sm leading-relaxed ${textSecondaryColor} text-justify`}>
+                            {t[`dataAnalystRecommendation${num}` as keyof typeof t] as string}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </section >
 

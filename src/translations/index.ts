@@ -119,6 +119,50 @@ export interface Translations {
   pgeOutput: string;
   essay: string;
   essayComingSoon: string;
+  // Data Analyst Project Specific
+  province: string;
+  performanceOverview: string;
+  riskProfile: string;
+  paymentMethodMix: string;
+  orders: string;
+  revenue: string;
+  aov: string;
+  cancelRate: string;
+  digital: string;
+  cod: string;
+  otc: string;
+  bank: string;
+  slideTable: string;
+  productCategory: string;
+  avgQty: string;
+  performanceMetric: string;
+  nonDiscountBaseline: string;
+  withDiscountPromo: string;
+  correlationImpact: string;
+  basketSize: string;
+  shippingCostPercent: string;
+  shippingFeePaid: string;
+  sampleSize: string;
+  highGrowthPotential: string;
+  lift: string;
+  moreEfficient: string;
+  volumeDrivenIncrease: string;
+  regionalAnalysisTitle: string;
+  regionalAnalysisSubtitle: string;
+  recommendation: string;
+  totalOrder: string;
+  success: string;
+  cancelled: string;
+  revenueLoss: string;
+  realizedRevenue: string;
+  grossValue: string;
+  paymentMethod: string;
+  cancellationRateByMethod: string;
+  bayarDiTempat: string;
+  shopeePayBalance: string;
+  share: string;
+  units: string;
+  others: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -204,7 +248,7 @@ export const translations: Record<Language, Translations> = {
       "Find product categories most frequently purchased in Bulk (High Quantity).",
     dataAnalystObjective4:
       "Evaluate the impact of Shipping Costs on total buyer expenditure.",
-    dataAnalystDataEngineeringProcessTitle: "Data Engineering Process (The \"How\")",
+    dataAnalystDataEngineeringProcessTitle: "Data Engineering Process (Technical Steps)",
     dataAnalystDataEngineeringProcess1:
       "Before analysis, raw data was cleaned through several technical stages:",
     dataAnalystDataEngineeringProcess2:
@@ -214,7 +258,7 @@ export const translations: Record<Language, Translations> = {
     dataAnalystKeyInsightsResultsTitle: "Key Insights & Results",
     dataAnalystInsightARiskTitle: "Payment Risk Analysis",
     dataAnalystInsightARiskFindings:
-      "Answering the correlation analysis: There is a strong relationship between payment method and cancellation rate. OTC methods (Indomaret/Alfamart) show the highest risk with ~48% cancellation, whereas digital payments (ShopeePay) are much safer with only 18% cancellation.",
+      "Answering the correlation analysis: There is a strong relationship between payment method and cancellation rate. Cash/OTC methods (Indomaret/Alfamart) show the highest risk with ~48% cancellation, whereas digital payments (ShopeePay) are much safer with only 18% cancellation.",
     dataAnalystInsightARiskAnalysis:
       "Why is this happening? Over-the-counter (OTC) payments create a gap between ordering and paying. Customers order now, but pay later at the store. This makes it easy for them to cancel without penalty. Digital payments require immediate payment, so customers are more committed. For the business, this is a serious issue because nearly 50% of OTC orders never become real sales, making inventory planning difficult. Recommendation: offer small incentives (discounts, cashback) to encourage customers to use digital payments instead.",
     dataAnalystInsightBMarketTitle: "Regional Market Dominance",
@@ -277,6 +321,50 @@ export const translations: Record<Language, Translations> = {
       "PGE System unified all operations in one platform, eliminating data silos. Approval cycles accelerated with automatic data persistence and structured workflows. Management gained real-time visibility into employee activities, leave balances, project progress, and payments through intuitive dashboards. Reporting automated—EAR reports, trip documents, purchase orders, and payment records generate automatically. Complete audit trails ensure transparency and accountability. Enhanced visibility enables comprehensive monitoring of activities, projects, and approvals, improving decision-making and organizational efficiency.",
     essay: "Essay",
     essayComingSoon: "Essays coming soon. Check back later for my thoughts and writings.",
+    // Data Analyst Project Specific
+    province: "Province",
+    performanceOverview: "Performance Overview",
+    riskProfile: "Risk Profile",
+    paymentMethodMix: "Payment Method Mix (%)",
+    orders: "Orders",
+    revenue: "Revenue",
+    aov: "AOV",
+    cancelRate: "Cancel Rate",
+    digital: "Digital",
+    cod: "COD",
+    otc: "OTC",
+    bank: "Bank",
+    slideTable: "Slide Table",
+    productCategory: "Product Category",
+    avgQty: "Avg Qty",
+    performanceMetric: "Performance Metric",
+    nonDiscountBaseline: "Non-Discount (Baseline)",
+    withDiscountPromo: "With Discount (Promo)",
+    correlationImpact: "Correlation / Impact",
+    basketSize: "Avg. Order Value (Basket Size)",
+    shippingCostPercent: "Shipping Cost (%)",
+    shippingFeePaid: "Avg. Shipping Fee Paid",
+    sampleSize: "Sample Segment Size",
+    highGrowthPotential: "High growth potential",
+    lift: "Lift",
+    moreEfficient: "More efficient",
+    volumeDrivenIncrease: "Volume driven increase",
+    regionalAnalysisTitle: "Regional Analysis & Operational Risk Summary",
+    regionalAnalysisSubtitle: "Combination of performance metrics, operational risk, and payment method composition per province.",
+    recommendation: "Recommendation",
+    totalOrder: "Total Order",
+    success: "Success",
+    cancelled: "Cancelled",
+    revenueLoss: "Rev. Loss",
+    realizedRevenue: "Realized Rev.",
+    grossValue: "Gross Value",
+    paymentMethod: "Payment Method",
+    cancellationRateByMethod: "Cancellation Rate by Method (%)",
+    bayarDiTempat: "COD (Cash on Delivery)",
+    shopeePayBalance: "ShopeePay Balance",
+    share: "Share",
+    units: "units",
+    others: "Others",
   },
   id: {
     about: "Tentang",
@@ -345,7 +433,7 @@ export const translations: Record<Language, Translations> = {
     project4Category: "Analisis & Strategi Data",
     project4Desc: "Strategi Data E-Commerce: Analisis Risiko Pembayaran & Wawasan Pasar 2024-2025",
     dataAnalystProjectTitle: "E-Commerce Market Insights & Payment Risk Analysis 2024-2025",
-    dataAnalystProjectRole: "Peran: System Analyst & Data Engineer",
+    dataAnalystProjectRole: "Peran: Analis Sistem & Insinyur Data",
     dataAnalystProjectTools: "Alat: Python (Pandas), Google Colab, Tabulate",
     dataSource: "Sumber Data",
     executiveSummary: "1. Ringkasan Eksekutif",
@@ -357,37 +445,37 @@ export const translations: Record<Language, Translations> = {
     dataAnalystObjective2:
       "Mengidentifikasi Provinsi dengan kontribusi pembayaran terbesar untuk pemetaan pasar.",
     dataAnalystObjective3:
-      "Menemukan kategori produk yang paling sering dibeli secara Grosir (High Quantity).",
+      "Menemukan kategori produk yang paling sering dibeli secara Grosir (Jumlah Tinggi).",
     dataAnalystObjective4:
       "Mengevaluasi dampak Biaya Ongkos Kirim terhadap total pengeluaran pembeli.",
-    dataAnalystDataEngineeringProcessTitle: "Proses Rekayasa Data (The \"How\")",
+    dataAnalystDataEngineeringProcessTitle: "Proses Rekayasa Data (Langkah-langkah)",
     dataAnalystDataEngineeringProcess1:
       "Sebelum analisis dilakukan, data mentah dibersihkan melalui beberapa tahap teknis:",
     dataAnalystDataEngineeringProcess2:
-      "Data Splitting: Memecah kolom product_categories yang berisi multi-kategori menjadi baris tunggal agar setiap kategori terhitung secara akurat (Explode logic).",
+      "Pemisahan Data: Memecah kolom product_categories yang berisi multi-kategori menjadi baris tunggal agar setiap kategori terhitung secara akurat (Logika pecah baris).",
     dataAnalystDataEngineeringProcess3:
       "Data Standardization: Menyeragamkan penulisan nama provinsi dan kategori produk. Feature Engineering: Membuat kolom baru Tingkat Pembatalan (%) dan mengelompokkan status pesanan menjadi 'Selesai' vs 'Batal'.",
     dataAnalystKeyInsightsResultsTitle: "Wawasan Utama & Hasil",
     dataAnalystInsightARiskTitle: "Analisis Risiko Pembayaran",
     dataAnalystInsightARiskFindings:
-      "Menjawab analisis korelasi: Terdapat hubungan kuat antara metode pembayaran dengan tingkat pembatalan. Metode OTC (Indomaret/Alfamart) memiliki risiko tertinggi (~48% batal), sedangkan pembayaran digital jauh lebih aman (hanya 18% batal).",
+      "Menjawab analisis korelasi: Terdapat hubungan kuat antara metode pembayaran dengan tingkat pembatalan. Metode tunai/OTC (Indomaret/Alfamart) memiliki risiko tertinggi (~48% batal), sedangkan pembayaran digital jauh lebih aman (hanya 18% batal).",
     dataAnalystInsightARiskAnalysis:
-      "Data menunjukkan adanya korelasi kuat antara metode pembayaran dan tingkat pembatalan, baik secara persentase maupun dampak finansial. Metode OTC seperti Indomaret i.Saku dan Alfamart Dan+Dan berada pada kategori high risk dengan cancel rate mendekati 50 persen, yang menandakan rendahnya komitmen pelanggan akibat adanya jeda antara pemesanan dan pembayaran. Walaupun kontribusi volumenya kecil, hampir setengah dari Gross Value pada metode ini tidak pernah terealisasi menjadi pendapatan, sehingga secara operasional tidak efisien dan berisiko untuk dipertahankan dalam skala besar.\n\nCOD mencatat cancel rate sebesar 13,4 persen dengan revenue loss terbesar secara nominal yaitu Rp 63,1 miliar. Tingginya pembatalan pada COD terutama disebabkan oleh friksi di tahap pengiriman terakhir, seperti pelanggan tidak berada di lokasi saat kurir datang, perubahan keputusan karena harus membayar saat barang tiba, atau penolakan paket akibat ekspektasi harga dan produk yang belum sepenuhnya matang saat checkout. Berbeda dengan pembayaran digital instan, COD tidak menciptakan komitmen finansial di awal, sehingga keputusan pembelian masih bersifat tentatif hingga barang diterima.\n\nSebaliknya, metode pembayaran digital instan seperti Saldo ShopeePay menunjukkan kualitas revenue paling sehat dengan cancel rate terendah sebesar 8,7 persen dan rasio realisasi pendapatan yang paling optimal terhadap Gross Value. Pola ini menegaskan bahwa semakin tinggi komitmen pelanggan di awal transaksi, semakin rendah risiko pembatalan dan semakin baik kualitas pendapatan, sehingga strategi bisnis sebaiknya difokuskan pada penguatan pembayaran digital dan pengendalian risiko pada metode COD.",
+      "Data menunjukkan adanya korelasi kuat antara metode pembayaran dan tingkat pembatalan, baik secara persentase maupun dampak finansial. Metode tunai seperti Indomaret i.Saku dan Alfamart Dan+Dan berada pada kategori risiko tinggi dengan tingkat pembatalan mendekati 50 persen, yang menandakan rendahnya komitmen pelanggan akibat adanya jeda antara pemesanan dan pembayaran. Walaupun kontribusi volumenya kecil, hampir setengah dari Nilai Kotor (Gross Value) pada metode ini tidak pernah terealisasi menjadi pendapatan, sehingga secara operasional tidak efisien dan berisiko untuk dipertahankan dalam skala besar.\n\nCOD mencatat tingkat pembatalan sebesar 13,4 persen dengan kerugian pendapatan terbesar secara nominal yaitu Rp 63,1 miliar. Tingginya pembatalan pada COD terutama disebabkan oleh hambatan di tahap pengiriman terakhir, seperti pelanggan tidak berada di lokasi saat kurir datang, perubahan keputusan karena harus membayar saat barang tiba, atau penolakan paket akibat ekspektasi harga dan produk yang belum sepenuhnya matang saat konfirmasi pesanan (checkout). Berbeda dengan pembayaran digital instan, COD tidak menciptakan komitmen finansial di awal, sehingga keputusan pembelian masih bersifat sementara hingga barang diterima.\n\nSebaliknya, metode pembayaran digital instan seperti Saldo ShopeePay menunjukkan kualitas pendapatan paling sehat dengan tingkat pembatalan terendah sebesar 8,7 persen dan rasio realisasi pendapatan yang paling optimal terhadap Nilai Kotor. Pola ini menegaskan bahwa semakin tinggi komitmen pelanggan di awal transaksi, semakin rendah risiko pembatalan dan semakin baik kualitas pendapatan, sehingga strategi bisnis sebaiknya difokuskan pada penguatan pembayaran digital dan pengendalian risiko pada metode COD.",
     dataAnalystInsightBMarketTitle: "Dominasi Pasar Regional",
     dataAnalystInsightBMarketFindings:
-      "Terkait pemetaan pasar: Jawa Barat teridentifikasi sebagai provinsi dengan kontribusi pembayaran terbesar (Rp 277 Juta, 26% share), diikuti Banten dan Jakarta. Ini mengonfirmasi bahwa mayoritas pendapatan terpusat di wilayah Jawa bagian barat.",
+      "Terkait pemetaan pasar: Jawa Barat teridentifikasi sebagai provinsi dengan kontribusi pembayaran terbesar (Rp 277 Juta, 26% pangsa pasar), diikuti Banten dan Jakarta. Ini mengonfirmasi bahwa mayoritas pendapatan terpusat di wilayah Jawa bagian barat.",
     dataAnalystInsightBMarketAnalysis:
-      "Konsentrasi ini sebenarnya ada sisi baik dan buruknya. Baik: kita bisa optimalkan logistik dengan menempatkan gudang di Jawa Barat dan Banten untuk melayani mayoritas customer dengan cepat dan murah. Buruk: kita terlalu bergantung pada satu wilayah. Kategori 'Lainnya' (44,2%) menunjukkan ada permintaan di banyak provinsi, tapi tersebar. Strategi: fokus optimasi gudang di Jawa untuk hasil cepat, lalu bertahap ekspansi ke wilayah potensial lain seperti Sumatera dan Sulawesi untuk diversifikasi pendapatan.",
+      "Berdasarkan analisis Volume Pesanan, Rerata Nilai Pesanan (AOV), Tingkat Pembatalan, dan Komposisi Metode Pembayaran per provinsi, dapat disimpulkan bahwa kekuatan pasar utama berada pada klaster Pulau Jawa, khususnya Jawa Barat, Banten, dan DKI Jakarta. Ketiga wilayah ini bukan unggul karena nilai transaksi yang lebih tinggi, melainkan karena volume pesanan yang besar dengan karakter transaksi yang relatif serupa. AOV yang konsisten di seluruh provinsi inti menunjukkan bahwa perilaku belanja pelanggan setara, sehingga pertumbuhan pendapatan di Jawa lebih ditentukan oleh kapasitas pemrosesan pesanan dan kecepatan pemenuhan pesanan (fulfillment) dibandingkan diferensiasi produk atau harga berbasis wilayah.\n\nDari sisi risiko operasional, tingkat pembatalan yang relatif serupa di seluruh provinsi menegaskan bahwa faktor geografis bukan penyebab utama pembatalan pesanan. Risiko pembatalan lebih bersifat sistemik dan berkaitan erat dengan struktur pembayaran, khususnya dominasi metode COD yang mencapai lebih dari separuh transaksi di hampir semua wilayah. Hal ini mengindikasikan bahwa upaya penurunan tingkat pembatalan akan lebih efektif jika difokuskan pada kebijakan dan insentif metode pembayaran secara nasional, bukan dengan pendekatan regional atau pembatasan wilayah tertentu.\n\nSecara strategis, konsentrasi pasar di Jawa memberikan keunggulan operasional jangka pendek karena memungkinkan optimalisasi logistik, penempatan gudang, dan pengelolaan stok yang lebih efisien dengan dampak cepat terhadap biaya dan tingkat layanan (service level). Namun, konsentrasi ini juga menciptakan risiko ketergantungan pada satu wilayah volume, bukan karena perbedaan karakter pasar, melainkan karena akumulasi permintaan di satu wilayah geografis. Oleh karena itu, Jawa perlu diposisikan sebagai tulang punggung (backbone) operasional utama, sementara wilayah di luar Jawa diperlakukan sebagai opsi pertumbuhan jangka menengah hingga panjang.\n\nKategori Lainnya yang menyumbang porsi pendapatan signifikan menunjukkan bahwa permintaan nasional sudah terbentuk, namun masih terfragmentasi. Dengan karakter AOV, tingkat pembatalan, dan komposisi pembayaran yang relatif serupa, ekspansi ke luar Jawa sebaiknya dilakukan secara bertahap dengan pendekatan berbasis volume, dimulai dari provinsi yang mulai menunjukkan konsistensi permintaan. Pendekatan ini memungkinkan diversifikasi pendapatan tanpa mengorbankan efisiensi operasional yang telah dicapai di Jawa.\n\nSecara keseluruhan, data mendukung kesimpulan bahwa prioritas strategis perusahaan saat ini adalah memperkuat efisiensi dan kualitas pendapatan di klaster Jawa melalui optimasi logistik dan pergeseran metode pembayaran ke kanal digital, sambil menyiapkan fondasi ekspansi nasional yang terukur dan berisiko rendah.",
     dataAnalystInsightCWholesaleTitle: "Produk Favorit Grosir",
     dataAnalystInsightCWholesaleFindings:
-      "Mengenai kategori Grosir (High Quantity): 'Perlengkapan Rumah' adalah kategori #1 yang paling sering dibeli massal (rata-rata 53 unit/transaksi), khususnya Celengan dan Nampan. 'Peralatan Makan' ada di posisi #2 (45 unit). Kategori ini adalah penggerak utama volume grosir.",
+      "Mengenai kategori Grosir (Jumlah Tinggi): 'Perlengkapan Rumah' adalah kategori #1 yang paling sering dibeli massal (rata-rata 53 unit/transaksi), khususnya Celengan dan Nampan. 'Peralatan Makan' ada di posisi #2 (45 unit). Kategori ini adalah penggerak utama volume grosir.",
     dataAnalystInsightCWholesaleAnalysis:
       "Produk-produk ini populer di kalangan reseller karena murah, semua orang butuh, dan cepat laku. Jumlah tinggi (53 unit) mengkonfirmasi pembeli ini kebanyakan reseller, bukan konsumen biasa. Peluang bisnis: buat promo 'Beli Banyak Lebih Hemat' untuk mendorong pesanan lebih besar. Pertimbangkan juga bundling produk terkait (misal: nampan + set alat makan) untuk tingkatkan nilai pesanan dan permudah belanja reseller.",
     dataAnalystInsightDFinancialTitle: "Dampak Finansial (Ongkir & Diskon)",
     dataAnalystInsightDFinancialFindings:
       "Analisis dampak ongkos kirim menunjukkan bahwa biaya logistik (rata-rata Rp 4.190) berkontribusi sebesar 8,27% terhadap total nilai transaksi. Rasio yang signifikan ini mengindikasikan bahwa ongkir menjadi hambatan psikologis utama bagi pelanggan, yang berpengaruh langsung terhadap keputusan pembelian dan potensi pembatalan pesanan.",
     dataAnalystInsightDFinancialAnalysis:
-      "Berdasarkan tabel performa, penerapan diskon menunjukkan dampak yang signifikan terhadap nilai transaksi. Avg. Order Value (AOV) meningkat drastis dari Rp 49.212 pada kondisi non-diskon menjadi Rp 276.528 saat promo, atau naik sebesar +461%. Kenaikan ini mengindikasikan bahwa program diskon efektif mendorong pembelian dengan volume lebih besar, meskipun kontribusinya masih berasal dari segmen kecil (0,6% dari total transaksi). Hal ini menunjukkan adanya potensi pertumbuhan dari segmen pembeli bernilai tinggi, seperti reseller atau bulk buyer, yang lebih responsif terhadap insentif harga. \n\nDari sisi ongkos kirim, meskipun rata-rata biaya pengiriman yang dibayarkan meningkat secara nominal (Rp 4.084 menjadi Rp 20.452), proporsinya terhadap total belanja justru menurun dari 8,3% menjadi 7,4%. Ini menandakan efisiensi biaya logistik yang lebih baik seiring dengan meningkatnya ukuran keranjang belanja. Dengan kata lain, ongkir menjadi relatif lebih ringan bagi konsumen ketika nilai pesanan lebih besar, sehingga promo tidak hanya meningkatkan pendapatan per transaksi tetapi juga memperbaiki struktur biaya secara keseluruhan.",
+      "Berdasarkan tabel performa, penerapan diskon menunjukkan dampak yang signifikan terhadap nilai transaksi. Rerata Nilai Pesanan (AOV) meningkat drastis dari Rp 49.212 pada kondisi tanpa diskon menjadi Rp 276.528 saat promo, atau naik sebesar +461%. Kenaikan ini mengindikasikan bahwa program diskon efektif mendorong pembelian dengan volume lebih besar, meskipun kontribusinya masih berasal dari segmen kecil (0,6% dari total transaksi). Hal ini menunjukkan adanya potensi pertumbuhan dari segmen pembeli bernilai tinggi, seperti reseller atau pembeli borongan, yang lebih responsif terhadap insentif harga. \n\nDari sisi ongkos kirim, meskipun rata-rata biaya pengiriman yang dibayarkan meningkat secara nominal (Rp 4.084 menjadi Rp 20.452), proporsinya terhadap total belanja justru menurun dari 8,3% menjadi 7,4%. Ini menandakan efisiensi biaya logistik yang lebih baik seiring dengan meningkatnya ukuran keranjang belanja. Dengan kata lain, ongkir menjadi relatif lebih ringan bagi konsumen ketika nilai pesanan lebih besar, sehingga promo tidak hanya meningkatkan pendapatan per transaksi tetapi juga memperbaiki struktur biaya secara keseluruhan.",
     dataAnalystBusinessRecommendationsTitle: "Rekomendasi Bisnis",
     dataAnalystRecommendationsIntro: "Berdasarkan hasil pengolahan data transaksi yang telah dilakukan, berikut adalah beberapa rekomendasi strategis yang dapat diterapkan:",
     dataAnalystRecommendation1: "Berdasarkan data yang telah dianalisis yaitu adanya tingkat pembatalan yang sangat tinggi pada metode pembayaran tunai/OTC seperti Indomaret dan Alfamart (mencapai ~48%), rekomendasi yang bisa dilakukan adalah memberikan insentif khusus untuk pembayaran digital (seperti cashback koin atau diskon langsung) guna mendorong komitmen pembayaran instan dan meminimalisir risiko pesanan yang tidak terselesaikan.",
@@ -434,5 +522,49 @@ export const translations: Record<Language, Translations> = {
       "PGE System menyatukan seluruh operasi dalam satu platform, menghilangkan data silo. Siklus approval dipercepat dengan persistensi data otomatis dan workflow terstruktur. Manajemen memperoleh visibilitas real-time terhadap aktivitas karyawan, sisa cuti, progress project, dan pembayaran melalui dashboard intuitif. Pelaporan terotomatisasi—laporan EAR, dokumen perjalanan dinas, purchase order, dan catatan pembayaran ter-generate otomatis. Audit trail lengkap memastikan transparansi dan akuntabilitas. Visibilitas yang ditingkatkan memungkinkan monitoring menyeluruh aktivitas, project, dan approval, meningkatkan pengambilan keputusan dan efisiensi organisasi.",
     essay: "Essay",
     essayComingSoon: "Essay akan segera hadir. Kembali lagi nanti untuk membaca pemikiran dan tulisan saya.",
+    // Data Analyst Project Specific
+    province: "Provinsi",
+    performanceOverview: "Ringkasan Performa",
+    riskProfile: "Profil Risiko",
+    paymentMethodMix: "Komposisi Metode Pembayaran (%)",
+    orders: "Pesanan",
+    revenue: "Pendapatan",
+    aov: "AOV",
+    cancelRate: "Tingkat Pembatalan",
+    digital: "Digital",
+    cod: "COD",
+    otc: "OTC",
+    bank: "Bank",
+    slideTable: "Geser Tabel",
+    productCategory: "Kategori Produk",
+    avgQty: "Rerata Qty",
+    performanceMetric: "Metrik Performa",
+    nonDiscountBaseline: "Tanpa Diskon (Baseline)",
+    withDiscountPromo: "Dengan Diskon (Promo)",
+    correlationImpact: "Korelasi / Dampak",
+    basketSize: "Rerata Nilai Pesanan (Basket Size)",
+    shippingCostPercent: "Biaya Ongkir (%)",
+    shippingFeePaid: "Rerata Ongkir yang Dibayar",
+    sampleSize: "Ukuran Sampel Segmen",
+    highGrowthPotential: "Potensi pertumbuhan tinggi",
+    lift: "Lonjakan",
+    moreEfficient: "Lebih efisien",
+    volumeDrivenIncrease: "Peningkatan didorong volume",
+    regionalAnalysisTitle: "Ringkasan Analisis Regional dan Risiko Operasional",
+    regionalAnalysisSubtitle: "Kombinasi metrik performa, risiko operasional, dan komposisi metode pembayaran per provinsi.",
+    recommendation: "Rekomendasi",
+    totalOrder: "Total Pesanan",
+    success: "Berhasil",
+    cancelled: "Dibatalkan",
+    revenueLoss: "Rugi Pendapatan",
+    realizedRevenue: "Pendapatan Terealisasi",
+    grossValue: "Nilai Kotor",
+    paymentMethod: "Metode Pembayaran",
+    cancellationRateByMethod: "Tingkat Pembatalan per Metode (%)",
+    bayarDiTempat: "COD (Bayar di Tempat)",
+    shopeePayBalance: "Saldo ShopeePay",
+    share: "Pangsa Pasar",
+    units: "unit",
+    others: "Lainnya",
   },
 };
