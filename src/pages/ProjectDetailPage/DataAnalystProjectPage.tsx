@@ -727,39 +727,24 @@ export const DataAnalystProjectPage = ({
             </section >
 
             {/* Business Recommendations */}
-            < section className="mb-20 pb-32 pt-8 border-t border-gray-200 dark:border-gray-800" >
+            <section className="mb-20 pb-32 pt-8 border-t border-gray-200 dark:border-gray-800" >
               <h3 className="text-sm sm:text-base font-bold mb-4 uppercase tracking-wider opacity-80">
                 {t.dataAnalystBusinessRecommendationsTitle}
               </h3>
-              <p className={`mb-8 text-justify text-sm sm:text-base leading-relaxed ${textSecondaryColor}`}>
+              <p className={`mb-6 text-justify text-sm sm:text-base leading-relaxed ${textSecondaryColor}`}>
                 {t.dataAnalystRecommendationsIntro}
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {[1, 2, 3, 4].map((num) => {
-                  const icons = [
-                    <svg key="i1" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>,
-                    <svg key="i2" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
-                    <svg key="i3" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>,
-                    <svg key="i4" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
-                  ];
-                  return (
-                    <div key={num} className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-neutral-900/40 border-neutral-800 hover:bg-neutral-900/60' : 'bg-gray-50/50 border-gray-100 hover:bg-gray-50'} transition-all group`}>
-                      <div className="flex gap-4">
-                        <div className={`p-2.5 rounded-xl flex-shrink-0 ${isDarkMode ? 'bg-indigo-900/30 text-indigo-400 group-hover:bg-indigo-900/50' : 'bg-indigo-50 text-indigo-600 group-hover:bg-indigo-100'} transition-colors`}>
-                          {icons[num - 1]}
-                        </div>
-                        <div className="space-y-2">
-                          <span className={`text-[10px] font-bold uppercase tracking-widest ${isDarkMode ? 'text-indigo-400/70' : 'text-indigo-500/70'}`}>{t.recommendation} #{num}</span>
-                          <p className={`text-sm leading-relaxed ${textSecondaryColor} text-justify`}>
-                            {t[`dataAnalystRecommendation${num}` as keyof typeof t] as string}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </section >
+              <ul className="space-y-4 ml-1">
+                {[1, 2, 3, 4].map((num) => (
+                  <li key={num} className="flex gap-3 items-start">
+                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 flex-shrink-0" />
+                    <p className={`text-sm leading-relaxed ${textSecondaryColor} text-justify`}>
+                      {t[`dataAnalystRecommendation${num}` as keyof typeof t] as string}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </section>
 
           </motion.div >
         </div >
