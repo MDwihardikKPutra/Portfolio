@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import type { Translations } from "../../translations";
 import { getProjects, type Language } from "../../data";
 
@@ -25,25 +26,49 @@ export const ProjectsPage = ({ t, isDarkMode, language }: ProjectsPageProps) => 
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-12 pb-12">
-              {projects.map((project) => (
-                <a
-                  key={project.title}
-                  href={project.link}
-                  target={project.link !== "#" ? "_blank" : "_self"}
-                  rel={project.link !== "#" ? "noopener noreferrer" : ""}
-                  className="block group"
-                >
-                  <h3 className="text-sm font-bold mb-1.5">
-                    {project.title}
-                  </h3>
-                  <div className={`text-[10px] sm:text-xs mb-1.5 ${dateColor}`}>
-                    {project.category}
-                  </div>
-                  <p className={`text-[10px] sm:text-xs leading-relaxed ${descColor} text-justify`}>
-                    {project.description}
-                  </p>
-                </a>
-              ))}
+              {projects.map((project) => {
+                const isInternal = project.link.startsWith("/");
+                const isAnchor = project.link === "#";
+
+                const content = (
+                  <>
+                    <h3 className="text-sm font-bold mb-1.5">
+                      {project.title}
+                    </h3>
+                    <div className={`text-[10px] sm:text-xs mb-1.5 ${dateColor}`}>
+                      {project.category}
+                    </div>
+                    <p className={`text-[10px] sm:text-xs leading-relaxed ${descColor} text-justify`}>
+                      {project.description}
+                    </p>
+                  </>
+                );
+
+                if (isInternal) {
+                  return (
+                    <Link
+                      key={project.title}
+                      to={project.link}
+                      className="block group"
+                    >
+                      {content}
+                    </Link>
+                  );
+                }
+
+                return (
+                  <a
+                    key={project.title}
+                    href={project.link}
+                    target={!isAnchor ? "_blank" : "_self"}
+                    rel={!isAnchor ? "noopener noreferrer" : ""}
+                    className={`block group ${isAnchor ? "cursor-default" : ""}`}
+                    onClick={(e) => isAnchor && e.preventDefault()}
+                  >
+                    {content}
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>
