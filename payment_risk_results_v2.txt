@@ -1,0 +1,14 @@
+                           Total_Order  Completed_Order  Cancelled_Order  Cancellation_Rate  Completion_Rate   Gross_Value  Revenue_Loss  Realized_Revenue
+Metode Pembayaran                                                                                                                                         
+COD (Bayar di Tempat)            11538             9994             1544          13.381869        86.618131  4.718197e+08  6.313829e+07       408681420.0
+Saldo ShopeePay                   3692             3370              322           8.721560        91.278440  2.624292e+08  2.288792e+07       239541309.0
+Online Payment                    3170             2582              588          18.548896        81.451104  2.992374e+08  5.550523e+07       243732136.0
+SPayLater                         1485             1264              221          14.882155        85.117845  1.143788e+08  1.702203e+07        97356757.0
+SeaBank Bayar Instan               637              552               85          13.343799        86.656201  4.330455e+07  5.778472e+06        37526074.0
+Kartu Kredit/Debit                 222              193               29          13.063063        86.936937  2.230704e+07  2.913982e+06        19393054.0
+Indomaret/i.Saku                    43               22               21          48.837209        51.162791  8.492396e+06  4.147449e+06         4344947.0
+Alfamart/Alfamidi/Dan+Dan           36               19               17          47.222222        52.777778  9.797173e+06  4.626443e+06         5170730.0
+Pembayaran dibebaskan               18               17                1           5.555556        94.444444  0.000000e+00  0.000000e+00               0.0
+BCA OneKlik                          3                2                1          33.333333        66.666667  1.732500e+05  5.775000e+04          115500.0
+Cicilan Kartu Kredit                 3                3                0           0.000000       100.000000  7.897040e+05  0.000000e+00          789704.0
+Mitra Shopee                         1                0                1         100.000000         0.000000  0.000000e+00  0.000000e+00               0.0

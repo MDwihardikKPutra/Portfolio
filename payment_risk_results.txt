@@ -1,0 +1,14 @@
+                           Total_Order  Cancelled_Order  Realized_Revenue  Revenue_Loss  Gross_Value  Completed_Order  Cancellation_Rate  Completion_Rate
+Metode Pembayaran                                                                                                                                        
+COD (Bayar di Tempat)            11538             1544         408681420             0    408681420             9994          13.381869        86.618131
+Saldo ShopeePay                   3692              322         239541309             0    239541309             3370           8.721560        91.278440
+Online Payment                    3170              588         243732136             0    243732136             2582          18.548896        81.451104
+SPayLater                         1485              221          97356757             0     97356757             1264          14.882155        85.117845
+SeaBank Bayar Instan               637               85          37526074             0     37526074              552          13.343799        86.656201
+Kartu Kredit/Debit                 222               29          19393054             0     19393054              193          13.063063        86.936937
+Indomaret/i.Saku                    43               21           4344947             0      4344947               22          48.837209        51.162791
+Alfamart/Alfamidi/Dan+Dan           36               17           5170730             0      5170730               19          47.222222        52.777778
+Pembayaran dibebaskan               18                1                 0             0            0               17           5.555556        94.444444
+BCA OneKlik                          3                1            115500             0       115500                2          33.333333        66.666667
+Cicilan Kartu Kredit                 3                0            789704             0       789704                3           0.000000       100.000000
+Mitra Shopee                         1                1                 0             0            0                0         100.000000         0.000000

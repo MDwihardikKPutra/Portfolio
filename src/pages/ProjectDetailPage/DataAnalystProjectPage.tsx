@@ -115,8 +115,8 @@ export const DataAnalystProjectPage = ({
                   {/* Chart Container - Payment Risk Trends */}
                   <div className="mb-8">
                     <h5 className={`text-sm font-semibold mb-4 ${textSecondaryColor}`}>{t.cancellationRateByMethod}</h5>
-                    <div style={{ width: '100%', height: 320 }}>
-                      <ResponsiveContainer>
+                    <div className="w-full h-[320px] min-h-[320px]">
+                      <ResponsiveContainer width="100%" height="100%">
                         <BarChart
                           data={[
                             { method: 'Indomaret', rate: 48.8 },
@@ -308,8 +308,8 @@ export const DataAnalystProjectPage = ({
                   {/* Unified Chart & Table Container */}
                   <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8`}>
                     {/* Chart Side */}
-                    <div style={{ width: '100%', height: 300 }}>
-                      <ResponsiveContainer>
+                    <div className="w-full h-[300px] min-h-[300px]">
+                      <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                           <defs>
                             <linearGradient id="blueGradient" x1="0" y1="0" x2="1" y2="1">
@@ -543,8 +543,8 @@ export const DataAnalystProjectPage = ({
                   {/* Unified Chart & Table Container */}
                   <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8`}>
                     {/* Chart Side */}
-                    <div style={{ width: '100%', height: 300 }}>
-                      <ResponsiveContainer>
+                    <div className="w-full h-[300px] min-h-[300px]">
+                      <ResponsiveContainer width="100%" height="100%">
                         <AreaChart
                           data={[
                             { category: 'Celengan/Tray', qty: 53 },
