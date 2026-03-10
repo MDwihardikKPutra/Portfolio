@@ -20,7 +20,7 @@ export const DataAnalystProjectPage = ({
 
   return (
     <div className={`h-full ${bgColor} ${textColor} overflow-hidden w-full relative`}>
-      <div className="h-full w-full px-4 sm:px-6 md:px-8 lg:px-12 pt-12 sm:pt-16 pb-8 overflow-y-auto">
+      <div className="h-full w-full px-4 sm:px-6 md:px-8 lg:px-12 pt-12 sm:pt-16 pb-8 overflow-y-auto no-scrollbar">
         <div className="max-w-[1200px] mx-auto">
           {/* Back Button */}
           <motion.div

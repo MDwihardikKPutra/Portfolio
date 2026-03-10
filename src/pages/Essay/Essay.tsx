@@ -16,63 +16,58 @@ export const Essay = ({ t, isDarkMode, language }: EssayProps) => {
   const borderColor = isDarkMode ? "border-[#1a1a1a]" : "border-[#e5e5e5]";
   const hoverBg = isDarkMode ? "hover:bg-[#1a1a1a]" : "hover:bg-[#f5f5f5]";
 
-  const essays = getEssays(language as Language);
+  const essays = getEssays("en" as Language);
 
   return (
     <div className={`h-full ${bgColor} ${textColor} overflow-hidden w-full`}>
-      <div className="h-full w-full px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-20 md:pb-24 overflow-y-auto">
-        <div className="max-w-[1200px] mx-auto">
+      <div className="h-full w-full px-6 md:px-10 lg:px-16 py-6 md:py-8 flex flex-col overflow-hidden">
+        <div className="max-w-[1200px] mx-auto w-full flex flex-col flex-1 overflow-hidden min-h-0">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.4 }}
+            className="mb-3"
           >
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light mb-3 sm:mb-4">
+            <h1 className="text-2xl sm:text-3xl font-light mb-1">
               {t.essay}
             </h1>
           </motion.div>
 
           <motion.div
-            className="space-y-2"
-            initial={{ opacity: 0, y: 20 }}
+            className="flex-1 overflow-hidden min-h-0 flex flex-col"
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
           >
             {essays.length > 0 ? (
-              essays.map((essay, index) => (
-                <Link
-                  key={essay.id}
-                  to={`/essay/${essay.id}`}
-                  className={`block border-t ${borderColor} pt-3 pb-3 transition-all duration-300 ${hoverBg} -mx-1 px-1 rounded`}
-                >
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.05 + index * 0.05 }}
+              <div className="space-y-0">
+                {essays.map((essay) => (
+                  <Link
+                    key={essay.id}
+                    to={`/essay/${essay.id}`}
+                    className={`flex items-center justify-between gap-4 border-t ${borderColor} py-3 transition-all duration-200 ${hoverBg} -mx-1 px-1 rounded group`}
                   >
-                    <div className="flex items-start justify-between gap-2 sm:gap-4">
-                      <div className="flex-1 min-w-0">
-                        <h2 className="text-sm sm:text-base md:text-lg font-light mb-1 sm:mb-1.5 line-clamp-1">
-                          {language === "en" ? essay.title : essay.titleId}
-                        </h2>
-                        <p className={`text-[10px] sm:text-xs leading-relaxed ${textSecondaryColor} mb-1.5 sm:mb-2 line-clamp-2 text-justify`}>
-                          {language === "en" ? essay.excerpt : essay.excerptId}
-                        </p>
-                        <span className={`text-[9px] sm:text-[10px] ${textSecondaryColor}`}>
-                          {new Date(essay.date).toLocaleDateString(language === "en" ? "en-US" : "id-ID", {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
-                          })}
-                        </span>
-                      </div>
+                    <div className="flex-1 min-w-0">
+                      <h2 className="text-sm font-light line-clamp-1 group-hover:underline">
+                        {essay.title}
+                      </h2>
+                      <p className={`text-[10px] leading-relaxed ${textSecondaryColor} line-clamp-1 mt-0.5`}>
+                        {essay.excerpt}
+                      </p>
                     </div>
-                  </motion.div>
-                </Link>
-              ))
+                    <span className={`text-[10px] ${textSecondaryColor} whitespace-nowrap shrink-0`}>
+                      {new Date(essay.date).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </span>
+                  </Link>
+                ))}
+              </div>
             ) : (
-              <div className={`border-t ${borderColor} pt-6`}>
-                <p className={`text-xs sm:text-sm leading-relaxed ${textSecondaryColor}`}>
+              <div className={`border-t ${borderColor} pt-4`}>
+                <p className={`text-xs leading-relaxed ${textSecondaryColor}`}>
                   {t.essayComingSoon}
                 </p>
               </div>

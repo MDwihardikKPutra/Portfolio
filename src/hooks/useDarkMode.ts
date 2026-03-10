@@ -4,14 +4,14 @@ export const useDarkMode = () => {
   // Initialize with localStorage, default to light mode
   const getInitialMode = (): boolean => {
     if (typeof window === 'undefined') return false;
-    
+
     const savedMode = localStorage.getItem("darkMode");
     if (savedMode !== null) {
       return savedMode === "true";
     }
-    
-    // Default to light mode
-    return false;
+
+    // Default to dark mode
+    return true;
   };
 
   const [isDarkMode, setIsDarkMode] = useState(getInitialMode);

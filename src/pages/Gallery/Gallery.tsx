@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { Translations } from "../../translations";
 import { galleryPhotos } from "../../utils/preloadImages";
 
@@ -8,131 +8,90 @@ interface GalleryProps {
   isDarkMode: boolean;
 }
 
-// Fisher-Yates shuffle algorithm
-const shuffleArray = <T,>(array: T[]): T[] => {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-};
-
-// Shuffle ensuring no image is in the same position
-const shuffleWithoutSamePosition = (current: string[], all: string[]): string[] => {
-  let shuffled: string[];
-  let attempts = 0;
-  const maxAttempts = 50;
-  
-  do {
-    shuffled = shuffleArray(all);
-    attempts++;
-  } while (
-    attempts < maxAttempts &&
-    shuffled.some((photo, index) => photo === current[index])
-  );
-  
-  return shuffled;
-};
-
 export const Gallery = ({ t, isDarkMode }: GalleryProps) => {
-  const bgColor = isDarkMode ? "bg-[#0a0a0a]" : "bg-white";
-  const textColor = isDarkMode ? "text-[#f5f5f5]" : "text-[#1a1a1a]";
-  const textSecondaryColor = isDarkMode ? "text-[#a0a0a0]" : "text-[#666666]";
-  const borderColor = isDarkMode ? "border-[#2a2a2a]" : "border-[#e5e5e5]";
-
-  // Photos from preloaded images - shuffled initially
-  const [photos, setPhotos] = useState<string[]>(() => shuffleArray(galleryPhotos));
-  const [shuffleKey, setShuffleKey] = useState(0);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.16, 1, 0.3, 1],
-      },
-    },
-  };
-
-  // Auto-shuffle images every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPhotos((current) => {
-        const newPhotos = shuffleWithoutSamePosition(current, galleryPhotos);
-        setShuffleKey(prev => prev + 1);
-        return newPhotos;
-      });
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
+  const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
 
   return (
-    <div className={`h-screen h-[100dvh] ${bgColor} ${textColor} relative overflow-hidden w-full`}>
-      <div className="h-full w-full flex flex-col pb-20 md:pb-24">
-        {/* Gallery Grid - Responsive */}
+    <div className="h-full bg-[#0a0a0a] text-[#f5f5f5] overflow-hidden w-full flex flex-col">
+      <div className="flex-1 px-6 md:px-10 lg:px-16 py-6 md:py-8 flex flex-col overflow-hidden min-h-0">
+
+        {/* Compact Header */}
         <motion.div
-          className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 min-h-0 relative overflow-hidden"
-          style={{ gap: 0 }}
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="mb-4"
         >
-          {photos.map((photo, index) => (
-            <motion.div
-              key={`${index}-${shuffleKey}-${photo}`}
-              className="relative group cursor-pointer overflow-hidden"
-              style={{ margin: 0, padding: 0 }}
-              layout
+          <h1 className="text-2xl sm:text-3xl font-normal tracking-tight mb-1">{t.gallery}</h1>
+          <p className="text-xs text-[#a0a0a0]">Click any photo to view it in full size.</p>
+        </motion.div>
+
+        {/* Thumbnail Grid */}
+        <motion.div
+          className="flex-1 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 min-h-0 overflow-hidden content-start"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+        >
+          {galleryPhotos.map((photo, index) => (
+            <motion.button
+              key={photo}
+              onClick={() => setSelectedPhoto(photo)}
+              className="relative aspect-square overflow-hidden cursor-pointer group"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ 
-                duration: 0.8, 
-                ease: [0.16, 1, 0.3, 1] 
-              }}
+              transition={{ duration: 0.3, delay: index * 0.03 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <motion.img
-                key={`img-${photo}-${shuffleKey}`}
+              <img
                 src={photo}
                 alt={`Photo ${index + 1}`}
-                className="w-full h-full object-cover group-hover:scale-105"
-                style={{ display: 'block', margin: 0, padding: 0 }}
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ 
-                  duration: 1, 
-                  ease: [0.16, 1, 0.3, 1] 
-                }}
-                onError={(e) => {
-                  // Fallback to placeholder if image fails to load
-                  const target = e.target as HTMLImageElement;
-                  target.src = `https://via.placeholder.com/400x400/${isDarkMode ? '1a1a1a' : 'e5e5e5'}/${isDarkMode ? '666666' : '999999'}?text=Photo+${index + 1}`;
-                }}
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
               />
-              <div
-                className={`absolute inset-0 ${bgColor} opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none`}
-              />
-            </motion.div>
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+            </motion.button>
           ))}
         </motion.div>
       </div>
+
+      {/* ═══════════════════════════════════
+          Full-size Photo Popup (fills main)
+          ═══════════════════════════════════ */}
+      <AnimatePresence>
+        {selectedPhoto && (
+          <motion.div
+            className="absolute inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center cursor-pointer"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={() => setSelectedPhoto(null)}
+          >
+            {/* Close hint */}
+            <motion.div
+              className="absolute top-6 right-6 text-white/60 text-xs tracking-wider uppercase"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              Click anywhere to close
+            </motion.div>
+
+            {/* Full image */}
+            <motion.img
+              src={selectedPhoto}
+              alt="Full size"
+              className="max-w-[90%] max-h-[85%] object-contain shadow-2xl"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
-

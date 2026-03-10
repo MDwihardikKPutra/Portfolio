@@ -5,6 +5,7 @@ export default {
     extend: {
       fontFamily: {
         sans: [
+          'Inter',
           '-apple-system',
           'BlinkMacSystemFont',
           '"Segoe UI"',
@@ -12,8 +13,6 @@ export default {
           '"Apple Color Emoji"',
           'Arial',
           'sans-serif',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
         ],
       },
     },

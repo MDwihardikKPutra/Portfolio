@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDarkMode } from "./hooks/useDarkMode";
 import { useLanguage } from "./hooks/useLanguage";
 import { translations } from "./translations";
@@ -10,87 +10,57 @@ import { ProjectsPage } from "./pages/ProjectsPage/ProjectsPage";
 import { ExperiencePage } from "./pages/ExperiencePage/ExperiencePage";
 import { Contact } from "./pages/Contact/Contact";
 import { Gallery } from "./pages/Gallery/Gallery";
-import { Essay } from "./pages/Essay/Essay";
 import { EssayDetail } from "./pages/Essay/EssayDetail";
 import { Landing } from "./pages/Landing/Landing";
 import { DataAnalystProjectPage } from "./pages/ProjectDetailPage/DataAnalystProjectPage";
 import { preloadGalleryImages, preloadHomeImages } from "./utils/preloadImages";
 
-const AnimatedRoutes = ({
+/**
+ * Renders the active panel based on the activeTab state.
+ * Uses AnimatePresence for smooth fade transitions between panels.
+ */
+const ActivePanel = ({
+  activeTab,
   t,
   isDarkMode,
   language,
   toggleDarkMode,
   toggleLanguage,
 }: {
+  activeTab: string;
   t: any;
   isDarkMode: boolean;
   language: string;
   toggleDarkMode: () => void;
   toggleLanguage: () => void;
 }) => {
-  const location = useLocation();
-
-  const pageVariants = {
-    initial: {
-      opacity: 0,
-      x: 20,
-    },
-    animate: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.4,
-        ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-      },
-    },
-    exit: {
-      opacity: 0,
-      x: -20,
-      transition: {
-        duration: 0.3,
-        ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-      },
-    },
-  };
+  // All panels are rendered simultaneously but only the active one is visible.
+  // This ensures everything is preloaded and ready for instant switching.
+  const panels = [
+    { id: "home", content: <Home t={t} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLanguage={toggleLanguage} language={language} /> },
+    { id: "experience", content: <ExperiencePage t={t} isDarkMode={isDarkMode} language={language} /> },
+    { id: "projects", content: <ProjectsPage t={t} isDarkMode={isDarkMode} language={language} /> },
+    { id: "gallery", content: <Gallery t={t} isDarkMode={isDarkMode} /> },
+    { id: "contact", content: <Contact t={t} isDarkMode={isDarkMode} /> },
+  ];
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
-      <motion.div
-        key={`${location.pathname}-${language}`}
-        variants={pageVariants}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        className="h-full w-full"
-      >
-        <Routes location={location}>
-          <Route path="/home" element={<Home t={t} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLanguage={toggleLanguage} language={language} />} />
-          <Route path="/experience" element={<ExperiencePage t={t} isDarkMode={isDarkMode} language={language} />} />
-          <Route path="/projects" element={<ProjectsPage t={t} isDarkMode={isDarkMode} language={language} />} />
-          <Route
-            path="/contact"
-            element={<Contact t={t} isDarkMode={isDarkMode} />}
-          />
-          <Route
-            path="/gallery"
-            element={<Gallery t={t} isDarkMode={isDarkMode} />}
-          />
-          <Route
-            path="/essay"
-            element={<Essay t={t} isDarkMode={isDarkMode} language={language} />}
-          />
-                 <Route
-                   path="/essay/:id"
-                   element={<EssayDetail t={t} isDarkMode={isDarkMode} language={language} />}
-                 />
-                 <Route
-                   path="/projects/data-analyst"
-                   element={<DataAnalystProjectPage t={t} isDarkMode={isDarkMode} language={language} />}
-                 />
-        </Routes>
-      </motion.div>
-    </AnimatePresence>
+    <div className="relative h-full w-full">
+      {panels.map((panel) => {
+        const isActive = activeTab === panel.id;
+        return (
+          <motion.div
+            key={panel.id}
+            initial={false}
+            animate={{ opacity: isActive ? 1 : 0 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className={`absolute inset-0 h-full w-full ${isActive ? "z-10 pointer-events-auto" : "z-0 pointer-events-none"}`}
+          >
+            {panel.content}
+          </motion.div>
+        );
+      })}
+    </div>
   );
 };
 
@@ -108,63 +78,80 @@ const AppRoutes = ({
   toggleLanguage: () => void;
 }) => {
   const location = useLocation();
+  const [activeTab, setActiveTab] = useState<string>("home");
 
   const pageVariants = {
-    initial: {
-      opacity: 0,
-      x: 20,
-    },
+    initial: { opacity: 0, x: 20 },
     animate: {
       opacity: 1,
       x: 0,
-      transition: {
-        duration: 0.4,
-        ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-      },
+      transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
     },
     exit: {
       opacity: 0,
       x: -20,
-      transition: {
-        duration: 0.3,
-        ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-      },
+      transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
     },
   };
 
   const bgColor = isDarkMode ? "bg-[#0a0a0a]" : "bg-white";
 
+  // Check if we're on a deep-linked route (essay detail, project detail)
+  const isDeepLink = location.pathname.startsWith("/essay/") || location.pathname === "/projects/data-analyst";
+
   return (
     <div className={`fixed inset-0 ${bgColor} transition-colors duration-300`}>
       <AnimatePresence mode="wait" initial={location.pathname === "/"}>
         <motion.div
-          key={location.pathname}
+          key={location.pathname === "/" ? "landing" : "main"}
           variants={pageVariants}
           initial="initial"
           animate="animate"
           exit="exit"
           className="h-screen h-[100dvh] w-full"
         >
-        <Routes location={location}>
-          <Route
-            path="/"
-            element={<Landing t={t} isDarkMode={isDarkMode} />}
-          />
-          <Route
-            path="/*"
-            element={
-              <MainLayout
-                t={t}
-                isDarkMode={isDarkMode}
-                toggleDarkMode={toggleDarkMode}
-                toggleLanguage={toggleLanguage}
-                language={language}
-              >
-                <AnimatedRoutes t={t} isDarkMode={isDarkMode} language={language} toggleDarkMode={toggleDarkMode} toggleLanguage={toggleLanguage} />
-              </MainLayout>
-            }
-          />
-        </Routes>
+          <Routes location={location}>
+            <Route
+              path="/"
+              element={<Landing t={t} isDarkMode={isDarkMode} />}
+            />
+            <Route
+              path="/*"
+              element={
+                <MainLayout
+                  t={t}
+                  isDarkMode={isDarkMode}
+                  toggleDarkMode={toggleDarkMode}
+                  toggleLanguage={toggleLanguage}
+                  language={language}
+                  activeTab={activeTab}
+                  setActiveTab={setActiveTab}
+                >
+                  {isDeepLink ? (
+                    <Routes>
+                      <Route
+                        path="/essay/:id"
+                        element={<EssayDetail t={t} isDarkMode={isDarkMode} language={language} />}
+                      />
+                      <Route
+                        path="/projects/data-analyst"
+                        element={<DataAnalystProjectPage t={t} isDarkMode={isDarkMode} />}
+                      />
+                    </Routes>
+                  ) : (
+                    <ActivePanel
+                      activeTab={activeTab}
+                      t={t}
+                      isDarkMode={isDarkMode}
+                      language={language}
+                      toggleDarkMode={toggleDarkMode}
+                      toggleLanguage={toggleLanguage}
+                    />
+                  )}
+                </MainLayout>
+              }
+            />
+          </Routes>
         </motion.div>
       </AnimatePresence>
     </div>

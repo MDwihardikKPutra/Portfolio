@@ -61,12 +61,56 @@ export const getProjects = (language: Language): Project[] => {
       type: "project",
     },
     {
+      title: "Document Control",
+      category: language === "en" ? "Project Documentation" : "Dokumentasi Proyek",
+      description: language === "en"
+        ? "Created spreadsheet templates for engineering project document control, tracking revisions, approvals, and distribution records."
+        : "Membuat template spreadsheet untuk pengendalian dokumen proyek engineering, melacak revisi, persetujuan, dan catatan distribusi.",
+      tags: ["Google Sheets", "Documentation"],
+      link: "https://docs.google.com/spreadsheets/d/1i5rAyo9UXbBTon-mBzRzqqPLJqpMX6JE08gEG1zGiVY/edit?usp=sharing",
+      featured: true,
+      type: "project",
+    },
+    {
       title: t.dataAnalystProjectTitle,
       category: t.project4Category,
       description: t.project4Desc,
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       tags: ["Python", "Data Analysis", "Pandas"],
       link: "/projects/data-analyst",
+      featured: true,
+      type: "personal",
+    },
+    {
+      title: "ScaleUpGo",
+      category: language === "en" ? "Web Development Agency" : "Jasa Pembuatan Web",
+      description: language === "en"
+        ? "A business website offering professional web development services, built with modern technologies."
+        : "Website bisnis yang menawarkan jasa pembuatan web profesional, dibangun dengan teknologi modern.",
+      tags: ["React", "Business", "Web Services"],
+      link: "https://scaleupgo.vercel.app/",
+      featured: true,
+      type: "personal",
+    },
+    {
+      title: "Oceanus Energy",
+      category: language === "en" ? "Corporate Website" : "Website Perusahaan",
+      description: language === "en"
+        ? "A corporate company profile website showcasing energy sector services and capabilities."
+        : "Website company profile perusahaan yang menampilkan layanan dan kapabilitas di sektor energi.",
+      tags: ["React", "Corporate", "Company Profile"],
+      link: "https://oceanusenergy.vercel.app/",
+      featured: true,
+      type: "personal",
+    },
+    {
+      title: "Brewhouse",
+      category: language === "en" ? "Landing Page" : "Landing Page",
+      description: language === "en"
+        ? "A visually appealing landing page for a coffee shop with modern design aesthetics."
+        : "Landing page yang menarik secara visual untuk coffee shop dengan estetika desain modern.",
+      tags: ["React", "Landing Page", "Coffee Shop"],
+      link: "https://brewhouse-rho.vercel.app/",
       featured: true,
       type: "personal",
     },
@@ -86,7 +130,7 @@ export { getEssays, getEssayById } from "../utils/loadEssay";
 export const socialLinks: SocialLink[] = [
   {
     name: "GitHub",
-    url: "https://github.com/ddiko105",
+    url: "https://github.com/MDwihardikKPutra",
     icon: "github",
   },
   {

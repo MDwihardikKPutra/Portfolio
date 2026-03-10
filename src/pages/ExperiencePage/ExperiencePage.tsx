@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import type { Translations } from "../../translations";
 import { getSkills, type Language } from "../../data";
 
@@ -8,95 +9,110 @@ interface ExperiencePageProps {
 }
 
 export const ExperiencePage = ({ t, isDarkMode, language }: ExperiencePageProps) => {
-  const bgColor = isDarkMode ? "bg-[#0a0a0a]" : "bg-white";
-  const textColor = isDarkMode ? "text-white" : "text-black";
-  const descColor = isDarkMode ? "text-[#cccccc]" : "text-black";
+  const textColor = isDarkMode ? "text-[#f5f5f5]" : "text-[#111111]";
+  const textSecondary = isDarkMode ? "text-[#a3a3a3]" : "text-[#666666]";
+  const borderColor = isDarkMode ? "border-white/10" : "border-black/10";
 
   const skills = getSkills(language as Language);
 
   return (
-    <div className={`h-[100dvh] ${bgColor} ${textColor} w-full flex flex-col pt-20 pb-8 px-6 sm:px-12 lg:px-20 box-border overflow-hidden`}>
-      <div className="flex-1 w-full max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start h-full overflow-y-auto lg:overflow-hidden">
+    <div className={`h-full ${textColor} flex flex-col overflow-hidden`}>
+      <div className="flex-1 px-6 md:px-10 lg:px-16 py-6 md:py-8 flex flex-col overflow-hidden">
 
-        {/* Left Column: Experience */}
-        <div className="h-full flex flex-col lg:overflow-y-auto pr-4 no-scrollbar">
-          <div className="mb-8">
-            <h2 className={`text-sm font-bold uppercase tracking-widest mb-6 ${isDarkMode ? "opacity-40" : "opacity-100"}`}>
-              {t.experience}
-            </h2>
-          </div>
+        {/* Compact Page Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="mb-4 md:mb-6"
+        >
+          <h1 className="text-2xl sm:text-3xl font-normal tracking-tight mb-1">{t.experience}</h1>
+          <p className={`text-xs sm:text-sm ${textSecondary} leading-relaxed`}>
+            A timeline of my professional journey, highlighting key roles in IT Engineering, UI/UX Design, and Data Analysis.
+          </p>
+        </motion.div>
 
-          <div className="space-y-12">
-            {/* PGE Experience - Removed vertical line/dot */}
-            <div className="pl-0">
-              <div className="mb-4">
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
-                  <h3 className="text-lg font-medium tracking-tight">{t.informationTechnologyEngineer}</h3>
-                  <span className={`text-xs font-mono ${isDarkMode ? "opacity-60" : "opacity-100"}`}>{t.jun2025Present}</span>
-                </div>
-                <a
-                  href="https://pg-engineering.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`text-xs hover:underline transition-opacity ${isDarkMode ? "opacity-50 hover:opacity-100" : "opacity-100"}`}
-                >
-                  {t.pgeCompany}
-                </a>
+        {/* Content Grid */}
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-[7fr_3fr] gap-6 lg:gap-10 overflow-hidden min-h-0">
+
+          {/* Left Column: Work Experience (70%) */}
+          <div className="overflow-y-auto no-scrollbar min-h-0 space-y-4 pr-2">
+
+            {/* Experience Item 1: PGE */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+              className={`pb-4 border-b ${borderColor}`}
+            >
+              <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
+                <h3 className="text-lg md:text-xl font-medium tracking-tight mb-1 md:mb-0">{t.informationTechnologyEngineer}</h3>
+                <span className="text-[10px] font-medium tracking-wide uppercase px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 self-start md:self-auto">
+                  {t.jun2025Present}
+                </span>
               </div>
-              <ul className={`space-y-3 text-sm leading-relaxed ${descColor} ${isDarkMode ? "opacity-90" : "opacity-100"} list-disc list-outside ml-4 text-justify`}>
+              <a
+                href="https://pg-engineering.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`text-sm font-medium hover:underline transition-all ${textSecondary} block mb-2`}
+              >
+                {t.pgeCompany}
+              </a>
+              <ul className={`space-y-1 text-xs leading-relaxed ${textSecondary} list-disc list-outside ml-4`}>
                 <li>{t.expDesc1}</li>
                 <li>{t.expDesc2}</li>
                 <li>{t.expDesc3}</li>
+                <li>{t.expDesc4}</li>
               </ul>
-            </div>
+            </motion.div>
 
-            {/* UI/UX Internship Experience - Removed vertical line/dot */}
-            <div className="pl-0">
-              <div className="mb-4">
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
-                  <h3 className="text-lg font-medium tracking-tight">{t.wofWoodenPosition}</h3>
-                  <span className={`text-xs font-mono ${isDarkMode ? "opacity-60" : "opacity-100"}`}>{t.wofWoodenDate}</span>
-                </div>
-                <p className={`text-xs ${isDarkMode ? "opacity-50" : "opacity-100"}`}>{t.wofWoodenCompany}</p>
+            {/* Experience Item 2: Elux Space */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+            >
+              <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
+                <h3 className="text-lg md:text-xl font-medium tracking-tight mb-1 md:mb-0">{t.wofWoodenPosition}</h3>
+                <span className="text-[10px] font-medium tracking-wide uppercase px-2.5 py-0.5 rounded-full bg-white/10 self-start md:self-auto">
+                  {t.wofWoodenDate}
+                </span>
               </div>
-              <ul className={`space-y-3 text-sm leading-relaxed ${descColor} ${isDarkMode ? "opacity-90" : "opacity-100"} list-disc list-outside ml-4 text-justify`}>
+              <p className={`text-sm font-medium ${textSecondary} mb-2`}>{t.wofWoodenCompany}</p>
+              <ul className={`space-y-1 text-xs leading-relaxed ${textSecondary} list-disc list-outside ml-4`}>
                 <li>{t.wofWoodenDesc1}</li>
                 <li>{t.wofWoodenDesc2}</li>
                 <li>{t.wofWoodenDesc3}</li>
               </ul>
+            </motion.div>
+          </div>
+
+          {/* Right Column: Skills (30%) */}
+          <div className="overflow-y-auto no-scrollbar min-h-0">
+            <h2 className="text-sm font-bold tracking-tight mb-4 uppercase">{t.skills}</h2>
+            <div className="space-y-4">
+              {skills.map((skillSet) => (
+                <div key={skillSet.category}>
+                  <h4 className={`text-[10px] font-bold uppercase tracking-widest mb-2 pb-1.5 border-b ${borderColor} text-white`}>
+                    {skillSet.category}
+                  </h4>
+                  <div className="flex flex-wrap gap-1.5">
+                    {skillSet.items.map((item) => (
+                      <span
+                        key={item}
+                        className="text-[10px] px-2.5 py-1 rounded-full bg-white/5 text-gray-300 hover:bg-white/10 transition-colors"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
+
         </div>
-
-        {/* Right Column: Skills */}
-        <div className="h-full flex flex-col lg:overflow-y-auto pr-2 no-scrollbar">
-          <div className="mb-8">
-            <h2 className={`text-sm font-bold uppercase tracking-widest mb-6 ${isDarkMode ? "opacity-40" : "opacity-100"}`}>
-              {t.skills}
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-2 gap-x-12 gap-y-12 content-start">
-            {skills.map((skillSet) => (
-              <div key={skillSet.category}>
-                <h4 className={`text-[10px] font-bold uppercase tracking-widest mb-4 border-b border-gray-200 dark:border-gray-800 pb-2 inline-block ${isDarkMode ? "opacity-50" : "opacity-100"}`}>
-                  {skillSet.category}
-                </h4>
-                <ul className="space-y-2">
-                  {skillSet.items.map((item) => (
-                    <li
-                      key={item}
-                      className={`text-sm ${descColor} ${isDarkMode ? "opacity-80 hover:opacity-100" : "opacity-100"} transition-opacity text-justify`}
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-
       </div>
     </div>
   );

@@ -1,108 +1,111 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import type { Translations } from "../../translations";
 
 interface NavigationColumnProps {
   t: Translations;
   isDarkMode: boolean;
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
 }
 
-export const NavigationColumn = ({ t, isDarkMode }: NavigationColumnProps) => {
+export const NavigationColumn = ({ t, isDarkMode, activeTab, setActiveTab }: NavigationColumnProps) => {
   const location = useLocation();
-  const [activeSection, setActiveSection] = useState<string>("/");
+  const navigate = useNavigate();
 
   const navItems = [
-    { path: "/home", text: "Home", sectionId: "home" },
-    { path: "/experience", text: t.experience, sectionId: "experience" },
-    { path: "/projects", text: t.selectedWork, sectionId: "projects" },
-    { path: "/gallery", text: t.gallery, sectionId: "gallery" },
-    { path: "/essay", text: t.essay, sectionId: "essay" },
-    { path: "/contact", text: t.contact, sectionId: "contact" },
+    { text: "Home", sectionId: "home" },
+    { text: t.experience, sectionId: "experience" },
+    { text: t.selectedWork, sectionId: "projects" },
+    { text: t.gallery, sectionId: "gallery" },
+    { text: t.contact, sectionId: "contact" },
   ];
 
-  useEffect(() => {
-    // Set active section based on current route
-    const currentPath = location.pathname;
-    setActiveSection(currentPath);
-  }, [location]);
+  const isDeepLink = location.pathname.startsWith("/essay/") || location.pathname === "/projects/data-analyst";
 
-  // Hide navigation on essay detail pages
-  const isEssayDetail = location.pathname.startsWith("/essay/") && location.pathname !== "/essay";
-
-  if (isEssayDetail) {
-    return null;
-  }
+  const handleTabClick = (sectionId: string) => {
+    if (isDeepLink) {
+      navigate("/home");
+    }
+    setActiveTab(sectionId);
+  };
 
   return (
     <>
-      {/* Mobile Navigation - Bottom Bar */}
-      <div 
-        className={`fixed bottom-0 left-0 right-0 z-[100] flex md:hidden justify-center items-center pb-4 pt-2 ${
-          isDarkMode ? "bg-[#0a0a0a]/80 backdrop-blur-sm" : "bg-white/80 backdrop-blur-sm"
-        }`}
-      >
-        <div className="flex flex-row items-center gap-2 overflow-x-auto max-w-full px-2 scrollbar-hide">
-          {navItems.map((item) => {
-            const isActive = activeSection === item.path;
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`text-[10px] font-normal text-center inline-block whitespace-nowrap transition-all duration-300 ${
-                  isActive
-                    ? isDarkMode
-                      ? "text-[#1a1a1a] bg-[#f5f5f5]"
-                      : "text-[#f5f5f5] bg-[#1a1a1a]"
-                    : isDarkMode
-                    ? "text-[#f5f5f5] hover:bg-[#1a1a1a]"
-                    : "text-[#1a1a1a] hover:bg-[#f5f5f5]"
+      {/* ── Tab Items ── */}
+      <div className="flex flex-col justify-center h-full">
+        {navItems.map((item) => {
+          const isActive = activeTab === item.sectionId;
+
+          return (
+            <button
+              key={item.sectionId}
+              onClick={() => handleTabClick(item.sectionId)}
+              className={`relative text-left px-5 py-4 w-full cursor-pointer transition-colors duration-200 ${isActive
+                ? (isDarkMode ? "text-white" : "text-black")
+                : (isDarkMode ? "text-neutral-600 hover:text-neutral-400" : "text-neutral-400 hover:text-neutral-600")
                 }`}
-                style={{
-                  textDecoration: "none",
-                  padding: "6px 10px",
-                  borderRadius: "4px",
-                }}
-              >
+            >
+              {/* Sliding active background */}
+              <AnimatePresence>
+                {isActive && (
+                  <motion.div
+                    layoutId="tab-active-bg"
+                    className={`absolute inset-0 z-[-1] ${isDarkMode
+                      ? "bg-white/[0.04]"
+                      : "bg-black/[0.03]"
+                      }`}
+                    initial={false}
+                    transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                  />
+                )}
+              </AnimatePresence>
+
+              {/* Active left accent line */}
+              {isActive && (
+                <motion.div
+                  layoutId="tab-accent"
+                  className={`absolute left-0 top-1/4 bottom-1/4 w-[2px] rounded-full ${isDarkMode ? "bg-white" : "bg-black"
+                    }`}
+                  transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                />
+              )}
+
+              <span className={`relative z-10 text-[11px] tracking-[0.15em] uppercase ${isActive ? "font-semibold" : "font-normal"
+                }`}>
                 {item.text}
-              </Link>
-            );
-          })}
-        </div>
+              </span>
+            </button>
+          );
+        })}
+
       </div>
 
-      {/* Desktop Navigation */}
-      <div 
-        className={`fixed bottom-0 left-0 right-0 z-[100] hidden md:flex justify-center items-center pb-8 pt-4`}
+      {/* ── Mobile Bottom Nav ── */}
+      <nav
+        className={`md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-center justify-evenly px-4 py-3 border-t backdrop-blur-xl transition-colors duration-300 ${isDarkMode
+          ? "bg-[#0a0a0a]/80 border-white/5"
+          : "bg-white/80 border-black/5"
+          }`}
       >
-        <div className="flex flex-row items-center gap-3 md:gap-4">
-          {navItems.map((item) => {
-            const isActive = activeSection === item.path;
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`text-xs md:text-sm font-normal text-center inline-block transition-all duration-300 ${
-                  isActive
-                    ? isDarkMode
-                      ? "text-[#1a1a1a] bg-[#f5f5f5]"
-                      : "text-[#f5f5f5] bg-[#1a1a1a]"
-                    : isDarkMode
-                    ? "text-[#f5f5f5] hover:opacity-70"
-                    : "text-[#1a1a1a] hover:opacity-70"
+        {navItems.map((item) => {
+          const isActive = activeTab === item.sectionId;
+          return (
+            <button
+              key={item.sectionId}
+              onClick={() => handleTabClick(item.sectionId)}
+              className={`text-[10px] tracking-wider uppercase transition-colors duration-200 flex flex-col items-center gap-1 ${isActive
+                ? (isDarkMode ? "text-white font-bold" : "text-black font-bold")
+                : (isDarkMode ? "text-gray-500 hover:text-white" : "text-gray-400 hover:text-black")
                 }`}
-                style={{
-                  textDecoration: "none",
-                  padding: "4px 8px",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                }}
-              >
-                {item.text}
-              </Link>
-            );
-          })}
-        </div>
-      </div>
+            >
+              <div className={`w-1 h-1 rounded-full transition-colors duration-200 ${isActive ? (isDarkMode ? "bg-white" : "bg-black") : "bg-transparent"
+                }`} />
+              {item.text}
+            </button>
+          );
+        })}
+      </nav>
     </>
   );
 };
