@@ -28,10 +28,10 @@ export const MainLayout = ({
 
   return (
     <div
-      className={`h-[100dvh] w-full flex items-center justify-center p-0 md:p-6 lg:p-10 overflow-hidden transition-colors duration-300 bg-neutral-950 text-[#f5f5f5] grain-overlay`}
+      className={`h-[100dvh] w-full flex items-center justify-center p-0 md:p-6 lg:p-10 overflow-hidden transition-colors duration-300 bg-white text-[#f5f5f5] grain-overlay`}
     >
       <div
-        className="relative w-full max-w-[1600px] h-full overflow-hidden transition-colors duration-300 grid grid-cols-1 md:grid-cols-[1fr_auto] bg-[#0a0a0a] shadow-2xl shadow-black/40 border border-white/[0.06]"
+        className="relative w-full max-w-[1600px] h-full overflow-hidden transition-colors duration-300 grid grid-cols-1 md:grid-cols-[1fr_auto] bg-[#0a0a0a] shadow-xl border border-white/[0.06]"
       >
         {/* Main Content Area */}
         <main className="relative flex-1 h-full overflow-hidden flex flex-col no-scrollbar pb-16 md:pb-0">
@@ -65,14 +65,12 @@ export const MainLayout = ({
         </main>
 
         {/* Sidebar Nav Column */}
-        <aside className="hidden md:flex flex-col justify-center items-stretch w-[140px] bg-[#111111]">
-          <NavigationColumn
-            t={t}
-            isDarkMode={isDarkMode}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-          />
-        </aside>
+        <NavigationColumn
+          t={t}
+          isDarkMode={isDarkMode}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
       </div>
     </div>
   );

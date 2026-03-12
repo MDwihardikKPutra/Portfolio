@@ -32,54 +32,56 @@ export const NavigationColumn = ({ t, isDarkMode, activeTab, setActiveTab }: Nav
 
   return (
     <>
-      {/* ── Tab Items ── */}
-      <div className="flex flex-col justify-center h-full">
-        {navItems.map((item) => {
-          const isActive = activeTab === item.sectionId;
+      {/* ── Desktop Sidebar Container ── */}
+      <aside className="hidden md:flex flex-col justify-center items-stretch w-[140px] bg-[#111111] h-full">
+        {/* ── Tab Items ── */}
+        <div className="flex flex-col justify-center h-full">
+          {navItems.map((item) => {
+            const isActive = activeTab === item.sectionId;
 
-          return (
-            <button
-              key={item.sectionId}
-              onClick={() => handleTabClick(item.sectionId)}
-              className={`relative text-left px-5 py-4 w-full cursor-pointer transition-colors duration-200 ${isActive
-                ? (isDarkMode ? "text-white" : "text-black")
-                : (isDarkMode ? "text-neutral-600 hover:text-neutral-400" : "text-neutral-400 hover:text-neutral-600")
-                }`}
-            >
-              {/* Sliding active background */}
-              <AnimatePresence>
+            return (
+              <button
+                key={item.sectionId}
+                onClick={() => handleTabClick(item.sectionId)}
+                className={`relative text-left px-5 py-4 w-full cursor-pointer transition-colors duration-200 ${isActive
+                  ? (isDarkMode ? "text-white" : "text-black")
+                  : (isDarkMode ? "text-neutral-600 hover:text-neutral-400" : "text-neutral-400 hover:text-neutral-600")
+                  }`}
+              >
+                {/* Sliding active background */}
+                <AnimatePresence>
+                  {isActive && (
+                    <motion.div
+                      layoutId="tab-active-bg"
+                      className={`absolute inset-0 z-[-1] ${isDarkMode
+                        ? "bg-white/[0.04]"
+                        : "bg-black/[0.03]"
+                        }`}
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                    />
+                  )}
+                </AnimatePresence>
+
+                {/* Active left accent line */}
                 {isActive && (
                   <motion.div
-                    layoutId="tab-active-bg"
-                    className={`absolute inset-0 z-[-1] ${isDarkMode
-                      ? "bg-white/[0.04]"
-                      : "bg-black/[0.03]"
+                    layoutId="tab-accent"
+                    className={`absolute left-0 top-1/4 bottom-1/4 w-[2px] rounded-full ${isDarkMode ? "bg-white" : "bg-black"
                       }`}
-                    initial={false}
                     transition={{ type: "spring", stiffness: 400, damping: 35 }}
                   />
                 )}
-              </AnimatePresence>
 
-              {/* Active left accent line */}
-              {isActive && (
-                <motion.div
-                  layoutId="tab-accent"
-                  className={`absolute left-0 top-1/4 bottom-1/4 w-[2px] rounded-full ${isDarkMode ? "bg-white" : "bg-black"
-                    }`}
-                  transition={{ type: "spring", stiffness: 400, damping: 35 }}
-                />
-              )}
-
-              <span className={`relative z-10 text-[11px] tracking-[0.15em] uppercase ${isActive ? "font-semibold" : "font-normal"
-                }`}>
-                {item.text}
-              </span>
-            </button>
-          );
-        })}
-
-      </div>
+                <span className={`relative z-10 text-[11px] tracking-[0.15em] uppercase ${isActive ? "font-semibold" : "font-normal"
+                  }`}>
+                  {item.text}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </aside>
 
       {/* ── Mobile Bottom Nav ── */}
       <nav
