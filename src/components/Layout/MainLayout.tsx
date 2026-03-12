@@ -28,7 +28,7 @@ export const MainLayout = ({
 
   return (
     <div
-      className={`h-[100dvh] w-full flex items-center justify-center p-0 md:p-6 lg:p-10 overflow-hidden transition-colors duration-300 bg-neutral-50 text-[#f5f5f5] grain-overlay`}
+      className={`h-[100dvh] w-full flex items-center justify-center p-0 md:p-6 lg:p-10 overflow-hidden transition-colors duration-300 bg-neutral-100 text-[#f5f5f5] grain-overlay`}
     >
       <div
         className="relative w-full max-w-[1600px] h-full overflow-hidden transition-colors duration-300 grid grid-cols-1 md:grid-cols-[1fr_auto] bg-[#0a0a0a] shadow-xl border border-white/[0.06]"
