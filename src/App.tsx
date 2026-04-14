@@ -94,7 +94,7 @@ const AppRoutes = ({
     },
   };
 
-  const bgColor = isDarkMode ? "bg-[#0a0a0a]" : "bg-white";
+  const bgColor = isDarkMode ? "bg-black" : "bg-white";
 
   // Check if we're on a deep-linked route (essay detail, project detail)
   const isDeepLink = location.pathname.startsWith("/essay/") || location.pathname === "/projects/data-analyst";

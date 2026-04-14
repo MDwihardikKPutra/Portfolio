@@ -114,6 +114,28 @@ export const getProjects = (language: Language): Project[] => {
       featured: true,
       type: "personal",
     },
+    {
+      title: "Smart Finance Tracker",
+      category: language === "en" ? "Finance Management" : "Manajemen Keuangan",
+      description: language === "en"
+        ? "Manage your financial future with precision intelligence."
+        : "Kelola masa depan keuangan Anda dengan kecerdasan presisi.",
+      tags: ["React", "Next.js", "Finance"],
+      link: "https://smart-finance-tracker-smoky.vercel.app/",
+      featured: true,
+      type: "personal",
+    },
+    {
+      title: "HRIS Six",
+      category: language === "en" ? "HR Management" : "Manajemen HR",
+      description: language === "en"
+        ? "Human Resource Integration System."
+        : "Sistem Integrasi Sumber Daya Manusia.",
+      tags: ["React", "Next.js", "HRIS"],
+      link: "https://hris-six-pi.vercel.app/",
+      featured: true,
+      type: "personal",
+    },
   ];
 };
 
