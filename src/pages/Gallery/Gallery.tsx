@@ -11,15 +11,15 @@ interface GalleryProps {
 
 // Bento grid: 4 cols × 4 rows = 16 cells, 9 items, zero gaps
 const bentoLayout = [
-  { col: "col-span-2", row: "row-span-2" },  // 0: large
-  { col: "col-span-1", row: "row-span-1" },  // 1: small
-  { col: "col-span-1", row: "row-span-1" },  // 2: small
-  { col: "col-span-1", row: "row-span-1" },  // 3: small
-  { col: "col-span-1", row: "row-span-1" },  // 4: small
-  { col: "col-span-2", row: "row-span-2" },  // 5: large
-  { col: "col-span-1", row: "row-span-1" },  // 6: small
-  { col: "col-span-1", row: "row-span-1" },  // 7: small
-  { col: "col-span-2", row: "row-span-1" },  // 8: wide
+  { col: "md:col-span-2", row: "md:row-span-2" },  // 0: large (on md+)
+  { col: "col-span-1",    row: "row-span-1" },      // 1: small
+  { col: "col-span-1",    row: "row-span-1" },      // 2: small
+  { col: "col-span-1",    row: "row-span-1" },      // 3: small
+  { col: "col-span-1",    row: "row-span-1" },      // 4: small
+  { col: "md:col-span-2", row: "md:row-span-2" },  // 5: large (on md+)
+  { col: "col-span-1",    row: "row-span-1" },      // 6: small
+  { col: "col-span-1",    row: "row-span-1" },      // 7: small
+  { col: "md:col-span-2", row: "row-span-1" },      // 8: wide (on md+)
 ];
 
 export const Gallery = ({ }: GalleryProps) => {
@@ -30,14 +30,14 @@ export const Gallery = ({ }: GalleryProps) => {
     <div id="gallery" className="section-full flex flex-col items-center justify-center">
       <div className="section-container w-full h-full flex flex-col justify-center">
         
-        <header className="mb-6 flex flex-col items-start text-left">
-          <h2 className="text-5xl md:text-6xl font-black tracking-tighter uppercase leading-[0.85]">
+        <header className="mb-4 md:mb-6 flex flex-col items-start text-left">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter uppercase leading-[0.85]">
             Still <br /> Captures
           </h2>
         </header>
 
         {/* Bento Grid — 4 col, dense, no gaps */}
-        <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[130px] md:auto-rows-[150px] gap-1.5" style={{ gridAutoFlow: "row dense" }}>
+        <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[100px] md:auto-rows-[150px] gap-1.5" style={{ gridAutoFlow: "row dense" }}>
           {displayPhotos.map((photo, index) => {
             const layout = bentoLayout[index];
             return (

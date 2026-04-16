@@ -35,11 +35,11 @@ export const ProjectsPage = ({ t, language }: ProjectsPageProps) => {
   ];
 
   return (
-    <div id="work" className="section-full flex flex-col justify-center bg-white">
-      <div className="section-container w-full h-full max-h-[90vh] grid grid-cols-1 lg:grid-cols-10 gap-8 lg:gap-16 pt-12 overflow-hidden">
+    <div id="work" className="section-full flex flex-col bg-white">
+      <div className="section-container w-full flex-1 flex flex-col lg:grid lg:grid-cols-10 gap-6 lg:gap-16 pt-4 lg:pt-12 overflow-hidden">
         
         {/* Left Side: Experience Chronicle (30%) */}
-        <div className="lg:col-span-3 flex flex-col h-full pr-8 border-r border-black/5">
+        <div className="hidden lg:flex lg:col-span-3 flex-col h-full pr-8 border-r border-black/5">
           
           {/* Section Title */}
           <div className="mb-10">
@@ -101,8 +101,8 @@ export const ProjectsPage = ({ t, language }: ProjectsPageProps) => {
         </div>
 
         {/* Right Side: Digital Archive (70%) */}
-        <div className="lg:col-span-7 flex flex-col h-full">
-           <div className="mb-8 border-b border-black pb-4">
+        <div className="lg:col-span-7 flex flex-col flex-1 min-h-0">
+           <div className="mb-4 lg:mb-8 border-b border-black pb-3 lg:pb-4">
               <h2 className="text-2xl font-black tracking-tighter uppercase leading-none text-black">
                  Project Archive
               </h2>

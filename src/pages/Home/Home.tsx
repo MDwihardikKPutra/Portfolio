@@ -32,7 +32,7 @@ export const Home = ({ t }: { t: any }) => {
         </motion.div>
 
         {/* Horizontal Hero Block */}
-        <div className="w-full h-[25vh] md:h-[30vh] overflow-hidden mb-8 bg-gray-100 border border-black/5">
+        <div className="w-full h-[20vh] md:h-[30vh] overflow-hidden mb-4 md:mb-8 bg-gray-100 border border-black/5">
            <motion.img 
               initial={{ scale: 1.1, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}

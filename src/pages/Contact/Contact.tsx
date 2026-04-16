@@ -25,11 +25,11 @@ export const Contact = ({}: ContactProps) => {
     <div id="contact" className="section-full bg-white">
       <div className="section-container w-full h-full flex flex-col">
         <div className="flex-1 flex items-center">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 items-center w-full">
 
           {/* Left: Statement */}
           <div>
-            <h2 className="text-6xl md:text-7xl lg:text-8xl font-black leading-[0.85] tracking-tighter uppercase text-black">
+            <h2 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.85] tracking-tighter uppercase text-black">
               Trying<br />to do<br />better.
             </h2>
           </div>
