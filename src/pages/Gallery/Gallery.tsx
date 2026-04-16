@@ -2,91 +2,91 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import type { Translations } from "../../translations";
 import { galleryPhotos } from "../../utils/preloadImages";
+import { X } from "lucide-react";
 
 interface GalleryProps {
   t: Translations;
   isDarkMode: boolean;
 }
 
-export const Gallery = ({ t, isDarkMode }: GalleryProps) => {
+// Bento grid: 4 cols × 4 rows = 16 cells, 9 items, zero gaps
+const bentoLayout = [
+  { col: "col-span-2", row: "row-span-2" },  // 0: large
+  { col: "col-span-1", row: "row-span-1" },  // 1: small
+  { col: "col-span-1", row: "row-span-1" },  // 2: small
+  { col: "col-span-1", row: "row-span-1" },  // 3: small
+  { col: "col-span-1", row: "row-span-1" },  // 4: small
+  { col: "col-span-2", row: "row-span-2" },  // 5: large
+  { col: "col-span-1", row: "row-span-1" },  // 6: small
+  { col: "col-span-1", row: "row-span-1" },  // 7: small
+  { col: "col-span-2", row: "row-span-1" },  // 8: wide
+];
+
+export const Gallery = ({ }: GalleryProps) => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
+  const displayPhotos = galleryPhotos.slice(0, 9);
 
   return (
-    <div className="h-full bg-[#0a0a0a] text-[#f5f5f5] overflow-hidden w-full flex flex-col">
-      <div className="flex-1 px-6 md:px-10 lg:px-16 py-6 md:py-8 flex flex-col overflow-hidden min-h-0">
+    <div id="gallery" className="section-full flex flex-col items-center justify-center">
+      <div className="section-container w-full h-full flex flex-col justify-center">
+        
+        <header className="mb-6 flex flex-col items-start text-left">
+          <h2 className="text-5xl md:text-6xl font-black tracking-tighter uppercase leading-[0.85]">
+            Still <br /> Captures
+          </h2>
+        </header>
 
-        {/* Compact Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="mb-4"
-        >
-          <h1 className="text-2xl sm:text-3xl font-normal tracking-tight mb-1">{t.gallery}</h1>
-          <p className="text-xs text-[#a0a0a0]">Click any photo to view it in full size.</p>
-        </motion.div>
+        {/* Bento Grid — 4 col, dense, no gaps */}
+        <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[130px] md:auto-rows-[150px] gap-1.5" style={{ gridAutoFlow: "row dense" }}>
+          {displayPhotos.map((photo, index) => {
+            const layout = bentoLayout[index];
+            return (
+              <motion.div
+                key={photo}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: index * 0.04 }}
+                viewport={{ once: true }}
+                className={`relative overflow-hidden cursor-pointer group ${layout.col} ${layout.row}`}
+                onClick={() => setSelectedPhoto(photo)}
+              >
+                <img
+                  src={photo}
+                  alt={`Capture ${index + 1}`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+              </motion.div>
+            );
+          })}
+        </div>
 
-        {/* Thumbnail Grid */}
-        <motion.div
-          className="flex-1 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 min-h-0 overflow-hidden content-start"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-        >
-          {galleryPhotos.map((photo, index) => (
-            <motion.button
-              key={photo}
-              onClick={() => setSelectedPhoto(photo)}
-              className="relative aspect-square overflow-hidden cursor-pointer group"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: index * 0.03 }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <img
-                src={photo}
-                alt={`Photo ${index + 1}`}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-            </motion.button>
-          ))}
-        </motion.div>
       </div>
 
-      {/* ═══════════════════════════════════
-          Full-size Photo Popup (fills main)
-          ═══════════════════════════════════ */}
+      {/* Lightbox */}
       <AnimatePresence>
         {selectedPhoto && (
           <motion.div
-            className="absolute inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center cursor-pointer"
+            className="fixed inset-0 z-[200] bg-white/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-10 cursor-zoom-out"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
             onClick={() => setSelectedPhoto(null)}
           >
-            {/* Close hint */}
-            <motion.div
-              className="absolute top-6 right-6 text-white/60 text-xs tracking-wider uppercase"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+            <button 
+              className="absolute top-8 right-8 w-12 h-12 flex items-center justify-center border border-black/10 text-black hover:bg-black hover:text-white transition-all rounded-full"
+              onClick={() => setSelectedPhoto(null)}
             >
-              Click anywhere to close
-            </motion.div>
-
-            {/* Full image */}
+              <X size={20} />
+            </button>
             <motion.img
               src={selectedPhoto}
               alt="Full size"
-              className="max-w-[90%] max-h-[85%] object-contain shadow-2xl"
+              className="max-w-full max-h-[85vh] object-contain shadow-2xl border border-black/5 p-2 bg-white"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ type: "spring", stiffness: 200, damping: 25 }}
               onClick={(e) => e.stopPropagation()}
             />
           </motion.div>

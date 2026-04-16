@@ -9,7 +9,7 @@ interface EssayDetailProps {
   language: string;
 }
 
-export const EssayDetail = ({ isDarkMode }: EssayDetailProps) => {
+export const EssayDetail = () => {
   const { id } = useParams<{ id: string }>();
 
   // Always use English for essays
@@ -17,11 +17,11 @@ export const EssayDetail = ({ isDarkMode }: EssayDetailProps) => {
 
   if (!essay) {
     return (
-      <div className="h-full bg-[#0a0a0a] text-[#f5f5f5] overflow-hidden w-full flex items-center justify-center">
+      <div className="min-h-screen bg-white text-text-primary flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-light mb-4">Essay not found</h1>
-          <Link to="/essay" className="text-sm text-[#a0a0a0] underline">
-            Back to Essays
+          <h1 className="text-xl font-medium mb-4">Essay not found</h1>
+          <Link to="/" className="text-[10px] font-medium uppercase tracking-widest border-b border-black">
+            Back to Home
           </Link>
         </div>
       </div>
@@ -29,69 +29,71 @@ export const EssayDetail = ({ isDarkMode }: EssayDetailProps) => {
   }
 
   return (
-    <div className="h-full bg-[#0a0a0a] text-[#f5f5f5] overflow-hidden w-full relative">
-      <div className="h-full w-full overflow-y-auto no-scrollbar">
-        <div className="max-w-[680px] mx-auto px-6 md:px-8 pt-12 sm:pt-16 pb-16">
+    <div className="bg-white min-h-screen relative">
+      <div className="max-w-[720px] mx-auto px-6 md:px-8 py-20 md:py-32">
 
-          {/* Back Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="mb-8"
+        {/* Back Button */}
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-16"
+        >
+          <Link
+            to="/"
+            className="inline-flex items-center gap-3 text-[10px] uppercase font-medium tracking-[0.2em] text-black hover:text-accent transition-colors group"
           >
-            <Link
-              to="/essay"
-              className="inline-flex items-center gap-2 text-xs text-[#a0a0a0] hover:text-[#f5f5f5] transition-colors"
-            >
-              <ArrowLeft size={14} />
-              <span>Back to Essays</span>
-            </Link>
-          </motion.div>
+            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+            <span>Back to Thoughts</span>
+          </Link>
+        </motion.div>
 
-          {/* Title & Date */}
-          <motion.header
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-            className="mb-8"
-          >
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-light leading-tight tracking-tight mb-3">
-              {essay.title}
-            </h1>
-            <time className="text-[11px] text-[#666666] uppercase tracking-widest">
-              {new Date(essay.date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </time>
-          </motion.header>
+        {/* Title & Date */}
+        <motion.header
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-16"
+        >
+          <time className="text-[10px] text-black uppercase tracking-[0.5em] font-medium block mb-6 px-1 border-l-2 border-accent">
+            {new Date(essay.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </time>
+          <h1 className="text-4xl md:text-5xl font-medium leading-[1.1] tracking-tighter mb-8 text-black">
+            {essay.title}
+          </h1>
+          <div className="w-10 h-px bg-black" />
+        </motion.header>
 
-          {/* Divider */}
-          <div className="w-full h-px bg-white/10 mb-8" />
+        {/* Article Content */}
+        <motion.article
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.3 }}
+          className="prose prose-lg max-w-none"
+        >
+          {essay.content
+            .split("\n\n")
+            .filter((p) => p.trim().length > 0)
+            .map((paragraph, index) => (
+              <p
+                key={index}
+                className="text-sm md:text-base leading-relaxed text-black/80 text-justify mb-8 font-normal"
+              >
+                {paragraph.trim()}
+              </p>
+            ))}
+        </motion.article>
 
-          {/* Article Content */}
-          <motion.article
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-            className="prose prose-invert max-w-none"
-          >
-            {essay.content
-              .split("\n\n")
-              .filter((p) => p.trim().length > 0)
-              .map((paragraph, index) => (
-                <p
-                  key={index}
-                  className="text-sm leading-[1.8] text-[#d4d4d4] text-justify mb-6 last:mb-0"
-                >
-                  {paragraph.trim()}
-                </p>
-              ))}
-          </motion.article>
-
+        {/* Footer Navigation */}
+        <div className="mt-32 pt-16 border-t border-black/10 flex justify-between items-center text-[10px] uppercase tracking-widest font-bold">
+           <span className="text-text-secondary">Keep reading</span>
+           <Link to="/" className="border-b border-black pb-1 hover:pb-2 transition-all">Next Essay</Link>
         </div>
+
       </div>
     </div>
   );

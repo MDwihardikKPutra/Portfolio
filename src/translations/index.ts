@@ -40,12 +40,14 @@ export interface Translations {
   expDesc2: string;
   expDesc3: string;
   expDesc4: string;
-  wofWoodenCompany: string;
-  wofWoodenPosition: string;
-  wofWoodenDate: string;
-  wofWoodenDesc1: string;
-  wofWoodenDesc2: string;
-  wofWoodenDesc3: string;
+  expDesc5: string;
+  expDesc6: string;
+  eluxSpaceCompany: string;
+  eluxSpacePosition: string;
+  eluxSpaceDate: string;
+  eluxSpaceDesc1: string;
+  eluxSpaceDesc2: string;
+  eluxSpaceDesc3: string;
   techStack: string;
   project1Category: string;
   project1Desc: string;
@@ -204,21 +206,20 @@ export const translations: Record<Language, Translations> = {
     aug2020_2024: "AUG 2020 - 2024",
     statePolytechnicMalang: "State Polytechnic of Malang",
     gpa: "GPA: 3.42",
-    expDesc1:
-      "Designed and deployed PGE System (v1.10.0), a comprehensive Integrated Management Platform managing critical office workflows.",
-    expDesc2:
-      "Network Engineering using RouterOS (MikroTik), including traffic shaping, Hotspot solutions, VLAN segmentation, and advanced routing configurations.",
-    expDesc3:
-      "Server Administration using Ubuntu for local web deployment, and Data Storage Server management using Synology NAS.",
-    expDesc4: "Document control and management for engineering project documentation.",
-    wofWoodenCompany: "Elux Space",
-    wofWoodenPosition: "UI/UX Internship",
-    wofWoodenDate: "Aug 2023 - Feb 2024",
-    wofWoodenDesc1:
+    expDesc1: "Developed and deployed internal web-based business applications, including a project monitoring dashboard and a human resources (HR) management system.",
+    expDesc2: "Designed and implemented a centralized office server environment utilizing TrueNAS and Nextcloud on Linux-based systems to ensure secure data storage and streamlined file collaboration.",
+    expDesc3: "Managed enterprise network infrastructure using MikroTik routers, implementing VLANs, Hotspots, and Firewall configurations to maintain network security.",
+    expDesc4: "Document Control for the PLTG Payo Selincah Unit #1 relocation project to PT CNI Kolaka: managing technical supervision records, version tracking, and secure archiving.",
+    expDesc5: "Document Control for the Tungkal Gas Development Project: managed documentation for gas transportation services involving stakeholders like SKK Migas and MontD’Or Oil Tungkal Limited.",
+    expDesc6: "Performed technical troubleshooting for hardware and software systems to maintain operational continuity and minimize downtime.",
+    eluxSpaceCompany: "Elux Space",
+    eluxSpacePosition: "UI/UX Internship",
+    eluxSpaceDate: "Aug 2023 - Feb 2024",
+    eluxSpaceDesc1:
       "Contributed to the design and development of user interfaces (UI) and user experiences (UX) for various digital products.",
-    wofWoodenDesc2:
+    eluxSpaceDesc2:
       "Assisted in conducting user research, creating wireframes, prototypes, and mockups.",
-    wofWoodenDesc3:
+    eluxSpaceDesc3:
       "Collaborated with cross-functional teams to ensure a user-centered design approach and translate concepts into intuitive designs.",
     techStack: "Tech Stack",
     project1Category: "Corporate Website",
@@ -404,21 +405,20 @@ export const translations: Record<Language, Translations> = {
     aug2020_2024: "AGU 2020 - 2024",
     statePolytechnicMalang: "Politeknik Negeri Malang",
     gpa: "IPK: 3.42",
-    expDesc1:
-      "Merancang dan menerapkan Sistem PGE (v1.10.0), Platform Manajemen Terintegrasi komprehensif yang mengelola alur kerja kantor yang kritis.",
-    expDesc2:
-      "Network Engineering menggunakan RouterOS (MikroTik), termasuk traffic shaping, solusi Hotspot, segmentasi VLAN, dan konfigurasi routing tingkat lanjut.",
-    expDesc3:
-      "Administrasi Server menggunakan Ubuntu untuk deployment web lokal, serta pengelolaan Data Storage Server menggunakan Synology NAS.",
-    expDesc4: "Pengendalian dan manajemen dokumen untuk dokumentasi proyek engineering.",
-    wofWoodenCompany: "Elux Space",
-    wofWoodenPosition: "UI/UX Internship",
-    wofWoodenDate: "Agu 2023 - Feb 2024",
-    wofWoodenDesc1:
+    expDesc1: "Mengembangkan dan menerapkan aplikasi bisnis berbasis web internal, termasuk dashboard monitoring proyek dan sistem manajemen sumber daya manusia (SDM).",
+    expDesc2: "Merancang dan menerapkan lingkungan server kantor terpusat menggunakan TrueNAS dan Nextcloud pada sistem berbasis Linux untuk memastikan penyimpanan data yang aman dan kolaborasi file.",
+    expDesc3: "Mengelola infrastruktur jaringan perusahaan menggunakan router MikroTik, menerapkan VLAN, Hotspot, dan konfigurasi Firewall untuk menjaga keamanan jaringan.",
+    expDesc4: "Document Control untuk proyek relokasi PLTG Payo Selincah Unit #1 ke PT CNI Kolaka: mengelola catatan supervisi teknis, pelacakan versi, dan pengarsipan yang aman.",
+    expDesc5: "Document Control untuk Proyek Pengembangan Gas Tungkal: mengelola dokumentasi layanan transportasi gas yang melibatkan pemangku kepentingan seperti SKK Migas dan MontD’Or Oil Tungkal Limited.",
+    expDesc6: "Melakukan troubleshooting teknis untuk sistem perangkat keras dan lunak untuk menjaga kelangsungan operasional dan meminimalkan downtime.",
+    eluxSpaceCompany: "Elux Space",
+    eluxSpacePosition: "UI/UX Magang",
+    eluxSpaceDate: "Agu 2023 - Feb 2024",
+    eluxSpaceDesc1:
       "Berkontribusi pada desain dan pengembangan antarmuka pengguna (UI) dan pengalaman pengguna (UX) untuk berbagai produk digital.",
-    wofWoodenDesc2:
+    eluxSpaceDesc2:
       "Membantu dalam melakukan riset pengguna, membuat wireframe, prototipe, dan mockup.",
-    wofWoodenDesc3:
+    eluxSpaceDesc3:
       "Berkolaborasi dengan tim lintas fungsi untuk memastikan pendekatan desain yang berpusat pada pengguna dan menerjemahkan konsep menjadi desain yang intuitif.",
     techStack: "Tech Stack",
     project1Category: "Website Perusahaan",

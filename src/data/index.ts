@@ -24,6 +24,44 @@ export const getProjects = (language: Language): Project[] => {
 
   return [
     {
+      title: "Smart Finance Tracker",
+      category: language === "en" ? "Finance Management" : "Manajemen Keuangan",
+      description: language === "en"
+        ? "AI-powered financial management system for tracking transactions and wealth growth."
+        : "Sistem manajemen keuangan berbasis AI untuk melacak transaksi dan pertumbuhan kekayaan.",
+      image: "/Gallery/SmartFinance/1-smartfinance.png",
+      images: ["/Gallery/SmartFinance/1-smartfinance.png", "/Gallery/SmartFinance/2-smartfinance.png"],
+      tags: ["Next.js", "AI", "Finance", "PostgreSQL"],
+      link: "https://smart-finance-tracker-smoky.vercel.app/",
+      featured: true,
+      type: "personal",
+    },
+    {
+      title: "Oceanus Energy",
+      category: language === "en" ? "Corporate Website" : "Website Perusahaan",
+      description: language === "en"
+        ? "High-impact corporate company profile with a focus on sustainable energy sector services."
+        : "Company profile perusahaan dengan fokus pada layanan sektor energi terbarukan.",
+      image: "/Gallery/Oceanus.png",
+      tags: ["React", "Corporate", "Company Profile"],
+      link: "https://oceanusenergy.vercel.app/",
+      featured: true,
+      type: "personal",
+    },
+    {
+      title: "HRIS Six",
+      category: language === "en" ? "HR Management" : "Manajemen HR",
+      description: language === "en"
+        ? "Compact Human Resource Integration System with streamlined attendance and payroll."
+        : "Sistem Integrasi SDM ringkas dengan absensi dan penggajian yang efisien.",
+      image: "/Gallery/HRIS/1-hris.png",
+      images: ["/Gallery/HRIS/1-hris.png", "/Gallery/HRIS/2-hris.png"],
+      tags: ["Next.js", "HRIS", "Prisma", "Tailwind"],
+      link: "https://hris-six-pi.vercel.app/",
+      featured: true,
+      type: "personal",
+    },
+    {
       title: "PT Puri Ganesha Engineering",
       category: t.project1Category,
       description: t.project1Desc,
@@ -50,26 +88,28 @@ export const getProjects = (language: Language): Project[] => {
       type: "project",
     },
     {
-      title: "Network Infrastructure",
-      category: t.project3Category,
-      description: t.project3Desc,
-      image:
-        "https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=800",
-      tags: ["Linux", "Network"],
-      link: "#",
+      title: "ScaleUpGo",
+      category: language === "en" ? "Web Development Agency" : "Jasa Pembuatan Web",
+      description: language === "en"
+        ? "Boutique web development agency landing page showcasing modern tech solutions for businesses."
+        : "Landing page agensi pembuatan website yang menawarkan solusi teknologi modern bagi bisnis.",
+      image: "/Gallery/Scaleup.png",
+      tags: ["React", "Business", "Web Services"],
+      link: "https://scaleupgo.vercel.app/",
       featured: true,
-      type: "project",
+      type: "personal",
     },
     {
-      title: "Document Control",
-      category: language === "en" ? "Project Documentation" : "Dokumentasi Proyek",
+      title: "Brewhouse",
+      category: language === "en" ? "Landing Page" : "Landing Page",
       description: language === "en"
-        ? "Created spreadsheet templates for engineering project document control, tracking revisions, approvals, and distribution records."
-        : "Membuat template spreadsheet untuk pengendalian dokumen proyek engineering, melacak revisi, persetujuan, dan catatan distribusi.",
-      tags: ["Google Sheets", "Documentation"],
-      link: "https://docs.google.com/spreadsheets/d/1i5rAyo9UXbBTon-mBzRzqqPLJqpMX6JE08gEG1zGiVY/edit?usp=sharing",
+        ? "Modern coffee shop landing page with sophisticated design aesthetics and interactive elements."
+        : "Landing page coffee shop modern dengan estetika desain yang canggih dan elemen interaktif.",
+      image: "/Gallery/brewhouse.png",
+      tags: ["React", "Landing Page", "Coffee Shop"],
+      link: "https://brewhouse-rho.vercel.app/",
       featured: true,
-      type: "project",
+      type: "personal",
     },
     {
       title: t.dataAnalystProjectTitle,
@@ -82,59 +122,15 @@ export const getProjects = (language: Language): Project[] => {
       type: "personal",
     },
     {
-      title: "ScaleUpGo",
-      category: language === "en" ? "Web Development Agency" : "Jasa Pembuatan Web",
-      description: language === "en"
-        ? "A business website offering professional web development services, built with modern technologies."
-        : "Website bisnis yang menawarkan jasa pembuatan web profesional, dibangun dengan teknologi modern.",
-      tags: ["React", "Business", "Web Services"],
-      link: "https://scaleupgo.vercel.app/",
+      title: "Network Infrastructure",
+      category: t.project3Category,
+      description: t.project3Desc,
+      image:
+        "https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=800",
+      tags: ["Linux", "Network"],
+      link: "#",
       featured: true,
-      type: "personal",
-    },
-    {
-      title: "Oceanus Energy",
-      category: language === "en" ? "Corporate Website" : "Website Perusahaan",
-      description: language === "en"
-        ? "A corporate company profile website showcasing energy sector services and capabilities."
-        : "Website company profile perusahaan yang menampilkan layanan dan kapabilitas di sektor energi.",
-      tags: ["React", "Corporate", "Company Profile"],
-      link: "https://oceanusenergy.vercel.app/",
-      featured: true,
-      type: "personal",
-    },
-    {
-      title: "Brewhouse",
-      category: language === "en" ? "Landing Page" : "Landing Page",
-      description: language === "en"
-        ? "A visually appealing landing page for a coffee shop with modern design aesthetics."
-        : "Landing page yang menarik secara visual untuk coffee shop dengan estetika desain modern.",
-      tags: ["React", "Landing Page", "Coffee Shop"],
-      link: "https://brewhouse-rho.vercel.app/",
-      featured: true,
-      type: "personal",
-    },
-    {
-      title: "Smart Finance Tracker",
-      category: language === "en" ? "Finance Management" : "Manajemen Keuangan",
-      description: language === "en"
-        ? "Manage your financial future with precision intelligence."
-        : "Kelola masa depan keuangan Anda dengan kecerdasan presisi.",
-      tags: ["React", "Next.js", "Finance"],
-      link: "https://smart-finance-tracker-smoky.vercel.app/",
-      featured: true,
-      type: "personal",
-    },
-    {
-      title: "HRIS Six",
-      category: language === "en" ? "HR Management" : "Manajemen HR",
-      description: language === "en"
-        ? "Human Resource Integration System."
-        : "Sistem Integrasi Sumber Daya Manusia.",
-      tags: ["React", "Next.js", "HRIS"],
-      link: "https://hris-six-pi.vercel.app/",
-      featured: true,
-      type: "personal",
+      type: "project",
     },
   ];
 };
@@ -166,6 +162,17 @@ export const socialLinks: SocialLink[] = [
     icon: "medium",
   },
 ];
+
+export const contactInfo = {
+  email: "ddiko105@gmail.com",
+  phone: "+62 878 5632 4656",
+  whatsapp: "https://wa.me/6287856324656",
+  linkedinName: "Mokhamad Dwihardik K.P.",
+  githubName: "MDwihardikKPutra",
+  copyright: "© 2026 Mokhamad Dwihardik Kusuma Putra",
+  location: "Bandung, West Java",
+  zone: "Indonesia / SEA Zone"
+};
 
 export const getSkills = (language: Language): SkillSet[] => {
   const t = translations[language];

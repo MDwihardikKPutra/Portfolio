@@ -1,89 +1,66 @@
 import { motion } from "framer-motion";
 import type { Translations } from "../../translations";
+import { Coffee, ShieldCheck, Zap, Globe } from "lucide-react";
 
 interface HomeProps {
   t: Translations;
   isDarkMode: boolean;
-  toggleDarkMode: () => void;
-  toggleLanguage: () => void;
-  language: string;
 }
 
-export const Home = ({ t }: HomeProps) => {
-  const firstName = t.firstName;
-  const lastName = t.lastName;
+const StarIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" className={className}>
+    <path d="M50 0 L55 45 L100 50 L55 55 L50 100 L45 55 L0 50 L45 45 Z" fill="currentColor" />
+  </svg>
+);
 
-  const letterVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.04,
-        duration: 0.5,
-        ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-      },
-    }),
-  };
-
+export const Home = ({ t }: { t: any }) => {
   return (
-    <div className="h-full flex flex-col w-full relative overflow-hidden text-[#f5f5f5]">
+    <div id="home" className="section-full flex flex-col justify-center">
+      <div className="section-container w-full">
+        
+        {/* Huge Editorial Title */}
+        <motion.div 
+           initial={{ opacity: 0, y: 30 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+           className="mb-4 md:mb-8"
+        >
+           <h1 className="flex flex-col font-black uppercase leading-[0.8] tracking-tighter">
+              <span className="text-[8.6vw] md:text-[6.6vw] whitespace-nowrap">Personal Portfolio</span>
+              <span className="text-[8.3vw] md:text-[6.4vw] whitespace-nowrap">M DWIHARDIK K PUTRA</span>
+           </h1>
+        </motion.div>
 
-      {/* Subtle accent gradient orb */}
-      <div className="absolute top-1/4 right-1/4 w-[400px] h-[400px] bg-white/[0.015] rounded-full blur-[120px] animate-pulse-glow pointer-events-none" />
-
-      {/* Main Content */}
-      <div className="relative z-10 flex-1 flex flex-col justify-center px-8 md:px-16 lg:px-24 pt-4 md:pt-8 pb-6 w-full mx-auto">
-        <div className="flex flex-col max-w-4xl">
-
-          {/* Name - Letter by letter reveal */}
-          <div className="mb-6">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight leading-[1.1] text-white">
-              <span className="block">
-                {firstName.split("").map((letter, i) => (
-                  <motion.span
-                    key={`first-${i}`}
-                    custom={i}
-                    variants={letterVariants}
-                    initial="hidden"
-                    animate="visible"
-                    className="inline-block"
-                    style={{ minWidth: letter === " " ? "0.3em" : undefined }}
-                  >
-                    {letter === " " ? "\u00A0" : letter}
-                  </motion.span>
-                ))}
-              </span>
-              <span className="block text-shimmer">
-                {lastName.split("").map((letter, i) => (
-                  <motion.span
-                    key={`last-${i}`}
-                    custom={i + firstName.length}
-                    variants={letterVariants}
-                    initial="hidden"
-                    animate="visible"
-                    className="inline-block"
-                    style={{ minWidth: letter === " " ? "0.3em" : undefined }}
-                  >
-                    {letter === " " ? "\u00A0" : letter}
-                  </motion.span>
-                ))}
-              </span>
-            </h1>
-          </div>
-
-
-          {/* About text */}
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.0 }}
-            className="text-sm sm:text-base leading-[1.8] text-justify text-gray-300 max-w-2xl"
-          >
-            {t.aboutText1}
-          </motion.p>
-
+        {/* Horizontal Hero Block */}
+        <div className="w-full h-[25vh] md:h-[30vh] overflow-hidden mb-8 bg-gray-100 border border-black/5">
+           <motion.img 
+              initial={{ scale: 1.1, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 1.5 }}
+              src="/wasnevermeant.png" 
+              alt="M. Dwihardik"
+              className="w-full h-full object-cover"
+           />
         </div>
+
+        {/* Brief Narrative */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+           <div className="lg:col-span-4">
+           </div>
+           <div className="lg:col-span-8">
+              <motion.div
+                 initial={{ opacity: 0, x: 20 }}
+                 whileInView={{ opacity: 1, x: 0 }}
+                 transition={{ duration: 1 }}
+              >
+                 <p className="text-lg md:text-xl font-bold leading-tight tracking-tight">
+                    Informatics Engineering graduate specializing in robust infrastructure and 
+                    high-end digital solutions. Merging technical depth with minimal engineering.
+                 </p>
+              </motion.div>
+           </div>
+        </div>
+
       </div>
     </div>
   );

@@ -7,7 +7,6 @@ import { translations } from "./translations";
 import { MainLayout } from "./components/Layout/MainLayout";
 import { Home } from "./pages/Home/Home";
 import { ProjectsPage } from "./pages/ProjectsPage/ProjectsPage";
-import { ExperiencePage } from "./pages/ExperiencePage/ExperiencePage";
 import { Contact } from "./pages/Contact/Contact";
 import { Gallery } from "./pages/Gallery/Gallery";
 import { EssayDetail } from "./pages/Essay/EssayDetail";
@@ -16,50 +15,15 @@ import { DataAnalystProjectPage } from "./pages/ProjectDetailPage/DataAnalystPro
 import { preloadGalleryImages, preloadHomeImages } from "./utils/preloadImages";
 
 /**
- * Renders the active panel based on the activeTab state.
- * Uses AnimatePresence for smooth fade transitions between panels.
+ * Renders all sections in a vertical stack for a single-page experience.
  */
-const ActivePanel = ({
-  activeTab,
-  t,
-  isDarkMode,
-  language,
-  toggleDarkMode,
-  toggleLanguage,
-}: {
-  activeTab: string;
-  t: any;
-  isDarkMode: boolean;
-  language: string;
-  toggleDarkMode: () => void;
-  toggleLanguage: () => void;
-}) => {
-  // All panels are rendered simultaneously but only the active one is visible.
-  // This ensures everything is preloaded and ready for instant switching.
-  const panels = [
-    { id: "home", content: <Home t={t} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLanguage={toggleLanguage} language={language} /> },
-    { id: "experience", content: <ExperiencePage t={t} isDarkMode={isDarkMode} language={language} /> },
-    { id: "projects", content: <ProjectsPage t={t} isDarkMode={isDarkMode} language={language} /> },
-    { id: "gallery", content: <Gallery t={t} isDarkMode={isDarkMode} /> },
-    { id: "contact", content: <Contact t={t} isDarkMode={isDarkMode} /> },
-  ];
-
+const SinglePageContent = ({ t, language }: { t: any; language: string }) => {
   return (
-    <div className="relative h-full w-full">
-      {panels.map((panel) => {
-        const isActive = activeTab === panel.id;
-        return (
-          <motion.div
-            key={panel.id}
-            initial={false}
-            animate={{ opacity: isActive ? 1 : 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className={`absolute inset-0 h-full w-full ${isActive ? "z-10 pointer-events-auto" : "z-0 pointer-events-none"}`}
-          >
-            {panel.content}
-          </motion.div>
-        );
-      })}
+    <div id="main-snap-container" className="snap-container">
+      <Home t={t} />
+      <ProjectsPage t={t} language={language} />
+      <Gallery t={t} isDarkMode={false} />
+      <Contact t={t} isDarkMode={false} />
     </div>
   );
 };
@@ -81,26 +45,51 @@ const AppRoutes = ({
   const [activeTab, setActiveTab] = useState<string>("home");
 
   const pageVariants = {
-    initial: { opacity: 0, x: 20 },
+    initial: { opacity: 0 },
     animate: {
       opacity: 1,
-      x: 0,
-      transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+      transition: { duration: 0.5, ease: "easeOut" },
     },
     exit: {
       opacity: 0,
-      x: -20,
-      transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+      transition: { duration: 0.3, ease: "easeIn" },
     },
   };
-
-  const bgColor = isDarkMode ? "bg-black" : "bg-white";
 
   // Check if we're on a deep-linked route (essay detail, project detail)
   const isDeepLink = location.pathname.startsWith("/essay/") || location.pathname === "/projects/data-analyst";
 
+  // Scroll Spy logic to update activeTab in Navbar
+  useEffect(() => {
+    if (isDeepLink) return;
+
+    const handleScrollSpy = () => {
+      const observerOptions = {
+        root: document.getElementById("main-snap-container"),
+        threshold: 0.5,
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveTab(entry.target.id);
+          }
+        });
+      }, observerOptions);
+
+      ["home", "work", "gallery", "contact"].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+
+      return () => observer.disconnect();
+    };
+
+    return handleScrollSpy();
+  }, [isDeepLink]);
+
   return (
-    <div className={`fixed inset-0 ${bgColor} transition-colors duration-300`}>
+    <div className="bg-white">
       <AnimatePresence mode="wait" initial={location.pathname === "/"}>
         <motion.div
           key={location.pathname === "/" ? "landing" : "main"}
@@ -108,7 +97,7 @@ const AppRoutes = ({
           initial="initial"
           animate="animate"
           exit="exit"
-          className="h-screen h-[100dvh] w-full"
+          className="min-h-screen w-full flex flex-col"
         >
           <Routes location={location}>
             <Route
@@ -139,13 +128,9 @@ const AppRoutes = ({
                       />
                     </Routes>
                   ) : (
-                    <ActivePanel
-                      activeTab={activeTab}
+                    <SinglePageContent
                       t={t}
-                      isDarkMode={isDarkMode}
                       language={language}
-                      toggleDarkMode={toggleDarkMode}
-                      toggleLanguage={toggleLanguage}
                     />
                   )}
                 </MainLayout>

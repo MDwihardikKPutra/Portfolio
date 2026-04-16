@@ -8,97 +8,54 @@ interface LandingProps {
   isDarkMode: boolean;
 }
 
-export const Landing = ({ t, isDarkMode }: LandingProps) => {
+export const Landing = ({ t }: LandingProps) => {
   const navigate = useNavigate();
-  const bgColor = isDarkMode ? "bg-[#0a0a0a]" : "bg-white";
-  const textColor = isDarkMode ? "text-[#f5f5f5]" : "text-[#1a1a1a]";
 
   useEffect(() => {
-    // Auto redirect to home after 3.5 seconds (exit animation will be handled by AnimatePresence)
+    // Auto redirect after a shorter duration for a snappier feel
     const timer = setTimeout(() => {
       navigate("/home");
-    }, 3500);
+    }, 2500);
 
-    return () => {
-      clearTimeout(timer);
-    };
+    return () => clearTimeout(timer);
   }, [navigate]);
-
-  const words = t.thankYouMessage.split(" ");
-  // Split into two parts: "Thanks for coming" and "for sure"
-  const firstPart = words.slice(0, -2); // "Thanks", "for", "coming"
-  const secondPart = words.slice(-2); // "for", "sure"
 
   return (
     <motion.div 
-      className={`h-screen h-[100dvh] ${bgColor} ${textColor} relative overflow-hidden w-full flex flex-col items-center justify-center px-6 md:px-8 lg:px-0`}
+      className="h-screen w-full bg-white flex flex-col items-center justify-center p-6 overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
+      exit={{ opacity: 0 }}
     >
-      <h1 className={`text-center mb-8 md:mb-12 w-full px-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 md:gap-x-3 md:gap-y-1 lg:gap-x-4 lg:gap-y-2 ${textColor}`}>
-        {/* First part: "Thanks for coming" */}
+      <div className="flex flex-col items-center">
         <motion.span
-          className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 md:gap-x-3 md:gap-y-1 lg:gap-x-4 lg:gap-y-2"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ 
-            delay: 0.3, 
-            duration: 0.8, 
-            ease: [0.16, 1, 0.3, 1] 
-          }}
+          initial={{ opacity: 0, letterSpacing: "1em" }}
+          animate={{ opacity: 1, letterSpacing: "0.5em" }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className="text-[10px] uppercase font-medium text-black mb-10 block"
         >
-          {firstPart.map((word, index) => (
-            <span
-              key={`first-${index}`}
-              className="text-[clamp(1.4rem,6.5vw,2.2rem)] md:text-[clamp(1.75rem,4.5vw,3.5rem)] font-light tracking-[-0.01em] md:tracking-[-0.04em] leading-snug md:leading-none whitespace-nowrap"
-            >
-              {word}
-            </span>
-          ))}
+          {t.firstName.split(" ")[0]}
         </motion.span>
         
-        {/* Second part: "for sure" */}
-        <motion.span
-          className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 md:gap-x-3 md:gap-y-1 lg:gap-x-4 lg:gap-y-2"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ 
-            delay: 1.2, 
-            duration: 0.8, 
-            ease: [0.16, 1, 0.3, 1] 
-          }}
-        >
-          {secondPart.map((word, index) => {
-            const cleanWord = word.replace(/[.,]/g, '');
-            const isBold = cleanWord === "for" || cleanWord === "sure";
-            return (
-              <span
-                key={`second-${index}`}
-                className={`text-[clamp(1.4rem,6.5vw,2.2rem)] md:text-[clamp(1.75rem,4.5vw,3.5rem)] ${isBold ? 'font-medium' : 'font-light'} tracking-[-0.01em] md:tracking-[-0.04em] leading-snug md:leading-none whitespace-nowrap`}
-              >
-                {word}
-              </span>
-            );
-          })}
-        </motion.span>
-      </h1>
-
-      {/* Loading Loader */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <div className={`loader ${isDarkMode ? 'dark' : 'light'}`}>
-          <span></span>
-          <span></span>
-          <span></span>
+        <div className="overflow-hidden">
+          <motion.h1 
+            initial={{ y: 80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="text-4xl md:text-5xl font-medium tracking-tighter text-black flex flex-col items-center gap-2"
+          >
+            <span>{t.lastName}</span>
+            <span className="serif italic font-light text-black text-xl md:text-2xl opacity-40 uppercase tracking-widest">Portfolio — 2025</span>
+          </motion.h1>
         </div>
-      </motion.div>
+
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: 100 }}
+          transition={{ delay: 0.5, duration: 1, ease: "easeInOut" }}
+          className="h-[1px] bg-black mt-8"
+        />
+      </div>
     </motion.div>
   );
 };
-
-export default Landing;
-
