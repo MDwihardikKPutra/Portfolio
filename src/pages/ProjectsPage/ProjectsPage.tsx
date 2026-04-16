@@ -39,7 +39,7 @@ export const ProjectsPage = ({ t, language }: ProjectsPageProps) => {
       <div className="section-container w-full flex-1 flex flex-col lg:grid lg:grid-cols-10 gap-6 lg:gap-16 pt-4 lg:pt-12 overflow-hidden">
         
         {/* Left Side: Experience Chronicle (30%) */}
-        <div className="hidden lg:flex lg:col-span-3 flex-col h-full pr-8 border-r border-black/5">
+        <div className="lg:col-span-3 flex flex-col h-full pr-8 border-r border-black/5">
           
           {/* Section Title */}
           <div className="mb-10">

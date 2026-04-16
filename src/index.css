@@ -33,8 +33,7 @@
   }
 
   .section-full {
-    @apply min-h-screen w-full snap-start snap-always relative flex flex-col bg-white pt-16;
-    @apply overflow-y-auto lg:overflow-hidden;
+    @apply h-screen w-full snap-start snap-always relative overflow-hidden flex flex-col bg-white pt-16;
     scroll-snap-stop: always;
   }
 
