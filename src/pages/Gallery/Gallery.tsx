@@ -117,11 +117,11 @@ export const Gallery = memo(({ }: { t: any; isDarkMode: boolean }) => {
 
         {/* Panoramic Gallery Strip */}
         <div className="w-full flex-1 bg-white flex flex-col justify-center relative shadow-2xl shadow-black/[0.03] overflow-hidden rounded-sm" style={{ willChange: "contents" }}>
-          <div className="w-full h-full grid grid-cols-1 lg:grid-cols-12 items-center">
+          <div className="w-full h-full">
             
-            {/* Mosaic Grid */}
-            <div className="lg:col-span-12 h-full overflow-hidden no-scrollbar">
-               <div className="grid grid-cols-2 md:grid-cols-6 grid-flow-dense auto-rows-[240px] md:auto-rows-[240px] gap-0 h-full">
+            {/* Mosaic Grid (Rigid Layout) */}
+            <div className="h-full overflow-hidden no-scrollbar">
+               <div className="grid grid-cols-2 md:grid-cols-6 grid-rows-3 gap-0 h-full">
                   {spans.map((spanClass, i) => (
                     <GalleryCell 
                       key={i} 
