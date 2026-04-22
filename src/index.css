@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,65 +17,66 @@
   body {
     @apply antialiased bg-white text-black;
     font-size: 15px;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow: hidden;
     height: 100%;
   }
 
   h1, h2, h3, h4 {
-    @apply tracking-tighter font-bold text-black uppercase;
-    line-height: 0.95;
+    @apply tracking-tight font-bold text-black;
+    line-height: 1.1;
   }
 }
 
 @layer utilities {
-  .section-container {
-    @apply max-w-[1550px] mx-auto px-6 md:px-12 lg:px-16 py-8 md:py-12;
+  /* Swiss Layout System - High Precision Consistency */
+  .swiss-px {
+    @apply px-8 md:px-20 lg:px-32;
+  }
+  
+  .swiss-py {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  .swiss-gap {
+    @apply gap-12 md:gap-16 lg:gap-20;
   }
 
   .section-full {
-    @apply h-screen w-full snap-start snap-always relative overflow-hidden flex flex-col bg-white pt-16;
-    scroll-snap-stop: always;
+    @apply h-screen w-screen flex-shrink-0 snap-start relative overflow-hidden flex flex-col bg-white pt-16;
   }
 
   .snap-container {
-    @apply h-screen overflow-y-scroll snap-y snap-mandatory bg-white;
+    @apply h-screen w-screen overflow-x-auto overflow-y-hidden flex flex-row snap-x snap-mandatory bg-white;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .snap-container::-webkit-scrollbar {
+    display: none;
   }
 
   /* Typography Scale */
   .text-display-giant {
-    @apply text-[15vw] md:text-[12vw] font-bold leading-[0.85] tracking-tighter;
+    @apply text-[15vw] md:text-[10vw] font-bold leading-[1.1] tracking-tighter;
   }
 
   .text-meta {
-    @apply text-[10px] uppercase font-bold tracking-[0.3em] text-black/40 font-mono;
+    @apply text-[11px] font-bold tracking-normal text-black font-sans;
   }
 
   .text-editorial-body {
     @apply text-base md:text-lg leading-relaxed font-normal text-black;
   }
 
-  /* Structural Dividers */
-  .divider-l {
-    @apply border-l border-black/5;
-  }
-  
-  .divider-r {
-    @apply border-r border-black/5;
-  }
-
-  .divider-t {
-    @apply border-t border-black/5;
-  }
-
-  .divider-b {
-    @apply border-b border-black/5;
+  /* Structural Dividers (Neutralized) */
+  .divider-l, .divider-r, .divider-t, .divider-b {
+    @apply border-transparent;
   }
 
   .glass-navbar {
-    @apply bg-white/90 backdrop-blur-md border-b border-black/10 sticky top-0 z-[100] h-20 flex items-center;
+    @apply bg-white sticky top-0 z-[100] h-12 flex items-center;
   }
 
   .no-scrollbar::-webkit-scrollbar {
@@ -85,7 +88,7 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #000000;
+    background: rgba(0,0,0,0.1);
   }
 }
 

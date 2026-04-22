@@ -106,21 +106,6 @@ export interface Translations {
   solutions: string;
   finalOutput: string;
   developmentProcess: string;
-  pgeDevelopmentProcess: string;
-  pgeDevelopmentProcess2: string;
-  pgeDevelopmentProcess3: string;
-  pgeTechStackTitle: string;
-  pgeTechStack: {
-    backend: string;
-    frontend: string;
-    packages: string;
-  };
-  pgeBackground: string;
-  pgeProblems: string;
-  pgeSolutions: string;
-  pgeOutput: string;
-  essay: string;
-  essayComingSoon: string;
   // Data Analyst Project Specific
   province: string;
   performanceOverview: string;
@@ -178,7 +163,7 @@ export const translations: Record<Language, Translations> = {
     education: "Education",
     whoAmI: "Who am I?",
     aboutText1:
-      "I completed my studies in Informatics Engineering at the State Polytechnic of Malang, earning a D4 degree in 2024 with a GPA of 3.42. Alongside my academic journey, I cultivate a strong passion for photography, which plays a significant role in shaping my creative direction and professional interests. I also write essays, exploring various topics that complement my technical expertise and creative pursuits.",
+      "I completed my studies in Informatics Engineering at the State Polytechnic of Malang, earning a D4 degree in 2024 with a GPA of 3.42. Alongside my academic journey, I cultivate a strong passion for photography, which plays a significant role in shaping my creative direction and professional interests.",
     contactMe: "Contact me",
     letsBuild: "Trying to do better",
     findings: "Findings",
@@ -320,8 +305,7 @@ export const translations: Record<Language, Translations> = {
       "PGE System integrates nine core modules: Work Management for daily plans and progress tracking; Leave Management with auto-balance tracking and multi-layer approvals; SPD Management for business trips with cost calculations; Purchase & Vendor Payment with centralized approvals; unified Approval Center with real-time notifications; Project Management with granular access controls; User & Role Management with module-level permissions; real-time notifications and complete audit trails; and EAR module for automatic activity reports in daily, weekly, or monthly formats.",
     pgeOutput:
       "PGE System unified all operations in one platform, eliminating data silos. Approval cycles accelerated with automatic data persistence and structured workflows. Management gained real-time visibility into employee activities, leave balances, project progress, and payments through intuitive dashboards. Reporting automated—EAR reports, trip documents, purchase orders, and payment records generate automatically. Complete audit trails ensure transparency and accountability. Enhanced visibility enables comprehensive monitoring of activities, projects, and approvals, improving decision-making and organizational efficiency.",
-    essay: "Essay",
-    essayComingSoon: "Essays coming soon. Check back later for my thoughts and writings.",
+
     // Data Analyst Project Specific
     province: "Province",
     performanceOverview: "Performance Overview",
@@ -377,7 +361,7 @@ export const translations: Record<Language, Translations> = {
     education: "Pendidikan",
     whoAmI: "Siapa saya?",
     aboutText1:
-      "Saya menyelesaikan pendidikan di Teknik Informatika di Politeknik Negeri Malang, meraih gelar D4 pada tahun 2024 dengan IPK 3.42. Seiring dengan perjalanan akademik saya, saya mengembangkan minat yang kuat terhadap fotografi, yang memainkan peran penting dalam membentuk arah kreatif dan minat profesional saya. Saya juga menulis essay, mengeksplorasi berbagai topik yang melengkapi keahlian teknis dan minat kreatif saya.",
+      "Saya menyelesaikan pendidikan di Teknik Informatika di Politeknik Negeri Malang, meraih gelar D4 pada tahun 2024 dengan IPK 3.42. Seiring dengan perjalanan akademik saya, saya mengembangkan minat yang kuat terhadap fotografi, yang memainkan peran penting dalam membentuk arah kreatif dan minat profesional saya.",
     contactMe: "Hubungi saya",
     letsBuild: "Mencoba untuk menjadi lebih baik",
     findings: "Temuan",
@@ -520,8 +504,7 @@ export const translations: Record<Language, Translations> = {
       "PGE System mengintegrasikan sembilan modul inti: Work Management untuk rencana harian dan tracking progress; Leave Management dengan tracking sisa cuti otomatis dan approval berlapis; SPD Management untuk perjalanan dinas dengan kalkulasi biaya; Purchase & Vendor Payment dengan approval terpusat; Approval Center terpadu dengan notifikasi real-time; Project Management dengan kontrol akses granular; User & Role Management dengan permission per modul; notifikasi real-time dan audit trail lengkap; serta modul EAR untuk laporan aktivitas otomatis dalam format harian, mingguan, atau bulanan.",
     pgeOutput:
       "PGE System menyatukan seluruh operasi dalam satu platform, menghilangkan data silo. Siklus approval dipercepat dengan persistensi data otomatis dan workflow terstruktur. Manajemen memperoleh visibilitas real-time terhadap aktivitas karyawan, sisa cuti, progress project, dan pembayaran melalui dashboard intuitif. Pelaporan terotomatisasi—laporan EAR, dokumen perjalanan dinas, purchase order, dan catatan pembayaran ter-generate otomatis. Audit trail lengkap memastikan transparansi dan akuntabilitas. Visibilitas yang ditingkatkan memungkinkan monitoring menyeluruh aktivitas, project, dan approval, meningkatkan pengambilan keputusan dan efisiensi organisasi.",
-    essay: "Essay",
-    essayComingSoon: "Essay akan segera hadir. Kembali lagi nanti untuk membaca pemikiran dan tulisan saya.",
+
     // Data Analyst Project Specific
     province: "Provinsi",
     performanceOverview: "Ringkasan Performa",

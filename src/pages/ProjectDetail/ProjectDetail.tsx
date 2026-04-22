@@ -9,7 +9,7 @@ interface DataAnalystProjectPageProps {
   isDarkMode: boolean;
 }
 
-export const DataAnalystProjectPage = ({ t }: DataAnalystProjectPageProps) => {
+export const ProjectDetail = ({ t }: DataAnalystProjectPageProps) => {
   return (
     <div className="bg-white min-h-screen">
       <div className="section-container">
