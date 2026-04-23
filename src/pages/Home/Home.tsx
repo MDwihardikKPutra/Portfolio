@@ -51,15 +51,15 @@ export const Home = memo(({ t }: { t: any }) => {
            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
            className="w-full h-[35vh] md:h-[45vh] bg-gray-50 overflow-hidden relative group shadow-2xl shadow-black/5 rounded-sm"
         >
+           {/* Interactive Figure Hotspot */}
+           <div className="peer absolute top-[50%] left-[28%] -translate-x-1/2 -translate-y-1/2 w-[40%] h-[80%] md:w-[25%] md:h-[90%] rounded-[100%] cursor-help z-20" />
+           
            <img 
              src="/wasnevermeant.png" 
              alt="Featured Visual" 
-             className="w-full h-full object-cover object-[center_60%] grayscale group-hover:grayscale-0 transition-grayscale duration-1000"
+             className="w-full h-full object-cover object-[center_60%] grayscale peer-hover:grayscale-0 transition-all duration-1000"
            />
 
-           {/* Interactive Figure Hotspot (Maintained on z-20 so Tooltip survives) */}
-           <div className="peer absolute top-[50%] left-[28%] -translate-x-1/2 -translate-y-1/2 w-[40%] h-[80%] md:w-[25%] md:h-[90%] rounded-[100%] cursor-help z-20" />
-           
            {/* Dialog Bubble Tooltip */}
            <div className="absolute top-[35%] lg:top-[30%] left-[32%] lg:left-[32%] opacity-0 peer-hover:opacity-100 transition-opacity duration-500 pointer-events-none flex items-center z-30">
              

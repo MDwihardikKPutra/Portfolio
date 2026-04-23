@@ -11,6 +11,7 @@ import { Contact } from "./pages/Contact/Contact";
 import { Gallery } from "./pages/Gallery/Gallery";
 import { Landing } from "./pages/Landing/Landing";
 import { ProjectDetail } from "./pages/ProjectDetail/ProjectDetail";
+import { Manifesto } from "./pages/Manifesto/Manifesto";
 import { preloadGalleryImages, preloadHomeImages } from "./utils/preloadImages";
 
 /**
@@ -69,6 +70,7 @@ const SinglePageContent = memo(({ t, language }: { t: any; language: string }) =
       style={{ willChange: "transform, scroll-position" }}
     >
       <Home t={t} />
+      <Manifesto t={t} />
       <Projects t={t} language={language} />
       <Gallery t={t} isDarkMode={false} />
       <Contact t={t} isDarkMode={false} />
@@ -125,7 +127,7 @@ const AppRoutes = ({
         });
       }, observerOptions);
 
-      ["home", "work", "gallery", "contact"].forEach((id) => {
+      ["home", "manifesto", "work", "gallery", "contact"].forEach((id) => {
         const el = document.getElementById(id);
         if (el) observer.observe(el);
       });
