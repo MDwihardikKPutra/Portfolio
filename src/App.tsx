@@ -12,7 +12,7 @@ import { Gallery } from "./pages/Gallery/Gallery";
 import { Landing } from "./pages/Landing/Landing";
 import { ProjectDetail } from "./pages/ProjectDetail/ProjectDetail";
 import { Manifesto } from "./pages/Manifesto/Manifesto";
-import { preloadGalleryImages, preloadHomeImages } from "./utils/preloadImages";
+import { preloadAll } from "./utils/preloadImages";
 
 /**
  * Renders all sections in a vertical stack for a single-page experience.
@@ -204,8 +204,7 @@ function App() {
 
   // Preload images on app mount
   useEffect(() => {
-    preloadGalleryImages();
-    preloadHomeImages();
+    preloadAll();
   }, []);
 
   return (

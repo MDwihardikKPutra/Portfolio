@@ -14,14 +14,33 @@ export const galleryPhotos = [
 // Home page images
 export const homeImages = [
   "/profile.jpg",
+  "/wasnevermeant.png",
 ];
 
-// Internal optimization: Single-pass execution for all preloading types using Idle periods
-const executePreload = (srcArray: string[]) => {
-  const preload = () => {
-    srcArray.forEach((src) => {
-      // Background loading via Image object
+// Project thumbnail images for instant grid rendering
+export const projectImages = [
+  "/Gallery/Archi-Studio/preview-1.png",
+  "/Gallery/Archi-Studio/preview-2.png",
+  "/Gallery/SmartFinance/1-smartfinance.png",
+  "/Gallery/SmartFinance/2-smartfinance.png",
+  "/Gallery/Oceanus.png",
+  "/Gallery/HRIS/1-hris.png",
+  "/Gallery/HRIS/2-hris.png",
+  "/pge-hero.png",
+  "/pge-project.png",
+  "/pge-aboutus.png",
+  "/Web-PGE-System.png",
+  "/Gallery/Scaleup.png",
+  "/Gallery/brewhouse.png",
+];
+
+// Internal optimization: Single-pass execution for all preloading types
+const executePreload = (srcArray: string[]): Promise<void[]> => {
+  const promises = srcArray.map((src) => {
+    return new Promise<void>((resolve) => {
       const img = new Image();
+      img.onload = () => resolve();
+      img.onerror = () => resolve(); // Resolve anyway on error to not block
       img.src = src;
 
       // Link-level hint (Low priority)
@@ -31,20 +50,27 @@ const executePreload = (srcArray: string[]) => {
       link.href = src;
       document.head.appendChild(link);
     });
-  };
+  });
 
-  if ("requestIdleCallback" in window) {
-    (window as any).requestIdleCallback(preload);
-  } else {
-    setTimeout(preload, 1000); // Standard fallback
-  }
+  return Promise.all(promises);
 };
 
 export const preloadGalleryImages = () => {
-  executePreload(galleryPhotos);
+  return executePreload(galleryPhotos);
 };
 
 export const preloadHomeImages = () => {
-  executePreload(homeImages);
+  return executePreload(homeImages);
+};
+
+/**
+ * Preloads all critical assets and returns a promise that resolves when complete.
+ */
+export const preloadAll = async () => {
+  await Promise.all([
+    preloadGalleryImages(),
+    preloadHomeImages(),
+    executePreload(projectImages),
+  ]);
 };
 
