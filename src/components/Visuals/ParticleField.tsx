@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, memo } from 'react';
 import * as THREE from 'three';
 
-export const ParticleField = memo(({ size = 600 }: { size?: number }) => {
+export const ParticleField = memo(() => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -11,17 +11,17 @@ export const ParticleField = memo(({ size = 600 }: { size?: number }) => {
     
     // Scenario Setup
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, 1, 1, 10000);
-    camera.position.set(0, 150, 600); // Low, deep perspective
-    camera.lookAt(0, 0, -500);
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
+    camera.position.set(0, 250, 1000); // Higher, wider view
+    camera.lookAt(0, -100, -500);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true }); // Faster for high counts
-    renderer.setSize(size, size);
+    const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Particles Geometry - Higher Density
-    const SEPARATION = 8, AMOUNTX = 200, AMOUNTY = 200;
+    // Particles Geometry - Massive density for full screen (62.5K particles)
+    const SEPARATION = 15, AMOUNTX = 250, AMOUNTY = 250;
     const numParticles = AMOUNTX * AMOUNTY;
     const positions = new Float32Array(numParticles * 3);
     const scales = new Float32Array(numParticles);
@@ -29,10 +29,9 @@ export const ParticleField = memo(({ size = 600 }: { size?: number }) => {
     let i = 0, j = 0;
     for (let ix = 0; ix < AMOUNTX; ix++) {
       for (let iy = 0; iy < AMOUNTY; iy++) {
-        // Add random jitter to break the grid
-        positions[i] = ix * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 ) + (Math.random() - 0.5) * 5; 
+        positions[i] = ix * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 ) + (Math.random() - 0.5) * 8; 
         positions[i + 1] = 0; 
-        positions[i + 2] = iy * SEPARATION - ( ( AMOUNTY * SEPARATION ) / 2 ) + (Math.random() - 0.5) * 5;
+        positions[i + 2] = iy * SEPARATION - ( ( AMOUNTY * SEPARATION ) / 2 ) + (Math.random() - 0.5) * 8;
         scales[j] = 1;
         i += 3;
         j++;
@@ -52,13 +51,8 @@ export const ParticleField = memo(({ size = 600 }: { size?: number }) => {
         varying float vAlpha;
         void main() {
           vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-          
-          // Size attenuation
-          gl_PointSize = scale * ( 800.0 / - mvPosition.z );
-          
-          // Fade based on distance (Z depth)
-          vAlpha = smoothstep(-1500.0, -100.0, mvPosition.z);
-          
+          gl_PointSize = scale * ( 1200.0 / - mvPosition.z );
+          vAlpha = smoothstep(-3000.0, -200.0, mvPosition.z);
           gl_Position = projectionMatrix * mvPosition;
         }
       `,
@@ -67,7 +61,7 @@ export const ParticleField = memo(({ size = 600 }: { size?: number }) => {
         varying float vAlpha;
         void main() {
           if ( length( gl_PointCoord - vec2( 0.5, 0.5 ) ) > 0.5 ) discard;
-          gl_FragColor = vec4( color, vAlpha * 0.8 );
+          gl_FragColor = vec4( color, vAlpha * 0.5 );
         }
       `,
       transparent: true,
@@ -76,7 +70,6 @@ export const ParticleField = memo(({ size = 600 }: { size?: number }) => {
     const particles = new THREE.Points(geometry, material);
     scene.add(particles);
 
-    // Animation variables
     let count = 0;
     let animationId: number;
 
@@ -89,13 +82,12 @@ export const ParticleField = memo(({ size = 600 }: { size?: number }) => {
       let i = 0, j = 0;
       for (let ix = 0; ix < AMOUNTX; ix++) {
         for (let iy = 0; iy < AMOUNTY; iy++) {
-          // Complex wavy motion (Multiple octaves for mountain look)
-          const h1 = Math.sin((ix + count) * 0.2) * 40;
-          const h2 = Math.sin((iy + count) * 0.1) * 60;
-          const h3 = Math.cos((ix + iy + count) * 0.05) * 30;
+          const h1 = Math.sin((ix + count) * 0.1) * 80;
+          const h2 = Math.sin((iy + count) * 0.08) * 100;
+          const h3 = Math.cos((ix + iy + count) * 0.04) * 50;
           
           positions[i + 1] = h1 + h2 + h3;
-          scales[j] = (Math.sin((ix + count) * 0.3) + 1.5) * 2 + (Math.sin((iy + count) * 0.5) + 1.5) * 2;
+          scales[j] = (Math.sin((ix + count) * 0.2) + 2.5) * 2 + (Math.sin((iy + count) * 0.4) + 2.5) * 2;
           
           i += 3;
           j++;
@@ -105,19 +97,21 @@ export const ParticleField = memo(({ size = 600 }: { size?: number }) => {
       particles.geometry.attributes.position.needsUpdate = true;
       particles.geometry.attributes.scale.needsUpdate = true;
 
-      // Subtle camera sway
-      camera.position.x += ( 0 - camera.position.x ) * 0.01;
-      camera.position.y += ( 150 - camera.position.y ) * 0.01;
-      camera.lookAt(0, -100, -500);
-
       renderer.render(scene, camera);
-      count += 0.03; // Real-time slow flow
+      count += 0.02;
     };
 
+    const handleResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
     animate();
 
-    // Clean up
     return () => {
+      window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationId);
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
@@ -126,20 +120,9 @@ export const ParticleField = memo(({ size = 600 }: { size?: number }) => {
       geometry.dispose();
       material.dispose();
     };
-  }, [size]);
+  }, []);
 
   return (
-    <div className="relative group overflow-hidden rounded-2xl" style={{ width: size, height: size }}>
-      <div ref={containerRef} className="w-full h-full bg-black/40" />
-      {/* Decorative Technical Label */}
-      <div className="absolute bottom-6 right-6 flex flex-col items-end opacity-40">
-        <span className="text-[8px] font-mono text-white tracking-[0.3em] uppercase">
-          Flux_Density: 40.0K_PX
-        </span>
-        <span className="text-[8px] font-mono text-white tracking-[0.3em] uppercase mt-1">
-          Render_Engine: WebGL_v2
-        </span>
-      </div>
-    </div>
+    <div ref={containerRef} className="w-full h-full pointer-events-none" />
   );
 });
