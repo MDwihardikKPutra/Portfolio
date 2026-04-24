@@ -81,7 +81,7 @@ export const Gallery = ({ }: { t: any; isDarkMode: boolean }) => {
   }, []);
 
   return (
-    <div id="gallery" className="section-full !bg-black !pt-0 relative overflow-hidden" style={{ touchAction: 'none' }}>
+    <div id="gallery" className="section-full !bg-black !pt-0 relative" style={{ touchAction: 'auto' }}>
       
       <div className="w-full h-full relative">
         <div className="absolute top-10 right-10 flex items-end justify-end z-40 pointer-events-none">
