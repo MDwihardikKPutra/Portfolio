@@ -127,7 +127,15 @@ const AppRoutes = ({
         });
       }, observerOptions);
 
-      ["home", "manifesto", "work", "gallery", "contact"].forEach((id) => {
+      const sections = [
+        { id: "home", label: "Home", index: 0 },
+        { id: "manifesto", label: "Manifesto", index: 1 },
+        { id: "projects", label: "Projects", index: 2 },
+        { id: "gallery", label: "Gallery", index: 3 },
+        { id: "contact", label: "Contact", index: 4 },
+      ];
+
+      sections.forEach(({ id }) => {
         const el = document.getElementById(id);
         if (el) observer.observe(el);
       });

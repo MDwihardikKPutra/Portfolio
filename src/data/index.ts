@@ -26,6 +26,17 @@ export const getProjects = (language: Language): Project[] => {
   const t = translations[language];
   const result: Project[] = [
     {
+      title: "Archi Studio",
+      category: t.archiStudioCategory,
+      description: t.archiStudioDesc,
+      image: "/Gallery/Archi-Studio/preview-1.png",
+      images: ["/Gallery/Archi-Studio/preview-1.png", "/Gallery/Archi-Studio/preview-2.png"],
+      tags: ["React", "TypeScript", "Vite", "Editorial"],
+      link: "https://landing-page-archi-studio.vercel.app/",
+      featured: true,
+      type: "personal",
+    },
+    {
       title: "Smart Finance Tracker",
       category: language === "en" ? "Finance Management" : "Manajemen Keuangan",
       description: language === "en"

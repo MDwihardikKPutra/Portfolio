@@ -59,6 +59,8 @@ export interface Translations {
   project4Desc: string;
   dataAnalystProjectTitle: string;
   dataAnalystProjectRole: string;
+  archiStudioCategory: string;
+  archiStudioDesc: string;
   dataAnalystProjectTools: string;
   dataSource: string;
   executiveSummary: string;
@@ -218,6 +220,8 @@ export const translations: Record<Language, Translations> = {
       "Configured and maintained enterprise-scale network infrastructure using MikroTik (RouterOS), focusing on Traffic Shaping, IP Traffic Management, and Hotspot authentication. Managed wireless infrastructure and access points via the UniFi Controller (Ubiquiti) to ensure stable and secure connectivity. Executed advanced network designs including VLAN segmentation and internal routing protocols.",
     project4Category: "Data Analysis & Strategy",
     project4Desc: "E-Commerce Market Insights & Payment Risk Analysis 2024-2025",
+    archiStudioCategory: "Architectural Studio",
+    archiStudioDesc: "High-end architectural landing page with Japanese minimalist aesthetics and editorial layouts.",
     dataAnalystProjectTitle: "E-Commerce Market Insights & Payment Risk Analysis 2024-2025",
     dataAnalystProjectRole: "Role: System Analyst & Data Engineer",
     dataAnalystProjectTools: "Tools: Python (Pandas), Google Colab, Tabulate",
@@ -416,6 +420,8 @@ export const translations: Record<Language, Translations> = {
       "Mengkonfigurasi dan memelihara infrastruktur jaringan skala enterprise menggunakan MikroTik (RouterOS), dengan fokus pada Traffic Shaping, Manajemen Lalu Lintas IP, dan autentikasi Hotspot. Mengelola infrastruktur nirkabel dan access point melalui UniFi Controller (Ubiquiti) untuk memastikan konektivitas yang stabil dan aman. Mengeksekusi desain jaringan canggih termasuk segmentasi VLAN dan protokol routing internal.",
     project4Category: "Analisis & Strategi Data",
     project4Desc: "Strategi Data E-Commerce: Analisis Risiko Pembayaran & Wawasan Pasar 2024-2025",
+    archiStudioCategory: "Studio Arsitektur",
+    archiStudioDesc: "Landing page arsitektur kelas atas dengan estetika minimalis Jepang dan tata letak editorial.",
     dataAnalystProjectTitle: "E-Commerce Market Insights & Payment Risk Analysis 2024-2025",
     dataAnalystProjectRole: "Peran: Analis Sistem & Insinyur Data",
     dataAnalystProjectTools: "Alat: Python (Pandas), Google Colab, Tabulate",

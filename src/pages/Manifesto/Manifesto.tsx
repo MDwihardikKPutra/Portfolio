@@ -10,25 +10,24 @@ export const Manifesto = memo(({ t }: { t: any }) => {
   const [activeTooltip, setActiveTooltip] = useState<{ label: string, content: string, x: number, y: number } | null>(null);
 
   const labelContents: Record<string, string> = {
-    "About": "Born Kediri, 2 May 2001",
-    "Lab": "Interactive UI/UX Experiments",
-    "Contact": "dwihardikk@gmail.com",
-    "Interactive Art": "Blending logic and aesthetics",
-    "Archive": "00_Index: Digital Repository",
-    "Client Works": "Commercial collaborations",
-    "Vision": "Mind the gap between pixels & reality",
-    "Pixels": "High density digital grain",
-    "Logic": "Structural integrity by Laravel/React",
-    "Photography": "Capturing moments in light",
-    "Minimalism": "Less but better",
-    "Code": "Crafting logic with purpose",
-    "Motion": "Bringing pixels to life",
-    "Collaboration": "Building together effectively",
-    "Technology": "Tool for the human spirit",
-    "Engineering": "Building robust systems",
-    "Art": "Design as a language",
-    "生き甲斐": "Ikigai: A reason for being",
-    "宮本 武蔵": "Miyamoto Musashi: The Way of the Sword"
+    "About": "M Dwihardik K Putra, 02 mei 2001",
+    "Disciplin": "Informatic Engineering",
+    "Based": "Bandung, West Java",
+    "Book": "A day at morisaki bookshoop, Kafka On the shore, Norwegian Wood",
+    "Art": "Earth without art is just a rock",
+    "宮本 武蔵": "the way of life",
+    "Perspective": "35mm lens on photograph",
+    "Connection": "Technology should bridge hearts, not just data",
+    "Code": "code not important today, everyone can write a code",
+    "Contact": "ddiko105@gmail.com",
+    "Music": "The Strokes, Blur",
+    "Dream": "Finding true happiness and peace",
+    "Movie": "Past Lives (2023), Interstellar (2014), Perfect Days (2023)",
+    "Drink": "Contrary to most, I am not a coffee drinker",
+    "Observer": "Learning more through silence than sound",
+    "Ritual": "Daily habits that keep the mind sharp",
+    "Horizon": "Exploring the world one city at a time",
+    "Stillness": "Finding beauty in a quiet, minimalist space"
   };
 
   useEffect(() => {
@@ -137,45 +136,25 @@ export const Manifesto = memo(({ t }: { t: any }) => {
     };
 
     const drawLines = () => {
-      const labeledParticles = particles.filter(p => p.label);
+      const labeledParticles = particles.filter(p => !!p.label);
+
       for (let i = 0; i < labeledParticles.length; i++) {
         for (let j = i + 1; j < labeledParticles.length; j++) {
             const p1 = labeledParticles[i];
             const p2 = labeledParticles[j];
             const dx = p1.x - p2.x;
             const dy = p1.y - p2.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
+            const distSq = dx * dx + dy * dy;
+            const dist = Math.sqrt(distSq);
             
-            const opacity = Math.max(0.08, 0.25 - (distance / canvas.width) * 0.15);
+            // Connect ALL, but fade by distance for depth
+            const opacity = Math.max(0.05, 0.3 - (dist / canvas.width) * 0.4);
             ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
-            ctx.lineWidth = 0.8;
+            ctx.lineWidth = 0.6;
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
             ctx.stroke();
-        }
-      }
-
-      const maxDistance = 150; 
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const p1 = particles[i];
-          const p2 = particles[j];
-          if (p1.label && p2.label) continue;
-          
-          const dx = p1.x - p2.x;
-          const dy = p1.y - p2.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          if (distance < maxDistance) {
-            const opacity = (1 - distance / maxDistance) * 0.15;
-            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
-            ctx.lineWidth = 0.4;
-            ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
-          }
         }
       }
     };
@@ -189,46 +168,59 @@ export const Manifesto = memo(({ t }: { t: any }) => {
       const safeWidth = canvas.width - paddingX * 2;
       const safeHeight = canvas.height - paddingY * 2;
 
-      drawLines();
-      
       let foundHover = false;
+      const labeledParticles = particles.filter(p => !!p.label);
+
       for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[j].x - particles[i].x;
-            const dy = particles[j].y - particles[i].y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            const minDistance = particles[i].label ? 80 : 30;
-            if (distance < minDistance) {
+        const p1 = particles[i];
+
+        // Collision logic ONLY for labeled nodes to save CPU
+        if (p1.label) {
+          for (let j = 0; j < labeledParticles.length; j++) {
+            const p2 = labeledParticles[j];
+            if (p1 === p2) continue;
+            
+            const dx = p2.x - p1.x;
+            const dy = p2.y - p1.y;
+            const distSq = dx * dx + dy * dy;
+            const minDist = 80;
+            if (distSq < minDist * minDist) {
+                const dist = Math.sqrt(distSq);
                 const angle = Math.atan2(dy, dx);
-                const force = (minDistance - distance) / minDistance;
+                const force = (minDist - dist) / minDist;
                 const pushX = Math.cos(angle) * force * 0.5;
                 const pushY = Math.sin(angle) * force * 0.5;
-                particles[i].x -= pushX;
-                particles[i].y -= pushY;
-                particles[j].x += pushX;
-                particles[j].y += pushY;
+                p1.x -= pushX;
+                p1.y -= pushY;
+                p2.x += pushX;
+                p2.y += pushY;
             }
+          }
         }
-        particles[i].update(paddingX, paddingY, safeWidth, safeHeight);
-        particles[i].draw();
 
-        if (particles[i].label && !foundHover) {
-            const dx = mouse.x - particles[i].x;
-            const dy = mouse.y - particles[i].y;
+        p1.update(paddingX, paddingY, safeWidth, safeHeight);
+        p1.draw();
+
+        if (p1.label && !foundHover) {
+            const dx = mouse.x - p1.x;
+            const dy = mouse.y - p1.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
             if (dist < 30) {
                 setActiveTooltip({
-                    label: particles[i].label!,
-                    content: labelContents[particles[i].label!] || "",
-                    x: particles[i].x,
-                    y: particles[i].y
+                    label: p1.label!,
+                    content: labelContents[p1.label!] || "",
+                    x: p1.x,
+                    y: p1.y
                 });
                 foundHover = true;
             }
         }
       }
-      if (!foundHover) setActiveTooltip(null);
+
+      // Draw lines AFTER update to prevent jitter/gap
+      drawLines();
       
+      if (!foundHover) setActiveTooltip(null);
       animationFrameId = requestAnimationFrame(animate);
     };
 
@@ -264,22 +256,27 @@ export const Manifesto = memo(({ t }: { t: any }) => {
       <AnimatePresence>
         {activeTooltip && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 10 }}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ 
+              opacity: 1, 
+              left: activeTooltip.x, 
+              top: activeTooltip.y + 15 
+            }}
+            exit={{ opacity: 0, y: 15 }}
+            transition={{ 
+              type: "spring",
+              damping: 20,
+              stiffness: 200,
+              opacity: { duration: 0.2 }
+            }}
             className="absolute z-50 pointer-events-none"
             style={{ 
-              left: activeTooltip.x, 
-              top: activeTooltip.y + 25,
-              transform: 'translateX(-50%)' 
+              translateX: '-50%'
             }}
           >
-            <div className="bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-sm shadow-xl">
-              <p className="text-[10px] md:text-[11px] font-bold text-white tracking-widest whitespace-nowrap">
-                {activeTooltip.content}
-              </p>
-            </div>
-            <div className="w-0 h-0 border-x-4 border-x-transparent border-b-4 border-b-white/10 mx-auto -mt-[1px]" />
+            <p className="text-[8px] font-bold text-white tracking-[0.1em] text-left max-w-[180px] leading-relaxed drop-shadow-[0_2px_10px_rgba(255,255,255,0.3)]">
+              {activeTooltip.content}
+            </p>
           </motion.div>
         )}
       </AnimatePresence>

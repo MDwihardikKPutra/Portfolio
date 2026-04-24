@@ -37,16 +37,21 @@ const ProjectImageSlideshow = ({ images }: { images: string[] }) => {
 
 export const Projects = memo(({ t, language }: { t: any; language: string }) => {
   const projects = getProjects(language as Language);
+  const [activeFilter, setActiveFilter] = useState<"all" | "project" | "personal">("personal");
+
+  const filteredProjects = projects.filter(
+    p => activeFilter === "all" || p.type === activeFilter
+  );
 
   return (
-    <div className="section-full bg-white flex flex-col justify-center items-center !pt-0">
+    <div id="projects" className="section-full bg-white flex flex-col justify-center items-center !pt-0">
       {/* 
         Micro-Panoramic Container
         High-density miniature look, spanning the full cinematic width.
       */}
       <div className="w-full h-[70vh] flex flex-col px-4 md:px-8 max-w-[2600px] mx-auto transform scale-[0.75] origin-center transition-transform duration-700">
         
-        {/* Minimalist Section Title */}
+        {/* Minimalist Section Title - Interactive Filter */}
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -54,15 +59,31 @@ export const Projects = memo(({ t, language }: { t: any; language: string }) => 
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col mb-12 self-start text-left items-start"
         >
-          <h2 className="text-[32px] md:text-[40px] text-black tracking-tight leading-none flex items-center gap-3">
-            <span className="font-black">Project / </span>
-            <span className="font-normal">Personal Project</span>
+          <h2 className="text-[32px] md:text-[40px] tracking-tight leading-none flex items-center gap-3">
+            <span 
+              onClick={() => setActiveFilter(activeFilter === "project" ? "all" : "project")}
+              className={`cursor-pointer transition-colors duration-300 ${
+                activeFilter === "project" || activeFilter === "all" ? "font-black text-black" : "font-normal text-black/30 hover:text-black/60"
+              }`}
+            >
+              Project
+            </span>
+            <span className="font-light text-black/20">/</span>
+            <span 
+              onClick={() => setActiveFilter(activeFilter === "personal" ? "all" : "personal")}
+              className={`cursor-pointer transition-colors duration-300 ${
+                activeFilter === "personal" || activeFilter === "all" ? "font-medium text-black" : "font-light text-black/30 hover:text-black/60"
+              }`}
+            >
+              Personal Project
+            </span>
           </h2>
         </motion.div>
         
         {/* Strictly 3 Rows, 4 Columns */}
         <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-5 md:grid-rows-3 grid-flow-dense gap-2 md:gap-4 w-full h-full">
-          {projects.slice(0, 9).map((project, itemIdx) => {
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.slice(0, 9).map((project, itemIdx) => {
             const projectImages = project.images || (project.image ? [project.image] : []);
             
             // Bento Compact Spans: 
@@ -77,11 +98,14 @@ export const Projects = memo(({ t, language }: { t: any; language: string }) => 
 
             return (
               <motion.div
-                key={itemIdx}
-                initial={{ opacity: 0, scale: 0.95 }}
+                key={project.title}
+                layout
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: "-5%" }}
-                transition={{ duration: 0.8, delay: itemIdx * 0.05 }}
+                transition={{ duration: 0.5 }}
                 className={`relative rounded-sm overflow-hidden group bg-gray-50 flex flex-col ${spanClass}`}
               >
                 {/* Background Slideshow */}
@@ -127,6 +151,7 @@ export const Projects = memo(({ t, language }: { t: any; language: string }) => 
               </motion.div>
             );
           })}
+          </AnimatePresence>
         </div>
       </div>
     </div>

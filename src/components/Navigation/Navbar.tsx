@@ -15,9 +15,10 @@ export const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
 
   const navItems = [
     { id: "home", label: "01. Head" },
-    { id: "work", label: "02. Works" },
-    { id: "gallery", label: "03. Archive" },
-    { id: "contact", label: "04. Connect" },
+    { id: "manifesto", label: "02. Core" },
+    { id: "projects", label: "03. Works" },
+    { id: "gallery", label: "04. Archive" },
+    { id: "contact", label: "05. Connect" },
   ];
 
   const scrollToSection = (id: string) => {
