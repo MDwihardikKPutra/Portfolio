@@ -82,12 +82,12 @@ export const Home = memo(({ t }: { t: any }) => {
            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
            className="w-full h-[35vh] md:h-[45vh] bg-gray-50 overflow-hidden relative shadow-2xl shadow-black/5 rounded-sm group"
         >
-           {/* Interactive Figure Hotspot - SECRET JET TRIGGER (Tightened) */}
+           {/* Interactive Figure Hotspot - SECRET JET TRIGGER (Optimized for Mobile Touch) */}
            <div 
              onMouseEnter={() => setIsHovered(true)}
              onMouseLeave={() => setIsHovered(false)}
              onClick={triggerFly}
-             className="absolute top-[35%] left-[27%] -translate-x-1/2 -translate-y-1/2 w-[12%] h-[18%] md:w-[8%] md:h-[25%] rounded-[100%] cursor-pointer z-50" 
+             className="absolute top-[35%] left-[27%] -translate-x-1/2 -translate-y-1/2 w-[30%] h-[30%] md:w-[8%] md:h-[25%] rounded-[100%] cursor-pointer z-50" 
            />
            <img 
              src="/wasnevermeant.png" 
