@@ -1,27 +1,24 @@
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { memo, useRef, useState, useMemo, useEffect } from "react";
 import { LiquidDistortion } from "../../components/Visuals/LiquidDistortion";
 import { ParticleField } from "../../components/Visuals/ParticleField";
-import { useState, useMemo, memo, useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 export const ExperimentalGeometric = memo(() => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [inputName, setInputName] = useState("");
-  
-  // Create a frequency data based on inputName
-  const frequencyData = useMemo(() => {
-    const chars = inputName.split("");
-    const baseFreq = chars.reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    return Array.from({ length: 40 }).map((_, i) => ({
-      height: Math.abs(Math.sin((baseFreq + i) * 0.2)) * 60 + 5,
-      delay: i * 0.02
-    }));
-  }, [inputName]);
   const [containerEl, setContainerEl] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
     const el = document.getElementById("main-snap-container");
     if (el) setContainerEl(el);
-  }, [inputName]);
+  }, []);
+  
+  // Auto-animating frequency data (dna-like sequence)
+  const frequencyData = useMemo(() => {
+    return Array.from({ length: 60 }).map((_, i) => ({
+      height: 15 + Math.random() * 45,
+      delay: i * 0.01
+    }));
+  }, []);
 
   const { scrollXProgress } = useScroll({
     container: containerEl ? { current: containerEl } : undefined,
@@ -61,7 +58,7 @@ export const ExperimentalGeometric = memo(() => {
             style={{ x: translateX }}
             className="hidden md:block flex-1"
           >
-            <LiquidDistortion size={400} />
+            <LiquidDistortion size={450} />
           </motion.div>
 
           {/* Pillar 2: Title & Narrative */}
@@ -74,34 +71,32 @@ export const ExperimentalGeometric = memo(() => {
               <span className="block text-[10px] font-black tracking-[0.5em] uppercase mb-4 text-white/40">
                 [ LAB / KINETIC_EXPERIMENTS ]
               </span>
-              <h2 className="text-[60px] md:text-[90px] font-black tracking-tighter leading-[0.9] text-white">
+              <h2 className="text-[60px] md:text-[100px] font-black tracking-tighter leading-[0.8] text-white">
                 GENETIC<br/>FLOW
               </h2>
             </motion.div>
 
-            {/* Input Section */}
-            <div className="flex flex-col items-center mt-12">
-              <span className="text-[10px] font-black tracking-[0.4em] uppercase text-white/30 mb-2">
-                [ TYPE_IDENTIFIER ]
-              </span>
-              <input 
-                type="text" 
-                value={inputName}
-                onChange={(e) => setInputName(e.target.value)}
-                placeholder="NAME_"
-                className="bg-transparent border-b border-white/20 text-white text-[24px] font-black tracking-tighter outline-none focus:border-white transition-colors text-center w-[250px] placeholder:text-white/5 uppercase"
-              />
-              {/* Frequency Bars */}
-              <div className="flex items-end gap-[2px] h-10 mt-6">
-                {frequencyData.map((data, i) => (
-                  <motion.div 
-                    key={i}
-                    animate={{ height: data.height }}
-                    className="w-[2px] bg-white rounded-t-sm origin-bottom"
-                  />
-                ))}
-              </div>
+            {/* Frequency Bars (Now Autonomous) */}
+            <div className="flex items-end gap-[2px] h-16 mt-16">
+              {frequencyData.map((data, i) => (
+                <motion.div 
+                  key={i}
+                  animate={{ 
+                    height: [data.height, data.height * 1.8, data.height * 0.4, data.height] 
+                  }}
+                  transition={{ 
+                    duration: 1.5 + Math.random() * 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: data.delay 
+                  }}
+                  className="w-[2px] bg-white rounded-t-sm origin-bottom"
+                />
+              ))}
             </div>
+            <span className="text-[10px] font-black tracking-[0.4em] uppercase text-white/20 mt-4">
+              [ SYSTEM_ACTIVE: MONITORING_DATA ]
+            </span>
           </div>
 
           {/* Pillar 3: Three.js Particle Wave */}
