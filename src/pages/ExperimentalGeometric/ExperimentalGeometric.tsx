@@ -16,9 +16,15 @@ export const ExperimentalGeometric = memo(() => {
       delay: i * 0.02
     }));
   }, [inputName]);
+  const [containerEl, setContainerEl] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const el = document.getElementById("main-snap-container");
+    if (el) setContainerEl(el);
+  }, [inputName]);
 
   const { scrollXProgress } = useScroll({
-    container: document.getElementById("main-snap-container") as HTMLElement,
+    container: containerEl ? { current: containerEl } : undefined,
     target: containerRef,
     offset: ["start end", "end start"]
   });
