@@ -12,6 +12,7 @@ import { Gallery } from "./pages/Gallery/Gallery";
 import { Landing } from "./pages/Landing/Landing";
 import { ProjectDetail } from "./pages/ProjectDetail/ProjectDetail";
 import { Manifesto } from "./pages/Manifesto/Manifesto";
+import { ExperimentalGeometric } from "./pages/ExperimentalGeometric/ExperimentalGeometric";
 import { preloadAll } from "./utils/preloadImages";
 
 /**
@@ -71,6 +72,7 @@ const SinglePageContent = memo(({ t, language }: { t: any; language: string }) =
     >
       <Home t={t} />
       <Manifesto t={t} />
+      <ExperimentalGeometric />
       <Projects t={t} language={language} />
       <Gallery t={t} isDarkMode={false} />
       <Contact t={t} isDarkMode={false} />
@@ -130,9 +132,10 @@ const AppRoutes = ({
       const sections = [
         { id: "home", label: "Home", index: 0 },
         { id: "manifesto", label: "Manifesto", index: 1 },
-        { id: "projects", label: "Projects", index: 2 },
-        { id: "gallery", label: "Gallery", index: 3 },
-        { id: "contact", label: "Contact", index: 4 },
+        { id: "experimental", label: "Experimental", index: 2 },
+        { id: "projects", label: "Projects", index: 3 },
+        { id: "gallery", label: "Gallery", index: 4 },
+        { id: "contact", label: "Contact", index: 5 },
       ];
 
       sections.forEach(({ id }) => {
