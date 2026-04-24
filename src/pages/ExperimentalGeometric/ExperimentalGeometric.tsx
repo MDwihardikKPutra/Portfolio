@@ -119,5 +119,3 @@ export const ExperimentalGeometric = memo(() => {
     </div>
   );
 });
-  );
-});
