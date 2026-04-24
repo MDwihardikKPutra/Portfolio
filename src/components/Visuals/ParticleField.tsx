@@ -12,7 +12,7 @@ export const ParticleField = memo(() => {
     // Scenario Setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.set(0, 250, 1000); // Higher, wider view
+    camera.position.set(0, 250, 1000); 
     camera.lookAt(0, -100, -500);
 
     const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
@@ -20,7 +20,7 @@ export const ParticleField = memo(() => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Particles Geometry - Massive density for full screen (62.5K particles)
+    // Particles Geometry - Massive density (62.5K particles)
     const SEPARATION = 15, AMOUNTX = 250, AMOUNTY = 250;
     const numParticles = AMOUNTX * AMOUNTY;
     const positions = new Float32Array(numParticles * 3);
@@ -51,7 +51,8 @@ export const ParticleField = memo(() => {
         varying float vAlpha;
         void main() {
           vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-          gl_PointSize = scale * ( 1200.0 / - mvPosition.z );
+          // Smaller points (Dots)
+          gl_PointSize = scale * ( 200.0 / - mvPosition.z );
           vAlpha = smoothstep(-3000.0, -200.0, mvPosition.z);
           gl_Position = projectionMatrix * mvPosition;
         }
