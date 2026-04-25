@@ -5,6 +5,15 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
 
+// --- SYSTEM STABILITY CONFIG ---
+const GALAXY_CONFIG = {
+  PARTICLE_COUNT: 150000, // Balanced for cinematic vs stability
+  CORE_COLOR: 0xffffff,
+  ARM_COLOR: 0x3366ff,
+  ROTATE_SPEED: 0.15,
+  BLOOM_STRENGTH: 1.8,
+};
+
 export const ParticleField = memo(() => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState<string | null>(null);
@@ -18,27 +27,39 @@ export const ParticleField = memo(() => {
     let animationId: number;
 
     try {
+      // 1. Scene Setup
       const scene = new THREE.Scene();
-      
-      const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
-      camera.position.set(0, 800, 2000); 
+      const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 5000);
+      camera.position.set(0, 700, 1800);
       camera.lookAt(0, 0, 0);
 
-      renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: "high-performance" });
+      // 2. Renderer with High Stability
+      renderer = new THREE.WebGLRenderer({ 
+        antialias: false, 
+        alpha: true, 
+        powerPreference: "high-performance",
+        canvas: document.createElement('canvas') // Internal creation
+      });
+
       renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
       renderer.toneMapping = THREE.ReinhardToneMapping;
       renderer.toneMappingExposure = 1.3;
       container.appendChild(renderer.domElement);
 
+      // 3. Post-Processing Pipeline
       composer = new EffectComposer(renderer);
-      composer.addPass(new RenderPass(scene, camera));
+      const renderPass = new RenderPass(scene, camera);
+      composer.addPass(renderPass);
 
-      const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 2.0, 0.5, 0.85);
+      const bloomPass = new UnrealBloomPass(
+        new THREE.Vector2(window.innerWidth, window.innerHeight),
+        GALAXY_CONFIG.BLOOM_STRENGTH, 0.45, 0.8
+      );
       composer.addPass(bloomPass);
 
       const filmPass = new ShaderPass({
-        uniforms: { tDiffuse: { value: null }, time: { value: 0 }, amount: { value: 0.003 } },
+        uniforms: { tDiffuse: { value: null }, time: { value: 0 }, amount: { value: 0.0025 } },
         vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
         fragmentShader: `
           uniform sampler2D tDiffuse; uniform float time; uniform float amount; varying vec2 vUv;
@@ -48,46 +69,41 @@ export const ParticleField = memo(() => {
             vec4 color = texture2D(tDiffuse, uv);
             float r = texture2D(tDiffuse, uv + vec2(amount, 0.0)).r;
             float b = texture2D(tDiffuse, uv - vec2(amount, 0.0)).b;
-            float n = random(uv + time) * 0.08;
+            float n = random(uv + time) * 0.07;
             gl_FragColor = vec4(r, color.g, b, color.a) + vec4(n, n, n, 0.0);
           }
         `
       });
       composer.addPass(filmPass);
 
-      // --- MILKY WAY GEOMETRY ---
-      const count = 300000; // 300K particles for the galaxy
+      // 4. Galaxy Geometry Construction
+      const count = GALAXY_CONFIG.PARTICLE_COUNT;
       const positions = new Float32Array(count * 3);
-      const randoms = new Float32Array(count * 3);
       const colors = new Float32Array(count * 3);
+      const randoms = new Float32Array(count * 3);
 
-      const colorInside = new THREE.Color(0xffffff); // Core
-      const colorOutside = new THREE.Color(0x3366ff); // Spiral arms
+      const cCenter = new THREE.Color(GALAXY_CONFIG.CORE_COLOR);
+      const cOuter = new THREE.Color(GALAXY_CONFIG.ARM_COLOR);
 
       for (let i = 0; i < count; i++) {
         const i3 = i * 3;
-        
-        // Spiral Math
-        const radius = Math.random() * 1200;
-        const spinAngle = radius * 0.003;
-        const branchAngle = (i % 3) * ((Math.PI * 2) / 3); // 3 arms
+        const radius = Math.random() * 1100;
+        const spinAngle = radius * 0.0025;
+        const branchAngle = (i % 3) * ((Math.PI * 2) / 3);
 
-        const randomX = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * (radius * 0.2);
-        const randomY = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * (radius * 0.1);
-        const randomZ = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * (radius * 0.2);
+        const rX = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * (radius * 0.2);
+        const rY = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * (radius * 0.1);
+        const rZ = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * (radius * 0.2);
 
-        positions[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX;
-        positions[i3 + 1] = randomY; 
-        positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
+        positions[i3] = Math.cos(branchAngle + spinAngle) * radius + rX;
+        positions[i3 + 1] = rY;
+        positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + rZ;
 
         randoms[i3] = Math.random();
         randoms[i3 + 1] = Math.random();
         randoms[i3 + 2] = Math.random();
 
-        // Milky Way Color Mix
-        const mixedColor = colorInside.clone();
-        mixedColor.lerp(colorOutside, radius / 1200);
-        
+        const mixedColor = cCenter.clone().lerp(cOuter, Math.pow(radius / 1100, 1.5));
         colors[i3] = mixedColor.r;
         colors[i3 + 1] = mixedColor.g;
         colors[i3 + 2] = mixedColor.b;
@@ -99,84 +115,66 @@ export const ParticleField = memo(() => {
       geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 3));
 
       const shaderMaterial = new THREE.ShaderMaterial({
-        depthWrite: false,
+        depthWrite: false, 
         blending: THREE.AdditiveBlending,
         vertexColors: true,
-        uniforms: {
-          uTime: { value: 0 },
-          uSize: { value: 30 * renderer.getPixelRatio() }
-        },
+        uniforms: { uTime: { value: 0 }, uSize: { value: 32 * renderer.getPixelRatio() } },
         vertexShader: `
-          uniform float uTime;
-          uniform float uSize;
-          attribute vec3 aRandom;
-          varying vec3 vColor;
+          uniform float uTime; uniform float uSize; attribute vec3 aRandom; varying vec3 vColor;
           void main() {
-            vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-            
-            // Subtle rotation / drift in shader
-            float angle = atan(modelPosition.x, modelPosition.z);
-            float distanceToCenter = length(modelPosition.xz);
-            float angleOffset = (1.0 / distanceToCenter) * uTime * 0.2;
-            angle += angleOffset;
-            modelPosition.x = cos(angle) * distanceToCenter;
-            modelPosition.z = sin(angle) * distanceToCenter;
-
-            // Subtle "breathing" height
-            modelPosition.y += sin(uTime * 0.5 + modelPosition.x * 0.01) * 20.0;
-
-            vec4 viewPosition = viewMatrix * modelPosition;
-            vec4 projectedPosition = projectionMatrix * viewPosition;
-            gl_Position = projectedPosition;
-
-            gl_PointSize = uSize * (1.0 / -viewPosition.z);
+            vec4 mPos = modelMatrix * vec4(position, 1.0);
+            float angle = atan(mPos.x, mPos.z) + (1.0 / length(mPos.xz)) * uTime * ${GALAXY_CONFIG.ROTATE_SPEED};
+            float dist = length(mPos.xz);
+            mPos.x = cos(angle) * dist;
+            mPos.z = sin(angle) * dist;
+            mPos.y += sin(uTime * 0.3 + mPos.x * 0.01) * 15.0;
+            vec4 vPos = viewMatrix * mPos;
+            gl_Position = projectionMatrix * vPos;
+            gl_PointSize = uSize * (1.0 / -vPos.z);
             vColor = color;
           }
         `,
         fragmentShader: `
           varying vec3 vColor;
           void main() {
-            float strength = distance(gl_PointCoord, vec2(0.5));
-            strength = 1.0 - strength;
-            strength = pow(strength, 10.0);
-            vec3 color = mix(vec3(0.0), vColor, strength);
-            gl_FragColor = vec4(color, 1.0);
+            float s = 1.0 - distance(gl_PointCoord, vec2(0.5));
+            s = pow(s, 8.0);
+            gl_FragColor = vec4(vColor * s, 1.0);
           }
         `
       });
 
-      const points = new THREE.Points(geometry, shaderMaterial);
-      scene.add(points);
+      const galaxy = new THREE.Points(geometry, shaderMaterial);
+      scene.add(galaxy);
 
+      // 5. Render Loop
       let t = 0;
       const animate = () => {
         animationId = requestAnimationFrame(animate);
-        t += 0.015;
+        t += 0.012;
         shaderMaterial.uniforms.uTime.value = t;
         filmPass.uniforms.time.value = t;
-        
-        // Cinematic camera drift
-        camera.position.x = Math.sin(t * 0.1) * 200;
-        camera.position.z = 2000 + Math.cos(t * 0.1) * 100;
+        camera.position.x = Math.sin(t * 0.08) * 150;
+        camera.position.z = 1800 + Math.cos(t * 0.08) * 100;
         camera.lookAt(0, 0, 0);
-
         composer!.render();
       };
 
       animate();
 
-      const handleResize = () => {
+      // 6. Responsive
+      const onResize = () => {
         if (!renderer || !composer) return;
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
         composer.setSize(window.innerWidth, window.innerHeight);
       };
+      window.addEventListener('resize', onResize);
 
-      window.addEventListener('resize', handleResize);
-
+      // 7. Ultimate Cleanup
       return () => {
-        window.removeEventListener('resize', handleResize);
+        window.removeEventListener('resize', onResize);
         cancelAnimationFrame(animationId);
         if (renderer) {
           if (container.contains(renderer.domElement)) container.removeChild(renderer.domElement);
@@ -188,15 +186,26 @@ export const ParticleField = memo(() => {
         if (composer) {
           composer.renderTarget1.dispose();
           composer.renderTarget2.dispose();
+          bloomPass.dispose();
+          filmPass.dispose();
+          renderPass.dispose();
         }
       };
     } catch (err) {
-      console.error(err);
-      setError("Galaxy Engine Initial Error");
+      console.error("Galaxy Engine Reboot Required", err);
+      setError("Engine Stability Issue Detected");
     }
   }, []);
 
-  if (error) return <div className="absolute inset-0 flex items-center justify-center bg-black text-white font-mono text-xs">GALAXY SYSTEM REBOOT REQUIRED</div>;
+  if (error) return (
+    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-90 z-50">
+      <div className="text-center font-mono p-8 border border-white/10 rounded-lg">
+        <p className="text-white/40 text-[10px] mb-2 uppercase tracking-widest">System Warning</p>
+        <p className="text-white text-xs mb-6">GRAPHICAL ENGINE REQUIRES REBOOT</p>
+        <button onClick={() => window.location.reload()} className="px-6 py-2 border border-white hover:bg-white hover:text-black transition-all text-[10px] uppercase tracking-tighter">Initialize Restart Sequence</button>
+      </div>
+    </div>
+  );
 
-  return <div ref={containerRef} className="relative w-full h-full pointer-events-none" />;
+  return <div ref={containerRef} className="relative w-full h-full overflow-hidden pointer-events-none" />;
 });
