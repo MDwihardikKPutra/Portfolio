@@ -13,6 +13,7 @@ import { Landing } from "./pages/Landing/Landing";
 import { ProjectDetail } from "./pages/ProjectDetail/ProjectDetail";
 import { Manifesto } from "./pages/Manifesto/Manifesto";
 import { ExperimentalGeometric } from "./pages/ExperimentalGeometric/ExperimentalGeometric";
+import { ConstellationBg } from "./components/Visuals/ConstellationBg";
 import { preloadAll } from "./utils/preloadImages";
 
 /**
@@ -74,11 +75,15 @@ const SinglePageContent = memo(({ t, language }: { t: any; language: string }) =
       <Manifesto t={t} />
       <ExperimentalGeometric />
       <Projects t={t} language={language} />
+
+
+
       <Gallery t={t} isDarkMode={false} />
       <Contact t={t} isDarkMode={false} />
     </div>
   );
 });
+
 
 const AppRoutes = ({
   t,

@@ -108,8 +108,6 @@ export const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
           </div>
 
         </div>
-
-        </div>
       </div>
     </nav>
   );

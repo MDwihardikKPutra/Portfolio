@@ -22,7 +22,8 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.10.1",
     "recharts": "^3.6.0",
-    "three": "^0.184.0"
+    "three": "^0.184.0",
+    "three-stdlib": "^2.36.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
