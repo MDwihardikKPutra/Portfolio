@@ -13,7 +13,8 @@ export const ParticleField = memo(() => {
 
     const scene  = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(44, window.innerWidth / window.innerHeight, 0.1, 800);
-    camera.position.set(0, 11, 15);  // Closer zoom into the core and arms
+    // CRITICAL: Start at core with the correct slanted angle
+    camera.position.set(0, 1.2, 1.7); 
     camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
@@ -26,12 +27,13 @@ export const ParticleField = memo(() => {
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableRotate = false; // Keep the angle fixed
     controls.enablePan    = false; // Keep the center fixed
+    controls.enableZoom   = false; // Disable mouse zoom to restore page horizontal scroll
     controls.enableDamping = true;
     controls.minDistance  = 2;     // Allow getting very close to core
     controls.maxDistance  = 100;   // Allow zooming out significantly
 
     // ── Keyboard Zoom (Smooth Lerped) ───────────────────────────────────
-    let targetDist = camera.position.length();
+    let targetDist = 15; // The 'normal' zoom out distance
     const onKeyDown = (e: KeyboardEvent) => {
       const zoomFactor = 0.25;
       if (e.key === 'ArrowUp') {
@@ -41,6 +43,18 @@ export const ParticleField = memo(() => {
       }
     };
     window.addEventListener('keydown', onKeyDown);
+    
+    // ── Art Click Logic: Jump to core and zoom out ──────────────────────
+    const onZoomTrigger = () => {
+      // 1. Instantly jump inside the galaxy core
+      const dir = camera.position.clone().normalize();
+      camera.position.copy(dir.multiplyScalar(2.1)); 
+      // 2. Target distance to zoom out to
+      targetDist = 15; 
+      // 3. Ensure looking at center
+      camera.lookAt(0, 0, 0);
+    };
+    window.addEventListener('galaxy-zoom-trigger', onZoomTrigger);
 
     // Very subtle bloom — just for bar glow, prevent whiteout
     const composer = new EffectComposer(renderer);
@@ -74,227 +88,171 @@ export const ParticleField = memo(() => {
       return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
     };
 
-    // ── Colours ─────────────────────────────────────────────────────────
-    const C_SING  = new THREE.Color('#FFDD66'); // Bright Warm Gold — vibrant, not muddy
-    const C_BULGE = new THREE.Color('#FFB300'); // Vibrant Amber
-    const C_BAR   = new THREE.Color('#FF8C00'); // Dark Orange bar transition
-    const C_INNER = new THREE.Color('#FFFEE0'); // Cream — brief inner arm zone
-    const C_GOLD  = new THREE.Color('#FFD700'); // Gold — very short transition
-    const C_ARM   = new THREE.Color('#00BFFF'); // Electric blue — dominates 50%+ radius
-    const C_OUTER = new THREE.Color('#191970'); // Midnight blue void
-    const C_HAZE  = new THREE.Color('#1a4a7a'); // Deep blue inter-arm haze
-    const C_H2    = new THREE.Color('#FF3355'); // H II pink-red
-    const C_DUST  = new THREE.Color('#0f0603'); // near-black dust lane
+    // ── Neutral/Electric Cinematic Palette (No Yellow) ───────────────────────
+    const C_SING  = new THREE.Color('#FFFFFF'); 
+    const C_BULGE = new THREE.Color('#00BFFF'); 
+    const C_BAR   = new THREE.Color('#00BFFF'); 
+    const C_INNER = new THREE.Color('#FFFFFF'); 
+    const C_GOLD  = new THREE.Color('#E6F2FF'); 
+    const C_ARM   = new THREE.Color('#00BFFF'); 
+    const C_OUTER = new THREE.Color('#1E90FF'); 
+    const C_HAZE  = new THREE.Color('#4B0082'); 
+    const C_H2    = new THREE.Color('#FF00FF'); 
+    const C_DUST  = new THREE.Color('#000000'); 
 
-    // ── Spiral params ────────────────────────────────────────────────────
-    // 2 arms at 180° = avoids concentric-ring artifact at tilted view
-    const ARMS  = 2;
-    const B     = 0.26;   // spiral openness
-    const R0    = 3.0;    // arm starts at bar edge
+    const ARMS  = 4;
+    const B     = 0.28;
+    const R0    = 1.8; // Shrunked to match smaller core
     const RMAX  = 16.0;
 
     const armTheta = (r: number, arm: number) =>
       (arm / ARMS) * Math.PI * 2 + Math.log(r / R0) / B;
 
-    // ── Buffers ──────────────────────────────────────────────────────────
-    const N     = 280000;
+    const N     = 140000; // Optimized for performance (was 280000)
     const pos   = new Float32Array(N * 3);
     const col   = new Float32Array(N * 3);
     const rnd   = new Float32Array(N);
     const stype = new Float32Array(N);
+    const armIndices = new Float32Array(N);
+    const initialRadii = new Float32Array(N);
+    const thetaOffsets = new Float32Array(N);
+    const radiusOffsets = new Float32Array(N);
     let idx = 0;
 
-    const put = (x: number, y: number, z: number, c: THREE.Color, t: number, br = 1.0) => {
+    const put = (x: number, y: number, z: number, c: THREE.Color, t: number, br = 1.0, armIdx = -1, iR = 0, tOff = 0, rOff = 0) => {
       if (idx >= N) return;
       const i3 = idx * 3;
       pos[i3]=x; pos[i3+1]=y; pos[i3+2]=z;
       col[i3]=c.r*br; col[i3+1]=c.g*br; col[i3+2]=c.b*br;
       rnd[idx]   = Math.random();
       stype[idx] = t;
+      armIndices[idx] = armIdx;
+      initialRadii[idx] = iR;
+      thetaOffsets[idx] = tOff;
+      radiusOffsets[idx] = rOff;
       idx++;
     };
 
-    // ── 1. VOLUMETRIC BULGE — 3 tiers, all randomness scaled by radius ───
+    // 1. VOID SINGULARITY (Absolute Zero)
+    // Core matter purged to achieve the pitch black singularity look.
 
-    // Tier A: Dense Goldenrod Singularity (radius < 0.5, very dim individually)
-    for (let i = 0; i < 6000; i++) {
-      const r = Math.pow(Math.random(), 0.4) * 0.5; // Smaller radius
-      const theta = Math.random() * Math.PI * 2;
-      const phi   = Math.acos(2 * Math.random() - 1);
-      const x = r * Math.sin(phi) * Math.cos(theta);
-      const y = r * Math.sin(phi) * Math.sin(theta) * 0.55;
-      const z = r * Math.cos(phi);
-      const c = C_SING.clone().lerp(C_BULGE, r / 0.5);
-      put(x, y, z, c, 3, 0.14); // Brighter per-particle — stacking builds glow
-    }
-
-    // Tier B: Gold Inner Bulge (radius 0.5–2.5, spheroidal, compact)
-    for (let i = 0; i < 28000; i++) {
-      const r     = 0.5 + Math.pow(Math.random(), 0.6) * 2.0; // Was 2.6, now 2.0
-      const theta = Math.random() * Math.PI * 2;
-      const phi   = Math.acos(2 * Math.random() - 1);
-      const x = r * Math.sin(phi) * Math.cos(theta);
-      const y = r * Math.sin(phi) * Math.sin(theta) * 0.95;
-      const z = r * Math.cos(phi);
-      const t = (r - 0.5) / 2.0;
-      const c = C_BULGE.clone().lerp(C_BAR, t);
-      const br = 0.12 + (1 - t) * 0.10; // 0.22 at center, 0.12 at edge
-      put(x, y, z, c, 3, br);
-    }
-
-    // Tier C: Amber Elongated Bar (compact ellipse)
-    for (let i = 0; i < 21000; i++) {
-      const a = Math.random() * Math.PI * 2;
-      const u = Math.pow(Math.random(), 0.7);
-      const rx = u * 4.5 * Math.cos(a); // Shrunk from 5.2
-      const rz = u * 1.8 * Math.sin(a); // Shrunk from 1.9
-      const d  = Math.sqrt((rx/4.5)**2 + (rz/1.8)**2);
-      const jx = randn() * 0.3 * d;
-      const jz = randn() * 0.3 * d;
-      const c  = C_BAR.clone().lerp(C_INNER, Math.pow(d, 0.5) * 0.7);
-      put(rx + jx, randn()*0.45*(1-d*0.5), rz + jz, c, 3, 0.15 + (1-d)*0.10);
-    }
-
-    // ── 2. TWO THICK SPIRAL ARMS (Gaussian scatter → cloud not wire) ─────
-    for (let i = 0; i < 165000; i++) {
+    // 2. ARMS (BLUE STARS) - ~35k
+    for (let i = 0; i < 35000; i++) {
       const arm = i % ARMS;
       const r   = R0 + Math.pow(Math.random(), 0.85) * (RMAX - R0);
-
-      const thetaC  = armTheta(r, arm);
-      // More aggressive angular scatter — breaks geometric stiffness
-      const sigmaA  = 0.38 + r * 0.028;
-      const theta   = thetaC + randn() * sigmaA;
-
-      // Stronger radial scatter for misty nebula look
-      const dr     = randn() * (0.8 + r * 0.05);
-      const rF     = Math.max(0.5, r + dr);
-
-      const px = Math.cos(theta) * rF;
-      const pz = Math.sin(theta) * rF;
-      const py = randn() * 1.2 * Math.exp(-r * 0.08); // More volumetric thickness in arms
-
-
-      // STRICT COLOR ENFORCEMENT: electric blue dominates from 35% radius
+      const sigmaA = 0.35 + r * 0.02; 
+      const tOff   = randn() * sigmaA;
+      const rOff   = randn() * (0.6 + r * 0.04);
       const rRatio = (r - R0) / (RMAX - R0);
       let c: THREE.Color;
-      if      (rRatio < 0.08) c = C_INNER.clone().lerp(C_GOLD,  rRatio / 0.08);
-      else if (rRatio < 0.15) c = C_GOLD.clone().lerp(C_ARM,    (rRatio-0.08)/0.07);
-      else if (rRatio < 0.65) c = C_ARM.clone().lerp(C_ARM,     1.0); // Solid electric blue band
-      else                    c = C_ARM.clone().lerp(C_OUTER,   (rRatio-0.65)/0.35);
-
-      // Brightness: brighter on arm centre line, dimmer on scatter wings
-      const proxA   = Math.exp(-0.5*(theta-thetaC)**2 / sigmaA**2);
-      const br      = 0.22 + proxA * 0.42;
-      put(px, py, pz, c, 0, br);
+      if      (rRatio < 0.2)  c = C_GOLD.clone().lerp(C_ARM, rRatio/0.2);
+      else if (rRatio < 0.7)  c = C_ARM.clone().lerp(C_ARM, 1.0);
+      else                    c = C_ARM.clone().lerp(C_OUTER, (rRatio-0.7)/0.3);
+      put(0, 0, 0, c, 0, 0.35 + Math.random()*0.3, arm, r, tOff, rOff);
     }
 
-    // ── 3. H II REGIONS — pre-placed CLUSTERS (not uniform ring) ─────────
+    // 3. HII REGIONS (PURPLE/PINK) - ~35k (More Diffuse)
     const h2Clusters: {r:number, arm:number}[] = [];
-    const N_CLUSTER = 13;
     for (let arm = 0; arm < ARMS; arm++) {
-      for (let j = 1; j <= N_CLUSTER; j++) {
-        h2Clusters.push({ r: R0 + (j / (N_CLUSTER+1)) * (RMAX*0.85 - R0), arm });
-      }
+      for (let j = 1; j <= 12; j++) h2Clusters.push({ r: R0 + (j/13) * (RMAX*0.9 - R0), arm });
     }
     for (const cl of h2Clusters) {
-      const tC  = armTheta(cl.r, cl.arm);
-      const cx  = Math.cos(tC) * cl.r;
-      const cz  = Math.sin(tC) * cl.r;
-      const sz  = 0.35 + Math.random() * 0.55;
-      const nP  = 180 + Math.random() * 200;
+      const nP = Math.floor(35000 / h2Clusters.length); 
       for (let p = 0; p < nP; p++) {
-        const px = cx + randn() * sz;
-        const pz = cz + randn() * sz;
-        const c  = C_H2.clone().lerp(C_ARM, 0.1 + Math.random() * 0.35);
-        put(px, randn()*0.12, pz, c, 1, 0.55 + Math.random()*0.35);
+        const c = C_H2.clone().lerp(C_ARM, 0.2 + Math.random()*0.3);
+        // Wider spread (0.2 / 0.4) to avoid "sausage" look
+        put(0, 0, 0, c, 1, 0.4 + Math.random()*0.3, cl.arm, cl.r, randn()*0.22, randn()*0.35);
       }
     }
 
-    // ── 4. DIFFUSE INTER-ARM HAZE ─────────────────────────────────────────
-    for (let i = 0; i < 42000; i++) {
+    // 4. HAZE (DEEP BLUE/PURPLE) - ~35k
+    for (let i = 0; i < 35000; i++) {
       const r = -Math.log(1 - Math.random() * 0.99) * 5.5;
-      if (r > RMAX) continue;
-      const a  = Math.random() * Math.PI * 2;
-      const rR = r / RMAX;
-      const c  = C_HAZE.clone().lerp(C_OUTER, rR * 1.3);
-      put(Math.cos(a)*r, randn()*0.18, Math.sin(a)*r, c, 4, 0.10 + Math.random()*0.08);
+      if (r < RMAX) {
+        const a = Math.random() * Math.PI * 2;
+        put(Math.cos(a)*r, randn()*0.15, Math.sin(a)*r, C_HAZE.clone().lerp(C_OUTER, r/RMAX*1.1), 4, 0.015 + Math.random()*0.02);
+      }
     }
 
-    // ── 5. DARK DUST LANES ────────────────────────────────────────────────
-    for (let i = 0; i < 9000; i++) {
-      const arm = i % ARMS;
-      const r   = R0 + Math.random() * (RMAX*0.75 - R0);
-      const t   = armTheta(r, arm) + 0.14; // inward edge
-      put(Math.cos(t)*r + randn()*0.35, 0, Math.sin(t)*r + randn()*0.35, C_DUST, 2, 1);
-    }
-
-    // Fill remaining slots with outer edge dim stars
     while (idx < N) {
-      const r = RMAX + Math.random() * 4;
-      const a = Math.random() * Math.PI * 2;
-      put(Math.cos(a)*r, (Math.random()-0.5)*0.2, Math.sin(a)*r, C_OUTER, 4, 0.04);
+        const r     = 60 + Math.random() * 400;
+        const theta = Math.random() * Math.PI * 2;
+        const phi   = Math.acos(2 * Math.random() - 1);
+        const px = r * Math.sin(phi) * Math.cos(theta);
+        const py = r * Math.sin(phi) * Math.sin(theta);
+        const pz = r * Math.cos(phi);
+        const br = 0.05 + Math.random() * 0.2; 
+        put(px, py, pz, new THREE.Color('#FFFFFF'), 4, br);
     }
 
-    // ── Geometry ──────────────────────────────────────────────────────────
     const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(pos,   3));
-    geo.setAttribute('color',    new THREE.BufferAttribute(col,   3));
-    geo.setAttribute('aRandom',  new THREE.BufferAttribute(rnd,   1));
-    geo.setAttribute('aType',    new THREE.BufferAttribute(stype, 1));
+    geo.setAttribute('position',       new THREE.BufferAttribute(pos,   3));
+    geo.setAttribute('color',          new THREE.BufferAttribute(col,   3));
+    geo.setAttribute('aRandom',        new THREE.BufferAttribute(rnd,   1));
+    geo.setAttribute('aType',          new THREE.BufferAttribute(stype, 1));
+    geo.setAttribute('aArmIndex',      new THREE.BufferAttribute(armIndices, 1));
+    geo.setAttribute('aInitialRadius', new THREE.BufferAttribute(initialRadii, 1));
+    geo.setAttribute('aThetaOffset',   new THREE.BufferAttribute(thetaOffsets, 1));
+    geo.setAttribute('aRadiusOffset',  new THREE.BufferAttribute(radiusOffsets, 1));
 
-    // ── Shader ────────────────────────────────────────────────────────────
     const mat = new THREE.ShaderMaterial({
-      transparent: true,
-      depthWrite:  false,
-      blending:    THREE.AdditiveBlending,
-      vertexColors: true,
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, vertexColors: true,
       uniforms: {
-        uTime:    { value: 0 },
-        uSize:    { value: 0.030 },
-        uTexture: { value: tex },
+        uTime: { value: 0 }, uAngle: { value: 0 }, uFlowOffset: { value: 0 },
+        uSize: { value: 0.030 }, uTexture: { value: tex },
+        uArms: { value: ARMS }, uB: { value: B }, uR0: { value: R0 }, uRMAX: { value: RMAX },
+        uSuckStrength: { value: 0.0 }, 
       },
       vertexShader: `
-        uniform float uTime;
-        uniform float uSize;
-        attribute float aRandom;
-        attribute float aType;
-        varying vec3  vColor;
-        varying float vAlpha;
-        varying float vType;
-        varying float vRadius;
-        varying float vDist;
+        uniform float uTime, uAngle, uFlowOffset, uSize, uArms, uB, uR0, uRMAX, uSuckStrength;
+        attribute float aRandom, aType, aArmIndex, aInitialRadius, aThetaOffset, aRadiusOffset;
+        varying vec3 vColor; varying float vAlpha, vType, vRadius, vDist;
 
         void main() {
-          vColor  = color;
-          vType   = aType;
-          vec3 p  = position;
+          vColor = color; vType = aType;
+          vec3 p = position;
+
+          float isFlow = step(aType, 2.5);
+          float isCore = step(2.5, aType) * step(aType, 3.5);
+          float isHaze = step(3.5, aType);
+
+          float suck = uSuckStrength;
+          float rRange = uRMAX - uR0;
+          // Use Accumulated Flow for perfectly smooth expansion
+          float rProgress = mod((aInitialRadius - uR0) - uFlowOffset, rRange);
+          if (rProgress < 0.0) rProgress += rRange; 
+          
+          float r = uR0 + rProgress + aRadiusOffset;
+          
+          // Use ONLY Accumulated Angle for 100% stable rotation
+          float theta = (aArmIndex / uArms) * 6.28 + (log(max(0.01, r) / uR0) / uB) + aThetaOffset + uAngle; 
+          
+          vec3 flowPos = vec3(r * cos(theta), 0.0, r * sin(theta));
+          float flowFade = smoothstep(0.0, 0.15, rProgress / rRange) * (1.0 - smoothstep(0.85, 1.0, rProgress / rRange));
+
+          float coreRad = length(p.xz);
+          // Pure angle-based rotation
+          float coreAng = aRandom * 6.28 + uAngle * 1.2; 
+          vec3 corePos = vec3(coreRad * cos(coreAng), p.y, coreRad * sin(coreAng));
+
+          p = mix(p, flowPos, isFlow);
+          p = mix(p, corePos, isCore);
+
           vRadius = length(p.xz);
-
-          // Differential rotation
-          float omega = 0.048 / (0.5 + vRadius * 0.065);
-          float ang   = uTime * omega;
-          float s = sin(ang), c = cos(ang);
-          p.xz = mat2(c,-s,s,c) * p.xz;
-
           float flicker = sin(uTime*1.3 + aRandom*48.0)*0.08 + 0.92;
-          vAlpha = 1.0 - smoothstep(14.5, 19.0, vRadius);
+          
+          vAlpha = (1.0 - smoothstep(14.5, 19.0, vRadius)) * mix(1.0, flowFade, isFlow);
+          vAlpha *= smoothstep(0.1, 0.45, vRadius); 
 
           vec4 mv = modelViewMatrix * vec4(p, 1.0);
-
-          // Rare giant stars
-          float giant = pow(aRandom, 14.0) * 22.0;
-          float sz    = uSize * (0.55 + giant);
-          if (aType > 0.5 && aType < 1.5) sz *= 1.7;  // H II
-          if (aType > 1.5 && aType < 2.5) sz *= 0.45; // dust
-          if (aType > 2.5 && aType < 3.5) sz *= 0.85; // bar
-
-          // CI-16-003: Radius-based size attenuation (exempt bar/bulge type 3)
-          float radialAtten = clamp(vRadius / 12.0, 0.18, 1.0);
-          if (aType < 2.5 || aType > 3.5) sz *= radialAtten; // arms only, not core
-
-          gl_PointSize = sz * 2800.0 * (1.0 / -mv.z) * flicker;
-          vDist        = -mv.z;
-          gl_Position  = projectionMatrix * mv;
+          float sizeMod = mix(1.0, 1.8, isCore); 
+          // Subtle size boost for H2 (Type 1)
+          sizeMod = mix(sizeMod, 1.3, step(0.5, vType)*step(vType, 1.5)); 
+          sizeMod = mix(sizeMod, 0.4, isCore); // SHARPEN CORE MORE
+          gl_PointSize = uSize * (0.55 + pow(aRandom, 14.0)*22.0) * 2800.0 * (1.0 / -mv.z) * flicker * sizeMod;
+          
+          vDist = -mv.z;
+          gl_Position = projectionMatrix * mv;
         }
       `,
       fragmentShader: `
@@ -307,23 +265,22 @@ export const ParticleField = memo(() => {
 
         void main() {
           vec4 tex  = texture2D(uTexture, gl_PointCoord);
-
-          // CI-16-002: Steeper core falloff — inner particles very dim individually
-          // Heavy additive overlap builds up brightness naturally
           float cf  = clamp(vRadius * 0.42, 0.04, 1.0);
-
-          // CI-16-001: Strict opacity limits per type
+          cf = mix(cf, 1.0, step(2.5, vType) * step(vType, 3.5));
+          
           float op;
-          if      (vType > 1.5 && vType < 2.5) op = 0.04;   // dust
-          else if (vType > 3.5)                 op = 1.0;    // haze
-          else if (vType > 0.5 && vType < 1.5) op = 0.60;   // H II
-          else if (vType > 2.5 && vType < 3.5) op = 1.0;    // bar
-          else                                  op = 0.22;   // normal stars
+          if      (vType > 1.5 && vType < 2.5) op = 0.035; 
+          else if (vType > 3.5)                 op = 0.8;  
+          else if (vType > 0.5 && vType < 1.5) op = 0.25; 
+          else if (vType > 2.5 && vType < 3.5) op = 1.0; 
+          else                                  op = 0.35; 
+          
+          float alpha = tex.a * vAlpha * cf * op;
+          // EVEN LARGER AND CLEANER HOLE
+          alpha *= smoothstep(0.18, 0.28, vRadius); 
 
-          // Volumetric fade: particles disappear as they hit the lens
-          float nearFade = smoothstep(0.4, 2.2, vDist);
-
-          gl_FragColor = vec4(vColor, tex.a * vAlpha * cf * op * nearFade);
+          float nearFade = smoothstep(0.04, 2.2, vDist); 
+          gl_FragColor = vec4(vColor, alpha * nearFade);
         }
       `,
     });
@@ -331,18 +288,68 @@ export const ParticleField = memo(() => {
     const pts = new THREE.Points(geo, mat);
     scene.add(pts);
 
+    // THE PHYSICAL BLACK HOLE (Solid Void)
+    const bhGeo = new THREE.SphereGeometry(0.18, 32, 32);
+    const bhMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+    const singularity = new THREE.Mesh(bhGeo, bhMat);
+    scene.add(singularity);
+
+    // CLICKABLE TARGET (Transparent)
+    const raycaster  = new THREE.Raycaster();
+    const mouse      = new THREE.Vector2();
+    let isSucking    = false;
+    let suckVal      = 0;
+    const targetMesh = new THREE.Mesh(new THREE.SphereGeometry(1.2, 16, 16), new THREE.MeshBasicMaterial({ visible: false }));
+    scene.add(targetMesh);
+
+    const onBHClick = (e: MouseEvent) => {
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      raycaster.setFromCamera(mouse, camera);
+      if (raycaster.intersectObject(targetMesh).length > 0) {
+        isSucking = !isSucking;
+      }
+    };
+    window.addEventListener('click', onBHClick);
+
     let animId: number;
+    let lastTime = performance.now() * 0.001;
     const tick = () => {
       animId = requestAnimationFrame(tick);
-      mat.uniforms.uTime.value = performance.now() * 0.001;
+      const time = performance.now() * 0.001;
+      const dt = time - lastTime;
+      lastTime = time;
+      
+      // Calculate continuous momentum accumulation
+      const orbitSpeed = 0.15 + suckVal * 1.35;
+      const flowSpeed  = 0.4  + suckVal * 3.5;
+      
+      mat.uniforms.uAngle.value      += dt * orbitSpeed;
+      mat.uniforms.uFlowOffset.value += dt * flowSpeed;
 
-      // Smoothly interpolate zoom distance
-      const curDist = camera.position.length();
-      const newDist = THREE.MathUtils.lerp(curDist, targetDist, 0.08);
-      const dir     = camera.position.clone().normalize();
-      camera.position.copy(dir.multiplyScalar(newDist));
+      if (isSucking) {
+        suckVal = THREE.MathUtils.lerp(suckVal, 1.0, 0.03); 
+        // Pure Top-Down Transition (No Zoom)
+        camera.position.x = THREE.MathUtils.lerp(camera.position.x, 0, 0.05);
+        camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetDist, 0.05);
+        camera.position.z = THREE.MathUtils.lerp(camera.position.z, 0.01, 0.05);
+      } else {
+        suckVal = THREE.MathUtils.lerp(suckVal, 0.0, 0.03); 
+        // Return to Tilted Perspective
+        const tx = 0; 
+        const ty = targetDist * 0.45;
+        const tz = targetDist * 0.9;
+        camera.position.x = THREE.MathUtils.lerp(camera.position.x, tx, 0.02);
+        camera.position.y = THREE.MathUtils.lerp(camera.position.y, ty, 0.02);
+        camera.position.z = THREE.MathUtils.lerp(camera.position.z, tz, 0.02);
+      }
+      
+      mat.uniforms.uSuckStrength.value = suckVal;
+      camera.lookAt(0, 0, 0);
 
-      controls.update();
+      // Additive subtle spin
+      pts.rotation.y += 0.0005;
+      
       composer.render();
     };
     tick();
@@ -357,7 +364,9 @@ export const ParticleField = memo(() => {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener('resize', onResize);
+      window.removeEventListener('click', onBHClick);
       window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('galaxy-zoom-trigger', onZoomTrigger);
       renderer.dispose(); tex.dispose(); geo.dispose(); mat.dispose();
       if (containerRef.current) containerRef.current.innerHTML = '';
     };

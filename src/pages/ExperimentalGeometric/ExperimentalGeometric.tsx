@@ -34,17 +34,11 @@ export const ExperimentalGeometric = memo(() => {
       {/* Background: Constellation — same as Manifesto */}
       <ConstellationBg pages={1} />
 
-      {/* Background Layer 2: Milky Way (ParticleField) — High z-index to catch scroll events */}
-      <div className="absolute inset-0 z-10">
+      {/* Background Layer 2: Milky Way (ParticleField) */}
+      <div className="absolute inset-0 z-0">
         <ParticleField />
-      </div>
-
-      {/* Live Metadata: NASA-style orbital logs — Absolute to keep it within the section flow */}
-      <div className="absolute right-8 bottom-8 z-[100] pointer-events-none w-64">
-        <GalacticMetadata />
       </div>
 
     </div>
   );
 });
-

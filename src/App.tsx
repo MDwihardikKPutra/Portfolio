@@ -1,89 +1,23 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState, useRef, memo } from "react";
+import { useNavigate, useLocation, Routes, Route, BrowserRouter } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useDarkMode } from "./hooks/useDarkMode";
 import { useLanguage } from "./hooks/useLanguage";
 import { translations } from "./translations";
-import { MainLayout } from "./components/Layout/MainLayout";
+
+// Components & Pages
+import { Landing } from "./pages/Landing/Landing";
 import { Home } from "./pages/Home/Home";
 import { Projects } from "./pages/Projects/Projects";
-import { Contact } from "./pages/Contact/Contact";
 import { Gallery } from "./pages/Gallery/Gallery";
-import { Landing } from "./pages/Landing/Landing";
+import { Contact } from "./pages/Contact/Contact";
 import { ProjectDetail } from "./pages/ProjectDetail/ProjectDetail";
 import { Manifesto } from "./pages/Manifesto/Manifesto";
-import { ExperimentalGeometric } from "./pages/ExperimentalGeometric/ExperimentalGeometric";
-import { ConstellationBg } from "./components/Visuals/ConstellationBg";
+import { Galaxy } from "./pages/Galaxy/Galaxy";
+import { MainLayout } from "./components/Layout/MainLayout";
 import { preloadAll } from "./utils/preloadImages";
 
-/**
- * Renders all sections in a vertical stack for a single-page experience.
- */
-const SinglePageContent = memo(({ t, language }: { t: any; language: string }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    let isTicking = false;
-    let snapTimeout: NodeJS.Timeout;
-
-    const handleNativeWheel = (e: WheelEvent) => {
-      // 1. Logic Check - Prioritize Horizontal Native
-      const isHorizontalSwipe = Math.abs(e.deltaX) > Math.abs(e.deltaY);
-      if (isHorizontalSwipe) return;
-
-      e.preventDefault();
-
-      // 2. State Management - Disable snapping during active movement to prevent layout fighting
-      if (container.style.scrollSnapType !== 'none') {
-        container.style.scrollSnapType = 'none';
-      }
-
-      // 3. Execution - Throttled Frame Sync (O(1) frame scheduling)
-      if (!isTicking) {
-        requestAnimationFrame(() => {
-          container.scrollBy({ left: e.deltaY, behavior: "auto" });
-          isTicking = false;
-        });
-        isTicking = true;
-      }
-
-      // 4. Persistence - Re-engage Snap (Mathematical Precision Lock)
-      clearTimeout(snapTimeout);
-      snapTimeout = setTimeout(() => {
-        container.style.scrollSnapType = 'x mandatory';
-      }, 100); // 100ms is the sweet spot for natural friction
-    };
-
-    container.addEventListener("wheel", handleNativeWheel, { passive: false });
-    return () => {
-      container.removeEventListener("wheel", handleNativeWheel);
-      clearTimeout(snapTimeout);
-    };
-  }, []);
-
-  return (
-    <div 
-      id="main-snap-container" 
-      ref={containerRef} 
-      className="snap-container"
-      style={{ willChange: "transform, scroll-position" }}
-    >
-      <Home t={t} />
-      <Manifesto t={t} />
-      <ExperimentalGeometric />
-      <Projects t={t} language={language} />
-
-
-
-      <Gallery t={t} isDarkMode={false} />
-      <Contact t={t} isDarkMode={false} />
-    </div>
-  );
-});
-
+import "./index.css";
 
 const AppRoutes = ({
   t,
@@ -98,77 +32,49 @@ const AppRoutes = ({
   toggleDarkMode: () => void;
   toggleLanguage: () => void;
 }) => {
+  const [activeTab, setActiveTab] = useState("home");
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState<string>("home");
 
   const pageVariants = {
-    initial: { opacity: 0 },
+    initial: {
+      opacity: 0,
+      scale: 0.98,
+    },
     animate: {
       opacity: 1,
-      transition: { duration: 0.5, ease: "easeOut" },
+      scale: 1,
+      transition: { duration: 0.6, ease: "easeOut" },
     },
     exit: {
       opacity: 0,
+      scale: 1.02,
       transition: { duration: 0.3, ease: "easeIn" },
     },
   };
 
-  // Check if we're on a deep-linked route (project detail)
-  const isDeepLink = location.pathname === "/projects/data-analyst";
-
-  // Scroll Spy logic to update activeTab in Navbar
-  useEffect(() => {
-    if (isDeepLink) return;
-
-    const handleScrollSpy = () => {
-      const observerOptions = {
-        root: document.getElementById("main-snap-container"),
-        threshold: 0.5,
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveTab(entry.target.id);
-          }
-        });
-      }, observerOptions);
-
-      const sections = [
-        { id: "home", label: "Home", index: 0 },
-        { id: "manifesto", label: "Manifesto", index: 1 },
-        { id: "experimental", label: "Experimental", index: 2 },
-        { id: "projects", label: "Projects", index: 3 },
-        { id: "gallery", label: "Gallery", index: 4 },
-        { id: "contact", label: "Contact", index: 5 },
-      ];
-
-      sections.forEach(({ id }) => {
-        const el = document.getElementById(id);
-        if (el) observer.observe(el);
-      });
-
-      return () => observer.disconnect();
-    };
-
-    return handleScrollSpy();
-  }, [isDeepLink]);
-
   return (
-    <div className="bg-white">
-      <AnimatePresence mode="wait" initial={location.pathname === "/"}>
+    <div className="bg-black min-h-screen">
+      <AnimatePresence mode="wait">
         <motion.div
-          key={location.pathname === "/" ? "landing" : "main"}
+          key={location.pathname}
           variants={pageVariants}
           initial="initial"
           animate="animate"
           exit="exit"
-          className="min-h-screen w-full flex flex-col"
+          className="w-full flex flex-col"
         >
           <Routes location={location}>
             <Route
               path="/"
               element={<Landing t={t} isDarkMode={isDarkMode} />}
+            />
+            <Route
+              path="/galaxy"
+              element={<Galaxy isStandalone />}
+            />
+            <Route
+              path="/projects/data-analyst"
+              element={<ProjectDetail t={t} isDarkMode={isDarkMode} />}
             />
             <Route
               path="/*"
@@ -182,19 +88,13 @@ const AppRoutes = ({
                   activeTab={activeTab}
                   setActiveTab={setActiveTab}
                 >
-                  {isDeepLink ? (
-                    <Routes>
-                      <Route
-                        path="/projects/data-analyst"
-                        element={<ProjectDetail t={t} isDarkMode={isDarkMode} />}
-                      />
-                    </Routes>
-                  ) : (
-                    <SinglePageContent
-                      t={t}
-                      language={language}
-                    />
-                  )}
+                   <Routes>
+                      <Route path="/about" element={<Home t={t} />} />
+                      <Route path="/manifesto" element={<Manifesto t={t} />} />
+                      <Route path="/projects" element={<Projects t={t} language={language} />} />
+                      <Route path="/gallery" element={<Gallery t={t} isDarkMode={false} />} />
+                      <Route path="/contact" element={<Contact t={t} isDarkMode={false} />} />
+                   </Routes>
                 </MainLayout>
               }
             />
@@ -210,7 +110,6 @@ function App() {
   const { language, toggleLanguage } = useLanguage();
   const t = translations[language];
 
-  // Preload images on app mount
   useEffect(() => {
     preloadAll();
   }, []);

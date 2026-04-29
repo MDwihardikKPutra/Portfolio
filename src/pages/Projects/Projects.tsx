@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { memo, useState, useEffect, useRef } from "react";
+import { BackToConstellation } from "../../components/Navigation/BackToConstellation";
 import { getProjects } from "../../data";
 import type { Translations, Language } from "../../translations";
 import { useIntersectionObserver } from "../../hooks/useIntersectionObserver";
@@ -45,6 +46,7 @@ export const Projects = memo(({ t, language }: { t: any; language: string }) => 
 
   return (
     <div id="projects" className="section-full bg-white flex flex-col justify-center items-center !pt-0">
+      <BackToConstellation isDark={false} />
       {/* 
         Micro-Panoramic Container
         High-density miniature look, spanning the full cinematic width.

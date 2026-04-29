@@ -13,6 +13,7 @@ export const Manifesto = memo(({ t }: { t: any }) => {
       className="section-full bg-black flex flex-col items-center justify-center relative overflow-hidden"
     >
       <ConstellationBg pages={1} />
+      
       <div className="relative z-10 w-full h-full flex items-center justify-center pointer-events-none">
       </div>
     </div>

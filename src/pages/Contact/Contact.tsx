@@ -3,10 +3,12 @@ import { Github, Linkedin, FileText } from "lucide-react";
 import { contactInfo, socialLinks } from "../../data";
 import { homeImages } from "../../utils/preloadImages";
 import { memo } from "react";
+import { BackToConstellation } from "../../components/Navigation/BackToConstellation";
 
 export const Contact = memo(({ }: { t: any; isDarkMode: boolean }) => {
   return (
     <div id="contact" className="section-full !bg-black flex flex-col justify-center items-center !pt-0">
+      <BackToConstellation isDark={true} />
       
       {/* 
         Micro-Panoramic Contact Container

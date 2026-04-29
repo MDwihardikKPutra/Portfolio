@@ -15,7 +15,7 @@
   }
 
   body {
-    @apply antialiased bg-white text-black;
+    @apply antialiased bg-black text-black;
     font-size: 15px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -115,8 +115,8 @@
 }
 
 .spinner {
-  width: 60px;
-  height: 60px;
+  width: 180px;
+  height: 180px;
   --clr: rgb(0, 0, 0);
   --clr-alpha: rgba(0,0,0,0.02);
   animation: spinner-hex 1.6s infinite ease;
@@ -132,7 +132,7 @@
 }
 
 .spinner div:nth-of-type(1) {
-  transform: translateZ(-30px) rotateY(180deg);
+  transform: translateZ(-90px) rotateY(180deg);
 }
 
 .spinner div:nth-of-type(2) {
@@ -156,19 +156,58 @@
 }
 
 .spinner div:nth-of-type(6) {
-  transform: translateZ(30px);
+  transform: translateZ(90px);
 }
 
 @keyframes spinner-hex {
-  0% {
-    transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
-  }
+  0% { transform: rotate(45deg) rotateX(-25deg) rotateY(25deg); }
+  50% { transform: rotate(45deg) rotateX(-385deg) rotateY(25deg); }
+  100% { transform: rotate(45deg) rotateX(-385deg) rotateY(385deg); }
+}
 
-  50% {
-    transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
-  }
+/* MINI CUBE NAV */
+.mini-cube-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 500px;
+}
 
-  100% {
-    transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
-  }
+.mini-cube {
+  width: 18px;
+  height: 18px;
+  --clrm: rgb(0, 0, 0);
+  --clrm-alpha: rgba(0,0,0,0.01);
+  animation: mini-cube-rot 3s infinite linear;
+  transform-style: preserve-3d;
+  transition: animation-duration 0.5s ease;
+}
+
+.mini-cube.is-dark {
+  --clrm: rgb(255, 255, 255);
+  --clrm-alpha: rgba(255,255,255,0.01);
+}
+
+.group:hover .mini-cube {
+  animation-duration: 1s;
+}
+
+.mini-cube > div {
+  background-color: var(--clrm-alpha);
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  border: 0.5px solid var(--clrm);
+}
+
+.mini-cube div:nth-of-type(1) { transform: translateZ(-9px) rotateY(180deg); }
+.mini-cube div:nth-of-type(2) { transform: rotateY(-270deg) translateX(50%); transform-origin: top right; }
+.mini-cube div:nth-of-type(3) { transform: rotateY(270deg) translateX(-50%); transform-origin: center left; }
+.mini-cube div:nth-of-type(4) { transform: rotateX(90deg) translateY(-50%); transform-origin: top center; }
+.mini-cube div:nth-of-type(5) { transform: rotateX(-90deg) translateY(50%); transform-origin: bottom center; }
+.mini-cube div:nth-of-type(6) { transform: translateZ(9px); }
+
+@keyframes mini-cube-rot {
+  from { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+  to { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
 }
