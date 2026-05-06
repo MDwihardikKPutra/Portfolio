@@ -70,8 +70,22 @@ export const PCDVisual = () => {
       renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
     };
 
+    let isInView = false;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isInView = entry.isIntersecting;
+        if (isInView) {
+          animate();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(containerRef.current);
+
     const animate = () => {
-      requestAnimationFrame(animate);
+      if (!isInView) return;
+      
+      const animId = requestAnimationFrame(animate);
       
       // Cinematic Zoom-In Interpolation
       if (currentZ > targetZ + 0.001) {
@@ -85,13 +99,16 @@ export const PCDVisual = () => {
       }
       controls.update();
       renderer.render(scene, camera);
+
+      // Store animId to cancel if needed, though isInView handles it
     };
 
     init();
-    animate();
+    // animate(); // removed, handled by observer
 
     return () => {
       window.removeEventListener('resize', onWindowResize);
+      observer.disconnect();
       renderer.dispose();
       if (containerRef.current) containerRef.current.innerHTML = '';
     };

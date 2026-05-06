@@ -1,5 +1,5 @@
 import { useNavigate, useLocation, Routes, Route, BrowserRouter } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDarkMode } from "./hooks/useDarkMode";
 import { useLanguage } from "./hooks/useLanguage";
@@ -14,6 +14,7 @@ import { Contact } from "./pages/Contact/Contact";
 import { ProjectDetail } from "./pages/ProjectDetail/ProjectDetail";
 import { Manifesto } from "./pages/Manifesto/Manifesto";
 import { Galaxy } from "./pages/Galaxy/Galaxy";
+import { Experimental } from "./pages/Experimental/Experimental";
 import { MainLayout } from "./components/Layout/MainLayout";
 import { preloadAll } from "./utils/preloadImages";
 
@@ -33,27 +34,27 @@ const AppRoutes = ({
   toggleLanguage: () => void;
 }) => {
   const [activeTab, setActiveTab] = useState("home");
+  const handleSetActiveTab = useCallback((tab: string) => {
+    setActiveTab(tab);
+  }, []);
   const location = useLocation();
 
   const pageVariants = {
     initial: {
       opacity: 0,
-      scale: 0.98,
     },
     animate: {
       opacity: 1,
-      scale: 1,
-      transition: { duration: 0.6, ease: "easeOut" },
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
     },
     exit: {
       opacity: 0,
-      scale: 1.02,
-      transition: { duration: 0.3, ease: "easeIn" },
+      transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
     },
   };
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-white min-h-screen selection:bg-black selection:text-white">
       <AnimatePresence mode="wait">
         <motion.div
           key={location.pathname}
@@ -69,10 +70,6 @@ const AppRoutes = ({
               element={<Landing t={t} isDarkMode={isDarkMode} />}
             />
             <Route
-              path="/galaxy"
-              element={<Galaxy isStandalone />}
-            />
-            <Route
               path="/projects/data-analyst"
               element={<ProjectDetail t={t} isDarkMode={isDarkMode} />}
             />
@@ -86,14 +83,12 @@ const AppRoutes = ({
                   toggleLanguage={toggleLanguage}
                   language={language}
                   activeTab={activeTab}
-                  setActiveTab={setActiveTab}
+                  setActiveTab={handleSetActiveTab}
                 >
                    <Routes>
-                      <Route path="/about" element={<Home t={t} />} />
-                      <Route path="/manifesto" element={<Manifesto t={t} />} />
-                      <Route path="/projects" element={<Projects t={t} language={language} />} />
-                      <Route path="/gallery" element={<Gallery t={t} isDarkMode={false} />} />
-                      <Route path="/contact" element={<Contact t={t} isDarkMode={false} />} />
+                      <Route path="/home" element={<Home t={t} setActiveTab={handleSetActiveTab} />} />
+                      <Route path="/experimental" element={<Experimental />} />
+                      <Route path="*" element={<Home t={t} setActiveTab={handleSetActiveTab} />} />
                    </Routes>
                 </MainLayout>
               }

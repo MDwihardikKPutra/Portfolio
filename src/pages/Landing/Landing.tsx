@@ -41,7 +41,7 @@ export const Landing = () => {
           ease: "circOut",
           onComplete: () => {
              setTimeout(() => {
-               if (isMounted) navigate("/manifesto");
+               if (isMounted) navigate("/home");
              }, 800); 
           }
         });

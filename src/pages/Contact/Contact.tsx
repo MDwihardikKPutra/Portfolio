@@ -8,7 +8,6 @@ import { BackToConstellation } from "../../components/Navigation/BackToConstella
 export const Contact = memo(({ }: { t: any; isDarkMode: boolean }) => {
   return (
     <div id="contact" className="section-full !bg-black flex flex-col justify-center items-center !pt-0">
-      <BackToConstellation isDark={true} />
       
       {/* 
         Micro-Panoramic Contact Container
@@ -24,7 +23,7 @@ export const Contact = memo(({ }: { t: any; isDarkMode: boolean }) => {
             
             {/* Social Icons */}
             <div className="flex flex-col gap-5 items-center">
-              <span className="text-[12px] font-bold text-black uppercase tracking-widest">Connect</span>
+              <span className="text-[12px] font-bold text-black tracking-widest">Connect</span>
               <div className="flex items-center gap-8">
                  <a href="https://github.com/ddiko105" target="_blank" title="GitHub" className="hover:opacity-40 transition-all text-black">
                    <Github size={24} strokeWidth={2} />
@@ -41,17 +40,17 @@ export const Contact = memo(({ }: { t: any; isDarkMode: boolean }) => {
             {/* Primary Contact Details */}
             <div className="flex flex-col gap-10 items-center">
               <div className="flex flex-col gap-2 items-center">
-                <span className="text-[12px] font-bold text-black uppercase tracking-widest">General enquiries</span>
+                <span className="text-[12px] font-bold text-black tracking-widest">General enquiries</span>
                 <a href={`mailto:${contactInfo.email}`} className="text-xl md:text-2xl font-black tracking-tighter hover:underline underline-offset-4 transition-all text-black">
                   {contactInfo.email}
                 </a>
               </div>
 
               <div className="flex flex-col gap-2 items-center">
-                <span className="text-[12px] font-bold text-black uppercase tracking-widest">Location</span>
+                <span className="text-[12px] font-bold text-black tracking-widest">Location</span>
                 <div className="flex flex-col items-center">
                    <span className="text-xl md:text-2xl font-black tracking-tighter text-black">Bandung, West Java</span>
-                   <span className="text-[12px] font-bold mt-1 text-black uppercase tracking-widest">Indonesia — GMT +7</span>
+                   <span className="text-[12px] font-bold mt-1 text-black tracking-widest">Indonesia — GMT +7</span>
                 </div>
               </div>
             </div>
@@ -74,7 +73,7 @@ export const Contact = memo(({ }: { t: any; isDarkMode: boolean }) => {
             </motion.div>
             
             <div className="absolute bottom-6 right-8 md:bottom-12 md:right-12 pointer-events-none z-10">
-               <span className="text-[9px] font-black uppercase tracking-[0.8em] text-white mix-blend-difference drop-shadow-md">End</span>
+               <span className="text-[9px] font-black tracking-[0.8em] text-white mix-blend-difference drop-shadow-md">End</span>
             </div>
           </div>
 

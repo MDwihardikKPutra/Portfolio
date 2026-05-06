@@ -5,19 +5,19 @@ import { getProjects } from "../../data";
 import type { Translations, Language } from "../../translations";
 import { useIntersectionObserver } from "../../hooks/useIntersectionObserver";
 
-const ProjectImageSlideshow = ({ images }: { images: string[] }) => {
+const ProjectImageSlideshow = ({ images, autoPlay = true }: { images: string[]; autoPlay?: boolean }) => {
   const [index, setIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const entry = useIntersectionObserver(containerRef, { threshold: 0.1 });
   const isVisible = !!entry?.isIntersecting;
 
   useEffect(() => {
-    if (images.length <= 1 || !isVisible) return;
+    if (images.length <= 1 || !isVisible || !autoPlay) return;
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % images.length);
     }, 4000);
     return () => clearInterval(timer);
-  }, [images.length, isVisible]);
+  }, [images.length, isVisible, autoPlay]);
 
   return (
     <div ref={containerRef} className="relative w-full h-full" style={{ willChange: "contents" }}>
@@ -36,126 +36,157 @@ const ProjectImageSlideshow = ({ images }: { images: string[] }) => {
   );
 };
 
-export const Projects = memo(({ t, language }: { t: any; language: string }) => {
+export const Projects = memo(({ t, language, isHome = false }: { t: any; language: string; isHome?: boolean }) => {
   const projects = getProjects(language as Language);
   const [activeFilter, setActiveFilter] = useState<"all" | "project" | "personal">("personal");
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 3;
 
-  const filteredProjects = projects.filter(
+  const allFiltered = projects.filter(
     p => activeFilter === "all" || p.type === activeFilter
   );
+  
+  const totalPages = Math.ceil(allFiltered.length / itemsPerPage);
+  const paginatedProjects = allFiltered.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+
+  // Reset page when filter changes
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [activeFilter]);
+
+  // Automatic page cycling when in view
+  const containerRef = useRef<HTMLDivElement>(null);
+  const entry = useIntersectionObserver(containerRef, { threshold: 0.5 });
+  const isVisible = !!entry?.isIntersecting;
+
+  useEffect(() => {
+    if (totalPages <= 1 || !isVisible) return;
+
+    const timer = setInterval(() => {
+      setCurrentPage((prev) => (prev + 1) % totalPages);
+    }, 8000); // 8 seconds per page
+
+    return () => clearInterval(timer);
+  }, [totalPages, isVisible]);
 
   return (
-    <div id="projects" className="section-full bg-white flex flex-col justify-center items-center !pt-0">
-      <BackToConstellation isDark={false} />
-      {/* 
-        Micro-Panoramic Container
-        High-density miniature look, spanning the full cinematic width.
-      */}
-      <div className="w-full h-[70vh] flex flex-col px-4 md:px-8 max-w-[2600px] mx-auto transform scale-[0.75] origin-center transition-transform duration-700">
+    <div id="projects" ref={containerRef} className="w-full h-full bg-white flex flex-col">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95, y: 30 }}
+        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: false, amount: 0.1 }}
+        className={`flex-1 w-full flex flex-col px-4 md:px-8 lg:px-12 ${isHome ? 'py-4' : 'py-12'}`}
+      >
         
-        {/* Minimalist Section Title - Interactive Filter */}
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col mb-12 self-start text-left items-start"
-        >
-          <h2 className="text-[32px] md:text-[40px] tracking-tight leading-none flex items-center gap-3">
-            <span 
-              onClick={() => setActiveFilter(activeFilter === "project" ? "all" : "project")}
-              className={`cursor-pointer transition-colors duration-300 ${
-                activeFilter === "project" || activeFilter === "all" ? "font-black text-black" : "font-normal text-black/30 hover:text-black/60"
-              }`}
+        {/* Header: Filters + Pagination */}
+        <div className="flex items-center justify-between mb-4">
+          {/* Internal Filter Tabs */}
+          <div className="flex items-center gap-8">
+            <button 
+              onClick={() => setActiveFilter("personal")}
+              className={`text-[11px] font-bold tracking-widest transition-all ${activeFilter === "personal" ? "text-black border-b border-black" : "text-black/20"}`}
             >
-              Project
-            </span>
-            <span className="font-light text-black/20">/</span>
-            <span 
-              onClick={() => setActiveFilter(activeFilter === "personal" ? "all" : "personal")}
-              className={`cursor-pointer transition-colors duration-300 ${
-                activeFilter === "personal" || activeFilter === "all" ? "font-medium text-black" : "font-light text-black/30 hover:text-black/60"
-              }`}
+              Personal
+            </button>
+            <button 
+              onClick={() => setActiveFilter("project")}
+              className={`text-[11px] font-bold tracking-widest transition-all ${activeFilter === "project" ? "text-black border-b border-black" : "text-black/20"}`}
             >
-              Personal Project
-            </span>
-          </h2>
-        </motion.div>
-        
-        {/* Strictly 3 Rows, 4 Columns */}
-        <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-5 md:grid-rows-3 grid-flow-dense gap-2 md:gap-4 w-full h-full">
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.slice(0, 9).map((project, itemIdx) => {
-            const projectImages = project.images || (project.image ? [project.image] : []);
-            
-            // Bento Compact Spans: 
-            // 1 Hero Project (2x2), 8 Supporting Projects (1x1)
-            // On mobile, grid is 2 cols, 5 rows. Hero is 2x2, others 1x1. Total 10 cells. Hero=4, others=8. Doesn't fit?
-            // Mobile: 2 cols x 5 rows = 10 cells. Hero(2x2=4) + 6 others(1x1=6) = 10. (Wait, we have 9 items. We need 12 cells for mobile? No, auto rows for mobile is better).
-            // Let's use auto-rows on mobile, fixed rows on desktop.
-            const isHero = itemIdx === 0;
-            const spanClass = isHero 
-              ? "col-span-2 row-span-2 md:col-span-2 md:row-span-2" 
-              : "col-span-1 row-span-1 md:col-span-1 md:row-span-1";
+              Commercial
+            </button>
+            <button 
+              onClick={() => setActiveFilter("all")}
+              className={`text-[11px] font-bold tracking-widest transition-all ${activeFilter === "all" ? "text-black border-b border-black" : "text-black/20"}`}
+            >
+              All
+            </button>
+          </div>
 
-            return (
-              <motion.div
-                key={project.title}
-                layout
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-5%" }}
-                transition={{ duration: 0.5 }}
-                className={`relative rounded-sm overflow-hidden group bg-gray-50 flex flex-col ${spanClass}`}
+          {/* Pagination Numbers */}
+          <div className="flex items-center gap-4">
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentPage(i)}
+                className={`text-[11px] font-bold tracking-widest transition-all ${currentPage === i ? "text-black underline underline-offset-4" : "text-black/20"}`}
               >
-                {/* Background Slideshow */}
-                <ProjectImageSlideshow images={projectImages} />
-
-                {/* Subtle Base Gradient */}
-                <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-black/80 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
-
-                {/* Content Overlay */}
-                <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-end pointer-events-none">
-                  <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                    <div className="flex flex-col gap-1 relative z-10">
-                      <span className="text-[8px] md:text-[9px] uppercase font-bold tracking-widest text-white/70">
-                        {project.category}
-                      </span>
-                      <h3 className={`font-bold text-white tracking-tight leading-tight ${isHero ? 'text-2xl md:text-4xl' : 'text-sm md:text-lg'} truncate`}>
-                        {project.title}
-                      </h3>
+                {String(i + 1).padStart(2, '0')}
+              </button>
+            ))}
+          </div>
+        </div>
+        
+        {/* Balanced Flexbox Layout - 100% Height Alignment */}
+        <div className={`flex flex-col md:flex-row gap-6 w-full h-full ${isHome ? 'overflow-hidden' : 'overflow-y-auto no-scrollbar pb-12'}`}>
+          <div className="flex-[2] h-full min-h-[600px]">
+            <AnimatePresence mode="wait">
+              {paginatedProjects.slice(0, 1).map((project) => {
+                const projectImages = project.images || (project.image ? [project.image] : []);
+                return (
+                  <motion.div
+                    key={project.title}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.6, ease: "linear" }}
+                    className="relative overflow-hidden group w-full h-full"
+                  >
+                    <div className="w-full h-full transition-all duration-1000 ease-in-out scale-100 group-hover:scale-105">
+                      <ProjectImageSlideshow images={projectImages} autoPlay={!isHome} />
                     </div>
-
-                    {/* Expandable Meta */}
-                    <div className="mt-2 overflow-hidden h-0 group-hover:h-auto opacity-0 group-hover:opacity-100 transition-all duration-300 relative z-10 pointer-events-auto">
-                      <div className="flex items-center justify-between pt-2 border-t border-white/20">
-                        <div className="flex flex-wrap gap-1 md:gap-2 max-w-[80%] hidden md:flex">
-                          {project.tags.slice(0, isHero ? 3 : 1).map((tag, tIdx) => (
-                            <span key={tIdx} className="text-[8px] font-medium px-2 py-1 bg-white/20 backdrop-blur-sm text-white rounded-full whitespace-nowrap">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                        <a 
-                          href={project.link} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-white text-black flex items-center justify-center hover:scale-110 transition-transform flex-shrink-0 text-xs md:text-sm"
-                        >
-                          ↗
-                        </a>
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center">
+                      <div className="text-center p-8">
+                        <span className="text-[10px] font-bold text-white/40 tracking-[0.4em] mb-4 block">{project.category}</span>
+                        <h3 className="text-2xl md:text-4xl font-black text-white tracking-tighter">{project.title}</h3>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-          </AnimatePresence>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </div>
+
+          <div className="flex-[1] flex flex-col gap-6 h-full">
+            <AnimatePresence mode="wait">
+              {paginatedProjects.slice(1, 3).map((project, i) => {
+                const projectImages = project.images || (project.image ? [project.image] : []);
+                return (
+                  <motion.div
+                    key={project.title}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.6, ease: "linear" }}
+                    className="relative overflow-hidden group flex-1 w-full min-h-[290px]"
+                  >
+                    <div className="w-full h-full transition-all duration-1000 ease-in-out scale-100 group-hover:scale-105">
+                      <ProjectImageSlideshow images={projectImages} autoPlay={!isHome} />
+                    </div>
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center">
+                      <div className="text-center p-4">
+                        <span className="text-[8px] font-bold text-white/40 tracking-[0.4em] mb-2 block">{project.category}</span>
+                        <h3 className="text-lg md:text-2xl font-black text-white tracking-tighter">{project.title}</h3>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+            
+            {/* Placeholder for empty slots to maintain layout consistency */}
+            {paginatedProjects.length === 2 && (
+              <div className="flex-1 w-full bg-black/[0.02] border border-dashed border-black/5" />
+            )}
+            {paginatedProjects.length === 1 && (
+              <>
+                <div className="flex-1 w-full bg-black/[0.02] border border-dashed border-black/5" />
+                <div className="flex-1 w-full bg-black/[0.02] border border-dashed border-black/5" />
+              </>
+            )}
+          </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 });

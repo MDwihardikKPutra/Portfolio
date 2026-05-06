@@ -17,70 +17,89 @@ export const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
   const location = useLocation();
 
   const navItems = [
-    { id: "about", label: "01. About" },
-    { id: "manifesto", label: "02. Core" },
-    { id: "experimental", label: "03. Galaxy" },
-    { id: "projects", label: "04. Works" },
-    { id: "gallery", label: "05. Archive" },
-    { id: "contact", label: "06. Connect" },
+    { id: "home", label: "Home" },
+    { id: "manifesto", label: "Profile" },
+    { id: "projects", label: "Projects" },
+    { id: "gallery", label: "Archive" },
+    { id: "contact", label: "Contact" },
+    { id: "experimental", label: "Exp. 01" },
   ];
 
-  // Update active tab based on route
-  useEffect(() => {
-    const currentPath = location.pathname.replace("/", "");
-    const matched = navItems.find(item => 
-      item.id === currentPath || (currentPath === "galaxy" && item.id === "experimental")
-    );
-    if (matched) setActiveTab(matched.id);
-    else if (location.pathname === "/about") setActiveTab("about");
-  }, [location, setActiveTab]);
-
   const handleNav = (id: string) => {
-    setActiveTab(id); 
     if (id === "experimental") {
-      navigate("/galaxy");
-    } else {
-      navigate(`/${id}`);
+      navigate("/experimental");
+      return;
+    }
+    
+    // If we are not on the home page, go to home first then scroll
+    if (location.pathname !== "/home" && location.pathname !== "/") {
+      navigate("/home");
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+      return;
+    }
+
+    setActiveTab(id); 
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
+  const isDarkSection = activeTab === "manifesto" || activeTab === "contact" || location.pathname === "/experimental";
+
   return (
     <nav className="fixed top-0 left-0 w-full z-[200] pointer-events-none">
-      <div className="w-full bg-white/80 backdrop-blur-md border-b border-black/[0.03] pt-8 pb-6 swiss-px">
-        <div className="max-w-[1800px] mx-auto flex items-end justify-between">
+      <div className={`w-full transition-all duration-300 py-4 swiss-px ${
+        isDarkSection ? "bg-black/80 backdrop-blur-md border-b border-white/[0.05]" : "bg-white/80 backdrop-blur-md border-b border-black/[0.03]"
+      }`}>
+        <div className="max-w-[1800px] mx-auto flex items-center justify-between">
           
-          <div className="flex flex-col pointer-events-auto">
-            <span className="text-[10px] font-black tracking-[0.2em] text-black">Mdw.</span>
-            <span className="text-[8px] font-bold text-black/20 mt-1 uppercase">Portfolio / 2026</span>
+          <div className="flex items-center gap-4 pointer-events-auto">
+            {/* Spinning Wireframe Cube */}
+            <div className="w-[18px] h-[18px] perspective-[1000px]">
+              <div className="w-full h-full relative preserve-3d animate-cube">
+                {/* Cube Faces (Wireframe) */}
+                {[...Array(6)].map((_, i) => (
+                  <div 
+                    key={i}
+                    className={`absolute inset-0 border transition-colors duration-500 ${isDarkSection ? "border-white/40" : "border-black/40"}`}
+                    style={{
+                      transform: i === 0 ? "translateZ(9px)" :
+                                 i === 1 ? "translateZ(-9px)" :
+                                 i === 2 ? "rotateY(90deg) translateZ(9px)" :
+                                 i === 3 ? "rotateY(-90deg) translateZ(9px)" :
+                                 i === 4 ? "rotateX(90deg) translateZ(9px)" :
+                                           "rotateX(-90deg) translateZ(9px)"
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
           
-          <div className="flex flex-col gap-4 items-end pointer-events-auto max-w-[60%] w-full">
-             <div className="flex items-center gap-8 md:gap-14 pr-1">
-                {navItems.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => handleNav(item.id)}
-                    className={`transition-all text-[10px] font-bold tracking-tight relative whitespace-nowrap ${
-                      activeTab === item.id ? "text-black" : "text-black/30 hover:text-black/60"
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-             </div>
-
-             <div className="w-full h-[1px] bg-black/5 relative mt-1">
-                <div className="absolute inset-0 flex justify-between items-center px-[2px]">
-                   {navItems.map((item) => (
-                      <div 
-                        key={`dot-${item.id}`}
-                        className={`w-[4px] h-[4px] rounded-full transition-all duration-500 ${
-                          activeTab === item.id ? 'bg-black scale-110' : 'bg-black/10 scale-90'
-                        }`}
-                      />
-                   ))}
-                </div>
-             </div>
+          <div className="flex items-center gap-8 md:gap-12 pointer-events-auto">
+             {navItems.map((item) => (
+               <button
+                 key={item.id}
+                 onClick={() => handleNav(item.id)}
+                 className={`transition-all text-[10px] font-bold tracking-tight relative whitespace-nowrap duration-500 ${
+                   isDarkSection 
+                    ? (activeTab === item.id ? "text-white" : "text-white/30 hover:text-white/60")
+                    : (activeTab === item.id ? "text-black" : "text-black/30 hover:text-black/60")
+                 }`}
+               >
+                 {item.label}
+                 {activeTab === item.id && (
+                   <motion.div 
+                     layoutId="activeTab"
+                     className={`absolute -bottom-1 left-0 right-0 h-[1.5px] transition-colors duration-500 ${isDarkSection ? "bg-white" : "bg-black"}`}
+                   />
+                 )}
+               </button>
+             ))}
           </div>
         </div>
       </div>

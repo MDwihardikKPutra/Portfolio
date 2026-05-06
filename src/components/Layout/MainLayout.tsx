@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { Navbar } from "../Navigation/Navbar";
-import { CustomCursor } from "../Shared/CustomCursor";
 import { socialLinks } from "../../data";
 import type { Translations } from "../../translations";
 import { motion } from "framer-motion";
@@ -34,46 +33,26 @@ export const MainLayout = ({
   t,
   activeTab,
   setActiveTab,
+  isDarkMode,
+  toggleDarkMode,
+  toggleLanguage,
+  language
 }: MainLayoutProps) => {
 
   return (
-    <div className="w-full bg-white text-black relative">
-
-      {/* Cinematic Bokeh Effect */}
-      <div className="fixed inset-0 pointer-events-none z-[1] overflow-hidden">
-        {[...Array(3)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-black/[0.015] blur-[100px]"
-            style={{ willChange: "transform" }}
-            initial={{
-              width: Math.random() * 400 + 300,
-              height: Math.random() * 400 + 300,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              opacity: 0
-            }}
-            animate={{
-              x: [0, Math.random() * 100 - 50, 0],
-              y: [0, Math.random() * 100 - 50, 0],
-              opacity: [0.03, 0.08, 0.03],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: Math.random() * 20 + 20,
-              repeat: Infinity,
-              ease: "linear",
-              delay: i * 5,
-            }}
-          />
-        ))}
-      </div>
+    <div className="w-full h-screen bg-white text-black relative font-['Plus_Jakarta_Sans'] overflow-hidden">
+      
+      {/* Navigation */}
+      <Navbar 
+        t={t} 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+      />
 
       {/* Main Content Area */}
-      <main className="flex-1 w-full h-full relative z-10">
+      <main className="w-full h-full">
         {children}
       </main>
-
     </div>
   );
 };

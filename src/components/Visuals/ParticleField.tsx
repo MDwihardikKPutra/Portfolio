@@ -11,16 +11,23 @@ export const ParticleField = memo(() => {
   useEffect(() => {
     if (!containerRef.current) return;
 
+    const width = containerRef.current.clientWidth;
+    const height = containerRef.current.clientHeight;
+
     const scene  = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(44, window.innerWidth / window.innerHeight, 0.1, 800);
+    const camera = new THREE.PerspectiveCamera(44, width / height, 0.1, 800);
     // CRITICAL: Start at core with the correct slanted angle
     camera.position.set(0, 1.2, 1.7); 
     camera.lookAt(0, 0, 0);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+    const renderer = new THREE.WebGLRenderer({ 
+      antialias: true, 
+      powerPreference: "high-performance",
+      alpha: true 
+    });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 1);
+    renderer.setSize(width, height);
+    renderer.setClearColor(0x000000, 0);
     containerRef.current.appendChild(renderer.domElement);
 
     // ── Controls (Zoom Only) ──────────────────────────────────────────────
@@ -314,7 +321,26 @@ export const ParticleField = memo(() => {
 
     let animId: number;
     let lastTime = performance.now() * 0.001;
+    let isInView = false;
+    const intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isInView = entry.isIntersecting;
+          if (isInView) tick();
+          
+          if (entry.intersectionRatio < 0.99) {
+            isSucking = false;
+          }
+        });
+      },
+      { 
+        threshold: [0, 0.2, 0.5, 0.7, 0.9, 0.99, 1.0] 
+      }
+    );
+    if (containerRef.current) intersectionObserver.observe(containerRef.current);
+
     const tick = () => {
+      if (!isInView) return;
       animId = requestAnimationFrame(tick);
       const time = performance.now() * 0.001;
       const dt = time - lastTime;
@@ -352,13 +378,24 @@ export const ParticleField = memo(() => {
       
       composer.render();
     };
-    tick();
+    // tick(); // Handled by observer
+
+    const updateSize = () => {
+      if (!containerRef.current) return;
+      const width = containerRef.current.clientWidth;
+      const height = containerRef.current.clientHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+      composer.setSize(width, height);
+    };
+
+    updateSize();
+
+    // ... (rest of the setup)
 
     const onResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      composer.setSize(window.innerWidth, window.innerHeight);
+      updateSize();
     };
     window.addEventListener('resize', onResize);
     return () => {
@@ -367,6 +404,7 @@ export const ParticleField = memo(() => {
       window.removeEventListener('click', onBHClick);
       window.removeEventListener('keydown', onKeyDown);
       window.removeEventListener('galaxy-zoom-trigger', onZoomTrigger);
+      intersectionObserver.disconnect();
       renderer.dispose(); tex.dispose(); geo.dispose(); mat.dispose();
       if (containerRef.current) containerRef.current.innerHTML = '';
     };

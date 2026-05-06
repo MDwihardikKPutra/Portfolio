@@ -6,7 +6,7 @@
 
 @layer base {
   * {
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; - Removed to fix scroll snapping stutter */
   }
 
   html {
@@ -15,7 +15,7 @@
   }
 
   body {
-    @apply antialiased bg-black text-black;
+    @apply antialiased bg-white text-black;
     font-size: 15px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -44,16 +44,52 @@
   }
 
   .section-full {
-    @apply h-screen w-screen flex-shrink-0 snap-start relative overflow-hidden flex flex-col pt-16;
+    @apply h-screen w-full flex-shrink-0 snap-start relative overflow-hidden flex flex-col items-center justify-center;
+    will-change: transform, opacity;
   }
 
-  .snap-container {
+  .scale-container {
+    @apply w-full h-full flex flex-col items-center justify-center;
+    /* Baseline height 1080px */
+    max-height: 1080px;
+    max-width: 1920px;
+    will-change: transform;
+  }
+
+  .snap-container-y {
+    @apply h-screen w-full overflow-y-auto overflow-x-hidden snap-y snap-mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  @keyframes cube-rotate {
+    from { transform: rotateX(0deg) rotateY(0deg); }
+    to { transform: rotateX(360deg) rotateY(360deg); }
+  }
+
+  .animate-cube {
+    animation: cube-rotate 10s linear infinite;
+  }
+
+  .snap-container-y::-webkit-scrollbar {
+    display: none;
+  }
+
+  .snap-container-x {
     @apply h-screen w-screen overflow-x-auto overflow-y-hidden flex flex-row snap-x snap-mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
 
-  .snap-container::-webkit-scrollbar {
+  .snap-container-x::-webkit-scrollbar {
     display: none;
   }
 
