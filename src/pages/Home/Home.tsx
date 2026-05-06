@@ -300,9 +300,10 @@ export const Home = memo(({ t, setActiveTab }: { t: any; setActiveTab?: (tab: st
       {/* SECTION 4: GALLERY */}
       <LazySection id="gallery" className="w-full h-screen snap-start bg-white flex flex-col border-t border-black/5">
         <div className="flex-1 overflow-y-auto no-scrollbar">
-        <div className="scale-container w-full flex flex-col justify-center will-change-transform" style={{ transform: isMobile ? 'none' : `scale(${scale})` }}>
-          <div className="w-full">
-            <Gallery t={t} isDarkMode={false} isHome={true} />
+          <div className="scale-container w-full flex flex-col justify-center will-change-transform" style={{ transform: isMobile ? 'none' : `scale(${scale})` }}>
+            <div className="w-full">
+              <Gallery t={t} isDarkMode={false} isHome={true} />
+            </div>
           </div>
         </div>
       </LazySection>
