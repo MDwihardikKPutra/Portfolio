@@ -70,7 +70,7 @@ export const Projects = memo(({ t, language, isHome = false }: { t: any; languag
   }, [totalPages, isVisible]);
 
   return (
-    <div id="projects" ref={containerRef} className="w-full h-full bg-white flex flex-col">
+    <div id="projects" ref={containerRef} className="w-full bg-white flex flex-col">
       <motion.div 
         initial={{ opacity: 0, scale: 0.95, y: 30 }}
         whileInView={{ opacity: 1, scale: 1, y: 0 }}
@@ -117,9 +117,9 @@ export const Projects = memo(({ t, language, isHome = false }: { t: any; languag
           </div>
         </div>
         
-        {/* Balanced Flexbox Layout - 100% Height Alignment */}
-        <div className={`flex flex-col md:flex-row gap-6 w-full h-full ${isHome ? 'overflow-hidden' : 'overflow-y-auto no-scrollbar pb-12'}`}>
-          <div className="flex-[2] h-full min-h-[600px]">
+        {/* Balanced Flexbox Layout - Responsive Height */}
+        <div className={`flex flex-col md:flex-row gap-6 w-full ${isHome ? '' : 'pb-12'}`}>
+          <div className="flex-[2] min-h-[400px] md:min-h-[600px]">
             <AnimatePresence mode="wait">
               {paginatedProjects.slice(0, 1).map((project) => {
                 const projectImages = project.images || (project.image ? [project.image] : []);
@@ -147,7 +147,7 @@ export const Projects = memo(({ t, language, isHome = false }: { t: any; languag
             </AnimatePresence>
           </div>
 
-          <div className="flex-[1] flex flex-col gap-6 h-full">
+          <div className="flex-[1] flex flex-col gap-6">
             <AnimatePresence mode="wait">
               {paginatedProjects.slice(1, 3).map((project, i) => {
                 const projectImages = project.images || (project.image ? [project.image] : []);
