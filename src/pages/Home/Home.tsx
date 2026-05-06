@@ -174,9 +174,9 @@ export const Home = memo(({ t, setActiveTab }: { t: any; setActiveTab?: (tab: st
       </div>
 
       {/* SECTION 2: PROFILE */}
-      <LazySection id="manifesto" className="w-full h-screen snap-start bg-black text-white flex flex-col">        
-        <div className="flex-1 overflow-y-auto no-scrollbar px-4 md:px-20 lg:px-32 pt-[12vh] md:pt-[20vh] pb-20 md:pb-32">
-        <div style={{ transform: isMobile ? 'none' : `scale(${scale})` }} className="w-full md:max-w-[1600px] mx-auto will-change-transform">
+      <LazySection id="manifesto" className="w-full h-screen snap-start bg-black text-white flex flex-col overflow-hidden">        
+        <div className="flex-1 px-4 md:px-20 lg:px-32 pt-[12vh] md:pt-[20vh] pb-20 md:pb-32">
+          <div style={{ transform: isMobile ? 'none' : `scale(${scale})` }} className="w-full md:max-w-[1600px] mx-auto will-change-transform">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
