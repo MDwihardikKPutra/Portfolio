@@ -174,7 +174,8 @@ export const Home = memo(({ t, setActiveTab }: { t: any; setActiveTab?: (tab: st
       </div>
 
       {/* SECTION 2: PROFILE */}
-      <LazySection id="manifesto" className="w-full min-h-screen snap-start scroll-mt-[10vh] bg-black text-white flex flex-col justify-start pt-[12vh] md:pt-[20vh] px-4 md:px-20 lg:px-32 pb-20 md:pb-32">
+      <LazySection id="manifesto" className="w-full h-screen snap-start bg-black text-white flex flex-col">        
+        <div className="flex-1 overflow-y-auto no-scrollbar px-4 md:px-20 lg:px-32 pt-[12vh] md:pt-[20vh] pb-20 md:pb-32">
         <div style={{ transform: isMobile ? 'none' : `scale(${scale})` }} className="w-full md:max-w-[1600px] mx-auto will-change-transform">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -279,22 +280,26 @@ export const Home = memo(({ t, setActiveTab }: { t: any; setActiveTab?: (tab: st
             />
           </motion.div>
         </div>
+        </div>
       </LazySection>
 
       {/* SECTION 3: WORKS */}
-      <LazySection id="projects" className="w-full min-h-screen snap-start scroll-mt-[10vh] bg-white flex flex-col items-center justify-start py-20 md:py-32">
-        <div className="scale-container w-full flex flex-col justify-center px-4 md:px-20 lg:px-32 will-change-transform" style={{ transform: isMobile ? 'none' : `scale(${scale})` }}>
-          <div className="w-full pb-8 md:pb-12">
-            <h2 className="text-4xl md:text-[48px] font-black tracking-tighter text-black">Projects.</h2>
-          </div>
-          <div className="w-full">
-            <Projects t={t} language="en" isHome={true} />
+      <LazySection id="projects" className="w-full h-screen snap-start bg-white flex flex-col">
+        <div className="flex-1 overflow-y-auto no-scrollbar px-4 md:px-20 lg:px-32 py-20 md:py-24">
+          <div className="scale-container w-full flex flex-col justify-center will-change-transform" style={{ transform: isMobile ? 'none' : `scale(${scale})` }}>
+            <div className="w-full pb-8 md:pb-12">
+              <h2 className="text-4xl md:text-[48px] font-black tracking-tighter text-black">Projects.</h2>
+            </div>
+            <div className="w-full">
+              <Projects t={t} language="en" isHome={true} />
+            </div>
           </div>
         </div>
       </LazySection>
 
       {/* SECTION 4: GALLERY */}
-      <LazySection id="gallery" className="w-full min-h-screen snap-start scroll-mt-[10vh] bg-white flex flex-col items-center justify-start py-20 md:py-32 border-t border-black/5">
+      <LazySection id="gallery" className="w-full h-screen snap-start bg-white flex flex-col border-t border-black/5">
+        <div className="flex-1 overflow-y-auto no-scrollbar">
         <div className="scale-container w-full flex flex-col justify-center will-change-transform" style={{ transform: isMobile ? 'none' : `scale(${scale})` }}>
           <div className="w-full">
             <Gallery t={t} isDarkMode={false} isHome={true} />
@@ -303,7 +308,7 @@ export const Home = memo(({ t, setActiveTab }: { t: any; setActiveTab?: (tab: st
       </LazySection>
 
       {/* SECTION 5: CONTACT */}
-      <LazySection id="contact" className="w-full min-h-screen snap-start scroll-mt-[10vh] bg-black text-white flex items-center justify-center py-20 md:py-32">
+      <LazySection id="contact" className="w-full h-screen snap-start bg-black text-white flex items-center justify-center">
         <div className="scale-container w-full flex items-center justify-center will-change-transform" style={{ transform: isMobile ? 'none' : `scale(${scale})` }}>
           <Contact t={t} isDarkMode={true} />
         </div>
