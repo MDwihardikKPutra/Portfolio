@@ -1,4 +1,4 @@
-import { useNavigate, useLocation, Routes, Route, BrowserRouter } from "react-router-dom";
+import { useNavigate, useLocation, Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDarkMode } from "./hooks/useDarkMode";
@@ -67,7 +67,7 @@ const AppRoutes = ({
           <Routes location={location}>
             <Route
               path="/"
-              element={<Landing t={t} isDarkMode={isDarkMode} />}
+              element={<Navigate to="/home" replace />}
             />
             <Route
               path="/projects/data-analyst"
