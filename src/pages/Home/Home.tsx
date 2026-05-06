@@ -4,6 +4,7 @@ import { Projects } from "../Projects/Projects";
 import { Gallery } from "../Gallery/Gallery";
 import { Contact } from "../Contact/Contact";
 import { PCDVisual } from "../../components/Visuals/PCDVisual";
+import { Expertise } from "../../components/Expertise/Expertise";
 
 // Optimized Section Wrapper for "On View" rendering
 const LazySection = ({ id, className, children, threshold = 0.1 }: { id: string; className: string; children: React.ReactNode; threshold?: number }) => {
@@ -172,6 +173,15 @@ export const Home = memo(({ t, setActiveTab }: { t: any; setActiveTab?: (tab: st
         <div className="absolute top-0 h-screen w-full snap-start pointer-events-none" />
         <div className="absolute top-[100vh] h-screen w-full snap-start pointer-events-none" />
       </div>
+
+      {/* SECTION 1.5: EXPERTISE */}
+      <LazySection id="expertise" className="w-full h-screen snap-start bg-white text-black flex flex-col border-b border-black/5">
+        <div className="flex-1 overflow-y-auto no-scrollbar">
+          <div style={{ transform: isMobile ? 'none' : `scale(${scale})` }} className="w-full h-full will-change-transform">
+            <Expertise />
+          </div>
+        </div>
+      </LazySection>
 
       {/* SECTION 2: PROFILE */}
       <LazySection id="manifesto" className="w-full h-screen snap-start bg-black text-white flex flex-col overflow-hidden">        
