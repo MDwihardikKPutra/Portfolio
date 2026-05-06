@@ -29,9 +29,16 @@ export const Landing = () => {
         else window.addEventListener("load", resolve, { once: true });
       });
 
-      const minDuration = new Promise(resolve => setTimeout(resolve, 5500));
+      const minDuration = new Promise(resolve => setTimeout(resolve, 4500));
+      
+      // Safety timeout: If it takes more than 12s, just go anyway
+      const safetyTimeout = new Promise(resolve => setTimeout(resolve, 12000));
 
-      await Promise.all([preloadAll(), windowLoad, minDuration]);
+      // Wait for assets, window load, and min duration, but capped by safety timeout
+      await Promise.race([
+        Promise.all([preloadAll(), windowLoad, minDuration]),
+        safetyTimeout
+      ]);
 
       if (isMounted) {
         crawlAnimation.stop();
