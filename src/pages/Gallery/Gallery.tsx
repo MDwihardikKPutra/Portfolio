@@ -17,9 +17,9 @@ export const Gallery = ({ isHome = false }: { t: any; isDarkMode: boolean; isHom
   ];
 
   return (
-    <div id="gallery" className="w-full h-full bg-white text-black flex flex-col overflow-hidden">
+    <div className="w-full bg-white text-black flex flex-col">
       {/* Header - Simplified */}
-      <div className="px-8 md:px-20 lg:px-32 pt-6">
+      <div className="px-4 md:px-20 lg:px-32 pt-6">
         <div className="flex justify-between items-end">
           <div className="space-y-1">
             <h2 className="text-4xl font-black tracking-tighter leading-none text-black">Visual Archive</h2>
@@ -27,14 +27,14 @@ export const Gallery = ({ isHome = false }: { t: any; isDarkMode: boolean; isHom
         </div>
       </div>
 
-      {/* Article Content - Static Single Screen Spread */}
-      <div className="flex-1 w-full overflow-hidden px-8 md:px-20 lg:px-32 py-6">
-        <div className="flex flex-col md:flex-row gap-8 h-full items-start">
+      {/* Article Content - Responsive Grid */}
+      <div className="w-full px-4 md:px-20 lg:px-32 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 items-start">
           
-          {/* Main Editorial Columns - Fixed to 4 to fit the screen */}
+          {/* Main Editorial Columns */}
           {[0, 1, 2, 3].map((colIndex) => (
-            <div key={colIndex} className="flex-1 flex flex-col gap-5 border-r border-black/5 pr-8 last:border-0 h-full overflow-hidden">
-              <div className="space-y-5">
+            <div key={colIndex} className="flex flex-col gap-10 md:gap-8 border-b md:border-b-0 md:border-r border-black/5 pb-10 md:pb-0 md:pr-8 last:border-0 last:pb-0">
+              <div className="space-y-10 md:space-y-8">
                 
                 {/* Photo 1 in Column */}
                 <div className="space-y-3">
