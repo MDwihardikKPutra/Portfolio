@@ -76,7 +76,7 @@ export const Projects = memo(({ t, language, isHome = false }: { t: any; languag
         whileInView={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         viewport={{ once: false, amount: 0.1 }}
-        className={`flex-1 w-full flex flex-col px-4 md:px-8 lg:px-12 ${isHome ? 'py-4' : 'py-12'}`}
+        className={`flex-1 w-full flex flex-col px-6 md:px-10 lg:px-12 ${isHome ? 'pt-0 pb-4' : 'py-12'}`}
       >
         
         {/* Header: Filters + Pagination */}
@@ -85,19 +85,19 @@ export const Projects = memo(({ t, language, isHome = false }: { t: any; languag
           <div className="flex items-center gap-8">
             <button 
               onClick={() => setActiveFilter("personal")}
-              className={`text-[11px] font-bold tracking-widest transition-all ${activeFilter === "personal" ? "text-black border-b border-black" : "text-black/20"}`}
+              className={`text-[11px] font-normal tracking-widest transition-all ${activeFilter === "personal" ? "text-black border-b border-black" : "text-black/20"}`}
             >
               Personal
             </button>
             <button 
               onClick={() => setActiveFilter("project")}
-              className={`text-[11px] font-bold tracking-widest transition-all ${activeFilter === "project" ? "text-black border-b border-black" : "text-black/20"}`}
+              className={`text-[11px] font-normal tracking-widest transition-all ${activeFilter === "project" ? "text-black border-b border-black" : "text-black/20"}`}
             >
               Commercial
             </button>
             <button 
               onClick={() => setActiveFilter("all")}
-              className={`text-[11px] font-bold tracking-widest transition-all ${activeFilter === "all" ? "text-black border-b border-black" : "text-black/20"}`}
+              className={`text-[11px] font-normal tracking-widest transition-all ${activeFilter === "all" ? "text-black border-b border-black" : "text-black/20"}`}
             >
               All
             </button>
@@ -109,7 +109,7 @@ export const Projects = memo(({ t, language, isHome = false }: { t: any; languag
               <button
                 key={i}
                 onClick={() => setCurrentPage(i)}
-                className={`text-[11px] font-bold tracking-widest transition-all ${currentPage === i ? "text-black underline underline-offset-4" : "text-black/20"}`}
+                className={`text-[11px] font-normal tracking-widest transition-all ${currentPage === i ? "text-black underline underline-offset-4" : "text-black/20"}`}
               >
                 {String(i + 1).padStart(2, '0')}
               </button>
@@ -137,8 +137,8 @@ export const Projects = memo(({ t, language, isHome = false }: { t: any; languag
                     </div>
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center">
                       <div className="text-center p-8">
-                        <span className="text-[10px] font-bold text-white/40 tracking-[0.4em] mb-4 block">{project.category}</span>
-                        <h3 className="text-2xl md:text-4xl font-black text-white tracking-tighter">{project.title}</h3>
+                        <span className="text-[10px] font-normal text-white/40 tracking-[0.4em] mb-4 block">{project.category}</span>
+                        <h3 className="text-2xl md:text-4xl font-normal text-white tracking-tighter">{project.title}</h3>
                       </div>
                     </div>
                   </motion.div>
@@ -165,8 +165,8 @@ export const Projects = memo(({ t, language, isHome = false }: { t: any; languag
                     </div>
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center">
                       <div className="text-center p-4">
-                        <span className="text-[8px] font-bold text-white/40 tracking-[0.4em] mb-2 block">{project.category}</span>
-                        <h3 className="text-lg md:text-2xl font-black text-white tracking-tighter">{project.title}</h3>
+                        <span className="text-[8px] font-normal text-white/40 tracking-[0.4em] mb-2 block">{project.category}</span>
+                        <h3 className="text-lg md:text-2xl font-normal text-white tracking-tighter">{project.title}</h3>
                       </div>
                     </div>
                   </motion.div>

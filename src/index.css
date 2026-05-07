@@ -24,7 +24,7 @@
   }
 
   h1, h2, h3, h4 {
-    @apply tracking-tight font-bold text-black;
+    @apply tracking-tight font-normal text-black;
     line-height: 1.1;
   }
 }
@@ -49,7 +49,7 @@
   }
 
   .scale-container {
-    @apply w-full h-full flex flex-col items-center justify-center;
+    @apply w-full h-auto flex flex-col items-center justify-center;
     /* Baseline height 1080px */
     max-height: 1080px;
     max-width: 1920px;
@@ -95,11 +95,11 @@
 
   /* Typography Scale */
   .text-display-giant {
-    @apply text-[15vw] md:text-[10vw] font-bold leading-[1.1] tracking-tighter;
+    @apply text-[15vw] md:text-[10vw] font-normal leading-[1.1] tracking-tighter;
   }
 
   .text-meta {
-    @apply text-[11px] font-bold tracking-normal text-black font-sans;
+    @apply text-[11px] font-normal tracking-normal text-black font-sans;
   }
 
   .text-editorial-body {

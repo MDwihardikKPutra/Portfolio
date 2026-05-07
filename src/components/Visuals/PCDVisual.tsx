@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { PCDLoader } from 'three/examples/jsm/loaders/PCDLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-export const PCDVisual = () => {
+export const PCDVisual = ({ onReady }: { onReady?: () => void }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -49,6 +49,7 @@ export const PCDVisual = () => {
           points.material.color.set(0x000000);
           pointsObj = points;
           scene.add(points);
+          if (onReady) onReady();
         },
         undefined,
         (err) => {
@@ -57,6 +58,7 @@ export const PCDVisual = () => {
           const mat = new THREE.PointsMaterial({ size: 0.002, color: 0x000000 });
           pointsObj = new THREE.Points(geo, mat);
           scene.add(pointsObj);
+          if (onReady) onReady();
         }
       );
 

@@ -1,7 +1,7 @@
-
+import { memo } from "react";
 import { motion } from "framer-motion";
 
-export const Gallery = ({ isHome = false }: { t: any; isDarkMode: boolean; isHome?: boolean }) => {
+export const Gallery = memo(({ isHome = false }: { t: any; isDarkMode: boolean; isHome?: boolean }) => {
   const displayPhotos = galleryPhotos;
 
   // content for the 8 photos (4 columns x 2 photos each)
@@ -18,17 +18,10 @@ export const Gallery = ({ isHome = false }: { t: any; isDarkMode: boolean; isHom
 
   return (
     <div className="w-full bg-white text-black flex flex-col">
-      {/* Header - Simplified */}
-      <div className="px-4 md:px-20 lg:px-32 pt-6">
-        <div className="flex justify-between items-end">
-          <div className="space-y-1">
-            <h2 className="text-4xl font-black tracking-tighter leading-none text-black">Visual Archive</h2>
-          </div>
-        </div>
-      </div>
+
 
       {/* Article Content - Responsive Grid */}
-      <div className="w-full px-4 md:px-20 lg:px-32 py-10">
+      <div className="w-full px-6 md:px-20 lg:px-24 pt-12 pb-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 items-start">
           
           {/* Main Editorial Columns */}
@@ -46,10 +39,10 @@ export const Gallery = ({ isHome = false }: { t: any; isDarkMode: boolean; isHom
                     <img src={displayPhotos[(colIndex * 2) % displayPhotos.length]} className="w-full h-full object-cover transition-all duration-700" />
                   </motion.div>
                   <div className="space-y-1">
-                    <p className="text-[11px] font-black text-black">
+                    <p className="text-[11px] font-normal text-black">
                       {galleryContent[colIndex * 2].title}
                     </p>
-                    <p className="text-[10px] leading-relaxed font-medium text-black/60">
+                    <p className="text-[10px] leading-relaxed font-normal text-black/60">
                       {galleryContent[colIndex * 2].desc}
                     </p>
                   </div>
@@ -82,6 +75,6 @@ export const Gallery = ({ isHome = false }: { t: any; isDarkMode: boolean; isHom
 
     </div>
   );
-};
+});
 
 import { galleryPhotos } from "../../utils/preloadImages";

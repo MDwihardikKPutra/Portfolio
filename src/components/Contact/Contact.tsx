@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
 import type { Translations } from "../../translations";
@@ -7,7 +8,7 @@ interface ContactProps {
   isDarkMode: boolean;
 }
 
-export const Contact = ({ t, isDarkMode }: ContactProps) => {
+export const Contact = memo(({ t, isDarkMode }: ContactProps) => {
   const descColor = isDarkMode ? "text-[#a0a0a0]" : "text-[#666666]";
   const buttonClass = isDarkMode
     ? "bg-[#f5f5f5] text-[#0a0a0a] hover:bg-[#e5e5e5]"

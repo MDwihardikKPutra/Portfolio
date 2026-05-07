@@ -48,7 +48,7 @@ export const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
     }
   };
 
-  const isDarkSection = activeTab === "manifesto" || activeTab === "contact" || location.pathname === "/experimental";
+  const isDarkSection = (activeTab === "contact" || location.pathname.includes("experimental")) && activeTab !== "home";
 
   return (
     <nav className="fixed top-0 left-0 w-full z-[200] pointer-events-none">

@@ -1,10 +1,55 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import { memo, useRef, useEffect, useState } from "react";
 import { Projects } from "../Projects/Projects";
 import { Gallery } from "../Gallery/Gallery";
 import { Contact } from "../Contact/Contact";
-import { PCDVisual } from "../../components/Visuals/PCDVisual";
-import { Expertise } from "../../components/Expertise/Expertise";
+
+// Optimized Typewriter Animation
+const TypewriterText = ({ text, delay = 0 }: { text: string; delay?: number }) => {
+  const characters = text.split("");
+  
+  const container = {
+    hidden: { opacity: 0 },
+    visible: (i = 1) => ({
+      opacity: 1,
+      transition: { staggerChildren: 0.03, delayChildren: delay * i },
+    }),
+  };
+
+  const child = {
+    visible: {
+      opacity: 1,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 200,
+      },
+    },
+    hidden: {
+      opacity: 0,
+    },
+  };
+
+  return (
+    <motion.div
+      style={{ display: "flex", flexWrap: "wrap" }}
+      variants={container}
+      initial="hidden"
+      animate="visible"
+      className="mb-2"
+    >
+      {characters.map((char, index) => (
+        <motion.span
+          variants={child}
+          key={index}
+          style={{ display: "inline-block", minWidth: char === " " ? "0.3em" : "auto" }}
+        >
+          {char}
+        </motion.span>
+      ))}
+    </motion.div>
+  );
+};
 
 // Optimized Section Wrapper for "On View" rendering
 const LazySection = ({ id, className, children, threshold = 0.1 }: { id: string; className: string; children: React.ReactNode; threshold?: number }) => {
@@ -34,12 +79,10 @@ export const Home = memo(({ t, setActiveTab }: { t: any; setActiveTab?: (tab: st
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
-
-  const heroScroll = useScroll({
-    container: containerRef,
-    target: heroRef,
-    offset: ["start start", "end end"]
-  });
+  const { scrollYProgress } = useScroll({ container: containerRef });
+  
+  // Reveal profile only after 3% scroll
+  const profileOpacity = useTransform(scrollYProgress, [0, 0.03, 0.08], [0, 0, 1]);
 
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -84,117 +127,58 @@ export const Home = memo(({ t, setActiveTab }: { t: any; setActiveTab?: (tab: st
     return () => observer.disconnect();
   }, [setActiveTab]);
 
+
+
   return (
     <div 
       ref={containerRef} 
-      className="h-screen w-full relative overflow-y-auto snap-y snap-mandatory no-scrollbar bg-white"
+      className="h-screen w-full relative overflow-y-auto no-scrollbar bg-white snap-y snap-mandatory"
     >
-      {/* SECTION 1: HERO (Sticky Still Experience) */}
-      <div id="home" ref={heroRef} className="relative h-[200vh]">
-        {/* Sticky Container - This stays "still" in the viewport */}
-        <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col md:flex-row items-center px-6 md:px-20 lg:px-32">
-          
-          {/* Visual Container (Top on Mobile, Right on Desktop) */}
-          <div className="relative w-full h-[40%] md:h-full md:w-1/2 flex items-center justify-center md:justify-end order-1 md:order-2">
-            <div className="w-full max-w-[300px] md:max-w-none md:w-full aspect-square relative will-change-transform" style={{ transform: `scale(${scale})` }}>
-              <PCDVisual />
-            </div>
+      {/* SECTION 1: HERO (Interract-Inspired Editorial) */}
+      <div id="home" ref={heroRef} className="relative min-h-screen bg-white overflow-hidden flex flex-col items-center justify-center px-6 md:px-20 lg:px-24 snap-start snap-always">
+        <div className="w-full max-w-[1600px] flex flex-col md:flex-row items-center justify-between gap-12 z-10">
+          <div className="max-w-[1200px] flex flex-col justify-center">
+            <h1 className="text-3xl md:text-[3.5vw] font-normal tracking-tight text-black leading-[1.05] cursor-default">
+              <TypewriterText text="Personally, Personal." delay={0.5} />
+              <TypewriterText text="Evolving the landscape of" delay={1.5} />
+              <TypewriterText text="how digital meets humanity." delay={2.5} />
+            </h1>
           </div>
 
-          {/* Text Container (Bottom on Mobile, Left on Desktop) */}
-          <div className="relative w-full h-[60%] md:h-full md:w-[60%] flex flex-col justify-center text-center md:text-left order-2 md:order-1" style={{ transform: `scale(${scale})` }}>
-            {/* Box 1: The Titles (Fixed Position) */}
-            <div className="relative h-[80px] md:h-[120px] grid grid-cols-1 grid-rows-1 items-center md:items-end mb-4 md:mb-8">
-              {/* Step 1 Title */}
-              <motion.div 
-                style={{ 
-                  opacity: useTransform(heroScroll.scrollYProgress, [0, 0.4], [1, 0]),
-                  y: useTransform(heroScroll.scrollYProgress, [0, 0.4], [0, -20]),
-                  filter: useTransform(heroScroll.scrollYProgress, [0, 0.4], ["blur(0px)", "blur(20px)"]),
-                  pointerEvents: useTransform(heroScroll.scrollYProgress, [0, 0.4], ["auto", "none"])
-                }}
-                className="col-start-1 row-start-1"
-              >
-                <h1 className="text-5xl md:text-[4.5rem] font-black tracking-tighter text-black leading-[1.1] md:leading-none">
-                  Personally, Personal.
-                </h1>
-              </motion.div>
-
-              {/* Step 2 Title */}
-              <motion.div 
-                style={{ 
-                  opacity: useTransform(heroScroll.scrollYProgress, [0.5, 0.9], [0, 1]),
-                  y: useTransform(heroScroll.scrollYProgress, [0.5, 0.9], [20, 0]),
-                  filter: useTransform(heroScroll.scrollYProgress, [0.5, 0.9], ["blur(20px)", "blur(0px)"]),
-                  pointerEvents: useTransform(heroScroll.scrollYProgress, [0.5, 0.9], ["none", "auto"])
-                }}
-                className="col-start-1 row-start-1"
-              >
-                <h2 className="text-5xl md:text-[4.5rem] font-black tracking-tighter text-black leading-[1.1] md:leading-none">
-                  Diko Putra.
-                </h2>
-              </motion.div>
-            </div>
-
-            {/* Box 2: The Descriptions (Fixed Position) */}
-            <div className="relative h-fit md:h-[100px] grid grid-cols-1 grid-rows-1 items-start px-4 md:px-0">
-              {/* Step 1 Desc */}
-              <motion.div 
-                style={{ 
-                  opacity: useTransform(heroScroll.scrollYProgress, [0, 0.4], [1, 0]),
-                  y: useTransform(heroScroll.scrollYProgress, [0, 0.4], [0, -10]),
-                  filter: useTransform(heroScroll.scrollYProgress, [0, 0.4], ["blur(0px)", "blur(10px)"]),
-                }}
-                className="col-start-1 row-start-1"
-              >
-                <p className="text-sm md:text-xl font-light text-black/60 leading-relaxed max-w-[700px]">
-                  An exploration of digital humanity. I craft interfaces where logic meets emotion, building products that feel as good as they function.
-                </p>
-              </motion.div>
-
-              {/* Step 2 Desc */}
-              <motion.div 
-                style={{ 
-                  opacity: useTransform(heroScroll.scrollYProgress, [0.5, 0.9], [0, 1]),
-                  y: useTransform(heroScroll.scrollYProgress, [0.5, 0.9], [10, 0]),
-                  filter: useTransform(heroScroll.scrollYProgress, [0.5, 0.9], ["blur(10px)", "blur(0px)"]),
-                }}
-                className="col-start-1 row-start-1"
-              >
-                <p className="text-sm md:text-xl font-light text-black/60 leading-relaxed max-w-[700px]">
-                  Digital Craftsman / Designer / Engineer based in Jakarta. Focused on building high-end digital experiences.
-                </p>
-              </motion.div>
-            </div>
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, clipPath: "inset(0 100% 0 0)" }}
+            animate={{ opacity: 1, clipPath: "inset(0 0% 0 0)" }}
+            transition={{ duration: 1.5, delay: 3.5, ease: [0.22, 1, 0.36, 1] }}
+            className="flex-shrink-0 w-[30%] min-h-full overflow-hidden"
+          >
+            <img 
+              src="/Hero/5.png"
+              alt="Editorial Feature" 
+              className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+            />
+          </motion.div>
         </div>
 
-        {/* Snap Points - These define the scroll positions but are invisible */}
-        <div className="absolute top-0 h-screen w-full snap-start pointer-events-none" />
-        <div className="absolute top-[100vh] h-screen w-full snap-start pointer-events-none" />
+
       </div>
 
-      {/* SECTION 1.5: EXPERTISE */}
-      <LazySection id="expertise" className="w-full h-screen snap-start bg-white text-black flex flex-col border-b border-black/5">
-        <div className="flex-1 overflow-y-auto no-scrollbar">
-          <div style={{ transform: isMobile ? 'none' : `scale(${scale})` }} className="w-full h-full will-change-transform">
-            <Expertise />
-          </div>
-        </div>
-      </LazySection>
-
       {/* SECTION 2: PROFILE */}
-      <LazySection id="manifesto" className="w-full h-screen snap-start bg-black text-white flex flex-col overflow-hidden">        
-        <div className="flex-1 px-4 md:px-20 lg:px-32 pt-[12vh] md:pt-[20vh] pb-20 md:pb-32">
-          <div style={{ transform: isMobile ? 'none' : `scale(${scale})` }} className="w-full md:max-w-[1600px] mx-auto will-change-transform">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-5xl md:text-[5rem] font-black tracking-tighter leading-none text-white mb-10 md:mb-12"
-          >
-            Profile.
-          </motion.h2>
+      <LazySection id="manifesto" className="w-full min-h-screen bg-white text-black flex flex-col items-center justify-start overflow-hidden snap-start snap-always">        
+        <motion.div 
+          style={{ opacity: profileOpacity }}
+          className="w-full max-w-[1600px] px-6 md:px-20 lg:px-24 pt-32 pb-20"
+        >
+          <div style={{ transform: isMobile ? 'none' : `scale(${scale})`, transformOrigin: 'top center' }} className="w-full md:max-w-[1600px] mx-auto will-change-transform">
+          <div className="overflow-hidden py-2 mb-10 md:mb-12">
+            <motion.h2 
+              initial={{ y: "100%" }}
+              whileInView={{ y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="text-2xl md:text-[2.5vw] lg:text-[3vw] font-normal tracking-tighter leading-[1.1] text-black"
+            >
+              Profile.
+            </motion.h2>
+          </div>
 
           <motion.div 
             initial="hidden"
@@ -221,12 +205,12 @@ export const Home = memo(({ t, setActiveTab }: { t: any; setActiveTab?: (tab: st
               className="flex flex-col space-y-6 md:space-y-8 min-w-full md:min-w-[180px]"
             >
               <div className="space-y-1">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-white/40">Identity</p>
-                <p className="text-sm font-bold text-white leading-snug">Mokahamad Dwihardik<br />Kusuma Putra</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-black">Identity</p>
+                <p className="text-sm font-normal text-black leading-snug">Mokahamad Dwihardik<br />Kusuma Putra/Diko Putra</p>
               </div>
               <div className="space-y-1">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-white/40">Background</p>
-                <p className="text-sm font-medium text-white/90">Informatics Engineering<br />Polinema</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-black">Background</p>
+                <p className="text-sm font-normal text-black">Informatics Engineering<br />Polinema</p>
               </div>
             </motion.div>
 
@@ -238,7 +222,7 @@ export const Home = memo(({ t, setActiveTab }: { t: any; setActiveTab?: (tab: st
               }}
               className="w-full md:flex-1 md:max-w-[320px] space-y-6"
             >
-              <p className="text-base md:text-lg font-light text-white leading-relaxed text-justify">
+              <p className="text-base md:text-lg font-light text-black leading-relaxed text-justify">
                 A multidisciplinary creator dedicated to pushing the boundaries of digital humanity through design and engineering.
               </p>
             </motion.div>
@@ -251,7 +235,7 @@ export const Home = memo(({ t, setActiveTab }: { t: any; setActiveTab?: (tab: st
               }}
               className="w-full md:flex-1 md:max-w-[320px] space-y-6"
             >
-              <p className="text-base md:text-lg font-light text-white leading-relaxed italic text-justify">
+              <p className="text-base md:text-lg font-light text-black leading-relaxed text-justify">
                 Bridging the gap between complex logic and raw human emotion, one pixel at a time.
               </p>
             </motion.div>
@@ -265,12 +249,12 @@ export const Home = memo(({ t, setActiveTab }: { t: any; setActiveTab?: (tab: st
               className="flex flex-col space-y-6 md:space-y-8 min-w-full md:min-w-[150px] text-left md:text-right"
             >
               <div className="space-y-1">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-white/40">Role</p>
-                <p className="text-sm font-bold text-white">Digital Craftsman</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-black">Role</p>
+                <p className="text-sm font-normal text-black">Digital Craftsman</p>
               </div>
               <div className="space-y-1">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-white/40">Location</p>
-                <p className="text-sm font-medium text-white/90">Jakarta, ID</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-black">Location</p>
+                <p className="text-sm font-normal text-black">Jakarta, ID</p>
               </div>
             </motion.div>
           </motion.div>
@@ -290,15 +274,26 @@ export const Home = memo(({ t, setActiveTab }: { t: any; setActiveTab?: (tab: st
             />
           </motion.div>
         </div>
-        </div>
+        </motion.div>
       </LazySection>
 
+
+
+
+
       {/* SECTION 3: WORKS */}
-      <LazySection id="projects" className="w-full h-screen snap-start bg-white flex flex-col">
-        <div className="flex-1 overflow-y-auto no-scrollbar px-4 md:px-20 lg:px-32 py-20 md:py-24">
-          <div className="scale-container w-full flex flex-col justify-center will-change-transform" style={{ transform: isMobile ? 'none' : `scale(${scale})` }}>
-            <div className="w-full pb-8 md:pb-12">
-              <h2 className="text-4xl md:text-[48px] font-black tracking-tighter text-black">Projects.</h2>
+      <LazySection id="projects" className="w-full min-h-screen bg-white flex flex-col items-center justify-start snap-start snap-always">
+        <div className="w-full max-w-[1600px] px-6 md:px-20 lg:px-24 pt-32 pb-20">
+          <div className="scale-container w-full flex flex-col will-change-transform" style={{ transform: isMobile ? 'none' : `scale(${scale})`, transformOrigin: 'top center' }}>
+            <div className="w-full mb-12 overflow-hidden py-2">
+              <motion.h2 
+                initial={{ y: "100%" }}
+                whileInView={{ y: 0 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="text-2xl md:text-[2.5vw] lg:text-[3vw] font-normal tracking-tighter text-black leading-[1.1]"
+              >
+                Projects.
+              </motion.h2>
             </div>
             <div className="w-full">
               <Projects t={t} language="en" isHome={true} />
@@ -308,9 +303,19 @@ export const Home = memo(({ t, setActiveTab }: { t: any; setActiveTab?: (tab: st
       </LazySection>
 
       {/* SECTION 4: GALLERY */}
-      <LazySection id="gallery" className="w-full h-screen snap-start bg-white flex flex-col border-t border-black/5">
-        <div className="flex-1 overflow-y-auto no-scrollbar">
-          <div className="scale-container w-full flex flex-col justify-center will-change-transform" style={{ transform: isMobile ? 'none' : `scale(${scale})` }}>
+      <LazySection id="gallery" className="w-full min-h-screen bg-white flex flex-col items-center justify-start border-t border-black/5 snap-start snap-always">
+        <div className="w-full max-w-[1600px] px-6 md:px-20 lg:px-24 pt-32 pb-20">
+          <div className="scale-container w-full flex flex-col will-change-transform" style={{ transform: isMobile ? 'none' : `scale(${scale})`, transformOrigin: 'top center' }}>
+            <div className="w-full mb-12 overflow-hidden py-2">
+              <motion.h2 
+                initial={{ y: "100%" }}
+                whileInView={{ y: 0 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="text-2xl md:text-[2.5vw] lg:text-[3vw] font-normal tracking-tighter text-black leading-[1.1]"
+              >
+                Visual Archive.
+              </motion.h2>
+            </div>
             <div className="w-full">
               <Gallery t={t} isDarkMode={false} isHome={true} />
             </div>
@@ -319,9 +324,11 @@ export const Home = memo(({ t, setActiveTab }: { t: any; setActiveTab?: (tab: st
       </LazySection>
 
       {/* SECTION 5: CONTACT */}
-      <LazySection id="contact" className="w-full h-screen snap-start bg-black text-white flex items-center justify-center">
-        <div className="scale-container w-full flex items-center justify-center will-change-transform" style={{ transform: isMobile ? 'none' : `scale(${scale})` }}>
-          <Contact t={t} isDarkMode={true} />
+      <LazySection id="contact" className="w-full min-h-screen bg-black text-white flex flex-col items-center justify-start snap-start snap-always">
+        <div className="w-full max-w-[1600px] px-6 md:px-20 lg:px-24 pt-32 pb-20">
+          <div className="scale-container w-full flex items-center justify-center will-change-transform" style={{ transform: isMobile ? 'none' : `scale(${scale})`, transformOrigin: 'top center' }}>
+            <Contact t={t} isDarkMode={true} />
+          </div>
         </div>
       </LazySection>
     </div>
