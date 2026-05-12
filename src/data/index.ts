@@ -11,6 +11,7 @@ export interface Project {
   tags: string[];
   link: string;
   featured: boolean;
+  accent?: string; // New: Accent color for visual differentiation
   type: "project" | "personal";
 }
 
@@ -34,44 +35,42 @@ export const getProjects = (language: Language): Project[] => {
       tags: ["React", "TypeScript", "Vite", "Editorial"],
       link: "https://landing-page-archi-studio.vercel.app/",
       featured: true,
+      accent: "#B49673", // Earthy Sand
       type: "personal",
     },
     {
       title: "Smart Finance Tracker",
-      category: language === "en" ? "Finance Management" : "Manajemen Keuangan",
-      description: language === "en"
-        ? "AI-powered financial management system for tracking transactions and wealth growth."
-        : "Sistem manajemen keuangan berbasis AI untuk melacak transaksi dan pertumbuhan kekayaan.",
+      category: t.smartFinanceCategory,
+      description: t.smartFinanceDesc,
       image: "/Gallery/SmartFinance/1-smartfinance.png",
       images: ["/Gallery/SmartFinance/1-smartfinance.png", "/Gallery/SmartFinance/2-smartfinance.png"],
       tags: ["Next.js", "AI", "Finance", "PostgreSQL"],
       link: "https://smart-finance-tracker-smoky.vercel.app/",
       featured: true,
+      accent: "#3C4C3D", // Forest Green
       type: "personal",
     },
     {
       title: "Oceanus Energy",
-      category: language === "en" ? "Corporate Website" : "Website Perusahaan",
-      description: language === "en"
-        ? "High-impact corporate company profile with a focus on sustainable energy sector services."
-        : "Company profile perusahaan dengan fokus pada layanan sektor energi terbarukan.",
+      category: t.oceanusCategory,
+      description: t.oceanusDesc,
       image: "/Gallery/Oceanus.png",
       tags: ["React", "Corporate", "Company Profile"],
       link: "https://oceanusenergy.vercel.app/",
       featured: true,
+      accent: "#2A4B6B", // Deep Ocean Blue
       type: "personal",
     },
     {
       title: "HRIS Six",
-      category: language === "en" ? "HR Management" : "Manajemen HR",
-      description: language === "en"
-        ? "Compact Human Resource Integration System with streamlined attendance and payroll."
-        : "Sistem Integrasi SDM ringkas dengan absensi dan penggajian yang efisien.",
+      category: t.hrisCategory,
+      description: t.hrisDesc,
       image: "/Gallery/HRIS/1-hris.png",
       images: ["/Gallery/HRIS/1-hris.png", "/Gallery/HRIS/2-hris.png"],
       tags: ["Next.js", "HRIS", "Prisma", "Tailwind"],
       link: "https://hris-six-pi.vercel.app/",
       featured: true,
+      accent: "#6B2A2A", // Crimson Earth
       type: "personal",
     },
     {
@@ -82,6 +81,7 @@ export const getProjects = (language: Language): Project[] => {
       tags: ["React", "Full-Stack"],
       link: "https://pg-engineering.com",
       featured: true,
+      accent: "#111111",
       type: "project",
     },
     {
@@ -98,51 +98,40 @@ export const getProjects = (language: Language): Project[] => {
       tags: ["Laravel 11", "Enterprise"],
       link: "#",
       featured: true,
+      accent: "#333333",
       type: "project",
     },
     {
       title: "ScaleUpGo",
-      category: language === "en" ? "Web Development Agency" : "Jasa Pembuatan Web",
-      description: language === "en"
-        ? "Boutique web development agency landing page showcasing modern tech solutions for businesses."
-        : "Landing page agensi pembuatan website yang menawarkan solusi teknologi modern bagi bisnis.",
+      category: t.scaleupCategory,
+      description: t.scaleupDesc,
       image: "/Gallery/Scaleup.png",
       tags: ["React", "Business", "Web Services"],
       link: "https://scaleupgo.vercel.app/",
       featured: true,
+      accent: "#4A5568",
       type: "personal",
     },
     {
       title: "Brewhouse",
-      category: language === "en" ? "Landing Page" : "Landing Page",
-      description: language === "en"
-        ? "Modern coffee shop landing page with sophisticated design aesthetics and interactive elements."
-        : "Landing page coffee shop modern dengan estetika desain yang canggih dan elemen interaktif.",
+      category: t.brewhouseCategory,
+      description: t.brewhouseDesc,
       image: "/Gallery/brewhouse.png",
       tags: ["React", "Landing Page", "Coffee Shop"],
       link: "https://brewhouse-rho.vercel.app/",
       featured: true,
-      type: "personal",
-    },
-    {
-      title: t.dataAnalystProjectTitle,
-      category: t.project4Category,
-      description: t.project4Desc,
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
-      tags: ["Python", "Data Analysis", "Pandas"],
-      link: "/projects/data-analyst",
-      featured: true,
+      accent: "#744210",
       type: "personal",
     },
     {
       title: "Network Infrastructure",
       category: t.project3Category,
       description: t.project3Desc,
-      image:
-        "https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      image: "https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=1000",
       tags: ["Linux", "Network"],
       link: "#",
       featured: true,
+      accent: "#2D3748",
       type: "project",
     },
   ];
@@ -151,29 +140,7 @@ export const getProjects = (language: Language): Project[] => {
   return result;
 };
 
-export interface SocialLink {
-  name: string;
-  url: string;
-  icon: "github" | "linkedin" | "medium";
-}
-
-export const socialLinks: SocialLink[] = [
-  {
-    name: "GitHub",
-    url: "https://github.com/MDwihardikKPutra",
-    icon: "github",
-  },
-  {
-    name: "LinkedIn",
-    url: "https://www.linkedin.com/in/mokhamad-dwihardik-kusuma-putra-470854190/",
-    icon: "linkedin",
-  },
-  {
-    name: "Medium",
-    url: "https://medium.com/@ddiko105",
-    icon: "medium",
-  },
-];
+export const projects = getProjects('en');
 
 export const contactInfo = {
   email: "ddiko105@gmail.com",
@@ -185,7 +152,6 @@ export const contactInfo = {
   location: "Bandung, West Java",
   zone: "Indonesia / SEA Zone"
 };
-
 
 const skillCache: Record<string, SkillSet[]> = {};
 export const getSkills = (language: Language): SkillSet[] => {
@@ -206,7 +172,7 @@ export const getSkills = (language: Language): SkillSet[] => {
       items: ["MySQL", "PostgreSQL"],
     },
     {
-      category: language === "en" ? "Infrastructure & Operations" : "Infrastruktur & Operasi",
+      category: t.infrastructureCategory,
       items: [
         "Linux Server Administration",
         "MikroTik RouterOS",

@@ -11,7 +11,7 @@ export const useDarkMode = () => {
     }
 
     // Default to dark mode
-    return true;
+    return false;
   };
 
   const [isDarkMode, setIsDarkMode] = useState(getInitialMode);

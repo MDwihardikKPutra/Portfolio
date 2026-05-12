@@ -40,11 +40,7 @@ Duration: Aug 2023 - Feb 2024
 ### 3. System Management
 * Configured and maintained enterprise-scale network infrastructure using MikroTik (RouterOS), focusing on Traffic Shaping, IP Traffic Management, and Hotspot authentication. Managed wireless infrastructure and access points via the UniFi Controller (Ubiquiti) to ensure stable and secure connectivity.
 
-### 4. Data Analyst Project: E-Commerce Market Insights & Payment Risk Analysis 2024-2025
-* Role: System Analyst & Data Engineer
-* Tools: Python (Pandas), Google Colab, Tabulate
-* Objective: Analyze correlation between Payment Methods and Order Cancellation Rates, Identify Provinces with largest payment contribution, Find product categories purchased in Bulk, Evaluate impact of Shipping Costs.
-* Executive Summary: This project analyzes a 20,848-row e-commerce transaction dataset to identify customer shopping behavior and operational risks. The main issues addressed are the high cancellation rates for certain payment methods and market potential mapping.
+
 
 ## Tech Stack & Expertise
 * Backend Development

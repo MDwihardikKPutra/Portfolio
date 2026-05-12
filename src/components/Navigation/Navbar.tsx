@@ -1,104 +1,90 @@
 import { motion } from "framer-motion";
-import type { Translations } from "../../translations";
-import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAppContext } from "../../context/AppContext";
 
-interface NavbarProps {
-  t: Translations;
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-  toggleDarkMode?: () => void;
-  isDarkMode?: boolean;
-}
-
-export const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
-  const [progress, setProgress] = useState(0);
+export const Navbar = ({ activeTab, setActiveTab }: any) => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const navItems = [
     { id: "home", label: "Home" },
-    { id: "manifesto", label: "Profile" },
-    { id: "projects", label: "Projects" },
-    { id: "gallery", label: "Archive" },
-    { id: "contact", label: "Contact" },
-    { id: "experimental", label: "Exp. 01" },
+    { id: "visual-archive", label: "Visual Archive" },
+    { id: "exp", label: "Exp" },
   ];
 
+  // Determine which tab is actually active based on route
+  const currentActiveTab = location.pathname === "/visual-archive" 
+    ? "visual-archive" 
+    : location.pathname === "/exp" 
+      ? "exp" 
+      : activeTab;
+
   const handleNav = (id: string) => {
-    if (id === "experimental") {
-      navigate("/experimental");
+    if (id === "visual-archive") {
+      navigate("/visual-archive");
+      return;
+    }
+
+    if (id === "exp") {
+      navigate("/exp");
       return;
     }
     
-    // If we are not on the home page, go to home first then scroll
     if (location.pathname !== "/home" && location.pathname !== "/") {
       navigate("/home");
       setTimeout(() => {
         const element = document.getElementById(id);
         if (element) element.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+      }, 500);
       return;
     }
 
-    setActiveTab(id); 
+    if (setActiveTab) setActiveTab(id); 
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  const isDarkSection = (activeTab === "contact" || location.pathname.includes("experimental")) && activeTab !== "home";
+  const isExpPage = location.pathname === "/exp";
 
   return (
     <nav className="fixed top-0 left-0 w-full z-[200] pointer-events-none">
-      <div className={`w-full transition-all duration-300 py-4 swiss-px ${
-        isDarkSection ? "bg-black/80 backdrop-blur-md border-b border-white/[0.05]" : "bg-white/80 backdrop-blur-md border-b border-black/[0.03]"
+      <div className={`w-full transition-all duration-500 py-4 ${
+        isExpPage ? "bg-black/40 backdrop-blur-md" : "bg-white/80 backdrop-blur-md"
       }`}>
-        <div className="max-w-[1800px] mx-auto flex items-center justify-between">
+        <div className="w-full px-6 md:px-10 flex items-center justify-between pointer-events-auto">
           
-          <div className="flex items-center gap-4 pointer-events-auto">
-            {/* Spinning Wireframe Cube */}
-            <div className="w-[18px] h-[18px] perspective-[1000px]">
-              <div className="w-full h-full relative preserve-3d animate-cube">
-                {/* Cube Faces (Wireframe) */}
-                {[...Array(6)].map((_, i) => (
-                  <div 
-                    key={i}
-                    className={`absolute inset-0 border transition-colors duration-500 ${isDarkSection ? "border-white/40" : "border-black/40"}`}
-                    style={{
-                      transform: i === 0 ? "translateZ(9px)" :
-                                 i === 1 ? "translateZ(-9px)" :
-                                 i === 2 ? "rotateY(90deg) translateZ(9px)" :
-                                 i === 3 ? "rotateY(-90deg) translateZ(9px)" :
-                                 i === 4 ? "rotateX(90deg) translateZ(9px)" :
-                                           "rotateX(-90deg) translateZ(9px)"
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
+          <div className="flex items-center">
+            <span className={`text-[12px] md:text-[14px] font-normal tracking-tight transition-colors duration-500 ${
+              isExpPage ? "text-white" : "text-text-primary"
+            }`}>
+              M. Dwihardik
+            </span>
           </div>
           
-          <div className="flex items-center gap-8 md:gap-12 pointer-events-auto">
+          <div className="flex items-center gap-4 md:gap-10">
              {navItems.map((item) => (
-               <button
-                 key={item.id}
-                 onClick={() => handleNav(item.id)}
-                 className={`transition-all text-[10px] font-bold tracking-tight relative whitespace-nowrap duration-500 ${
-                   isDarkSection 
-                    ? (activeTab === item.id ? "text-white" : "text-white/30 hover:text-white/60")
-                    : (activeTab === item.id ? "text-black" : "text-black/30 hover:text-black/60")
-                 }`}
-               >
-                 {item.label}
-                 {activeTab === item.id && (
-                   <motion.div 
-                     layoutId="activeTab"
-                     className={`absolute -bottom-1 left-0 right-0 h-[1.5px] transition-colors duration-500 ${isDarkSection ? "bg-white" : "bg-black"}`}
-                   />
-                 )}
-               </button>
+                <button
+                  key={item.id}
+                  onClick={() => handleNav(item.id)}
+                  className={`transition-all text-[11px] font-normal tracking-tight relative pb-1 duration-500 ${
+                    isExpPage 
+                      ? (currentActiveTab === item.id ? "text-white" : "text-white/40 hover:text-white")
+                      : (currentActiveTab === item.id ? "text-text-primary" : "text-text-primary/40 hover:text-text-primary")
+                  }`}
+                >
+                  {item.label}
+                  {currentActiveTab === item.id && (
+                    <motion.div 
+                      layoutId="activeTabIndicator"
+                      className={`absolute bottom-0 left-0 right-0 h-[1.5px] transition-colors duration-500 ${
+                        isExpPage ? "bg-white" : "bg-text-primary"
+                      }`}
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </button>
              ))}
           </div>
         </div>

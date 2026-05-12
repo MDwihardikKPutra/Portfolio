@@ -13,64 +13,44 @@ export const galleryPhotos = [
 
 // Home page images
 export const homeImages = [
-  "/profile.jpg",
+  "/Hero/5.png",
   "/wasnevermeant.png",
 ];
 
-// Project thumbnail images for instant grid rendering
+// Project thumbnail images
 export const projectImages = [
   "/Gallery/Archi-Studio/preview-1.png",
-  "/Gallery/Archi-Studio/preview-2.png",
   "/Gallery/SmartFinance/1-smartfinance.png",
-  "/Gallery/SmartFinance/2-smartfinance.png",
   "/Gallery/Oceanus.png",
-  "/Gallery/HRIS/1-hris.png",
-  "/Gallery/HRIS/2-hris.png",
   "/pge-hero.png",
-  "/pge-project.png",
-  "/pge-aboutus.png",
-  "/Web-PGE-System.png",
-  "/Gallery/Scaleup.png",
-  "/Gallery/brewhouse.png",
 ];
 
-// Internal optimization: Single-pass execution for all preloading types
-const executePreload = (srcArray: string[]): Promise<void[]> => {
-  const promises = srcArray.map((src) => {
-    return new Promise<void>((resolve) => {
-      const img = new Image();
-      img.onload = () => resolve();
-      img.onerror = () => resolve(); // Resolve anyway on error to not block
-      img.src = src;
-
-      // Link-level hint (Low priority)
-      const link = document.createElement("link");
-      link.rel = "preload";
-      link.as = "image";
-      link.href = src;
-      document.head.appendChild(link);
-    });
-  });
-
-  return Promise.all(promises);
-};
-
-export const preloadGalleryImages = () => {
-  return executePreload(galleryPhotos);
-};
-
-export const preloadHomeImages = () => {
-  return executePreload(homeImages);
+const chunkedPreload = async (srcArray: string[], chunkSize: number = 2) => {
+  for (let i = 0; i < srcArray.length; i += chunkSize) {
+    const chunk = srcArray.slice(i, i + chunkSize);
+    await Promise.all(
+      chunk.map((src) => {
+        return new Promise<void>((resolve) => {
+          const img = new Image();
+          img.src = src;
+          if ('decode' in img) {
+            img.decode().then(() => resolve()).catch(() => resolve());
+          } else {
+            img.onload = () => resolve();
+            img.onerror = () => resolve();
+          }
+        });
+      })
+    );
+  }
 };
 
 /**
- * Preloads all critical assets and returns a promise that resolves when complete.
+ * Preloads all assets across all pages. 
+ * Chunked processing ensures main thread stability.
  */
 export const preloadAll = async () => {
-  await Promise.all([
-    preloadGalleryImages(),
-    preloadHomeImages(),
-    executePreload(projectImages),
-  ]);
+  await chunkedPreload(homeImages, 2);
+  await chunkedPreload(projectImages, 2);
+  await chunkedPreload(galleryPhotos, 2);
 };
-

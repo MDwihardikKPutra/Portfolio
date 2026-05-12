@@ -55,44 +55,10 @@ export interface Translations {
   project2Desc: string;
   project3Category: string;
   project3Desc: string;
-  project4Category: string;
-  project4Desc: string;
-  dataAnalystProjectTitle: string;
-  dataAnalystProjectRole: string;
+
   archiStudioCategory: string;
   archiStudioDesc: string;
-  dataAnalystProjectTools: string;
-  dataSource: string;
-  executiveSummary: string;
-  projectObjective: string;
-  dataAnalystExecutiveSummary: string;
-  dataAnalystObjective1: string;
-  dataAnalystObjective2: string;
-  dataAnalystObjective3: string;
-  dataAnalystObjective4: string;
-  dataAnalystDataEngineeringProcessTitle: string;
-  dataAnalystDataEngineeringProcess1: string;
-  dataAnalystDataEngineeringProcess2: string;
-  dataAnalystDataEngineeringProcess3: string;
-  dataAnalystKeyInsightsResultsTitle: string;
-  dataAnalystInsightARiskTitle: string;
-  dataAnalystInsightARiskFindings: string;
-  dataAnalystInsightARiskAnalysis: string;
-  dataAnalystInsightBMarketTitle: string;
-  dataAnalystInsightBMarketFindings: string;
-  dataAnalystInsightBMarketAnalysis: string;
-  dataAnalystInsightCWholesaleTitle: string;
-  dataAnalystInsightCWholesaleFindings: string;
-  dataAnalystInsightCWholesaleAnalysis: string;
-  dataAnalystInsightDFinancialTitle: string;
-  dataAnalystInsightDFinancialFindings: string;
-  dataAnalystInsightDFinancialAnalysis: string;
-  dataAnalystBusinessRecommendationsTitle: string;
-  dataAnalystRecommendationsIntro: string;
-  dataAnalystRecommendation1: string;
-  dataAnalystRecommendation2: string;
-  dataAnalystRecommendation3: string;
-  dataAnalystRecommendation4: string;
+
   backendDev: string;
   frontendDev: string;
   databaseMgmt: string;
@@ -108,50 +74,31 @@ export interface Translations {
   solutions: string;
   finalOutput: string;
   developmentProcess: string;
-  // Data Analyst Project Specific
-  province: string;
-  performanceOverview: string;
-  riskProfile: string;
-  paymentMethodMix: string;
-  orders: string;
-  revenue: string;
-  aov: string;
-  cancelRate: string;
-  digital: string;
-  cod: string;
-  otc: string;
-  bank: string;
-  slideTable: string;
-  productCategory: string;
-  avgQty: string;
-  performanceMetric: string;
-  nonDiscountBaseline: string;
-  withDiscountPromo: string;
-  correlationImpact: string;
-  basketSize: string;
-  shippingCostPercent: string;
-  shippingFeePaid: string;
-  sampleSize: string;
-  highGrowthPotential: string;
-  lift: string;
-  moreEfficient: string;
-  volumeDrivenIncrease: string;
-  regionalAnalysisTitle: string;
-  regionalAnalysisSubtitle: string;
-  recommendation: string;
-  totalOrder: string;
-  success: string;
-  cancelled: string;
-  revenueLoss: string;
-  realizedRevenue: string;
-  grossValue: string;
-  paymentMethod: string;
-  cancellationRateByMethod: string;
-  bayarDiTempat: string;
-  shopeePayBalance: string;
-  share: string;
-  units: string;
-  others: string;
+  pgeDevelopmentProcess: string;
+  pgeDevelopmentProcess2: string;
+  pgeDevelopmentProcess3: string;
+  pgeTechStackTitle: string;
+  pgeTechStack: {
+    backend: string;
+    frontend: string;
+    packages: string;
+  };
+  pgeBackground: string;
+  pgeProblems: string;
+  pgeSolutions: string;
+  pgeOutput: string;
+
+  smartFinanceCategory: string;
+  smartFinanceDesc: string;
+  oceanusCategory: string;
+  oceanusDesc: string;
+  hrisCategory: string;
+  hrisDesc: string;
+  scaleupCategory: string;
+  scaleupDesc: string;
+  brewhouseCategory: string;
+  brewhouseDesc: string;
+  infrastructureCategory: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -218,60 +165,10 @@ export const translations: Record<Language, Translations> = {
     project3Category: "System Management",
     project3Desc:
       "Configured and maintained enterprise-scale network infrastructure using MikroTik (RouterOS), focusing on Traffic Shaping, IP Traffic Management, and Hotspot authentication. Managed wireless infrastructure and access points via the UniFi Controller (Ubiquiti) to ensure stable and secure connectivity. Executed advanced network designs including VLAN segmentation and internal routing protocols.",
-    project4Category: "Data Analysis & Strategy",
-    project4Desc: "E-Commerce Market Insights & Payment Risk Analysis 2024-2025",
+
     archiStudioCategory: "Architectural Studio",
     archiStudioDesc: "High-end architectural landing page with Japanese minimalist aesthetics and editorial layouts.",
-    dataAnalystProjectTitle: "E-Commerce Market Insights & Payment Risk Analysis 2024-2025",
-    dataAnalystProjectRole: "Role: System Analyst & Data Engineer",
-    dataAnalystProjectTools: "Tools: Python (Pandas), Google Colab, Tabulate",
-    dataSource: "Data Source",
-    executiveSummary: "Executive Summary",
-    projectObjective: "Project Objective",
-    dataAnalystExecutiveSummary:
-      "This project analyzes a 20,848-row e-commerce transaction dataset to identify customer shopping behavior and operational risks. The main issues addressed are the high cancellation rates for certain payment methods and market potential mapping based on geographical regions to improve marketing and logistics strategy efficiency.",
-    dataAnalystObjective1:
-      "Analyze the correlation between Payment Methods and Order Cancellation Rates.",
-    dataAnalystObjective2:
-      "Identify Provinces with the largest payment contribution for market mapping.",
-    dataAnalystObjective3:
-      "Find product categories most frequently purchased in Bulk (High Quantity).",
-    dataAnalystObjective4:
-      "Evaluate the impact of Shipping Costs on total buyer expenditure.",
-    dataAnalystDataEngineeringProcessTitle: "Data Engineering Process (Technical Steps)",
-    dataAnalystDataEngineeringProcess1:
-      "Before analysis, raw data was cleaned through several technical stages:",
-    dataAnalystDataEngineeringProcess2:
-      "Data Splitting: Breaking down the product_categories column containing multi-categories into single rows so that each category is accurately counted (Explode logic).",
-    dataAnalystDataEngineeringProcess3:
-      "Data Standardization: Standardizing the writing of province names and product categories. Feature Engineering: Creating new columns Cancellation Rate (%) and grouping order statuses into 'Completed' vs 'Cancelled'.",
-    dataAnalystKeyInsightsResultsTitle: "Key Insights & Results",
-    dataAnalystInsightARiskTitle: "Payment Risk Analysis",
-    dataAnalystInsightARiskFindings:
-      "Answering the correlation analysis: There is a strong relationship between payment method and cancellation rate. Cash/OTC methods (Indomaret/Alfamart) show the highest risk with ~48% cancellation, whereas digital payments (ShopeePay) are much safer with only 18% cancellation.",
-    dataAnalystInsightARiskAnalysis:
-      "Why is this happening? Over-the-counter (OTC) payments create a gap between ordering and paying. Customers order now, but pay later at the store. This makes it easy for them to cancel without penalty. Digital payments require immediate payment, so customers are more committed. For the business, this is a serious issue because nearly 50% of OTC orders never become real sales, making inventory planning difficult. Recommendation: offer small incentives (discounts, cashback) to encourage customers to use digital payments instead.",
-    dataAnalystInsightBMarketTitle: "Regional Market Dominance",
-    dataAnalystInsightBMarketFindings:
-      "Regarding market mapping: West Java is identified as the province with the largest payment contribution (Rp 277M, 26% share), followed by Banten and Jakarta. This confirms that the majority of revenue and market power is concentrated in the western Java region.",
-    dataAnalystInsightBMarketAnalysis:
-      "This concentration is actually both good and bad. Good: we can optimize logistics by placing warehouses in West Java and Banten to serve most customers quickly and cheaply. Bad: we're too dependent on one region. The 'Others' category (44.2%) shows there's demand across many provinces, but it's scattered. Strategy: focus warehouse optimization in Java for quick wins, then gradually expand to other high-potential regions like Sumatra and Sulawesi to diversify revenue sources.",
-    dataAnalystInsightCWholesaleTitle: "Favorite Wholesale Products",
-    dataAnalystInsightCWholesaleFindings:
-      "For high-quantity wholesale purchases: 'Home & Kitchen' is the #1 category (avg 53 units/transaction), specifically items like Piggy Banks and Trays. 'Tableware' is #2 (45 units). These categories are the primary drivers of bulk volume.",
-    dataAnalystInsightCWholesaleAnalysis:
-      "These products are popular with resellers because they're cheap, everyone needs them, and they sell quickly. The high quantities (53 units) confirm these buyers are mostly resellers, not regular consumers. Business opportunity: create 'Buy More, Save More' promotions to encourage even larger orders. Also consider bundling related items together (e.g., trays + utensils set) to increase order value and make shopping easier for resellers.",
-    dataAnalystInsightDFinancialTitle: "Financial Impact (Shipping & Discounts)",
-    dataAnalystInsightDFinancialFindings:
-      "Analysis of shipping cost impact reveals that logistics fees (avg Rp 4,190) contribute 8.27% to the total transaction value. This significant ratio suggests that shipping costs are a major psychological barrier for customers, directly influencing purchasing decisions and cart abandonment rates.",
-    dataAnalystInsightDFinancialAnalysis:
-      "In e-commerce, shipping cost can make or break a sale. For budget-conscious buyers (especially resellers buying in bulk), an extra 8% can push them to competitors offering free shipping. This is especially critical since we know OTC payment users (who cancel more often) are already price-sensitive. Solutions: 1) Place warehouses in West Java to reduce shipping distance and cost, 2) Offer 'Free shipping above Rp 50,000' to encourage larger orders, 3) Negotiate better rates with shipping partners for bulk shipments.",
-    dataAnalystBusinessRecommendationsTitle: "Business Recommendations",
-    dataAnalystRecommendationsIntro: "Based on the transaction data processing results, here are several strategic recommendations that can be applied:",
-    dataAnalystRecommendation1: "Based on the analyzed data showing a very high cancellation rate for cash/OTC payment methods like Indomaret and Alfamart (reaching ~48%), the recommendation is to provide special incentives for digital payments (such as coin cashback or direct discounts) to encourage instant payment commitment and minimize the risk of uncompleted orders.",
-    dataAnalystRecommendation2: "Based on the analyzed data showing revenue concentration reaching 55% in West Java, Banten, and Jakarta, the recommendation is to strengthen logistics infrastructure by building a Regional Fulfillment Center in the West Java area to shorten delivery distances, suppress operational costs, and accelerate delivery time to customers.",
-    dataAnalystRecommendation3: "Based on the analyzed data showing strong wholesale purchasing characteristics in the Home Supplies category (with an average above 50 units per transaction), the recommendation is to launch a Tiered Pricing feature specifically for bulk purchases to maintain the loyalty of reseller buyer groups and increase sales volume per transaction.",
-    dataAnalystRecommendation4: "Based on the analyzed data showing shipping costs contributing ~8% to total buyer expenditure, the recommendation is to implement a shipping subsidy strategy with a certain minimum spending threshold (Threshold Free Shipping) to eliminate shipping cost barriers while motivating customers to increase their shopping quantity.",
+
     backendDev: "Backend Development",
     frontendDev: "Frontend Development",
     databaseMgmt: "Database Management",
@@ -310,50 +207,19 @@ export const translations: Record<Language, Translations> = {
     pgeOutput:
       "PGE System unified all operations in one platform, eliminating data silos. Approval cycles accelerated with automatic data persistence and structured workflows. Management gained real-time visibility into employee activities, leave balances, project progress, and payments through intuitive dashboards. Reporting automated—EAR reports, trip documents, purchase orders, and payment records generate automatically. Complete audit trails ensure transparency and accountability. Enhanced visibility enables comprehensive monitoring of activities, projects, and approvals, improving decision-making and organizational efficiency.",
 
-    // Data Analyst Project Specific
-    province: "Province",
-    performanceOverview: "Performance Overview",
-    riskProfile: "Risk Profile",
-    paymentMethodMix: "Payment Method Mix (%)",
-    orders: "Orders",
-    revenue: "Revenue",
-    aov: "AOV",
-    cancelRate: "Cancel Rate",
-    digital: "Digital",
-    cod: "COD",
-    otc: "OTC",
-    bank: "Bank",
-    slideTable: "Slide Table",
-    productCategory: "Product Category",
-    avgQty: "Avg Qty",
-    performanceMetric: "Performance Metric",
-    nonDiscountBaseline: "Non-Discount (Baseline)",
-    withDiscountPromo: "With Discount (Promo)",
-    correlationImpact: "Correlation / Impact",
-    basketSize: "Avg. Order Value (Basket Size)",
-    shippingCostPercent: "Shipping Cost (%)",
-    shippingFeePaid: "Avg. Shipping Fee Paid",
-    sampleSize: "Sample Segment Size",
-    highGrowthPotential: "High growth potential",
-    lift: "Lift",
-    moreEfficient: "More efficient",
-    volumeDrivenIncrease: "Volume driven increase",
-    regionalAnalysisTitle: "Regional Analysis & Operational Risk Summary",
-    regionalAnalysisSubtitle: "Combination of performance metrics, operational risk, and payment method composition per province.",
-    recommendation: "Recommendation",
-    totalOrder: "Total Order",
-    success: "Success",
-    cancelled: "Cancelled",
-    revenueLoss: "Rev. Loss",
-    realizedRevenue: "Realized Rev.",
-    grossValue: "Gross Value",
-    paymentMethod: "Payment Method",
-    cancellationRateByMethod: "Cancellation Rate by Method (%)",
-    bayarDiTempat: "COD (Cash on Delivery)",
-    shopeePayBalance: "ShopeePay Balance",
-    share: "Share",
-    units: "units",
-    others: "Others",
+    smartFinanceCategory: "Finance Management",
+    smartFinanceDesc: "AI-powered financial management system for tracking transactions and wealth growth.",
+    oceanusCategory: "Corporate Website",
+    oceanusDesc: "High-impact corporate company profile with a focus on sustainable energy sector services.",
+    hrisCategory: "HR Management",
+    hrisDesc: "Compact Human Resource Integration System with streamlined attendance and payroll.",
+    scaleupCategory: "Web Development Agency",
+    scaleupDesc: "Boutique web development agency landing page showcasing modern tech solutions for businesses.",
+    brewhouseCategory: "Landing Page",
+    brewhouseDesc: "Modern coffee shop landing page with sophisticated design aesthetics and interactive elements.",
+    infrastructureCategory: "Infrastructure & Operations",
+
+
   },
   id: {
     about: "Tentang",
@@ -418,60 +284,10 @@ export const translations: Record<Language, Translations> = {
     project3Category: "Manajemen Sistem",
     project3Desc:
       "Mengkonfigurasi dan memelihara infrastruktur jaringan skala enterprise menggunakan MikroTik (RouterOS), dengan fokus pada Traffic Shaping, Manajemen Lalu Lintas IP, dan autentikasi Hotspot. Mengelola infrastruktur nirkabel dan access point melalui UniFi Controller (Ubiquiti) untuk memastikan konektivitas yang stabil dan aman. Mengeksekusi desain jaringan canggih termasuk segmentasi VLAN dan protokol routing internal.",
-    project4Category: "Analisis & Strategi Data",
-    project4Desc: "Strategi Data E-Commerce: Analisis Risiko Pembayaran & Wawasan Pasar 2024-2025",
+
     archiStudioCategory: "Studio Arsitektur",
     archiStudioDesc: "Landing page arsitektur kelas atas dengan estetika minimalis Jepang dan tata letak editorial.",
-    dataAnalystProjectTitle: "E-Commerce Market Insights & Payment Risk Analysis 2024-2025",
-    dataAnalystProjectRole: "Peran: Analis Sistem & Insinyur Data",
-    dataAnalystProjectTools: "Alat: Python (Pandas), Google Colab, Tabulate",
-    dataSource: "Sumber Data",
-    executiveSummary: "1. Ringkasan Eksekutif",
-    projectObjective: "2. Tujuan Proyek",
-    dataAnalystExecutiveSummary:
-      "Proyek ini menganalisis dataset transaksi e-commerce sebesar 20.848 baris untuk mengidentifikasi perilaku belanja pelanggan dan risiko operasional. Masalah utama yang dibedah adalah tingginya angka pembatalan pada metode pembayaran tertentu dan pemetaan potensi pasar berdasarkan wilayah geografis guna meningkatkan efisiensi strategi marketing dan logistik.",
-    dataAnalystObjective1:
-      "Menganalisis korelasi antara Metode Pembayaran dengan Tingkat Pembatalan Pesanan.",
-    dataAnalystObjective2:
-      "Mengidentifikasi Provinsi dengan kontribusi pembayaran terbesar untuk pemetaan pasar.",
-    dataAnalystObjective3:
-      "Menemukan kategori produk yang paling sering dibeli secara Grosir (Jumlah Tinggi).",
-    dataAnalystObjective4:
-      "Mengevaluasi dampak Biaya Ongkos Kirim terhadap total pengeluaran pembeli.",
-    dataAnalystDataEngineeringProcessTitle: "Proses Rekayasa Data (Langkah-langkah)",
-    dataAnalystDataEngineeringProcess1:
-      "Sebelum analisis dilakukan, data mentah dibersihkan melalui beberapa tahap teknis:",
-    dataAnalystDataEngineeringProcess2:
-      "Pemisahan Data: Memecah kolom product_categories yang berisi multi-kategori menjadi baris tunggal agar setiap kategori terhitung secara akurat (Logika pecah baris).",
-    dataAnalystDataEngineeringProcess3:
-      "Data Standardization: Menyeragamkan penulisan nama provinsi dan kategori produk. Feature Engineering: Membuat kolom baru Tingkat Pembatalan (%) dan mengelompokkan status pesanan menjadi 'Selesai' vs 'Batal'.",
-    dataAnalystKeyInsightsResultsTitle: "Wawasan Utama & Hasil",
-    dataAnalystInsightARiskTitle: "Analisis Risiko Pembayaran",
-    dataAnalystInsightARiskFindings:
-      "Menjawab analisis korelasi: Terdapat hubungan kuat antara metode pembayaran dengan tingkat pembatalan. Metode tunai/OTC (Indomaret/Alfamart) memiliki risiko tertinggi (~48% batal), sedangkan pembayaran digital jauh lebih aman (hanya 18% batal).",
-    dataAnalystInsightARiskAnalysis:
-      "Data menunjukkan adanya korelasi kuat antara metode pembayaran dan tingkat pembatalan, baik secara persentase maupun dampak finansial. Metode tunai seperti Indomaret i.Saku dan Alfamart Dan+Dan berada pada kategori risiko tinggi dengan tingkat pembatalan mendekati 50 persen, yang menandakan rendahnya komitmen pelanggan akibat adanya jeda antara pemesanan dan pembayaran. Walaupun kontribusi volumenya kecil, hampir setengah dari Nilai Kotor (Gross Value) pada metode ini tidak pernah terealisasi menjadi pendapatan, sehingga secara operasional tidak efisien dan berisiko untuk dipertahankan dalam skala besar.\n\nCOD mencatat tingkat pembatalan sebesar 13,4 persen dengan kerugian pendapatan terbesar secara nominal yaitu Rp 63,1 miliar. Tingginya pembatalan pada COD terutama disebabkan oleh hambatan di tahap pengiriman terakhir, seperti pelanggan tidak berada di lokasi saat kurir datang, perubahan keputusan karena harus membayar saat barang tiba, atau penolakan paket akibat ekspektasi harga dan produk yang belum sepenuhnya matang saat konfirmasi pesanan (checkout). Berbeda dengan pembayaran digital instan, COD tidak menciptakan komitmen finansial di awal, sehingga keputusan pembelian masih bersifat sementara hingga barang diterima.\n\nSebaliknya, metode pembayaran digital instan seperti Saldo ShopeePay menunjukkan kualitas pendapatan paling sehat dengan tingkat pembatalan terendah sebesar 8,7 persen dan rasio realisasi pendapatan yang paling optimal terhadap Nilai Kotor. Pola ini menegaskan bahwa semakin tinggi komitmen pelanggan di awal transaksi, semakin rendah risiko pembatalan dan semakin baik kualitas pendapatan, sehingga strategi bisnis sebaiknya difokuskan pada penguatan pembayaran digital dan pengendalian risiko pada metode COD.",
-    dataAnalystInsightBMarketTitle: "Dominasi Pasar Regional",
-    dataAnalystInsightBMarketFindings:
-      "Terkait pemetaan pasar: Jawa Barat teridentifikasi sebagai provinsi dengan kontribusi pembayaran terbesar (Rp 277 Juta, 26% pangsa pasar), diikuti Banten dan Jakarta. Ini mengonfirmasi bahwa mayoritas pendapatan terpusat di wilayah Jawa bagian barat.",
-    dataAnalystInsightBMarketAnalysis:
-      "Berdasarkan analisis Volume Pesanan, Rerata Nilai Pesanan (AOV), Tingkat Pembatalan, dan Komposisi Metode Pembayaran per provinsi, dapat disimpulkan bahwa kekuatan pasar utama berada pada klaster Pulau Jawa, khususnya Jawa Barat, Banten, dan DKI Jakarta. Ketiga wilayah ini bukan unggul karena nilai transaksi yang lebih tinggi, melainkan karena volume pesanan yang besar dengan karakter transaksi yang relatif serupa. AOV yang konsisten di seluruh provinsi inti menunjukkan bahwa perilaku belanja pelanggan setara, sehingga pertumbuhan pendapatan di Jawa lebih ditentukan oleh kapasitas pemrosesan pesanan dan kecepatan pemenuhan pesanan (fulfillment) dibandingkan diferensiasi produk atau harga berbasis wilayah.\n\nDari sisi risiko operasional, tingkat pembatalan yang relatif serupa di seluruh provinsi menegaskan bahwa faktor geografis bukan penyebab utama pembatalan pesanan. Risiko pembatalan lebih bersifat sistemik dan berkaitan erat dengan struktur pembayaran, khususnya dominasi metode COD yang mencapai lebih dari separuh transaksi di hampir semua wilayah. Hal ini mengindikasikan bahwa upaya penurunan tingkat pembatalan akan lebih efektif jika difokuskan pada kebijakan dan insentif metode pembayaran secara nasional, bukan dengan pendekatan regional atau pembatasan wilayah tertentu.\n\nSecara strategis, konsentrasi pasar di Jawa memberikan keunggulan operasional jangka pendek karena memungkinkan optimalisasi logistik, penempatan gudang, dan pengelolaan stok yang lebih efisien dengan dampak cepat terhadap biaya dan tingkat layanan (service level). Namun, konsentrasi ini juga menciptakan risiko ketergantungan pada satu wilayah volume, bukan karena perbedaan karakter pasar, melainkan karena akumulasi permintaan di satu wilayah geografis. Oleh karena itu, Jawa perlu diposisikan sebagai tulang punggung (backbone) operasional utama, sementara wilayah di luar Jawa diperlakukan sebagai opsi pertumbuhan jangka menengah hingga panjang.\n\nKategori Lainnya yang menyumbang porsi pendapatan signifikan menunjukkan bahwa permintaan nasional sudah terbentuk, namun masih terfragmentasi. Dengan karakter AOV, tingkat pembatalan, dan komposisi pembayaran yang relatif serupa, ekspansi ke luar Jawa sebaiknya dilakukan secara bertahap dengan pendekatan berbasis volume, dimulai dari provinsi yang mulai menunjukkan konsistensi permintaan. Pendekatan ini memungkinkan diversifikasi pendapatan tanpa mengorbankan efisiensi operasional yang telah dicapai di Jawa.\n\nSecara keseluruhan, data mendukung kesimpulan bahwa prioritas strategis perusahaan saat ini adalah memperkuat efisiensi dan kualitas pendapatan di klaster Jawa melalui optimasi logistik dan pergeseran metode pembayaran ke kanal digital, sambil menyiapkan fondasi ekspansi nasional yang terukur dan berisiko rendah.",
-    dataAnalystInsightCWholesaleTitle: "Produk Favorit Grosir",
-    dataAnalystInsightCWholesaleFindings:
-      "Mengenai kategori Grosir (Jumlah Tinggi): 'Perlengkapan Rumah' adalah kategori #1 yang paling sering dibeli massal (rata-rata 53 unit/transaksi), khususnya Celengan dan Nampan. 'Peralatan Makan' ada di posisi #2 (45 unit). Kategori ini adalah penggerak utama volume grosir.",
-    dataAnalystInsightCWholesaleAnalysis:
-      "Produk-produk ini populer di kalangan reseller karena murah, semua orang butuh, dan cepat laku. Jumlah tinggi (53 unit) mengkonfirmasi pembeli ini kebanyakan reseller, bukan konsumen biasa. Peluang bisnis: buat promo 'Beli Banyak Lebih Hemat' untuk mendorong pesanan lebih besar. Pertimbangkan juga bundling produk terkait (misal: nampan + set alat makan) untuk tingkatkan nilai pesanan dan permudah belanja reseller.",
-    dataAnalystInsightDFinancialTitle: "Dampak Finansial (Ongkir & Diskon)",
-    dataAnalystInsightDFinancialFindings:
-      "Analisis dampak ongkos kirim menunjukkan bahwa biaya logistik (rata-rata Rp 4.190) berkontribusi sebesar 8,27% terhadap total nilai transaksi. Rasio yang signifikan ini mengindikasikan bahwa ongkir menjadi hambatan psikologis utama bagi pelanggan, yang berpengaruh langsung terhadap keputusan pembelian dan potensi pembatalan pesanan.",
-    dataAnalystInsightDFinancialAnalysis:
-      "Berdasarkan tabel performa, penerapan diskon menunjukkan dampak yang signifikan terhadap nilai transaksi. Rerata Nilai Pesanan (AOV) meningkat drastis dari Rp 49.212 pada kondisi tanpa diskon menjadi Rp 276.528 saat promo, atau naik sebesar +461%. Kenaikan ini mengindikasikan bahwa program diskon efektif mendorong pembelian dengan volume lebih besar, meskipun kontribusinya masih berasal dari segmen kecil (0,6% dari total transaksi). Hal ini menunjukkan adanya potensi pertumbuhan dari segmen pembeli bernilai tinggi, seperti reseller atau pembeli borongan, yang lebih responsif terhadap insentif harga. \n\nDari sisi ongkos kirim, meskipun rata-rata biaya pengiriman yang dibayarkan meningkat secara nominal (Rp 4.084 menjadi Rp 20.452), proporsinya terhadap total belanja justru menurun dari 8,3% menjadi 7,4%. Ini menandakan efisiensi biaya logistik yang lebih baik seiring dengan meningkatnya ukuran keranjang belanja. Dengan kata lain, ongkir menjadi relatif lebih ringan bagi konsumen ketika nilai pesanan lebih besar, sehingga promo tidak hanya meningkatkan pendapatan per transaksi tetapi juga memperbaiki struktur biaya secara keseluruhan.",
-    dataAnalystBusinessRecommendationsTitle: "Rekomendasi Bisnis",
-    dataAnalystRecommendationsIntro: "Berdasarkan hasil pengolahan data transaksi yang telah dilakukan, berikut adalah beberapa rekomendasi strategis yang dapat diterapkan:",
-    dataAnalystRecommendation1: "Berdasarkan data yang telah dianalisis yaitu adanya tingkat pembatalan yang sangat tinggi pada metode pembayaran tunai/OTC seperti Indomaret dan Alfamart (mencapai ~48%), rekomendasi yang bisa dilakukan adalah memberikan insentif khusus untuk pembayaran digital (seperti cashback koin atau diskon langsung) guna mendorong komitmen pembayaran instan dan meminimalisir risiko pesanan yang tidak terselesaikan.",
-    dataAnalystRecommendation2: "Berdasarkan data yang telah dianalisis yaitu pemusatan pendapatan yang mencapai 55% di wilayah Jawa Barat, Banten, dan Jakarta, rekomendasi yang bisa dilakukan adalah memperkuat infrastruktur logistik dengan membangun Regional Fulfillment Center di area Jawa Barat untuk memperpendek jarak pengiriman, menekan biaya operasional, dan mempercepat waktu sampai ke tangan pelanggan.",
-    dataAnalystRecommendation3: "Berdasarkan data yang telah dianalisis yaitu kuatnya karakteristik pembelian grosir pada kategori Perlengkapan Rumah (dengan rerata di atas 50 unit per transaksi), rekomendasi yang bisa dilakukan adalah meluncurkan fitur Tiered Pricing atau harga bertingkat khusus untuk pembelian dalam jumlah besar guna menjaga loyalitas kelompok pembeli reseller dan meningkatkan volume penjualan per transaksi.",
-    dataAnalystRecommendation4: "Berdasarkan data yang telah dianalisis yaitu beban biaya pengiriman yang berkontribusi sebesar ~8% terhadap total pengeluaran pembeli, rekomendasi yang bisa dilakukan adalah menerapkan strategi subsidi ongkir dengan ambang batas minimum belanja tertentu (Threshold Free Shipping) untuk menghilangkan hambatan biaya kirim sekaligus memotivasi pelanggan agar menambah jumlah belanjaan mereka.",
+
     backendDev: "Pengembangan Backend",
     frontendDev: "Pengembangan Frontend",
     databaseMgmt: "Manajemen Database",
@@ -511,49 +327,18 @@ export const translations: Record<Language, Translations> = {
     pgeOutput:
       "PGE System menyatukan seluruh operasi dalam satu platform, menghilangkan data silo. Siklus approval dipercepat dengan persistensi data otomatis dan workflow terstruktur. Manajemen memperoleh visibilitas real-time terhadap aktivitas karyawan, sisa cuti, progress project, dan pembayaran melalui dashboard intuitif. Pelaporan terotomatisasi—laporan EAR, dokumen perjalanan dinas, purchase order, dan catatan pembayaran ter-generate otomatis. Audit trail lengkap memastikan transparansi dan akuntabilitas. Visibilitas yang ditingkatkan memungkinkan monitoring menyeluruh aktivitas, project, dan approval, meningkatkan pengambilan keputusan dan efisiensi organisasi.",
 
-    // Data Analyst Project Specific
-    province: "Provinsi",
-    performanceOverview: "Ringkasan Performa",
-    riskProfile: "Profil Risiko",
-    paymentMethodMix: "Komposisi Metode Pembayaran (%)",
-    orders: "Pesanan",
-    revenue: "Pendapatan",
-    aov: "AOV",
-    cancelRate: "Tingkat Pembatalan",
-    digital: "Digital",
-    cod: "COD",
-    otc: "OTC",
-    bank: "Bank",
-    slideTable: "Geser Tabel",
-    productCategory: "Kategori Produk",
-    avgQty: "Rerata Qty",
-    performanceMetric: "Metrik Performa",
-    nonDiscountBaseline: "Tanpa Diskon (Baseline)",
-    withDiscountPromo: "Dengan Diskon (Promo)",
-    correlationImpact: "Korelasi / Dampak",
-    basketSize: "Rerata Nilai Pesanan (Basket Size)",
-    shippingCostPercent: "Biaya Ongkir (%)",
-    shippingFeePaid: "Rerata Ongkir yang Dibayar",
-    sampleSize: "Ukuran Sampel Segmen",
-    highGrowthPotential: "Potensi pertumbuhan tinggi",
-    lift: "Lonjakan",
-    moreEfficient: "Lebih efisien",
-    volumeDrivenIncrease: "Peningkatan didorong volume",
-    regionalAnalysisTitle: "Ringkasan Analisis Regional dan Risiko Operasional",
-    regionalAnalysisSubtitle: "Kombinasi metrik performa, risiko operasional, dan komposisi metode pembayaran per provinsi.",
-    recommendation: "Rekomendasi",
-    totalOrder: "Total Pesanan",
-    success: "Berhasil",
-    cancelled: "Dibatalkan",
-    revenueLoss: "Rugi Pendapatan",
-    realizedRevenue: "Pendapatan Terealisasi",
-    grossValue: "Nilai Kotor",
-    paymentMethod: "Metode Pembayaran",
-    cancellationRateByMethod: "Tingkat Pembatalan per Metode (%)",
-    bayarDiTempat: "COD (Bayar di Tempat)",
-    shopeePayBalance: "Saldo ShopeePay",
-    share: "Pangsa Pasar",
-    units: "unit",
-    others: "Lainnya",
+    smartFinanceCategory: "Manajemen Keuangan",
+    smartFinanceDesc: "Sistem manajemen keuangan berbasis AI untuk melacak transaksi dan pertumbuhan kekayaan.",
+    oceanusCategory: "Website Perusahaan",
+    oceanusDesc: "Company profile perusahaan dengan fokus pada layanan sektor energi terbarukan.",
+    hrisCategory: "Manajemen HR",
+    hrisDesc: "Sistem Integrasi SDM ringkas dengan absensi dan penggajian yang efisien.",
+    scaleupCategory: "Jasa Pembuatan Web",
+    scaleupDesc: "Landing page agensi pembuatan website yang menawarkan solusi teknologi modern bagi bisnis.",
+    brewhouseCategory: "Landing Page",
+    brewhouseDesc: "Landing page coffee shop modern dengan estetika desain yang canggih dan elemen interaktif.",
+    infrastructureCategory: "Infrastruktur & Operasi",
+
+
   },
 };
