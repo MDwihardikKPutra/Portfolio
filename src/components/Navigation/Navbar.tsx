@@ -8,18 +8,26 @@ export const Navbar = ({ activeTab, setActiveTab }: any) => {
 
   const navItems = [
     { id: "home", label: "Home" },
+    { id: "projects", label: "Projects" },
     { id: "visual-archive", label: "Visual Archive" },
     { id: "exp", label: "Exp" },
   ];
 
   // Determine which tab is actually active based on route
-  const currentActiveTab = location.pathname === "/visual-archive" 
-    ? "visual-archive" 
-    : location.pathname === "/exp" 
-      ? "exp" 
-      : activeTab;
+  const currentActiveTab = location.pathname === "/projects"
+    ? "projects"
+    : location.pathname === "/visual-archive" 
+      ? "visual-archive" 
+      : location.pathname === "/exp" 
+        ? "exp" 
+        : activeTab;
 
   const handleNav = (id: string) => {
+    if (id === "projects") {
+      navigate("/projects");
+      return;
+    }
+
     if (id === "visual-archive") {
       navigate("/visual-archive");
       return;

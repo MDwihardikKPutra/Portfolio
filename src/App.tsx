@@ -7,6 +7,7 @@ import { useAppContext } from "./context/AppContext";
 import { Home } from "./pages/Home/Home";
 import { Experimental } from "./pages/Experimental/Experimental";
 import VisualArchive from "./pages/Gallery/VisualArchive";
+import ProjectsPage from "./pages/Projects/ProjectsPage";
 import Exp from "./pages/Exp/Exp";
 import { MainLayout } from "./components/Layout/MainLayout";
 import { preloadAll } from "./utils/preloadImages";
@@ -54,6 +55,7 @@ const AppRoutes = () => {
                   <Routes>
                     <Route path="/home" element={<Home setActiveTab={handleSetActiveTab} />} />
                     <Route path="/visual-archive" element={<VisualArchive />} />
+                    <Route path="/projects" element={<ProjectsPage />} />
                     <Route path="/experimental" element={<Experimental />} />
                     <Route path="/exp" element={<Exp />} />
                     <Route path="*" element={<Home setActiveTab={handleSetActiveTab} />} />
