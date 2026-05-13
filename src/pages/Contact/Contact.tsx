@@ -31,11 +31,11 @@ export const Contact = memo(({ showNotice = true }: { showNotice?: boolean }) =>
              <span className="text-[12px] font-normal tracking-tight text-text-primary">Github</span>
              <Github size={14} strokeWidth={1} className="text-text-primary" />
            </a>
-           <a href="https://linkedin.com/in/dwihardik" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between group border-b border-border-primary pb-3 hover:opacity-60 transition-all">
+           <a href="https://www.linkedin.com/in/mokhamad-dwihardik-kusuma-putra-470854190/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between group border-b border-border-primary pb-3 hover:opacity-60 transition-all">
              <span className="text-[12px] font-normal tracking-tight text-text-primary">Linkedin</span>
              <Linkedin size={14} strokeWidth={1} className="text-text-primary" />
            </a>
-           <a href="https://medium.com/@ddiko105" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between group border-b border-border-primary pb-3 hover:opacity-60 transition-all">
+           <a href="https://medium.com/@dykoputra" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between group border-b border-border-primary pb-3 hover:opacity-60 transition-all">
              <span className="text-[12px] font-normal tracking-tight text-text-primary">Medium</span>
              <FileText size={14} strokeWidth={1} className="text-text-primary" />
            </a>
@@ -45,7 +45,7 @@ export const Contact = memo(({ showNotice = true }: { showNotice?: boolean }) =>
       {/* Footer Meta */}
       <div className="mt-24 pt-8 border-t border-border-primary flex flex-col md:flex-row justify-between items-end gap-8 pb-12">
         <div className="flex flex-col gap-1">
-          <span className="text-[14px] font-normal tracking-tight text-text-primary">Mokhamad Dwihardik Kusuma Putra</span>
+          <span className="text-[14px] font-normal tracking-tight text-text-primary">Mokhamad Dwihardik Kusuma Putra / Diko Putra</span>
           <span className="text-[11px] font-normal text-text-primary">IT Engineer & Design Systems Architect</span>
         </div>
         <div className="text-right flex flex-col gap-1">

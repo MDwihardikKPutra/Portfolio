@@ -37,10 +37,6 @@ Duration: Aug 2023 - Feb 2024
 * Tech Stack: Laravel 11.31, PHP 8.2+, MySQL 8.x, Tailwind CSS 3.4, Alpine.js 3.x, Vite 6.0
 * Details: The company operated daily processes manually across disconnected systems. PGE System was developed as a mini-ERP to centralize all operational workflows. It integrates nine core modules: Work Management, Leave Management, SPD Management, Purchase & Vendor Payment, Approval Center, Project Management, User & Role Management, and EAR module.
 
-### 3. System Management
-* Configured and maintained enterprise-scale network infrastructure using MikroTik (RouterOS), focusing on Traffic Shaping, IP Traffic Management, and Hotspot authentication. Managed wireless infrastructure and access points via the UniFi Controller (Ubiquiti) to ensure stable and secure connectivity.
-
-
 
 ## Tech Stack & Expertise
 * Backend Development

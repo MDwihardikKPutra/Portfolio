@@ -53,8 +53,7 @@ export interface Translations {
   project1Desc: string;
   project2Category: string;
   project2Desc: string;
-  project3Category: string;
-  project3Desc: string;
+
 
   archiStudioCategory: string;
   archiStudioDesc: string;
@@ -112,7 +111,7 @@ export const translations: Record<Language, Translations> = {
     education: "Education",
     whoAmI: "Who am I?",
     aboutText1:
-      "I completed my studies in Informatics Engineering at the State Polytechnic of Malang, earning a D4 degree in 2024 with a GPA of 3.42. Alongside my academic journey, I cultivate a strong passion for photography, which plays a significant role in shaping my creative direction and professional interests.",
+      "IT Infrastructure Engineer and Web Developer based in Bandung, Indonesia. My work focuses on building digital products, configuring server environments, and managing enterprise networks. I develop software architectures and IT infrastructures to support operational workflows, data accessibility, and system integrations.",
     contactMe: "Contact me",
     letsBuild: "Trying to do better",
     findings: "Findings",
@@ -129,7 +128,7 @@ export const translations: Record<Language, Translations> = {
     bachelorDegree: "Bachelor's Degree in Informatics Engineering",
     hello: "Hello, I am",
     anITEngineer: "An IT Engineer.",
-    firstName: "Mokhamad Dwihardik",
+    firstName: "Mokhamad Dwihardik Kusuma Putra / Diko Putra",
     lastName: "Kusuma Putra",
     lightMode: "Light",
     darkMode: "Dark",
@@ -162,9 +161,7 @@ export const translations: Record<Language, Translations> = {
     project2Category: "Enterprise Platform",
     project2Desc:
       "Integrated Management Platform for managing critical office workflows.",
-    project3Category: "System Management",
-    project3Desc:
-      "Configured and maintained enterprise-scale network infrastructure using MikroTik (RouterOS), focusing on Traffic Shaping, IP Traffic Management, and Hotspot authentication. Managed wireless infrastructure and access points via the UniFi Controller (Ubiquiti) to ensure stable and secure connectivity. Executed advanced network designs including VLAN segmentation and internal routing protocols.",
+
 
     archiStudioCategory: "Architectural Studio",
     archiStudioDesc: "High-end architectural landing page with Japanese minimalist aesthetics and editorial layouts.",
@@ -175,7 +172,7 @@ export const translations: Record<Language, Translations> = {
     systemAdmin: "System Administration",
     networkMgmt: "Network Management",
     cloudSecurity: "Cloud & Security",
-    copyright: "© 2025 Mokhamad Dwihardik Kusuma Putra. All rights reserved.",
+    copyright: "© 2025 Mokhamad Dwihardik Kusuma Putra / Diko Putra. All rights reserved.",
     backToProjects: "Back to Projects",
     projectDetails: "Project Details",
     background: "Background",
@@ -231,7 +228,7 @@ export const translations: Record<Language, Translations> = {
     education: "Pendidikan",
     whoAmI: "Siapa saya?",
     aboutText1:
-      "Saya menyelesaikan pendidikan di Teknik Informatika di Politeknik Negeri Malang, meraih gelar D4 pada tahun 2024 dengan IPK 3.42. Seiring dengan perjalanan akademik saya, saya mengembangkan minat yang kuat terhadap fotografi, yang memainkan peran penting dalam membentuk arah kreatif dan minat profesional saya.",
+      "IT Infrastructure Engineer dan Web Developer yang berbasis di Bandung, Indonesia. Pekerjaan saya berfokus pada pembangunan produk digital, konfigurasi lingkungan server, dan pengelolaan jaringan perusahaan. Saya mengembangkan arsitektur perangkat lunak dan infrastruktur IT untuk mendukung alur kerja operasional, aksesibilitas data, dan integrasi sistem.",
     contactMe: "Hubungi saya",
     letsBuild: "Mencoba untuk menjadi lebih baik",
     findings: "Temuan",
@@ -248,7 +245,7 @@ export const translations: Record<Language, Translations> = {
     bachelorDegree: "Sarjana Terapan Teknik Informatika",
     hello: "Halo, saya",
     anITEngineer: "Seorang IT Engineer.",
-    firstName: "Mokhamad Dwihardik",
+    firstName: "Mokhamad Dwihardik Kusuma Putra / Diko Putra",
     lastName: "Kusuma Putra",
     lightMode: "Terang",
     darkMode: "Gelap",
@@ -281,9 +278,7 @@ export const translations: Record<Language, Translations> = {
     project2Category: "Platform Enterprise",
     project2Desc:
       "Integrated Management Platform untuk mengelola alur kerja kantor yang kritis.",
-    project3Category: "Manajemen Sistem",
-    project3Desc:
-      "Mengkonfigurasi dan memelihara infrastruktur jaringan skala enterprise menggunakan MikroTik (RouterOS), dengan fokus pada Traffic Shaping, Manajemen Lalu Lintas IP, dan autentikasi Hotspot. Mengelola infrastruktur nirkabel dan access point melalui UniFi Controller (Ubiquiti) untuk memastikan konektivitas yang stabil dan aman. Mengeksekusi desain jaringan canggih termasuk segmentasi VLAN dan protokol routing internal.",
+
 
     archiStudioCategory: "Studio Arsitektur",
     archiStudioDesc: "Landing page arsitektur kelas atas dengan estetika minimalis Jepang dan tata letak editorial.",
@@ -295,7 +290,7 @@ export const translations: Record<Language, Translations> = {
     networkMgmt: "Manajemen Jaringan",
     cloudSecurity: "Cloud & Keamanan",
     copyright:
-      "© 2025 Mokhamad Dwihardik Kusuma Putra. Hak cipta dilindungi.",
+      "© 2025 Mokhamad Dwihardik Kusuma Putra / Diko Putra. Hak cipta dilindungi.",
     backToProjects: "Kembali ke Proyek",
     projectDetails: "Detail Proyek",
     background: "Latar Belakang",

@@ -23,8 +23,17 @@
     --surface: #1A1A1A;
   }
 
+  @media (min-width: 768px) {
+    body {
+      cursor: none !important;
+    }
+    
+    a, button, [role="button"], .cursor-pointer {
+      cursor: none !important;
+    }
+  }
   html {
-    overflow-y: scroll; /* Force vertical scrollbar to prevent layout shift and double scroll */
+    overflow-y: scroll;
     overflow-x: hidden;
     height: auto;
     width: 100%;
@@ -37,7 +46,7 @@
     font-size: 16px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
-    overflow: visible; /* Ensure no internal scrollbars */
+    overflow: visible;
     width: 100%;
     margin: 0;
   }

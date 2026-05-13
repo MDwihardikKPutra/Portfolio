@@ -123,17 +123,6 @@ export const getProjects = (language: Language): Project[] => {
       accent: "#744210",
       type: "personal",
     },
-    {
-      title: "Network Infrastructure",
-      category: t.project3Category,
-      description: t.project3Desc,
-      image: "https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=1000",
-      tags: ["Linux", "Network"],
-      link: "#",
-      featured: true,
-      accent: "#2D3748",
-      type: "project",
-    },
   ];
 
   projectCache[language] = result;
@@ -146,9 +135,9 @@ export const contactInfo = {
   email: "ddiko105@gmail.com",
   phone: "+62 878 5632 4656",
   whatsapp: "https://wa.me/6287856324656",
-  linkedinName: "Mokhamad Dwihardik K.P.",
+  linkedinName: "Mokhamad Dwihardik Kusuma Putra / Diko Putra",
   githubName: "MDwihardikKPutra",
-  copyright: "© 2026 Mokhamad Dwihardik Kusuma Putra",
+  copyright: "© 2026 Mokhamad Dwihardik Kusuma Putra / Diko Putra",
   location: "Bandung, West Java",
   zone: "Indonesia / SEA Zone"
 };
