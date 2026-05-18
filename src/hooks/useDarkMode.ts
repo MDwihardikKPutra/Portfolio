@@ -1,38 +1,22 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 export const useDarkMode = () => {
-  // Initialize with localStorage, default to light mode
-  const getInitialMode = (): boolean => {
-    if (typeof window === 'undefined') return false;
-
-    const savedMode = localStorage.getItem("darkMode");
-    if (savedMode !== null) {
-      return savedMode === "true";
-    }
-
-    // Default to dark mode
-    return false;
-  };
-
-  const [isDarkMode, setIsDarkMode] = useState(getInitialMode);
-
+  const isDarkMode = false;
+  
   useEffect(() => {
-    // Apply dark mode class to document for better compatibility
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    // Forcefully remove dark class and clear legacy theme state to ensure Light Mode only
+    document.documentElement.classList.remove('dark');
+    try {
+      localStorage.removeItem("darkMode");
+    } catch (e) {
+      console.warn("Storage access denied", e);
     }
-  }, [isDarkMode]);
+  }, []);
 
   const toggleDarkMode = () => {
-    setIsDarkMode((prev) => {
-      const newMode = !prev;
-      localStorage.setItem("darkMode", newMode.toString());
-      return newMode;
-    });
+    // No-op since dark mode is disabled
   };
 
-  return { isDarkMode, setIsDarkMode, toggleDarkMode };
+  return { isDarkMode, toggleDarkMode };
 };
 
