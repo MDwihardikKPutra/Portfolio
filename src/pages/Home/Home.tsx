@@ -258,7 +258,7 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
 
       {/* SECTION 6: BEYOND THE SCREEN */}
       <section id="beyond" className="w-full pb-10 border-t border-border-primary">
-        <div className="w-full aspect-[1920/720] overflow-hidden relative group bg-[#030c16]">
+        <div className="w-full aspect-[1920/720] max-h-[720px] overflow-hidden relative group bg-[#030c16]">
           {/* Dynamic WebGL Smoke Canvas */}
           <SmokeBackground smokeColor="#00d2ff" />
 
