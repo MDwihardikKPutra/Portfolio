@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { memo, useRef, useEffect } from "react";
+import { memo, useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Projects } from "../Projects/Projects";
 import { Contact } from "../Contact/Contact";
@@ -8,8 +8,17 @@ import { SmokeBackground } from "../../components/Visuals/SmokeBackground";
 
 const editorialEase = [0.22, 1, 0.36, 1];
 
-// --- UNIVERSAL EDITORIAL GRID COMPONENT (Revision 8.0: Optimized On-View Scroll) ---
-const EditorialSection = ({ label, heading, children, id, className, bg = "bg-transparent" }: any) => {
+// --- UNIVERSAL EDITORIAL GRID COMPONENT (Collapsible Accordion Style) ---
+const EditorialSection = ({ 
+  label, 
+  heading, 
+  children, 
+  id, 
+  className, 
+  bg = "bg-transparent",
+  isOpen,
+  onToggle
+}: any) => {
   return (
     <motion.section
       id={id}
@@ -17,21 +26,64 @@ const EditorialSection = ({ label, heading, children, id, className, bg = "bg-tr
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
       transition={{ duration: 1.2, ease: editorialEase }}
-      className={`w-full py-10 border-t border-border-primary ${bg} ${className}`}
+      className={`w-full border-t border-border-primary transition-colors duration-300 hover:bg-black/[0.01] ${bg} ${className}`}
     >
-      <div className="editorial-grid">
-        <div className="col-span-12 lg:col-span-3">
+      <div 
+        onClick={onToggle}
+        className="editorial-grid py-10 cursor-pointer select-none group"
+      >
+        {/* Left Column: Label */}
+        <div className="col-span-12 lg:col-span-3 flex justify-between items-center">
           <span className="editorial-label font-normal">{label}</span>
+          {/* Mobile dropdown indicator */}
+          <div className="lg:hidden">
+            <motion.span 
+              animate={{ rotate: isOpen ? 180 : 0 }}
+              transition={{ duration: 0.4, ease: editorialEase }}
+              className="text-[12px] opacity-60 text-text-primary block"
+            >
+              ↓
+            </motion.span>
+          </div>
         </div>
+
+        {/* Middle Column: Heading */}
         <div className="col-span-12 lg:col-span-4 mt-2 lg:mt-0 lg:pr-20">
           <h2 className="text-[15px] md:text-[16px] leading-relaxed font-normal tracking-tight text-text-primary">
             {heading}
           </h2>
         </div>
-        <div className="col-span-12 lg:col-span-4 mt-6 lg:mt-0">
-          {children}
+
+        {/* Right Column: Children (Collapsible) */}
+        <div 
+          onClick={(e) => e.stopPropagation()}
+          className="col-span-12 lg:col-span-4 mt-6 lg:mt-0 overflow-hidden cursor-default"
+        >
+          <motion.div
+            initial={false}
+            animate={{ 
+              height: isOpen ? "auto" : 0,
+              opacity: isOpen ? 1 : 0
+            }}
+            transition={{ duration: 0.5, ease: editorialEase }}
+            className="w-full origin-top"
+          >
+            <div className="pt-2 lg:pt-0">
+              {children}
+            </div>
+          </motion.div>
         </div>
-        <div className="hidden lg:block lg:col-span-1"></div>
+
+        {/* Desktop dropdown indicator */}
+        <div className="hidden lg:flex lg:col-span-1 justify-end items-start pt-1">
+          <motion.span 
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.4, ease: editorialEase }}
+            className="text-[14px] opacity-40 group-hover:opacity-100 text-text-primary transition-opacity duration-300"
+          >
+            ↓
+          </motion.span>
+        </div>
       </div>
     </motion.section>
   );
@@ -40,6 +92,20 @@ const EditorialSection = ({ label, heading, children, id, className, bg = "bg-tr
 export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => void }) => {
   const { scrollYProgress } = useScroll();
   const heroText = "Making things work, then making them matter.";
+
+  // Accordion State
+  const [openSections, setOpenSections] = useState({
+    about: true,       // Default open
+    focus: false,
+    experience: false
+  });
+
+  const toggleSection = (section: 'about' | 'focus' | 'experience') => {
+    setOpenSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
 
   // Parallax for cinematic imagery
   const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 1.05]);
@@ -113,7 +179,13 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
       </section>
 
       {/* SECTION 2: ABOUT */}
-      <EditorialSection label="About" heading="Mokhamad Dwihardik Kusuma Putra / Diko Putra" id="about">
+      <EditorialSection 
+        label="About" 
+        heading="Mokhamad Dwihardik Kusuma Putra / Diko Putra" 
+        id="about"
+        isOpen={openSections.about}
+        onToggle={() => toggleSection("about")}
+      >
         <div className="space-y-6">
           <p className="text-editorial-body">
             IT Infrastructure Engineer and Web Developer based in Bandung, Indonesia. My work focuses on building digital products, configuring server environments, and managing enterprise networks. I develop software architectures and IT infrastructures to support operational workflows, data accessibility, and system integrations.
@@ -122,7 +194,13 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
       </EditorialSection>
 
       {/* SECTION 3: AREAS OF FOCUS */}
-      <EditorialSection label="Focus" heading="My technical scope centers on" id="focus">
+      <EditorialSection 
+        label="Focus" 
+        heading="My technical scope centers on" 
+        id="focus"
+        isOpen={openSections.focus}
+        onToggle={() => toggleSection("focus")}
+      >
         <div className="flex flex-wrap gap-2.5">
           {[
             "Software Development",
@@ -153,7 +231,13 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
       </EditorialSection>
 
       {/* SECTION 4: EXPERIENCE */}
-      <EditorialSection label="Experience" heading="System administration, network engineering, and web development." id="experience">
+      <EditorialSection 
+        label="Experience" 
+        heading="System administration, network engineering, and web development." 
+        id="experience"
+        isOpen={openSections.experience}
+        onToggle={() => toggleSection("experience")}
+      >
         <div className="space-y-6">
           <p className="text-editorial-body">
             My experience covers <strong>web application development</strong> and <strong>IT infrastructure management</strong> for business and operational environments. I develop <strong>web-based systems</strong> and <strong>internal business applications</strong> while also handling <strong>Linux administration</strong>, database configuration, and office network infrastructure (<strong>MikroTik</strong>).
