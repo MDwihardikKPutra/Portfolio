@@ -196,7 +196,7 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
       {/* SECTION 3: AREAS OF FOCUS */}
       <EditorialSection 
         label="Focus" 
-        heading="My technical scope centers on" 
+        heading="My technical scope" 
         id="focus"
         isOpen={openSections.focus}
         onToggle={() => toggleSection("focus")}
