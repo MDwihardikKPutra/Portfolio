@@ -258,7 +258,7 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
       </EditorialSection>
 
       {/* SECTION 5: WORKS */}
-      <section id="works" className="w-full py-10 border-t border-border-primary">
+      <section id="works" className="w-full border-t border-border-primary">
         <div className="w-full">
           <Projects isHome={true} />
         </div>
