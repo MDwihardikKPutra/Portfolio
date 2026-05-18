@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { Navbar } from "../Navigation/Navbar";
-import { CustomCursor } from "../Shared/CustomCursor";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -16,7 +15,6 @@ export const MainLayout = ({
 
   return (
     <div className="w-full min-h-screen relative font-['Plus_Jakarta_Sans']">
-      <CustomCursor />
       
       {/* Navigation */}
       <Navbar 

@@ -23,15 +23,7 @@
     --surface: #1A1A1A;
   }
 
-  @media (min-width: 768px) {
-    body {
-      cursor: none !important;
-    }
-    
-    a, button, [role="button"], .cursor-pointer {
-      cursor: none !important;
-    }
-  }
+
   html {
     overflow-y: scroll;
     overflow-x: hidden;
