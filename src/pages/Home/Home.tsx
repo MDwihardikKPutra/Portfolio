@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Projects } from "../Projects/Projects";
 import { Contact } from "../Contact/Contact";
 import { useAppContext } from "../../context/AppContext";
-import { HalftoneWave } from "../../components/Visuals/HalftoneWave";
+import { SmokeBackground } from "../../components/Visuals/SmokeBackground";
 
 const editorialEase = [0.22, 1, 0.36, 1];
 
@@ -183,8 +183,8 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
       {/* SECTION 6: BEYOND THE SCREEN */}
       <section id="beyond" className="w-full py-10">
         <div className="w-full aspect-[1920/720] overflow-hidden relative group bg-[#030c16]">
-          {/* Dynamic Halftone Wave Canvas */}
-          <HalftoneWave />
+          {/* Dynamic WebGL Smoke Canvas */}
+          <SmokeBackground smokeColor="#00d2ff" />
 
           {/* Text Overlay */}
           <div className="absolute inset-0 flex flex-col justify-center items-center text-white z-10 bg-black/10 backdrop-blur-[1px]">
