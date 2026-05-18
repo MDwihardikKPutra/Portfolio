@@ -112,10 +112,8 @@ export const CustomCursor = () => {
               translateX: "-50%",
               translateY: "-50%",
               opacity: isVisible ? 1 : 0,
-              width: trail.size,
-              height: trail.size,
-              scale: isHovering ? 1.5 : 1,
-              willChange: "transform",
+              width: isHovering ? trail.size * 1.5 : trail.size,
+              height: isHovering ? trail.size * 1.5 : trail.size,
             }}
           />
         ))}
