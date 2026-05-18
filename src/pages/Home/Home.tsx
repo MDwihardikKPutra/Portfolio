@@ -95,7 +95,7 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
 
   // Accordion State
   const [openSections, setOpenSections] = useState({
-    about: true,       // Default open
+    about: false,      // Default closed
     focus: false,
     experience: false
   });
