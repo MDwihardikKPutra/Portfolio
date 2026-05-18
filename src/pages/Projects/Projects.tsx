@@ -33,31 +33,60 @@ export const Projects = ({ isHome = false }: { isHome?: boolean }) => {
 
   const project = displayProjects[currentIndex];
 
-  // HOME LAYOUT: Breathtaking 3-grid full-width preview gallery
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Auto-play sliding 1-by-1 logic
+  useEffect(() => {
+    if (!isHome) return;
+    const maxIndex = isMobile ? projects.length - 1 : projects.length - 3;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => {
+        if (prev >= maxIndex) return 0;
+        return prev + 1;
+      });
+    }, 4000); // Shift every 4 seconds
+    return () => clearInterval(interval);
+  }, [isMobile, isHome]);
+
+  // HOME LAYOUT: Premium 3-column auto-sliding carousel (shifts 1-by-1)
   if (isHome) {
+    const translation = -currentIndex * (isMobile ? 100 : 33.3333);
+
     return (
-      <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-0 overflow-hidden relative">
-        {displayProjects.map((project) => (
-          <a 
-            key={project.title}
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full relative aspect-[16/10] overflow-hidden cursor-pointer block group bg-[#030c16]"
-          >
-            <img 
-              src={project.image || (project.images && project.images[0])} 
-              alt={project.title} 
-              className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105" 
-            />
-            {/* Elegant luxury black hover mask with spaced typography title */}
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-colors duration-500 flex items-center justify-center">
-              <span className="text-white text-[12px] md:text-[13px] uppercase tracking-[0.25em] font-normal opacity-0 group-hover:opacity-100 transform translate-y-3 group-hover:translate-y-0 transition-all duration-500">
-                {project.title}
-              </span>
-            </div>
-          </a>
-        ))}
+      <div className="w-full overflow-hidden relative">
+        <motion.div 
+          animate={{ x: `${translation}%` }}
+          transition={{ duration: 0.9, ease: [0.25, 1, 0.5, 1] }}
+          className="flex w-full"
+        >
+          {projects.map((project) => (
+            <a 
+              key={project.title}
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full md:w-1/3 flex-shrink-0 relative aspect-[16/10] overflow-hidden cursor-pointer block group bg-[#030c16]"
+            >
+              <img 
+                src={project.image || (project.images && project.images[0])} 
+                alt={project.title} 
+                className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105" 
+              />
+              {/* Elegant luxury black hover mask with spaced typography title */}
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-colors duration-500 flex items-center justify-center">
+                <span className="text-white text-[12px] md:text-[13px] uppercase tracking-[0.25em] font-normal opacity-0 group-hover:opacity-100 transform translate-y-3 group-hover:translate-y-0 transition-all duration-500">
+                  {project.title}
+                </span>
+              </div>
+            </a>
+          ))}
+        </motion.div>
       </div>
     );
   }
