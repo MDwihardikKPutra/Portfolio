@@ -1,19 +1,20 @@
 import { contactInfo } from "../../data";
 import { memo } from "react";
+import { Github, Linkedin, FileText } from "lucide-react";
 
-// --- CONTACT COMPONENT (Revision 8.0: Compact Full-Grid Editorial Footer) ---
+// --- CONTACT COMPONENT (Revision 8.2: Symmetrical Full-Grid Editorial Footer with Logos) ---
 export const Contact = memo(() => {
   return (
     <div id="contact" className="w-full">
       <div className="editorial-grid gap-y-10 lg:gap-y-0">
         
-        {/* Column 1: Label (3-span) */}
-        <div className="col-span-12 lg:col-span-3">
+        {/* Column 1: Label (3-span) - Aligned Left */}
+        <div className="col-span-12 lg:col-span-3 text-left">
           <span className="editorial-label font-normal">Connect</span>
         </div>
 
-        {/* Column 2: Core Action & Location (4-span) */}
-        <div className="col-span-12 lg:col-span-4 mt-2 lg:mt-0 flex flex-col justify-between min-h-[110px]">
+        {/* Column 2: Core Action & Location (4-span) - Aligned Left */}
+        <div className="col-span-12 lg:col-span-4 mt-2 lg:mt-0 flex flex-col justify-between min-h-[110px] text-left">
           <div className="space-y-4">
             <h2 className="text-[15px] md:text-[16px] leading-relaxed font-normal tracking-tight text-text-primary">
               Let's build something intentional.
@@ -30,57 +31,55 @@ export const Contact = memo(() => {
           </span>
         </div>
 
-        {/* Column 3: Notice & High-Density Social Row (4-span) */}
-        <div className="col-span-12 lg:col-span-4 mt-6 lg:mt-0 flex flex-col justify-between min-h-[110px]">
-          <p className="text-editorial-body text-[14px] leading-relaxed text-text-primary/60">
+        {/* Column 3: Notice & High-Density Social Logos (5-span) - Flush Right on Desktop */}
+        <div className="col-span-12 lg:col-span-5 mt-6 lg:mt-0 flex flex-col justify-between min-h-[110px] items-start lg:items-end text-left lg:text-right">
+          <p className="text-editorial-body text-[14px] leading-relaxed text-text-primary/60 w-full">
             I respond to inquiries within 24 hours. For urgent architectural digital projects, please mention the timeline in the brief.
           </p>
           
-          {/* Horizontal low-profile social row */}
-          <div className="flex gap-4 items-center mt-6 text-[11px] font-normal">
+          {/* Horizontal low-profile social logos - pushed right on desktop */}
+          <div className="flex gap-6 items-center mt-6 w-full justify-start lg:justify-end">
             <a 
               href="https://github.com/MDwihardikKPutra" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="uppercase tracking-wider text-text-primary/60 hover:text-text-primary transition-colors"
+              className="text-text-primary/60 hover:text-text-primary hover:scale-110 transition-all duration-300 block"
+              aria-label="GitHub"
             >
-              Github
+              <Github size={16} strokeWidth={1.5} />
             </a>
-            <span className="text-text-primary/20">/</span>
             <a 
               href="https://www.linkedin.com/in/mokhamad-dwihardik-kusuma-putra-470854190/" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="uppercase tracking-wider text-text-primary/60 hover:text-text-primary transition-colors"
+              className="text-text-primary/60 hover:text-text-primary hover:scale-110 transition-all duration-300 block"
+              aria-label="LinkedIn"
             >
-              Linkedin
+              <Linkedin size={16} strokeWidth={1.5} />
             </a>
-            <span className="text-text-primary/20">/</span>
             <a 
               href="https://medium.com/@dykoputra" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="uppercase tracking-wider text-text-primary/60 hover:text-text-primary transition-colors"
+              className="text-text-primary/60 hover:text-text-primary hover:scale-110 transition-all duration-300 block"
+              aria-label="Medium"
             >
-              Medium
+              <FileText size={16} strokeWidth={1.5} />
             </a>
           </div>
         </div>
 
-        {/* Column 4: Right Spacer (1-span) */}
-        <div className="hidden lg:block lg:col-span-1"></div>
-
         {/* Full-width elegant divider */}
         <div className="col-span-12 h-[1px] bg-border-primary/60 mt-16 mb-6"></div>
 
-        {/* Bottom Full-Width Horizontal Metadata Row */}
+        {/* Bottom Full-Width Horizontal Metadata Row - Perfectly Balanced Left/Right */}
         <div className="col-span-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6 text-[11px] tracking-wide text-text-primary/50 font-normal w-full">
-          <div className="flex flex-col md:flex-row gap-2 md:gap-6">
+          <div className="flex flex-col md:flex-row gap-2 md:gap-6 text-left">
             <span>Mokhamad Dwihardik Kusuma Putra / Diko Putra</span>
             <span className="hidden md:inline text-text-primary/20">|</span>
             <span>IT Engineer & Design Systems Architect</span>
           </div>
-          <div className="flex flex-col md:flex-row gap-2 md:gap-6 md:text-right">
+          <div className="flex flex-col md:flex-row gap-2 md:gap-6 text-left md:text-right">
             <span>© 2026 Architectural Digital Artifact</span>
             <span className="hidden md:inline text-text-primary/20">|</span>
             <span>Built with Vite / Framer / Intent.</span>
