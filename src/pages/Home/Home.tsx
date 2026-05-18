@@ -30,10 +30,10 @@ const EditorialSection = ({
     >
       <div 
         onClick={onToggle}
-        className="editorial-grid py-10 cursor-pointer select-none group"
+        className="editorial-grid items-start py-10 cursor-pointer select-none group"
       >
         {/* Left Column: Label */}
-        <div className="col-span-12 lg:col-span-3 flex justify-between items-center">
+        <div className="col-span-12 lg:col-span-3 flex justify-between items-start">
           <span className="editorial-label font-normal">{label}</span>
           {/* Mobile dropdown indicator */}
           <div className="lg:hidden">
