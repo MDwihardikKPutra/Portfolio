@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Projects } from "../Projects/Projects";
 import { Contact } from "../Contact/Contact";
 import { useAppContext } from "../../context/AppContext";
+import { HalftoneWave } from "../../components/Visuals/HalftoneWave";
 
 const editorialEase = [0.22, 1, 0.36, 1];
 
@@ -103,10 +104,10 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 2, ease: editorialEase, delay: 1 }}
-            style={{ scale: heroScale, opacity: heroOpacity }}
+            style={{ scale: heroScale, opacity: heroOpacity, willChange: "transform" }}
             src="/Hero/5.png"
             alt="Cinematic Portrait"
-            className="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-110"
+            className="w-full h-full object-cover"
           />
         </div>
       </section>
@@ -152,13 +153,13 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
       </EditorialSection>
 
       {/* SECTION 4: EXPERIENCE */}
-      <EditorialSection label="Experience" heading="Across infrastructure, web platforms, and digital agency projects." id="experience">
+      <EditorialSection label="Experience" heading="System administration, network engineering, and web development." id="experience">
         <div className="space-y-6">
           <p className="text-editorial-body">
-            My experience includes developing internal business applications, such as HRIS and project monitoring dashboards, as well as establishing centralized data storage and network infrastructure for corporate environments. Alongside corporate IT roles, I co-manage ScaleUp.Go, a digital agency providing web development and digital transformation services for SMEs.
+            My experience covers <strong>web application development</strong> and <strong>IT infrastructure management</strong> for business and operational environments. I develop <strong>web-based systems</strong> and <strong>internal business applications</strong> while also handling <strong>Linux administration</strong>, database configuration, and office network infrastructure (<strong>MikroTik</strong>).
           </p>
           <p className="text-editorial-body">
-            A central part of my work involves configuring centralized servers, implementing network rules, and developing web-based platforms to facilitate team collaboration, data management, and daily business operations.
+            In addition, I manage <strong>data storage</strong> and <strong>file-sharing systems</strong> (<strong>TrueNAS</strong>, <strong>Nextcloud</strong>), alongside database and network administration. I also develop <strong>custom web platforms</strong> and <strong>web architectures</strong> for small and medium-sized businesses.
           </p>
           <div className="pt-6">
             <motion.button
@@ -181,25 +182,18 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
 
       {/* SECTION 6: BEYOND THE SCREEN */}
       <section id="beyond" className="w-full py-10">
-        <div className="w-full aspect-[1920/720] overflow-hidden relative group">
-          <motion.img
-            initial={{ opacity: 0, scale: 1.1 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 2, ease: editorialEase }}
-            src="/beyond.jpg"
-            alt="Beyond the Screen"
-            className="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105"
-          />
+        <div className="w-full aspect-[1920/720] overflow-hidden relative group bg-[#030c16]">
+          {/* Dynamic Halftone Wave Canvas */}
+          <HalftoneWave />
 
           {/* Text Overlay */}
-          <div className="absolute inset-0 flex flex-col justify-center items-center text-black z-10">
+          <div className="absolute inset-0 flex flex-col justify-center items-center text-white z-10 bg-black/10 backdrop-blur-[1px]">
             <motion.span
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.5, duration: 1, ease: editorialEase }}
-              className="text-[10px] md:text-[12px] tracking-[0.4em] font-light mb-4"
+              className="text-[10px] md:text-[12px] tracking-[0.4em] font-mono text-[#00d2ff] mb-4"
             >
               Beyond
             </motion.span>
@@ -208,7 +202,7 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.7, duration: 1, ease: editorialEase }}
-              className="text-[24px] md:text-[36px] lg:text-[42px] font-normal tracking-tight text-center px-6 mb-8"
+              className="text-[24px] md:text-[36px] lg:text-[42px] font-normal tracking-tight text-center px-6 mb-8 text-white"
             >
               Making beyond the screen.
             </motion.h2>
@@ -222,13 +216,13 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
             >
               <Link
                 to="/visual-archive"
-                className="text-[14px] md:text-[16px] tracking-[0.05em] font-medium border-b border-black/20 pb-1 hover:border-black transition-all duration-300"
+                className="text-[14px] md:text-[16px] tracking-[0.05em] font-medium border-b border-white/20 pb-1 hover:border-white text-white transition-all duration-300"
               >
                 Visual Archive →
               </Link>
               <Link
                 to="/exp"
-                className="text-[14px] md:text-[16px] tracking-[0.05em] font-medium border-b border-black/20 pb-1 hover:border-black transition-all duration-300"
+                className="text-[14px] md:text-[16px] tracking-[0.05em] font-medium border-b border-white/20 pb-1 hover:border-white text-white transition-all duration-300"
               >
                 Experimental Space →
               </Link>
