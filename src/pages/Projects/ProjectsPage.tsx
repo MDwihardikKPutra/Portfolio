@@ -6,7 +6,7 @@ const editorialEase = [0.22, 1, 0.36, 1];
 
 const ProjectsPage = memo(() => {
   return (
-    <div className="w-full min-h-screen bg-white selection:bg-black selection:text-white font-helvetica">
+    <div className="w-full min-h-screen bg-bg-primary transition-colors duration-500 font-helvetica">
       
       {/* Header Section */}
       <section className="w-full pt-24 md:pt-28 pb-10">

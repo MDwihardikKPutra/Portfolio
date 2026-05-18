@@ -7,7 +7,7 @@ const editorialEase = [0.22, 1, 0.36, 1];
 // --- VISUAL ARCHIVE PAGE (Revision 8.73: Dense Full-Bleed Stream) ---
 const VisualArchive = memo(() => {
   return (
-    <div className="w-full min-h-screen bg-white selection:bg-black selection:text-white font-helvetica">
+    <div className="w-full min-h-screen bg-bg-primary transition-colors duration-500 font-helvetica">
       
       {/* Header Section - Wide & Symmetrical Grid Alignment */}
       <section className="w-full pt-44 pb-20">

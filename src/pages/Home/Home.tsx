@@ -66,7 +66,7 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
   }, [setActiveTab]);
 
   return (
-    <div className="w-full relative bg-white">
+    <div className="w-full relative bg-bg-primary transition-colors duration-500">
 
       {/* SCROLL PROGRESS INDICATOR */}
       <motion.div

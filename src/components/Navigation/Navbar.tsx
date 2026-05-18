@@ -59,7 +59,7 @@ export const Navbar = ({ activeTab, setActiveTab }: any) => {
   return (
     <nav className="fixed top-0 left-0 w-full z-[200] pointer-events-none">
       <div className={`w-full transition-all duration-500 py-4 ${
-        isExpPage ? "bg-black/40 backdrop-blur-md" : "bg-white/80 backdrop-blur-md"
+        isExpPage ? "bg-black/40 backdrop-blur-md" : "bg-white/80 dark:bg-[#111111]/80 backdrop-blur-md"
       }`}>
         <div className="w-full px-6 md:px-10 flex items-center justify-between pointer-events-auto">
           
