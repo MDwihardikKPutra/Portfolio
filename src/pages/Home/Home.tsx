@@ -1,7 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { memo, useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Projects } from "../Projects/Projects";
 import { Contact } from "../Contact/Contact";
 import { useAppContext } from "../../context/AppContext";
 import { SmokeBackground } from "../../components/Visuals/SmokeBackground";
@@ -114,7 +113,7 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
   // Section observer for Navbar
   useEffect(() => {
     if (!setActiveTab) return;
-    const sections = ["home", "about", "focus", "experience", "works", "beyond", "contact"];
+    const sections = ["home", "about", "focus", "experience", "beyond", "contact"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -257,15 +256,8 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
         </div>
       </EditorialSection>
 
-      {/* SECTION 5: WORKS */}
-      <section id="works" className="w-full border-t border-border-primary">
-        <div className="w-full">
-          <Projects isHome={true} />
-        </div>
-      </section>
-
       {/* SECTION 6: BEYOND THE SCREEN */}
-      <section id="beyond" className="w-full pb-10">
+      <section id="beyond" className="w-full pb-10 border-t border-border-primary">
         <div className="w-full aspect-[1920/720] overflow-hidden relative group bg-[#030c16]">
           {/* Dynamic WebGL Smoke Canvas */}
           <SmokeBackground smokeColor="#00d2ff" />
