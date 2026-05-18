@@ -8,28 +8,28 @@ export const CustomCursor = () => {
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
-  // Define 5 trailing springs for a true organic chain effect
-  const s1x = useSpring(mouseX, { damping: 20, stiffness: 400 });
-  const s1y = useSpring(mouseY, { damping: 20, stiffness: 400 });
+  // Define trailing springs all tracking mouseX/mouseY directly for a unified gooey comet tail
+  const s1x = useSpring(mouseX, { damping: 20, stiffness: 300 });
+  const s1y = useSpring(mouseY, { damping: 20, stiffness: 300 });
   
-  const s2x = useSpring(s1x, { damping: 25, stiffness: 350 });
-  const s2y = useSpring(s1y, { damping: 25, stiffness: 350 });
+  const s2x = useSpring(mouseX, { damping: 25, stiffness: 250 });
+  const s2y = useSpring(mouseY, { damping: 25, stiffness: 250 });
   
-  const s3x = useSpring(s2x, { damping: 30, stiffness: 300 });
-  const s3y = useSpring(s2y, { damping: 30, stiffness: 300 });
+  const s3x = useSpring(mouseX, { damping: 30, stiffness: 200 });
+  const s3y = useSpring(mouseY, { damping: 30, stiffness: 200 });
   
-  const s4x = useSpring(s3x, { damping: 35, stiffness: 250 });
-  const s4y = useSpring(s3y, { damping: 35, stiffness: 250 });
+  const s4x = useSpring(mouseX, { damping: 35, stiffness: 150 });
+  const s4y = useSpring(mouseY, { damping: 35, stiffness: 150 });
   
-  const s5x = useSpring(s4x, { damping: 40, stiffness: 200 });
-  const s5y = useSpring(s4y, { damping: 40, stiffness: 200 });
+  const s5x = useSpring(mouseX, { damping: 40, stiffness: 100 });
+  const s5y = useSpring(mouseY, { damping: 40, stiffness: 100 });
 
   const trails = [
-    { x: s1x, y: s1y, size: 20 },
-    { x: s2x, y: s2y, size: 16 },
-    { x: s3x, y: s3y, size: 12 },
-    { x: s4x, y: s4y, size: 8 },
-    { x: s5x, y: s5y, size: 4 },
+    { x: s1x, y: s1y, size: 24 },
+    { x: s2x, y: s2y, size: 20 },
+    { x: s3x, y: s3y, size: 16 },
+    { x: s4x, y: s4y, size: 12 },
+    { x: s5x, y: s5y, size: 8 },
   ];
 
   useEffect(() => {
