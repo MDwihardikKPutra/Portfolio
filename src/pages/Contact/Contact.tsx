@@ -34,7 +34,7 @@ export const Contact = memo(() => {
         {/* Column 3: Notice & High-Density Social Logos (5-span) - Flush Right on Desktop */}
         <div className="col-span-12 lg:col-span-5 mt-6 lg:mt-0 flex flex-col justify-between min-h-[110px] items-start lg:items-end text-left lg:text-right">
           <p className="text-editorial-body text-[14px] leading-relaxed text-text-primary/60 w-full">
-            I respond to inquiries within 24 hours. For urgent architectural digital projects, please mention the timeline in the brief.
+            Making things work, then making them matter.
           </p>
           
           {/* Horizontal low-profile social logos - pushed right on desktop */}
