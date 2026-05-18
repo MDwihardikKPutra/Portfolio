@@ -314,25 +314,9 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
         transition={{ duration: 1.5, ease: editorialEase }}
-        className="w-full py-10"
+        className="w-full pt-16 pb-0"
       >
-        <div className="editorial-grid">
-          <div className="col-span-12 lg:col-span-3">
-            <span className="editorial-label font-normal">Connect</span>
-          </div>
-          <div className="col-span-12 lg:col-span-4 mt-2 lg:mt-0 lg:pr-20 space-y-6">
-            <h2 className="text-[15px] md:text-[16px] leading-relaxed font-normal tracking-tight text-text-primary">
-              Let's build something intentional.
-            </h2>
-            <p className="text-editorial-body text-[14px] leading-relaxed text-text-primary opacity-60">
-              I respond to inquiries within 24 hours. For urgent architectural digital projects, please mention the timeline in the brief.
-            </p>
-          </div>
-          <div className="col-span-12 lg:col-span-4 mt-6 lg:mt-0">
-            <Contact showNotice={false} />
-          </div>
-          <div className="hidden lg:block lg:col-span-1"></div>
-        </div>
+        <Contact />
       </motion.section>
 
     </div>
