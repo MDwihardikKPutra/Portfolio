@@ -152,10 +152,10 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
       </EditorialSection>
 
       {/* SECTION 4: EXPERIENCE */}
-      <EditorialSection label="Experience" heading="Across brands, platforms, and teams." id="experience">
+      <EditorialSection label="Experience" heading="Across infrastructure, web platforms, and digital agency projects." id="experience">
         <div className="space-y-6">
           <p className="text-editorial-body">
-            Across infrastructure, web platforms, and digital agency projects. My experience includes developing internal business applications, such as HRIS and project monitoring dashboards, as well as establishing centralized data storage and network infrastructure for corporate environments. Alongside corporate IT roles, I co-manage ScaleUp.Go, a digital agency providing web development and digital transformation services for SMEs.
+            My experience includes developing internal business applications, such as HRIS and project monitoring dashboards, as well as establishing centralized data storage and network infrastructure for corporate environments. Alongside corporate IT roles, I co-manage ScaleUp.Go, a digital agency providing web development and digital transformation services for SMEs.
           </p>
           <p className="text-editorial-body">
             A central part of my work involves configuring centralized servers, implementing network rules, and developing web-based platforms to facilitate team collaboration, data management, and daily business operations.
