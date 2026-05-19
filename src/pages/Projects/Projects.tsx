@@ -1,39 +1,21 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useCallback } from "react";
-import { projects } from "../../data";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { getProjects } from "../../data";
+import { useAppContext } from "../../context/AppContext";
 
 const editorialEase = [0.22, 1, 0.36, 1];
 
 export const Projects = ({ isHome = false }: { isHome?: boolean }) => {
+  const { language } = useAppContext();
+  const rawProjects = getProjects(language);
+
+  // Filter projects by Home/Page requirements
   const displayProjects = isHome 
-    ? projects.filter(p => ["Archi Studio", "Smart Finance Tracker", "Oceanus Energy"].includes(p.title)) 
-    : projects;
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-
-  const nextProject = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % displayProjects.length);
-  }, [displayProjects.length]);
-
-  const prevProject = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + displayProjects.length) % displayProjects.length);
-  }, [displayProjects.length]);
-
-  // Auto-play logic
-  useEffect(() => {
-    if (!isHome || isHovered) return;
-
-    const interval = setInterval(() => {
-      nextProject();
-    }, 5000); // 5 seconds interval
-
-    return () => clearInterval(interval);
-  }, [isHome, isHovered, nextProject]);
-
-  const project = displayProjects[currentIndex];
+    ? rawProjects.filter(p => ["Archi Studio", "Smart Finance Tracker", "Oceanus Energy"].includes(p.title)) 
+    : rawProjects;
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -41,21 +23,22 @@ export const Projects = ({ isHome = false }: { isHome?: boolean }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Auto-play sliding 1-by-1 logic
-  useEffect(() => {
-    if (!isHome) return;
-    const maxIndex = isMobile ? projects.length - 1 : projects.length - 3;
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => {
-        if (prev >= maxIndex) return 0;
-        return prev + 1;
-      });
-    }, 4000); // Shift every 4 seconds
-    return () => clearInterval(interval);
-  }, [isMobile, isHome]);
-
-  // HOME LAYOUT: Premium 3-column auto-sliding carousel (shifts 1-by-1)
+  // HOME LAYOUT: Premium 3-column auto-sliding carousel
   if (isHome) {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    
+    useEffect(() => {
+      const maxIndex = isMobile ? displayProjects.length - 1 : displayProjects.length - 3;
+      if (maxIndex <= 0) return;
+      const interval = setInterval(() => {
+        setCurrentIndex((prev) => {
+          if (prev >= maxIndex) return 0;
+          return prev + 1;
+        });
+      }, 4000);
+      return () => clearInterval(interval);
+    }, [isMobile, displayProjects.length]);
+
     const translation = -currentIndex * (isMobile ? 100 : 33.3333);
 
     return (
@@ -65,7 +48,7 @@ export const Projects = ({ isHome = false }: { isHome?: boolean }) => {
           transition={{ duration: 0.9, ease: [0.25, 1, 0.5, 1] }}
           className="flex w-full"
         >
-          {projects.map((project) => (
+          {displayProjects.map((project) => (
             <a 
               key={project.title}
               href={project.link}
@@ -78,10 +61,16 @@ export const Projects = ({ isHome = false }: { isHome?: boolean }) => {
                 alt={project.title} 
                 className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105" 
               />
-              {/* Elegant luxury black hover mask with spaced typography title */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-colors duration-500 flex items-center justify-center">
-                <span className="text-white text-[12px] md:text-[13px] uppercase tracking-[0.25em] font-normal opacity-0 group-hover:opacity-100 transform translate-y-3 group-hover:translate-y-0 transition-all duration-500">
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/75 transition-colors duration-500 flex flex-col items-center justify-center p-6 text-center">
+                <span 
+                  className="w-8 h-[1px] mb-3 opacity-0 group-hover:opacity-100 transition-all duration-700 scale-x-0 group-hover:scale-x-100" 
+                  style={{ backgroundColor: project.accent || '#D9A066' }}
+                />
+                <span className="text-white text-[12px] md:text-[13px] font-bold opacity-0 group-hover:opacity-100 transform translate-y-3 group-hover:translate-y-0 transition-all duration-500 font-helvetica">
                   {project.title}
+                </span>
+                <span className="text-white text-[10px] mt-1 opacity-0 group-hover:opacity-100 transition-all duration-700 delay-100 font-mono font-semibold">
+                  {project.category}
                 </span>
               </div>
             </a>
@@ -91,63 +80,57 @@ export const Projects = ({ isHome = false }: { isHome?: boolean }) => {
     );
   }
 
-  // PROJECTS PAGE LAYOUT: High-density 4-column grid
+  // DESKTOP LAYOUT: Perfect 16:9 (1920x1080) Grid (Fits exactly 1 page, 0% gaps, 0% single-item rows)
+  // Every card is strictly locked to aspect-[16/9] (representing 1920x1080 aspect ratio),
+  // dynamically scaling down via percentage widths as a uniform grid to fit exactly 1 scrollbar-free page.
   return (
-    <div className="w-full px-6 md:px-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-        {displayProjects.map((project, index) => (
-          <motion.div 
-            key={project.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-5% 0px -5% 0px" }}
-            transition={{ duration: 1, ease: editorialEase, delay: index * 0.05 }}
-            className="flex flex-col group"
-          >
-            {/* Project Image Container */}
-            <a 
-              href={project.link} 
-              target="_blank" 
+    <div className="w-full h-[calc(100vh-210px)] select-none px-8 flex items-center justify-center">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 w-full max-w-[1920px] mx-auto">
+        {displayProjects.map((project, index) => {
+          const imageSrc = project.image || (project.images && project.images[0]);
+          const isHovered = hoveredIndex === index;
+
+          return (
+            <motion.a
+              key={project.title}
+              href={project.link}
+              target="_blank"
               rel="noopener noreferrer"
-              className="w-full aspect-[16/9] overflow-hidden mb-6 block relative bg-surface-secondary"
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              className="col-span-1 w-full flex flex-col cursor-pointer group overflow-hidden"
+              animate={{
+                scale: isHovered ? 1.025 : 1,
+                zIndex: isHovered ? 20 : 10,
+              }}
+              transition={{ duration: 0.4, ease: editorialEase }}
             >
-              <img 
-                src={project.image || (project.images && project.images[0])} 
-                alt={project.title} 
-                className="w-full h-full object-cover transition-all duration-700 ease-editorial group-hover:scale-105" 
-              />
-              <div className="absolute top-4 left-4">
-                 <span className="text-[10px] uppercase tracking-widest text-white/60 font-medium">
-                    {project.year}
-                 </span>
+              {/* Perfect 16:9 Website Screenshot Preview (strictly aspect-[16/9] matching 1920x1080) */}
+              <div className="w-full aspect-[16/9] overflow-hidden bg-neutral-50 dark:bg-neutral-950 relative shadow-sm">
+                <img
+                  src={imageSrc}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-[1200ms] ease-[0.16,1,0.3,1] group-hover:scale-[1.03]"
+                  loading="lazy"
+                />
+                
+                {/* Accent indicator bar on hover */}
+                <div 
+                  className="absolute bottom-0 left-0 right-0 h-[3px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
+                  style={{ backgroundColor: project.accent || "#D9A066" }}
+                />
               </div>
-            </a>
 
-            {/* Project Info */}
-            <div className="flex flex-col space-y-3">
-              <div className="flex flex-col">
-                <span className="text-[11px] uppercase tracking-tighter mb-1 opacity-40 font-medium" style={{ color: project.accent }}>
-                  {project.category}
-                </span>
-                <h3 className="text-[18px] font-normal tracking-tight text-text-primary leading-tight">
+              {/* Tiny Elegant Editorial Caption Block (aligned cleanly at the bottom) */}
+              <div className="mt-2.5 shrink-0 text-[11px] md:text-[12px] font-normal leading-relaxed text-neutral-950 dark:text-neutral-50 font-sans tracking-wide">
+                <span className="font-bold border-b border-transparent group-hover:border-neutral-950 dark:group-hover:border-neutral-50 transition-colors">
                   {project.title}
-                </h3>
+                </span> 
+                <span className="opacity-60 font-mono text-[10px] ml-1.5">{project.category}</span>
               </div>
-
-              <div className="flex flex-wrap gap-2">
-                 {project.tags?.slice(0, 2).map((tag) => (
-                   <span key={tag} className="text-[10px] uppercase tracking-tighter text-text-primary/40 border-b border-text-primary/10 pb-0.5">
-                     {tag}
-                   </span>
-                 ))}
-              </div>
-
-              <p className="text-[14px] leading-relaxed text-text-primary/60 line-clamp-3">
-                {project.description}
-              </p>
-            </div>
-          </motion.div>
-        ))}
+            </motion.a>
+          );
+        })}
       </div>
     </div>
   );

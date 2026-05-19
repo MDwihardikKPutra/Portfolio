@@ -1,21 +1,21 @@
 import { useLocation, Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppContext } from "./context/AppContext";
 
-// Components & Pages
-import { Home } from "./pages/Home/Home";
-import { Experimental } from "./pages/Experimental/Experimental";
-import VisualArchive from "./pages/Gallery/VisualArchive";
-import ProjectsPage from "./pages/Projects/ProjectsPage";
-import Exp from "./pages/Exp/Exp";
+// Components & Pages (Lazy loaded for high performance bundle splitting)
+const Home = lazy(() => import("./pages/Home/Home").then(m => ({ default: m.Home })));
+const VisualArchive = lazy(() => import("./pages/Gallery/VisualArchive"));
+const ProjectsPage = lazy(() => import("./pages/Projects/ProjectsPage"));
+const Exp = lazy(() => import("./pages/Exp/Exp"));
+const IoTKeyManagement = lazy(() => import("./pages/Journals/IoTKeyManagement").then(m => ({ default: m.IoTKeyManagement })));
+
 import { MainLayout } from "./components/Layout/MainLayout";
 import { preloadAll } from "./utils/preloadImages";
 
 import "./index.css";
 
 const AppRoutes = () => {
-  const { t } = useAppContext();
   const [activeTab, setActiveTab] = useState("home");
   const handleSetActiveTab = useCallback((tab: string) => {
     setActiveTab(tab);
@@ -52,14 +52,20 @@ const AppRoutes = () => {
               path="/*"
               element={
                 <MainLayout activeTab={activeTab} setActiveTab={handleSetActiveTab}>
-                  <Routes>
-                    <Route path="/home" element={<Home setActiveTab={handleSetActiveTab} />} />
-                    <Route path="/visual-archive" element={<VisualArchive />} />
-                    <Route path="/projects" element={<ProjectsPage />} />
-                    <Route path="/experimental" element={<Experimental />} />
-                    <Route path="/exp" element={<Exp />} />
-                    <Route path="*" element={<Home setActiveTab={handleSetActiveTab} />} />
-                  </Routes>
+                  <Suspense fallback={
+                    <div className="w-full min-h-screen bg-white text-neutral-400 flex items-center justify-center font-mono text-[10px] tracking-[0.3em] uppercase">
+                      LOADING...
+                    </div>
+                  }>
+                    <Routes>
+                      <Route path="/home" element={<Home setActiveTab={handleSetActiveTab} />} />
+                      <Route path="/visual-archive" element={<VisualArchive />} />
+                      <Route path="/projects" element={<ProjectsPage />} />
+                      <Route path="/exp" element={<Exp />} />
+                      <Route path="/journal/iot-key-management" element={<IoTKeyManagement />} />
+                      <Route path="*" element={<Home setActiveTab={handleSetActiveTab} />} />
+                    </Routes>
+                  </Suspense>
                 </MainLayout>
               }
             />
@@ -70,6 +76,20 @@ const AppRoutes = () => {
   );
 };
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    // Delay scroll reset to run after AnimatePresence exit animation (exit duration: 200ms)
+    const timer = setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }, 220);
+    return () => clearTimeout(timer);
+  }, [pathname]);
+
+  return null;
+};
+
 function App() {
   useEffect(() => {
     // Run preloading in background without blocking the UI
@@ -78,6 +98,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <AppRoutes />
     </BrowserRouter>
   );

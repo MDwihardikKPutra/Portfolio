@@ -1,22 +1,23 @@
 import { useEffect } from "react";
 
 export const useDarkMode = () => {
-  const isDarkMode = false;
+  const isDarkMode = true;
   
   useEffect(() => {
-    // Forcefully remove dark class and clear legacy theme state to ensure Light Mode only
-    document.documentElement.classList.remove('dark');
+    // Forcefully add dark class to document element
+    document.documentElement.classList.add('dark');
     try {
-      localStorage.removeItem("darkMode");
+      localStorage.setItem("darkMode", "true");
     } catch (e) {
       console.warn("Storage access denied", e);
     }
   }, []);
 
   const toggleDarkMode = () => {
-    // No-op since dark mode is disabled
+    // No-op since dark mode is strictly enabled
   };
 
   return { isDarkMode, toggleDarkMode };
 };
+
 

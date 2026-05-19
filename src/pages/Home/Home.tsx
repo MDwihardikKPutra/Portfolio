@@ -1,11 +1,75 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { memo, useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Contact } from "../Contact/Contact";
+import { Contact } from "../../components/Contact/Contact";
 import { useAppContext } from "../../context/AppContext";
-import { SmokeBackground } from "../../components/Visuals/SmokeBackground";
+import { Gallery4 } from "../../components/Gallery4";
+import { GooeyText } from "../../components/Visuals/GooeyText";
+import { NebulaFooterBackground } from "../../components/Visuals/GLSLHills";
+import { EngineeringLog } from "../../components/Visuals/EngineeringLog";
+import { getProjects } from "../../data";
+import { PortfolioGallery } from "../../components/Visuals/PortfolioGallery";
+import { ConstellationBg } from "../../components/Visuals/ConstellationBg";
+import { SystemStatus } from "../../components/Visuals/SystemStatus";
+import { ExpandOnHover } from "../../components/Visuals/ExpandOnHover";
+
 
 const editorialEase = [0.22, 1, 0.36, 1];
+
+// --- PREMIUM MAGNETIC CURSOR ATTRACTION COMPONENT ---
+export function Magnetic({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!ref.current) return;
+    const { clientX, clientY } = e;
+    const { left, top, width, height } = ref.current.getBoundingClientRect();
+    const middleX = clientX - (left + width / 2);
+    const middleY = clientY - (top + height / 2);
+    // 35% magnetic pull strength
+    setPosition({ x: middleX * 0.35, y: middleY * 0.35 });
+  };
+
+  const handleMouseLeave = () => {
+    setPosition({ x: 0, y: 0 });
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      animate={{ x: position.x, y: position.y }}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      className="w-fit h-fit"
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+// --- STAGGERED SPRING ANIMATION VARIANTS FOR GRID OBJECTS ---
+const staggerParentVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.15,
+    }
+  }
+};
+
+const staggerChildVariants = {
+  hidden: { opacity: 0, y: 15, scale: 0.9 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 220, damping: 18 }
+  }
+};
 
 // --- UNIVERSAL EDITORIAL GRID COMPONENT (Collapsible Accordion Style) ---
 const EditorialSection = ({ 
@@ -21,10 +85,11 @@ const EditorialSection = ({
   return (
     <motion.section
       id={id}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0.25, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
-      transition={{ duration: 1.2, ease: editorialEase }}
+      viewport={{ once: false, margin: "-18% 0px -18% 0px" }}
+      transition={{ duration: 1.0, ease: editorialEase }}
+      style={{ willChange: "transform, opacity" }}
       className={`w-full border-t border-border-primary transition-colors duration-300 hover:bg-black/[0.01] ${bg} ${className}`}
     >
       <div 
@@ -90,30 +155,39 @@ const EditorialSection = ({
 
 export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => void }) => {
   const { scrollYProgress } = useScroll();
+  const { language } = useAppContext();
   const heroText = "Making things work, then making them matter.";
+
+  // Fetch and format real portfolio projects dynamically in active language
+  const rawProjects = getProjects(language);
+  const galleryItems = rawProjects.map(proj => ({
+    id: proj.title.toLowerCase().replace(/\s+/g, "-"),
+    title: proj.title,
+    description: proj.description,
+    href: proj.link,
+    image: proj.image || (proj.images && proj.images[0]) || "/placeholder-image.png"
+  }));
 
   // Accordion State
   const [openSections, setOpenSections] = useState({
-    about: false,      // Default closed
-    focus: false,
-    experience: false
+    profile: false      // Default closed
   });
 
-  const toggleSection = (section: 'about' | 'focus' | 'experience') => {
+  const toggleSection = (section: 'profile') => {
     setOpenSections(prev => ({
       ...prev,
       [section]: !prev[section]
     }));
   };
 
-  // Parallax for cinematic imagery
-  const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 1.05]);
+  // Parallax for cinematic imagery - Dynamic 25% Widescreen Zoom
+  const heroScale = useTransform(scrollYProgress, [0, 0.25], [1, 1.25]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.9]);
 
   // Section observer for Navbar
   useEffect(() => {
     if (!setActiveTab) return;
-    const sections = ["home", "about", "focus", "experience", "beyond", "contact"];
+    const sections = ["home", "profile", "contact"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -142,7 +216,7 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
 
       {/* SECTION 1: HERO */}
       <section id="home" className="w-full pt-44 pb-0">
-        <div className="flex w-full px-6 md:px-10 mb-12 overflow-visible pb-2">
+        <div className="flex w-full px-4 md:px-8 lg:px-12 mb-12 overflow-visible pb-2">
           <div className="col-span-12">
             <h1 className="text-[28px] md:text-[36px] lg:text-[42px] leading-[1.05] font-normal tracking-tight whitespace-normal md:whitespace-nowrap text-text-primary">
               {heroText.split("").map((char, index) => (
@@ -163,12 +237,12 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
           </div>
         </div>
 
-        {/* Panoramic Hero Image */}
+        {/* Panoramic Hero Image - Majestic Shutter Opening Reveal */}
         <div className="w-full aspect-[1920/720] overflow-hidden relative group">
           <motion.img
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 2, ease: editorialEase, delay: 1 }}
+            initial={{ clipPath: "inset(45% 0% 45% 0%)", opacity: 0, scale: 1.05 }}
+            animate={{ clipPath: "inset(0% 0% 0% 0%)", opacity: 1, scale: 1 }}
+            transition={{ duration: 1.8, ease: editorialEase, delay: 0.6 }}
             style={{ scale: heroScale, opacity: heroOpacity, willChange: "transform" }}
             src="/Hero/5.png"
             alt="Cinematic Portrait"
@@ -177,146 +251,396 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
         </div>
       </section>
 
-      {/* SECTION 2: ABOUT */}
-      <EditorialSection 
-        label="About" 
-        heading="Mokhamad Dwihardik Kusuma Putra / Diko Putra" 
-        id="about"
-        isOpen={openSections.about}
-        onToggle={() => toggleSection("about")}
-      >
-        <div className="space-y-6">
-          <p className="text-editorial-body">
-            IT Infrastructure Engineer and Web Developer based in Bandung, Indonesia. My work focuses on building digital products, configuring server environments, and managing enterprise networks. I develop software architectures and IT infrastructures to support operational workflows, data accessibility, and system integrations.
-          </p>
-        </div>
-      </EditorialSection>
-
-      {/* SECTION 3: AREAS OF FOCUS */}
-      <EditorialSection 
-        label="Focus" 
-        heading="My technical scope" 
-        id="focus"
-        isOpen={openSections.focus}
-        onToggle={() => toggleSection("focus")}
-      >
-        <div className="flex flex-wrap gap-2.5">
-          {[
-            "Software Development",
-            "API Integration",
-            "Network Configuration",
-            "Network Security (MikroTik)",
-            "VLAN & Firewall Management",
-            "Server Administration (Linux)",
-            "Storage Management (TrueNAS)",
-            "Nextcloud Solutions",
-            "Interface Design Implementation",
-            "Minimalist & Spatial UI",
-            "IT Troubleshooting",
-            "Hardware Maintenance"
-          ].map((pill, i) => (
-            <motion.span
-              key={pill}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05, duration: 0.8, ease: editorialEase }}
-              className="pill-blue cursor-default"
-            >
-              {pill}
-            </motion.span>
-          ))}
-        </div>
-      </EditorialSection>
-
-      {/* SECTION 4: EXPERIENCE */}
-      <EditorialSection 
-        label="Experience" 
-        heading="System administration, network engineering, and web development." 
-        id="experience"
-        isOpen={openSections.experience}
-        onToggle={() => toggleSection("experience")}
-      >
-        <div className="space-y-6">
-          <p className="text-editorial-body">
-            My experience covers <strong>web application development</strong> and <strong>IT infrastructure management</strong> for business and operational environments. I develop <strong>web-based systems</strong> and <strong>internal business applications</strong> while also handling <strong>Linux administration</strong>, database configuration, and office network infrastructure (<strong>MikroTik</strong>).
-          </p>
-          <p className="text-editorial-body">
-            In addition, I manage <strong>data storage</strong> and <strong>file-sharing systems</strong> (<strong>TrueNAS</strong>, <strong>Nextcloud</strong>), alongside database and network administration. I also develop <strong>custom web platforms</strong> and <strong>web architectures</strong> for small and medium-sized businesses.
-          </p>
-          <div className="pt-6">
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="btn-editorial"
-            >
-              Explore Full Resume
-            </motion.button>
-          </div>
-        </div>
-      </EditorialSection>
-
-      {/* SECTION 6: BEYOND THE SCREEN */}
-      <section id="beyond" className="w-full pb-10 border-t border-border-primary">
-        <div className="w-full aspect-[1920/480] max-h-[480px] overflow-hidden relative group bg-[#030c16]">
-          {/* Dynamic WebGL Smoke Canvas */}
-          <SmokeBackground smokeColor="#00d2ff" />
-
-          {/* Text Overlay */}
-          <div className="absolute inset-0 flex flex-col justify-center items-center text-white z-10 bg-black/10 backdrop-blur-[1px]">
-            <motion.span
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5, duration: 1, ease: editorialEase }}
-              className="text-[10px] md:text-[12px] tracking-[0.4em] font-mono text-[#00d2ff] mb-4"
-            >
-              Beyond
-            </motion.span>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.7, duration: 1, ease: editorialEase }}
-              className="text-[24px] md:text-[36px] lg:text-[42px] font-normal tracking-tight text-center px-6 mb-8 text-white"
-            >
-              Making beyond the screen.
-            </motion.h2>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 1, duration: 1 }}
-              className="flex gap-8 md:gap-12"
-            >
-              <Link
-                to="/visual-archive"
-                className="text-[14px] md:text-[16px] tracking-[0.05em] font-medium border-b border-white/20 pb-1 hover:border-white text-white transition-all duration-300"
-              >
-                Visual Archive →
-              </Link>
-              <Link
-                to="/exp"
-                className="text-[14px] md:text-[16px] tracking-[0.05em] font-medium border-b border-white/20 pb-1 hover:border-white text-white transition-all duration-300"
-              >
-                Experimental Space →
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 7: CONTACT */}
+      {/* SECTION 2: PROFILE (COMBINED ABOUT, SCOPE & EXPERIENCE WITH ORIGINAL 3-COLUMN LAYOUT) */}
       <motion.section
-        id="contact"
+        id="profile"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
-        transition={{ duration: 1.5, ease: editorialEase }}
-        className="w-full pt-16 pb-0"
+        transition={{ duration: 1.2, ease: editorialEase }}
+        className="w-full border-t border-border-primary transition-colors duration-300 hover:bg-black/[0.005]"
       >
-        <Contact />
+        {/* Accordion Header Row (Full 12-Column Grid) */}
+        <motion.div 
+          onClick={() => toggleSection("profile")}
+          whileTap={{ scale: 0.995 }}
+          transition={{ duration: 0.3, ease: editorialEase }}
+          className="editorial-grid items-center py-10 cursor-pointer select-none group origin-center"
+        >
+          {/* Column 1: Label */}
+          <div className="col-span-12 lg:col-span-3 flex justify-between items-center">
+            <motion.span 
+              whileHover={{ scale: 1.03 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="editorial-label font-normal origin-left inline-block"
+            >
+              {language === 'id' ? "Profil" : "Profile"}
+            </motion.span>
+          </div>
+
+          {/* Column 2: Full Name Heading */}
+          <div className="col-span-12 lg:col-span-4 mt-2 lg:mt-0 lg:pr-20">
+            <motion.h2 
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="text-[15px] md:text-[16px] leading-relaxed font-normal tracking-tight text-text-primary group-hover:text-text-primary/70 transition-colors duration-300 origin-left inline-block"
+            >
+              Mokhamad Dwihardik Kusuma Putra / Diko Putra
+            </motion.h2>
+          </div>
+
+          {/* Column 3: Metadata Text & Rotate Arrow Icon */}
+          <div className="col-span-12 lg:col-span-5 flex justify-between items-center mt-4 lg:mt-0">
+            <motion.span 
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="text-[15px] md:text-[16px] leading-relaxed font-normal tracking-tight text-text-primary/40 group-hover:text-text-primary/70 transition-colors duration-300 origin-right inline-block"
+            >
+              Infrastructure & Web Development
+            </motion.span>
+            <motion.div 
+              animate={{ rotate: openSections.profile ? 180 : 0 }}
+              transition={{ duration: 0.4, ease: editorialEase }}
+              className="w-8 h-8 rounded-full bg-neutral-900 flex items-center justify-center text-white shadow-sm group-hover:bg-neutral-800 transition-colors duration-300"
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className="w-3.5 h-3.5 text-white"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Collapsible Area */}
+        <div className="overflow-hidden">
+          <motion.div
+            initial={false}
+            animate={{ 
+              height: openSections.profile ? "auto" : 0,
+              opacity: openSections.profile ? 1 : 0
+            }}
+            transition={{ duration: 0.6, ease: editorialEase }}
+            className="w-full origin-top"
+          >
+            <div className="pb-10 space-y-12">
+              
+              {/* SUB-SECTION 1: ABOUT (3-Column Layout) */}
+              <div className="editorial-grid pt-10 border-t border-border-primary/30 items-start">
+                <div className="col-span-12 lg:col-span-3">
+                  <motion.span 
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                    className="editorial-label font-normal origin-left inline-block"
+                  >
+                    {language === 'id' ? "Tentang" : "About"}
+                  </motion.span>
+                </div>
+                <div className="col-span-12 lg:col-span-4 mt-2 lg:mt-0 lg:pr-20">
+                  <motion.h3 
+                    whileHover={{ scale: 1.03 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-[15px] md:text-[16px] leading-relaxed font-normal text-text-primary origin-left inline-block"
+                  >
+                    {language === 'id' ? "Menjembatani sistem & perangkat lunak." : "Bridging software & system operations."}
+                  </motion.h3>
+                </div>
+                <div className="col-span-12 lg:col-span-5 mt-4 lg:mt-0">
+                  <motion.p 
+                    whileHover={{ scale: 1.01 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-editorial-body text-text-primary font-light origin-left block"
+                  >
+                    {language === 'id' 
+                      ? "Web developer spesialis infrastruktur yang menjembatani aplikasi web dan sistem bare-metal. Saya merekayasa perangkat lunak internal kustom, konfigurasi server Linux tangguh, dan merancang jaringan perusahaan yang aman — membangun produk digital untuk hardware tempat mereka berjalan."
+                      : "An infrastructure-oriented web developer bridging web applications and bare-metal systems. I build custom internal software, configure resilient Linux servers, and deploy secure enterprise networks — creating digital products designed for the hardware they run on."
+                    }
+                  </motion.p>
+                </div>
+              </div>
+
+              {/* SUB-SECTION 2: SCOPE (3-Column Layout) */}
+              <div className="editorial-grid pt-10 border-t border-border-primary/30 items-start">
+                <div className="col-span-12 lg:col-span-3">
+                  <motion.span 
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                    className="editorial-label font-normal origin-left inline-block"
+                  >
+                    {language === 'id' ? "Cakupan" : "Scope"}
+                  </motion.span>
+                </div>
+                <div className="col-span-12 lg:col-span-4 mt-2 lg:mt-0 lg:pr-20">
+                  <motion.h3 
+                    whileHover={{ scale: 1.03 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-[15px] md:text-[16px] leading-relaxed font-normal text-text-primary origin-left inline-block"
+                  >
+                    {language === 'id' ? "Kategori keahlian terfokus." : "Focused technical disciplines."}
+                  </motion.h3>
+                </div>
+                <div className="col-span-12 lg:col-span-5 mt-4 lg:mt-0 space-y-6">
+                  {/* Category 1: Infrastructure */}
+                  <div className="space-y-2.5">
+                    <motion.span 
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-[11px] md:text-[12px] font-normal text-text-primary/40 block origin-left w-fit"
+                    >
+                      Infrastructure
+                    </motion.span>
+                    <motion.div 
+                      variants={staggerParentVariants}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      className="flex flex-wrap gap-2"
+                    >
+                      {[
+                        "Linux Server Administration",
+                        "MikroTik Networking",
+                        "VLAN & Firewall Management",
+                        "Self-Hosted Storage (TrueNAS)"
+                      ].map((pill) => (
+                        <motion.span
+                          key={pill}
+                          variants={staggerChildVariants}
+                          whileHover={{ scale: 1.08, y: -2 }}
+                          whileTap={{ scale: 0.95 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                          className="pill-blue cursor-default text-xs"
+                        >
+                          {pill}
+                        </motion.span>
+                      ))}
+                    </motion.div>
+                  </div>
+
+                  {/* Category 2: Development */}
+                  <div className="space-y-2.5">
+                    <motion.span 
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-[11px] md:text-[12px] font-normal text-text-primary/40 block origin-left w-fit"
+                    >
+                      Development
+                    </motion.span>
+                    <motion.div 
+                      variants={staggerParentVariants}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      className="flex flex-wrap gap-2"
+                    >
+                      {[
+                        "TypeScript & React",
+                        "Laravel & PHP",
+                        "Next.js & Node.js",
+                        "PostgreSQL & MySQL",
+                        "Custom Web Platforms",
+                        "API Systems & Integrations",
+                        "Interface Implementation",
+                        "Spatial & Minimalist UI"
+                      ].map((pill) => (
+                        <motion.span
+                          key={pill}
+                          variants={staggerChildVariants}
+                          whileHover={{ scale: 1.08, y: -2 }}
+                          whileTap={{ scale: 0.95 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                          className="pill-blue cursor-default text-xs"
+                        >
+                          {pill}
+                        </motion.span>
+                      ))}
+                    </motion.div>
+                  </div>
+                </div>
+              </div>
+
+              {/* SUB-SECTION 3: EXPERIENCE (3-Column Layout) */}
+              <div className="editorial-grid pt-10 border-t border-border-primary/30 items-start">
+                <div className="col-span-12 lg:col-span-3">
+                  <motion.span 
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                    className="editorial-label font-normal origin-left inline-block"
+                  >
+                    {language === 'id' ? "Pengalaman" : "Experience"}
+                  </motion.span>
+                </div>
+                <div className="col-span-12 lg:col-span-4 mt-2 lg:mt-0 lg:pr-20">
+                  <motion.h3 
+                    whileHover={{ scale: 1.03 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-[15px] md:text-[16px] leading-relaxed font-normal text-text-primary origin-left inline-block"
+                  >
+                    {language === 'id' ? "Rekayasa sistem perusahaan." : "Enterprise systems and operations."}
+                  </motion.h3>
+                </div>
+                <div className="col-span-12 lg:col-span-5 mt-4 lg:mt-0 space-y-6">
+                  <motion.p 
+                    whileHover={{ scale: 1.01 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-editorial-body text-text-primary origin-left block"
+                  >
+                    {language === 'id'
+                      ? "Latar belakang profesional saya berfokus pada pengembangan aplikasi web dan operasional sistem secara langsung. Saya mengonfigurasi instansi server Linux tangguh, mengoptimalkan database relasional, dan mengelola infrastruktur jaringan perusahaan berbasis MikroTik."
+                      : "My professional background focuses on web application development and hands-on system operations. I configure resilient Linux server instances, optimize relational databases, and manage corporate network infrastructures powered by MikroTik."
+                    }
+                  </motion.p>
+                  <motion.p 
+                    whileHover={{ scale: 1.01 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-editorial-body text-text-primary origin-left block"
+                  >
+                    {language === 'id'
+                      ? "Selain itu, saya merekayasa lingkungan penyimpanan self-hosted (TrueNAS, Nextcloud) and merancang solusi web kustom untuk mengoptimalkan alur kerja operasional internal bisnis kecil dan menengah."
+                      : "Additionally, I engineer self-hosted storage environments (TrueNAS, Nextcloud) and deploy custom web solutions designed to optimize internal operational workflows for small and medium-sized businesses."
+                    }
+                  </motion.p>
+                  <div className="pt-4">
+                    <Magnetic>
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="pill-blue block w-fit"
+                      >
+                        {language === 'id' ? "Jelajahi Resume Lengkap" : "Explore Full Resume"}
+                      </motion.button>
+                    </Magnetic>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* SECTION 5.5: GOOEY TEXT TRANSITION SPACE (Sleek Dark Theme Background) */}
+      <div className="py-6 md:py-8 px-4 md:px-8 lg:px-12 w-full bg-bg-primary flex items-center justify-start overflow-hidden border-t border-border-primary">
+        <GooeyText 
+          texts={[
+            "Making things work,",
+            "then making them matter."
+          ]}
+          morphTime={1.5}
+          cooldownTime={0.8}
+          textClassName="text-[9.5vw] sm:text-[7.5vw] md:text-[5.8vw] lg:text-[5.2vw] xl:text-[5.1vw] whitespace-nowrap font-medium tracking-tighter font-helvetica text-text-primary"
+        />
+      </div>
+
+      {/* SECTION 5.4: SYSTEM STATUS & TECH EXPLORER */}
+      <motion.div
+        initial={{ opacity: 0.25, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, margin: "-18% 0px -18% 0px" }}
+        transition={{ duration: 1.0, ease: editorialEase }}
+        style={{ willChange: "transform, opacity" }}
+      >
+        <SystemStatus />
+      </motion.div>
+
+      {/* SECTION 5.8: EDITORIAL PARALLAX VISUAL ACCORDION STRIP */}
+      <motion.div
+        initial={{ opacity: 0.25, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, margin: "-18% 0px -18% 0px" }}
+        transition={{ duration: 1.0, ease: editorialEase }}
+        style={{ willChange: "transform, opacity" }}
+      >
+        <ExpandOnHover />
+      </motion.div>
+
+      {/* SECTION 5.6: CONSTELLATION SECTION (Interactive Network Visualizer) */}
+      <motion.section
+        id="constellation"
+        initial={{ opacity: 0.25, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, margin: "-18% 0px -18% 0px" }}
+        transition={{ duration: 1.0, ease: editorialEase }}
+        style={{ willChange: "transform, opacity" }}
+        className="w-full relative h-[500px] md:h-[650px] overflow-hidden bg-black border-t border-b border-neutral-800 flex flex-col justify-start pt-12"
+      >
+        {/* Floating Centered Minimalist Header */}
+        <div className="absolute top-12 left-0 right-0 z-10 w-full flex flex-col items-center justify-center text-center px-4 pointer-events-none">
+          <h2 className="text-[22px] md:text-[28px] font-light tracking-tight text-text-primary">
+            {language === 'id' ? "Konstelasi" : "Constellation"}
+          </h2>
+        </div>
+
+        {/* Interactive Constellation Canvas */}
+        <ConstellationBg showLabels={true} pages={1} />
+      </motion.section>
+
+      {/* SECTION 5.5: ENGINEERING LOG (Articles & Technical Writings) */}
+      <motion.div
+        initial={{ opacity: 0.25, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, margin: "-18% 0px -18% 0px" }}
+        transition={{ duration: 1.0, ease: editorialEase }}
+        style={{ willChange: "transform, opacity" }}
+      >
+        <EngineeringLog />
+      </motion.div>
+
+      {/* SECTION 5: GALLERY / CASE STUDIES (3D Overlapping Card Marquee for Selected Works) - Placed right above footer */}
+      <motion.div
+        initial={{ opacity: 0.25, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, margin: "-18% 0px -18% 0px" }}
+        transition={{ duration: 1.0, ease: editorialEase }}
+        style={{ willChange: "transform, opacity" }}
+      >
+        <PortfolioGallery
+          title={language === 'id' ? "Karya Terpilih" : "Selected Works"}
+          archiveButton={{
+            text: language === 'id' ? "Lihat Semua Proyek" : "View All Projects",
+            href: "/projects"
+          }}
+          images={(() => {
+            const base = galleryItems.map(item => ({
+              src: item.image,
+              alt: item.title,
+              title: item.title
+            }));
+            if (base.length === 0) return [];
+            return [
+              base[base.length - 2] || base[0],
+              base[base.length - 1] || base[0],
+              ...base,
+              base[0],
+              base[1] || base[0]
+            ];
+          })()}
+        />
+      </motion.div>
+
+      {/* SECTION 6: CONNECT WITH WEBGL BACKGROUND */}
+      <motion.section
+        id="contact"
+        initial={{ opacity: 0.25, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, margin: "-18% 0px -18% 0px" }}
+        transition={{ duration: 1.5, ease: editorialEase }}
+        style={{ willChange: "transform, opacity" }}
+        className="w-full relative py-20 md:py-28 overflow-hidden bg-[#030c16]"
+      >
+        {/* Dynamic WebGL Nebula Canvas */}
+        <NebulaFooterBackground />
+
+        {/* Content Wrapper */}
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10">
+          <Contact />
+        </div>
       </motion.section>
 
     </div>

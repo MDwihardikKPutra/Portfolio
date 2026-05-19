@@ -1,6 +1,5 @@
 import { useInView, motion, AnimatePresence } from "framer-motion";
 import { memo, useRef, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 interface ConstellationBgProps {
   pages?: number;
@@ -9,15 +8,15 @@ interface ConstellationBgProps {
 }
 
 const DEFAULT_LABELS: Record<string, string> = {
-  "About": "Navigation Start",
-  "Core": "The Manifesto",
-  "Galaxy": "Digital Installation",
-  "Works": "Engineering Projects",
-  "Archive": "Photography Archive",
-  "Connect": "Let's Bridge Hearts",
-  "宮本 武蔵": "The Way of the Void",
-  "Perspective": "35mm Minimalist Lens",
-  "Connection": "Technology should bridge hearts, not just data"
+  "About": "Diko Putra — Infrastructure-minded Web Developer based in Bandung, Indonesia.",
+  "Core": "Bridging the gap between software operations and bare-metal server infrastructure.",
+  "Galaxy": "Custom internal systems, secure Linux servers, and resilient network architectures.",
+  "Works": "Sovereign-grade engineering projects, custom APIs, and high-performance React & Laravel platforms.",
+  "Archive": "A 35mm manual lens photography collection capturing street, mechanical, and raw visual aesthetics.",
+  "Connect": "Let's build secure networks and responsive web platforms. Get in touch for technical integrations.",
+  "宮本 武蔵": "The Way of the Void — Dokkodo (The Path of Aloneness). Focus on mastering the single strike.",
+  "Perspective": "Viewing the world as an interconnected web of hardware, code, and visual grain.",
+  "Connection": "Technology should bridge hearts, not just data — creating digital empathy through code."
 };
 
 export const ConstellationBg = memo(({ 
@@ -28,7 +27,6 @@ export const ConstellationBg = memo(({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef);
-  const navigate = useNavigate();
   
   const [activeTooltip, setActiveTooltip] = useState<{ label: string, content: string, x: number, y: number } | null>(null);
 
@@ -90,13 +88,16 @@ export const ConstellationBg = memo(({
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           
+          // Elegant white theme text for labels
+          ctx.fillStyle = this.isPinned ? "rgba(255, 255, 255, 0.95)" : "rgba(255, 255, 255, 0.7)";
+          
           // No offset for pinned (branding) to keep it perfectly centered on the lines
           const offsetY = this.isPinned ? 0 : 15;
           ctx.fillText(this.label, this.x, this.y - offsetY);
         }
       }
 
-      update(paddingX: number, paddingY: number, safeWidth: number, safeHeight: number) {
+      update(paddingX: number, paddingY: number, safeWidth: number, safeHeight: number, layoutWidth: number, layoutHeight: number) {
         if (this.isPinned) return;
 
         // --- ULTRA-SLOW PERPETUAL DRIFT ---
@@ -125,9 +126,9 @@ export const ConstellationBg = memo(({
           if (this.y > paddingY + safeHeight - 20) { this.vy *= -1; }
         } else {
           if (this.x < 10) { this.vx *= -1; }
-          if (this.x > canvas.width - 10) { this.vx *= -1; }
+          if (this.x > layoutWidth - 10) { this.vx *= -1; }
           if (this.y < 10) { this.vy *= -1; }
-          if (this.y > canvas.height - 10) { this.vy *= -1; }
+          if (this.y > layoutHeight - 10) { this.vy *= -1; }
         }
 
         let mdx = mouse.x - this.x;
@@ -143,13 +144,20 @@ export const ConstellationBg = memo(({
     }
 
     const init = () => {
-      canvas.width = window.innerWidth * pages;
-      canvas.height = window.innerHeight;
+      const parentWidth = containerRef.current ? containerRef.current.clientWidth : window.innerWidth;
+      const parentHeight = containerRef.current ? containerRef.current.clientHeight : window.innerHeight;
+
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = parentWidth * pages * dpr;
+      canvas.height = parentHeight * dpr;
+      
       particles = [];
-      const paddingX = window.innerWidth * 0.1;
-      const paddingY = window.innerHeight * 0.2;
-      const safeWidth = canvas.width - paddingX * 2;
-      const safeHeight = canvas.height - paddingY * 2;
+      const layoutWidth = parentWidth * pages;
+      const layoutHeight = parentHeight;
+      const paddingX = parentWidth * 0.1;
+      const paddingY = parentHeight * 0.2;
+      const safeWidth = layoutWidth - paddingX * 2;
+      const safeHeight = layoutHeight - paddingY * 2;
       
       labelKeys.forEach(label => {
         const p = new Particle(label);
@@ -159,25 +167,25 @@ export const ConstellationBg = memo(({
       });
 
       // Special Pinned Center Title
-      const centerP = new Particle("Dyko Putra", true);
-      centerP.x = canvas.width / 2;
-      centerP.y = canvas.height / 2;
+      const centerP = new Particle("Diko Putra", true);
+      centerP.x = layoutWidth / 2;
+      centerP.y = layoutHeight / 2;
       centerP.size = 4;
       centerP.opacity = 1;
       particles.push(centerP);
 
-      const extraCount = (window.innerWidth < 768 ? 150 : 400) * pages;
+      const extraCount = (window.innerWidth < 768 ? 60 : 180) * pages;
       for (let i = 0; i < extraCount; i++) {
         const p = new Particle();
         p.vx = (Math.random() - 0.5) * 0.6;
         p.vy = (Math.random() - 0.5) * 0.6;
-        p.x = Math.random() * canvas.width;
-        p.y = Math.random() * canvas.height;
+        p.x = Math.random() * layoutWidth;
+        p.y = Math.random() * layoutHeight;
         particles.push(p);
       }
     };
 
-    const drawLines = () => {
+    const drawLines = (layoutWidth: number) => {
       const labeledParticles = particles.filter(p => !!p.label);
 
       for (let i = 0; i < labeledParticles.length; i++) {
@@ -189,7 +197,7 @@ export const ConstellationBg = memo(({
             const distSq = dx * dx + dy * dy;
             const dist = Math.sqrt(distSq);
             
-            const opacity = Math.max(0.05, 0.3 - (dist / canvas.width) * 0.4);
+            const opacity = Math.max(0.05, 0.3 - (dist / layoutWidth) * 0.4);
             ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
             ctx.lineWidth = 0.6;
             ctx.beginPath();
@@ -201,13 +209,22 @@ export const ConstellationBg = memo(({
     };
 
     const animate = () => {
+      const dpr = window.devicePixelRatio || 1;
+      ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset scale
       ctx.fillStyle = "#000000";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
-      const paddingX = window.innerWidth * 0.1;
-      const paddingY = window.innerHeight * 0.2;
-      const safeWidth = canvas.width - paddingX * 2;
-      const safeHeight = canvas.height - paddingY * 2;
+      ctx.scale(dpr, dpr); // Apply High-DPI scale transform once per frame
+      
+      const parentWidth = containerRef.current ? containerRef.current.clientWidth : window.innerWidth;
+      const parentHeight = containerRef.current ? containerRef.current.clientHeight : window.innerHeight;
+      const layoutWidth = parentWidth * pages;
+      const layoutHeight = parentHeight;
+
+      const paddingX = parentWidth * 0.1;
+      const paddingY = parentHeight * 0.2;
+      const safeWidth = layoutWidth - paddingX * 2;
+      const safeHeight = layoutHeight - paddingY * 2;
 
       let foundHover = false;
       const labeledParticles = particles.filter(p => !!p.label);
@@ -271,7 +288,7 @@ export const ConstellationBg = memo(({
           }
         }
 
-        p1.update(paddingX, paddingY, safeWidth, safeHeight);
+        p1.update(paddingX, paddingY, safeWidth, safeHeight, layoutWidth, layoutHeight);
         p1.draw();
 
         if (p1.label && !foundHover && showLabels) {
@@ -290,7 +307,7 @@ export const ConstellationBg = memo(({
         }
       }
 
-      drawLines();
+      drawLines(layoutWidth);
       
       if (!foundHover) setActiveTooltip(null);
       animationFrameId = requestAnimationFrame(animate);
@@ -302,46 +319,24 @@ export const ConstellationBg = memo(({
       mouse.y = e.clientY - rect.top;
     };
 
-    const handleClick = (e: MouseEvent) => {
-      if (!showLabels) return;
-      const rect = canvas.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const clickY = e.clientY - rect.top;
-
-      particles.filter(p => !!p.label).forEach(p => {
-        const dx = clickX - p.x;
-        const dy = clickY - p.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        
-        if (dist < 30) {
-          const routeMap: Record<string, string> = {
-            "About": "/about",
-            "Core": "/manifesto",
-            "Galaxy": "/galaxy",
-            "Works": "/projects",
-            "Archive": "/gallery",
-            "Connect": "/contact"
-          };
-
-          const targetRoute = routeMap[p.label!];
-          if (targetRoute) {
-            navigate(targetRoute);
-          }
-        }
-      });
-    };
-
     init();
     animate();
     window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("click", handleClick);
-    window.addEventListener("resize", init);
+
+    let resizeTimeout: NodeJS.Timeout;
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        init();
+      }, 150);
+    };
+    window.addEventListener("resize", handleResize);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      clearTimeout(resizeTimeout);
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("click", handleClick);
-      window.removeEventListener("resize", init);
+      window.removeEventListener("resize", handleResize);
     };
   }, [pages, labelContents, showLabels]);
 
@@ -349,7 +344,7 @@ export const ConstellationBg = memo(({
   return (
     <div 
       ref={containerRef}
-      className={`absolute inset-0 z-0 w-full h-full ${activeTooltip ? 'cursor-pointer pointer-events-auto' : 'pointer-events-none'}`}
+      className={`absolute inset-0 z-0 w-full h-full ${activeTooltip ? 'pointer-events-auto' : 'pointer-events-none'}`}
     >
       <canvas 
         ref={canvasRef} 
