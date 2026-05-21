@@ -8,15 +8,14 @@ interface ConstellationBgProps {
 }
 
 const DEFAULT_LABELS: Record<string, string> = {
-  "About": "Diko Putra — Infrastructure-minded Web Developer based in Bandung, Indonesia.",
-  "Core": "Bridging the gap between software operations and bare-metal server infrastructure.",
-  "Galaxy": "Custom internal systems, secure Linux servers, and resilient network architectures.",
-  "Works": "Sovereign-grade engineering projects, custom APIs, and high-performance React & Laravel platforms.",
-  "Archive": "A 35mm manual lens photography collection capturing street, mechanical, and raw visual aesthetics.",
-  "Connect": "Let's build secure networks and responsive web platforms. Get in touch for technical integrations.",
-  "宮本 武蔵": "The Way of the Void — Dokkodo (The Path of Aloneness). Focus on mastering the single strike.",
-  "Perspective": "Viewing the world as an interconnected web of hardware, code, and visual grain.",
-  "Connection": "Technology should bridge hearts, not just data — creating digital empathy through code."
+  "Presence": "Diko Putra — Based in Bandung, Indonesia.",
+  "Mantra": "Making things work, then making them disappear.",
+  "Orbit": "Haruki Murakami's book.",
+  "Routine": "Reading in transit, observing routines, and organizing personal spaces.",
+  "Fragments": "35mm manual lens.",
+  "Sight": "Whitespace, analog grain, and introspective narratives.",
+  "Anchor": "宮本 武蔵 (Miyamoto Musashi) — Dokkodo.",
+  "Circle": "Committing to deep-rooted."
 };
 
 export const ConstellationBg = memo(({ 
