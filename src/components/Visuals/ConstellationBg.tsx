@@ -422,21 +422,17 @@ export const ConstellationBg = memo(({
       <AnimatePresence>
         {activeTooltip && (
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ 
-              opacity: 1, 
-              left: activeTooltip.x, 
-              top: activeTooltip.y + 15 
-            }}
-            exit={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ 
-              type: "spring",
-              damping: 20,
-              stiffness: 200,
-              opacity: { duration: 0.2 }
+              duration: 0.2,
+              ease: "easeOut"
             }}
             className="absolute z-50 pointer-events-none"
             style={{ 
+              left: activeTooltip.x, 
+              top: activeTooltip.y + 20,
               translateX: '-50%'
             }}
           >
