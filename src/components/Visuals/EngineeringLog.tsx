@@ -49,9 +49,9 @@ export const EngineeringLog = () => {
   const { language } = useAppContext();
 
   return (
-    <section className="w-full bg-bg-primary pb-12 md:pb-16 pt-0 border-t border-border-primary">
-      {/* Container - Fullwidth Flush with slight safety padding */}
-      <div className="w-full px-4 md:px-8 lg:px-12">
+    <section className="w-full bg-bg-primary pt-16 pb-12 md:pb-16 border-t border-border-primary">
+      {/* Container - Aligned with max-w-6xl mx-auto grid */}
+      <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-16">
         
         {/* Centered Minimalist Header */}
         <div className="w-full flex flex-col items-center justify-center text-center mb-10 md:mb-12">
@@ -59,13 +59,13 @@ export const EngineeringLog = () => {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="text-[22px] md:text-[28px] font-light tracking-tight text-text-primary"
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as any }}
+            className="text-[4.75vw] sm:text-[3.75vw] md:text-[2.9vw] lg:text-[2.6vw] xl:text-[2.55vw] font-medium tracking-tighter font-helvetica text-text-primary"
           >
             Log
           </motion.h2>
         </div>
-
+ 
         {/* List - Compressed */}
         <div className="w-full flex flex-col">
           <div className="w-full border-t border-border-primary">
@@ -75,7 +75,7 @@ export const EngineeringLog = () => {
                 initial: { opacity: 0, y: 15 },
                 whileInView: { opacity: 1, y: 0 },
                 viewport: { once: true, margin: "-10% 0px -10% 0px" },
-                transition: { duration: 0.6, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] },
+                transition: { duration: 0.6, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] as any },
                 className: "group flex flex-col sm:flex-row items-start sm:items-center justify-between py-5 md:py-6 border-b border-border-primary hover:bg-surface/50 transition-colors duration-300 cursor-pointer"
               };
 

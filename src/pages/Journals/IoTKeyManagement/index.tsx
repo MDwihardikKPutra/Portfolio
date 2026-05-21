@@ -1,12 +1,9 @@
-import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../../../context/AppContext";
 
 import { articleData } from "./journalData";
-import { JournalHeader } from "./JournalHeader";
 import { JournalFlowchart } from "./JournalFlowchart";
-import { JournalHardwareGrid, JournalNetworkGrid } from "./JournalImageGrid";
 
 export const IoTKeyManagement = () => {
   const { language } = useAppContext();
@@ -21,14 +18,32 @@ export const IoTKeyManagement = () => {
   };
 
   useEffect(() => {
+    const isDesktop = window.innerWidth >= 1024;
+    const htmlEl = document.documentElement;
+    const originalHtmlOverflow = htmlEl.style.overflow;
+
+    if (isDesktop) {
+      htmlEl.style.overflow = "hidden";
+    }
+
     // Initial sync on mount to capture cached layout dimensions
     syncHeight();
     const handleLoad = () => syncHeight();
+    const handleResize = () => {
+      syncHeight();
+      if (window.innerWidth >= 1024) {
+        htmlEl.style.overflow = "hidden";
+      } else {
+        htmlEl.style.overflow = "";
+      }
+    };
+
     window.addEventListener("load", handleLoad);
-    window.addEventListener("resize", syncHeight);
+    window.addEventListener("resize", handleResize);
     return () => {
+      htmlEl.style.overflow = originalHtmlOverflow;
       window.removeEventListener("load", handleLoad);
-      window.removeEventListener("resize", syncHeight);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -61,11 +76,11 @@ export const IoTKeyManagement = () => {
           </div>
 
           {/* Narrative Content */}
-          <div className="font-sans text-[14px] leading-relaxed text-neutral-600 space-y-8">
+          <div className="font-sans text-[14px] leading-relaxed text-black space-y-8">
             
             {/* Introduction description block */}
             <div className="prose prose-neutral max-w-none">
-              <p className="text-[15px] text-neutral-800 leading-relaxed font-normal italic pl-4 border-l-2 border-neutral-900">
+              <p className="text-[15px] text-black leading-relaxed font-normal italic pl-4 border-l-2 border-neutral-900">
                 {articleData.intro[langKey]}
               </p>
             </div>
@@ -91,7 +106,7 @@ export const IoTKeyManagement = () => {
                       <th className="py-2 font-medium">Logical Mode / Type</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-neutral-100 text-neutral-700">
+                  <tbody className="divide-y divide-neutral-100 text-black">
                     <tr>
                       <td className="py-2"><code className="text-neutral-800 font-mono text-[11px] bg-neutral-50 px-1 py-0.5 border border-neutral-100 rounded">ILI9341_CS</code></td>
                       <td className="py-2">GPIO 21</td>
@@ -138,7 +153,7 @@ export const IoTKeyManagement = () => {
                       <th className="py-2 font-medium">Default State Description</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-neutral-100 text-neutral-700">
+                  <tbody className="divide-y divide-neutral-100 text-black">
                     <tr>
                       <td className="py-2"><code className="text-neutral-800 font-mono text-[11px] bg-neutral-50 px-1 py-0.5 border border-neutral-100 rounded">servoTerbuka</code></td>
                       <td className="py-2 font-mono text-[11px]">bool</td>
@@ -186,7 +201,7 @@ export const IoTKeyManagement = () => {
                       <th className="py-2 font-medium">Description</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-neutral-100 text-neutral-700">
+                  <tbody className="divide-y divide-neutral-100 text-black">
                     <tr>
                       <td className="py-2"><code className="text-neutral-800 font-mono text-[11px] bg-neutral-50 px-1 py-0.5 border border-neutral-100 rounded">item</code></td>
                       <td className="py-2 font-mono text-[11px]">String</td>
@@ -377,7 +392,7 @@ export const IoTKeyManagement = () => {
           </div>
 
           {/* Callout box inside Code Panel */}
-          <div className="bg-neutral-50 border border-neutral-200/60 p-4 rounded-lg text-neutral-600 text-[12px] leading-relaxed shadow-[inset_0_1px_2px_rgba(0,0,0,0.01)] mt-4">
+          <div className="bg-neutral-50 border border-neutral-200/60 p-4 rounded-lg text-black text-[12px] leading-relaxed shadow-[inset_0_1px_2px_rgba(0,0,0,0.01)] mt-4">
             <span className="font-semibold text-neutral-900 block mb-1">Architecture Summary:</span>
             {articleData.footer.p1[langKey]}
           </div>

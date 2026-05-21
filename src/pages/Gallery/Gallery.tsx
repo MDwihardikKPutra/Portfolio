@@ -1,8 +1,10 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import { galleryPhotos } from "../../utils/preloadImages";
 
 export const Gallery = memo(() => {
-  const displayPhotos = galleryPhotos;
+  const displayPhotos = useMemo(() => {
+    return [...galleryPhotos].sort(() => Math.random() - 0.5);
+  }, []);
 
   return (
     <div className="w-full flex flex-col gap-0">
@@ -45,6 +47,22 @@ export const Gallery = memo(() => {
           <img src={displayPhotos[8]} alt="G9" className="w-full h-full object-cover" />
         </div>
       </div>
+
+      {/* Section 4: 2 Columns - Full Padat */}
+      {displayPhotos.length > 9 && (
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-0">
+          {displayPhotos[9] && (
+            <div className="aspect-[4/3] overflow-hidden">
+              <img src={displayPhotos[9]} alt="G10" className="w-full h-full object-cover hover:scale-105 transition-transform duration-[2000ms]" />
+            </div>
+          )}
+          {displayPhotos[10] && (
+            <div className="aspect-[4/3] overflow-hidden">
+              <img src={displayPhotos[10]} alt="G11" className="w-full h-full object-cover hover:scale-105 transition-transform duration-[2000ms]" />
+            </div>
+          )}
+        </div>
+      )}
 
     </div>
   );

@@ -1,11 +1,16 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Gallery } from "./Gallery";
+import { galleryPhotos } from "../../utils/preloadImages";
 
-const editorialEase = [0.22, 1, 0.36, 1];
+const editorialEase = [0.22, 1, 0.36, 1] as const;
 
 // --- VISUAL ARCHIVE PAGE (Revision 8.73: Dense Full-Bleed Stream) ---
 const VisualArchive = memo(() => {
+  const heroImage = useMemo(() => {
+    return galleryPhotos[Math.floor(Math.random() * galleryPhotos.length)];
+  }, []);
+
   return (
     <div className="w-full min-h-screen bg-bg-primary transition-colors duration-500 font-helvetica">
       
@@ -39,7 +44,7 @@ const VisualArchive = memo(() => {
            initial={{ scale: 1.1, opacity: 0 }}
            animate={{ scale: 1, opacity: 1 }}
            transition={{ duration: 2, ease: editorialEase }}
-           src="/Gallery/Photography/imgi_691_b98968177718225.67e0fca617465.jpg" 
+           src={heroImage} 
            alt="Visual Archive Hero" 
            className="w-full h-full object-cover"
          />

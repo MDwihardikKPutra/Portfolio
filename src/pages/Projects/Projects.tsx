@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import { getProjects } from "../../data";
 import { useAppContext } from "../../context/AppContext";
 
-const editorialEase = [0.22, 1, 0.36, 1];
+const editorialEase = [0.22, 1, 0.36, 1] as const;
 
 export const Projects = ({ isHome = false }: { isHome?: boolean }) => {
   const { language } = useAppContext();
-  const rawProjects = getProjects(language);
+  const rawProjects = getProjects(language as any);
 
   // Filter projects by Home/Page requirements
   const displayProjects = isHome 

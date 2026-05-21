@@ -1,4 +1,4 @@
-import { useInView, motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { memo, useRef, useEffect, useState } from "react";
 
 interface ConstellationBgProps {
@@ -26,22 +26,46 @@ export const ConstellationBg = memo(({
 }: ConstellationBgProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef);
-  
+  const [dimensions, setDimensions] = useState<{ width: number; height: number } | null>(null);
   const [activeTooltip, setActiveTooltip] = useState<{ label: string, content: string, x: number, y: number } | null>(null);
 
+  // Robust container size tracking using ResizeObserver
   useEffect(() => {
-    if (!canvasRef.current) return;
+    if (!containerRef.current) return;
+    const container = containerRef.current;
+
+    const observer = new ResizeObserver((entries) => {
+      if (!entries || entries.length === 0) return;
+      const { width, height } = entries[0].contentRect;
+      // Fallback to window size if layout is zero
+      setDimensions({
+        width: width || window.innerWidth,
+        height: height || window.innerHeight
+      });
+    });
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
+  // Main canvas rendering effect
+  useEffect(() => {
+    if (!dimensions || !canvasRef.current) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
+    const { width, height } = dimensions;
+    const dpr = window.devicePixelRatio || 1;
+
+    // Crisp high-DPI scaling
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+
     let animationFrameId: number;
-    let particles: Particle[] = [];
-    
-    const labelKeys = showLabels ? Object.keys(labelContents) : [];
-    const mouse = { x: -1000, y: -1000, radius: 150 };
+    const isMobile = window.innerWidth < 768;
+    const mouse = { x: -1000, y: -1000, radius: isMobile ? 80 : 150 };
 
     class Particle {
       x: number;
@@ -49,24 +73,35 @@ export const ConstellationBg = memo(({
       vx: number;
       vy: number;
       size: number;
+      label: string | null;
+      opacity: number;
       isPinned: boolean;
 
+      // Mobile geometric floating coords
+      baseX: number | null = null;
+      baseY: number | null = null;
+      orbitAngle: number = 0;
+      orbitSpeed: number = 0;
+      orbitRadius: number = 0;
+
       constructor(label: string | null = null, isPinned = false) {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        const speedMult = label ? 0.15 : 0.4;
+        this.label = label;
+        this.isPinned = isPinned;
+        this.size = label ? (isPinned ? 4.5 : 3) : 1.5;
+        this.opacity = label ? (isPinned ? 1 : 0.85) : Math.random() * 0.2 + 0.15;
+
+        const speedMult = label ? 0.15 : 0.35;
         this.vx = (Math.random() - 0.5) * speedMult;
         this.vy = (Math.random() - 0.5) * speedMult;
-        this.size = label ? 3 : 1.5;
-        this.label = label;
-        this.opacity = label ? 0.9 : Math.random() * 0.2 + 0.1;
-        this.isPinned = isPinned;
+
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
       }
 
       draw() {
         if (!ctx) return;
-        
-        // Skip drawing the dot for pinned particles (branding)
+
+        // Draw particle dot
         if (!this.isPinned) {
           ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
           ctx.beginPath();
@@ -74,272 +109,303 @@ export const ConstellationBg = memo(({
           ctx.fill();
         }
 
+        // Draw label text
         if (this.label && showLabels) {
           const isJapanese = /[^\x00-\x7F]/.test(this.label);
           const fontStack = isJapanese ? '"Noto Sans JP", sans-serif' : '"Plus Jakarta Sans", sans-serif';
           
-          // Adaptive font size (Optimized for Mobile)
-          const isMobile = window.innerWidth < 768;
           const fontSize = this.isPinned 
             ? (isMobile ? "18px" : "24px")
             : (isMobile ? "9px" : "12px");
-            
+
           ctx.font = `600 ${fontSize} ${fontStack}`;
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           
-          // Elegant white theme text for labels
           ctx.fillStyle = this.isPinned ? "rgba(255, 255, 255, 0.95)" : "rgba(255, 255, 255, 0.7)";
           
-          // No offset for pinned (branding) to keep it perfectly centered on the lines
-          const offsetY = this.isPinned ? 0 : 15;
+          const offsetY = this.isPinned ? 0 : 14;
           ctx.fillText(this.label, this.x, this.y - offsetY);
         }
       }
 
-      update(paddingX: number, paddingY: number, safeWidth: number, safeHeight: number, layoutWidth: number, layoutHeight: number) {
+      update() {
         if (this.isPinned) return;
 
-        // --- ULTRA-SLOW PERPETUAL DRIFT ---
-        if (this.label) {
-          // Labeled icons: Eternal micro-drift
-          this.vx += (Math.random() - 0.5) * 0.005;
-          this.vy += (Math.random() - 0.5) * 0.005;
-          this.vx *= 0.999;
-          this.vy *= 0.999;
-        } else {
-          // Background stars: Very subtle movement
-          this.vx += (Math.random() - 0.5) * 0.012;
-          this.vy += (Math.random() - 0.5) * 0.012;
-          this.vx *= 0.99;
-          this.vy *= 0.99;
+        // Mobile orbital floating behavior
+        if (this.baseX !== null && this.baseY !== null) {
+          this.orbitAngle += this.orbitSpeed;
+          this.x = this.baseX + Math.sin(this.orbitAngle) * this.orbitRadius;
+          this.y = this.baseY + Math.cos(this.orbitAngle) * this.orbitRadius;
+          return;
         }
 
+        // Desktop drift behavior
         this.x += this.vx;
         this.y += this.vy;
 
-        const textPadding = 60;
-        if (this.label) {
-          if (this.x < paddingX + textPadding) { this.vx *= -1; }
-          if (this.x > paddingX + safeWidth - textPadding) { this.vx *= -1; }
-          if (this.y < paddingY + 20) { this.vy *= -1; }
-          if (this.y > paddingY + safeHeight - 20) { this.vy *= -1; }
-        } else {
-          if (this.x < 10) { this.vx *= -1; }
-          if (this.x > layoutWidth - 10) { this.vx *= -1; }
-          if (this.y < 10) { this.vy *= -1; }
-          if (this.y > layoutHeight - 10) { this.vy *= -1; }
+        // Repulsion from Center branding node to prevent label overlaps
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const dxCenter = this.x - centerX;
+        const dyCenter = this.y - centerY;
+        const halfWidth = isMobile ? 65 : 220;
+        const halfHeight = isMobile ? 15 : 50;
+
+        if (Math.abs(dxCenter) < halfWidth && Math.abs(dyCenter) < halfHeight) {
+          if (Math.abs(dxCenter) / halfWidth > Math.abs(dyCenter) / halfHeight) {
+            this.x += dxCenter > 0 ? (halfWidth - Math.abs(dxCenter)) + 5 : -(halfWidth - Math.abs(dxCenter)) - 5;
+            this.vx *= -0.5;
+          } else {
+            this.y += dyCenter > 0 ? (halfHeight - Math.abs(dyCenter)) + 5 : -(halfHeight - Math.abs(dyCenter)) - 5;
+            this.vy *= -0.5;
+          }
         }
 
-        let mdx = mouse.x - this.x;
-        let mdy = mouse.y - this.y;
-        let distance = Math.sqrt(mdx * mdx + mdy * mdy);
-        if (distance < mouse.radius && !this.label) {
-            const mAngle = Math.atan2(mdy, mdx);
-            const force = (mouse.radius - distance) / mouse.radius;
-            this.x -= Math.cos(mAngle) * force * 1.8;
-            this.y -= Math.sin(mAngle) * force * 1.8;
+        // Edge bounce
+        const boundary = 15;
+        if (this.x < boundary || this.x > width - boundary) { this.vx *= -1; }
+        if (this.y < boundary || this.y > height - boundary) { this.vy *= -1; }
+
+        // Mouse repulsion
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const distSq = dx * dx + dy * dy;
+        if (distSq < mouse.radius * mouse.radius) {
+          const dist = Math.sqrt(distSq);
+          const angle = Math.atan2(dy, dx);
+          const force = (mouse.radius - dist) / mouse.radius;
+          this.x -= Math.cos(angle) * force * 1.5;
+          this.y -= Math.sin(angle) * force * 1.5;
         }
       }
     }
 
-    const init = () => {
-      const parentWidth = containerRef.current ? containerRef.current.clientWidth : window.innerWidth;
-      const parentHeight = containerRef.current ? containerRef.current.clientHeight : window.innerHeight;
+    const labelKeys = showLabels ? Object.keys(labelContents) : [];
+    const activeLabels = labelKeys;
 
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = parentWidth * pages * dpr;
-      canvas.height = parentHeight * dpr;
-      
-      particles = [];
-      const layoutWidth = parentWidth * pages;
-      const layoutHeight = parentHeight;
-      const paddingX = parentWidth * 0.1;
-      const paddingY = parentHeight * 0.2;
-      const safeWidth = layoutWidth - paddingX * 2;
-      const safeHeight = layoutHeight - paddingY * 2;
-      
-      labelKeys.forEach(label => {
-        const p = new Particle(label);
-        p.x = paddingX + Math.random() * safeWidth;
-        p.y = paddingY + Math.random() * safeHeight;
-        particles.push(p);
-      });
+    const particles: Particle[] = [];
 
-      // Special Pinned Center Title
-      const centerP = new Particle("Diko Putra", true);
-      centerP.x = layoutWidth / 2;
-      centerP.y = layoutHeight / 2;
-      centerP.size = 4;
-      centerP.opacity = 1;
-      particles.push(centerP);
-
-      const extraCount = (window.innerWidth < 768 ? 60 : 180) * pages;
-      for (let i = 0; i < extraCount; i++) {
-        const p = new Particle();
-        p.vx = (Math.random() - 0.5) * 0.6;
-        p.vy = (Math.random() - 0.5) * 0.6;
-        p.x = Math.random() * layoutWidth;
-        p.y = Math.random() * layoutHeight;
-        particles.push(p);
+    // Initialize labels
+    activeLabels.forEach((label, idx) => {
+      const p = new Particle(label);
+      if (isMobile) {
+        p.orbitRadius = 5 + Math.random() * 4;
+        p.orbitSpeed = 0.006 + Math.random() * 0.006;
+        p.orbitAngle = Math.random() * Math.PI * 2;
+        
+        // Symmetrically distribute all labeled nodes in a circular constellation ring around the center "Diko Putra" brand
+        const angle = (idx / activeLabels.length) * Math.PI * 2 - Math.PI / 2;
+        const radius = Math.min(width * 0.35, height * 0.28);
+        p.baseX = width / 2 + Math.cos(angle) * radius;
+        p.baseY = height / 2 + Math.sin(angle) * radius;
+        
+        p.x = p.baseX;
+        p.y = p.baseY;
+      } else {
+        const paddingX = width * 0.1;
+        const paddingY = height * 0.2;
+        p.x = paddingX + Math.random() * (width - paddingX * 2);
+        p.y = paddingY + Math.random() * (height - paddingY * 2);
       }
-    };
+      particles.push(p);
+    });
 
-    const drawLines = (layoutWidth: number) => {
+    // Pinned Center branding
+    const centerP = new Particle("Diko Putra", true);
+    centerP.x = width / 2;
+    centerP.y = height / 2;
+    particles.push(centerP);
+
+    // Background extra stars
+    const extraCount = (isMobile ? 35 : 150) * pages;
+    for (let i = 0; i < extraCount; i++) {
+      const p = new Particle();
+      particles.push(p);
+    }
+
+    const drawLines = () => {
       const labeledParticles = particles.filter(p => !!p.label);
 
-      for (let i = 0; i < labeledParticles.length; i++) {
-        for (let j = i + 1; j < labeledParticles.length; j++) {
+      if (isMobile) {
+        const center = labeledParticles.find(p => p.isPinned);
+        const outerNodes = labeledParticles.filter(p => !p.isPinned);
+
+        // 1. Draw radial connections from center node to all outer nodes
+        outerNodes.forEach(p => {
+          if (!center) return;
+          const dx = p.x - center.x;
+          const dy = p.y - center.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const opacity = Math.max(0.04, 0.24 - (dist / width) * 0.3);
+
+          ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(center.x, center.y);
+          ctx.lineTo(p.x, p.y);
+          ctx.stroke();
+        });
+
+        // 2. Draw circumferential ring connecting adjacent outer nodes
+        for (let i = 0; i < outerNodes.length; i++) {
+          const p1 = outerNodes[i];
+          const p2 = outerNodes[(i + 1) % outerNodes.length];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const opacity = Math.max(0.04, 0.26 - (dist / width) * 0.35);
+
+          ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
+        }
+      } else {
+        // Desktop mesh connection
+        for (let i = 0; i < labeledParticles.length; i++) {
+          for (let j = i + 1; j < labeledParticles.length; j++) {
             const p1 = labeledParticles[i];
             const p2 = labeledParticles[j];
             const dx = p1.x - p2.x;
             const dy = p1.y - p2.y;
-            const distSq = dx * dx + dy * dy;
-            const dist = Math.sqrt(distSq);
-            
-            const opacity = Math.max(0.05, 0.3 - (dist / layoutWidth) * 0.4);
-            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
-            ctx.lineWidth = 0.6;
-            ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < width * 0.4) {
+              const opacity = Math.max(0.04, 0.3 - (dist / width) * 0.42);
+              ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+              ctx.lineWidth = 0.6;
+              ctx.beginPath();
+              ctx.moveTo(p1.x, p1.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.stroke();
+            }
+          }
         }
       }
+    };
+
+    let isInView = false;
+    let cachedRect = canvas.getBoundingClientRect();
+    const updateRect = () => {
+      cachedRect = canvas.getBoundingClientRect();
     };
 
     const animate = () => {
-      const dpr = window.devicePixelRatio || 1;
-      ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset scale
+      if (!isInView) return;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.fillStyle = "#000000";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      ctx.scale(dpr, dpr); // Apply High-DPI scale transform once per frame
-      
-      const parentWidth = containerRef.current ? containerRef.current.clientWidth : window.innerWidth;
-      const parentHeight = containerRef.current ? containerRef.current.clientHeight : window.innerHeight;
-      const layoutWidth = parentWidth * pages;
-      const layoutHeight = parentHeight;
 
-      const paddingX = parentWidth * 0.1;
-      const paddingY = parentHeight * 0.2;
-      const safeWidth = layoutWidth - paddingX * 2;
-      const safeHeight = layoutHeight - paddingY * 2;
+      ctx.scale(dpr, dpr);
 
-      let foundHover = false;
-      const labeledParticles = particles.filter(p => !!p.label);
-      const pinnedParticle = particles.find(p => p.isPinned);
-
-      for (let i = 0; i < particles.length; i++) {
-        const p1 = particles[i];
-
-        // 1. Repulsion from Pinned Center (Wide Rectangular Force Field)
-        if (pinnedParticle && p1 !== pinnedParticle) {
-          const dx = p1.x - pinnedParticle.x;
-          const dy = p1.y - pinnedParticle.y;
-          
-          // Define a wide box protection zone for the long text (Responsive)
-          const isMobile = window.innerWidth < 768;
-          const halfWidth = isMobile ? 120 : 220; 
-          const halfHeight = isMobile ? 35 : 50; 
-          
-          const absDx = Math.abs(dx);
-          const absDy = Math.abs(dy);
-          
-          if (absDx < halfWidth && absDy < halfHeight) {
-            // Push out based on the closest edge
-            if (absDx / halfWidth > absDy / halfHeight) {
-                p1.x += dx > 0 ? (halfWidth - absDx) + 5 : -(halfWidth - absDx) - 5;
-                p1.vx *= -0.5; // Bounce effect
-            } else {
-                p1.y += dy > 0 ? (halfHeight - absDy) + 5 : -(halfHeight - absDy) - 5;
-                p1.vy *= -0.5;
-            }
-          }
-        }
-
-        // 2. Repulsion between labeled particles
-        if (p1.label) {
-          for (let j = 0; j < labeledParticles.length; j++) {
-            const p2 = labeledParticles[j];
-            if (p1 === p2) continue;
-            
-            const dx = p2.x - p1.x;
-            const dy = p2.y - p1.y;
-            const distSq = dx * dx + dy * dy;
-            const minDist = 80;
-            if (distSq < minDist * minDist) {
-                const dist = Math.sqrt(distSq);
-                const angle = Math.atan2(dy, dx);
-                const force = (minDist - dist) / minDist;
-                const pushX = Math.cos(angle) * force * 0.5;
-                const pushY = Math.sin(angle) * force * 0.5;
-                
-                // Only move if NOT pinned
-                if (!p1.isPinned) {
-                  p1.x -= pushX;
-                  p1.y -= pushY;
-                }
-                if (!p2.isPinned) {
-                  p2.x += pushX;
-                  p2.y += pushY;
-                }
-            }
-          }
-        }
-
-        p1.update(paddingX, paddingY, safeWidth, safeHeight, layoutWidth, layoutHeight);
-        p1.draw();
-
-        if (p1.label && !foundHover && showLabels) {
-            const dx = mouse.x - p1.x;
-            const dy = mouse.y - p1.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 30) {
-                setActiveTooltip({
-                    label: p1.label!,
-                    content: labelContents[p1.label!] || "",
-                    x: p1.x,
-                    y: p1.y
-                });
-                foundHover = true;
-            }
-        }
+      // Keep pinned center and mobile geometric base coordinates responsive
+      const center = particles.find(p => p.isPinned);
+      if (center) {
+        center.x = width / 2;
+        center.y = height / 2;
       }
 
-      drawLines(layoutWidth);
-      
-      if (!foundHover) setActiveTooltip(null);
+      if (isMobile) {
+        const outerNodes = particles.filter(p => p.label && !p.isPinned);
+        outerNodes.forEach((p, idx) => {
+          const angle = (idx / outerNodes.length) * Math.PI * 2 - Math.PI / 2;
+          const radius = Math.min(width * 0.35, height * 0.28);
+          p.baseX = width / 2 + Math.cos(angle) * radius;
+          p.baseY = height / 2 + Math.sin(angle) * radius;
+        });
+      }
+
+      let foundHover = false;
+
+      // Update & Draw particles
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+
+        // Tooltip detection
+        if (p.label && !foundHover && showLabels) {
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 32) {
+            setActiveTooltip({
+              label: p.label,
+              content: labelContents[p.label] || "",
+              x: p.x,
+              y: p.y
+            });
+            foundHover = true;
+          }
+        }
+      });
+
+      drawLines();
+
+      if (!foundHover) {
+        setActiveTooltip(null);
+      }
+
       animationFrameId = requestAnimationFrame(animate);
     };
 
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const wasInView = isInView;
+          isInView = entry.isIntersecting;
+          if (isInView && !wasInView) {
+            updateRect();
+            animate();
+          }
+        });
+      },
+      { threshold: 0.05 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
+      mouse.x = e.clientX - cachedRect.left;
+      mouse.y = e.clientY - cachedRect.top;
     };
 
-    init();
-    animate();
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        mouse.x = e.touches[0].clientX - cachedRect.left;
+        mouse.y = e.touches[0].clientY - cachedRect.top;
+      }
+    };
+
+    const handleMouseLeave = () => {
+      mouse.x = -1000;
+      mouse.y = -1000;
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
-
-    let resizeTimeout: NodeJS.Timeout;
-    const handleResize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        init();
-      }, 150);
-    };
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchStart, { passive: true });
+    window.addEventListener("touchend", handleMouseLeave, { passive: true });
+    window.addEventListener("scroll", updateRect, { passive: true });
+    window.addEventListener("resize", updateRect, { passive: true });
 
     return () => {
+      observer.disconnect();
       cancelAnimationFrame(animationFrameId);
-      clearTimeout(resizeTimeout);
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchStart);
+      window.removeEventListener("touchend", handleMouseLeave);
+      window.removeEventListener("scroll", updateRect);
+      window.removeEventListener("resize", updateRect);
     };
-  }, [pages, labelContents, showLabels]);
-
+  }, [dimensions, pages, labelContents, showLabels]);
 
   return (
     <div 
@@ -348,7 +414,7 @@ export const ConstellationBg = memo(({
     >
       <canvas 
         ref={canvasRef} 
-        className="absolute inset-0 z-0 pointer-events-auto"
+        className="absolute inset-0 z-0 pointer-events-auto w-full h-full"
       />
 
       <AnimatePresence>

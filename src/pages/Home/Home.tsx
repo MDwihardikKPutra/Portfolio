@@ -1,9 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { memo, useRef, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Contact } from "../../components/Contact/Contact";
 import { useAppContext } from "../../context/AppContext";
-import { Gallery4 } from "../../components/Gallery4";
 import { GooeyText } from "../../components/Visuals/GooeyText";
 import { NebulaFooterBackground } from "../../components/Visuals/GLSLHills";
 import { EngineeringLog } from "../../components/Visuals/EngineeringLog";
@@ -12,9 +10,10 @@ import { PortfolioGallery } from "../../components/Visuals/PortfolioGallery";
 import { ConstellationBg } from "../../components/Visuals/ConstellationBg";
 import { SystemStatus } from "../../components/Visuals/SystemStatus";
 import { ExpandOnHover } from "../../components/Visuals/ExpandOnHover";
+import CommunityConnect from "../../components/Visuals/CommunityConnect";
 
 
-const editorialEase = [0.22, 1, 0.36, 1];
+const editorialEase = [0.22, 1, 0.36, 1] as const;
 
 // --- PREMIUM MAGNETIC CURSOR ATTRACTION COMPONENT ---
 export function Magnetic({ children }: { children: React.ReactNode }) {
@@ -67,90 +66,8 @@ const staggerChildVariants = {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { type: "spring", stiffness: 220, damping: 18 }
+    transition: { type: "spring" as const, stiffness: 220, damping: 18 }
   }
-};
-
-// --- UNIVERSAL EDITORIAL GRID COMPONENT (Collapsible Accordion Style) ---
-const EditorialSection = ({ 
-  label, 
-  heading, 
-  children, 
-  id, 
-  className, 
-  bg = "bg-transparent",
-  isOpen,
-  onToggle
-}: any) => {
-  return (
-    <motion.section
-      id={id}
-      initial={{ opacity: 0.25, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, margin: "-18% 0px -18% 0px" }}
-      transition={{ duration: 1.0, ease: editorialEase }}
-      style={{ willChange: "transform, opacity" }}
-      className={`w-full border-t border-border-primary transition-colors duration-300 hover:bg-black/[0.01] ${bg} ${className}`}
-    >
-      <div 
-        onClick={onToggle}
-        className="editorial-grid items-start py-10 cursor-pointer select-none group"
-      >
-        {/* Left Column: Label */}
-        <div className="col-span-12 lg:col-span-3 flex justify-between items-start">
-          <span className="editorial-label font-normal">{label}</span>
-          {/* Mobile dropdown indicator */}
-          <div className="lg:hidden">
-            <motion.span 
-              animate={{ rotate: isOpen ? 180 : 0 }}
-              transition={{ duration: 0.4, ease: editorialEase }}
-              className="text-[12px] opacity-60 text-text-primary block"
-            >
-              ↓
-            </motion.span>
-          </div>
-        </div>
-
-        {/* Middle Column: Heading */}
-        <div className="col-span-12 lg:col-span-4 mt-2 lg:mt-0 lg:pr-20">
-          <h2 className="text-[15px] md:text-[16px] leading-relaxed font-normal tracking-tight text-text-primary">
-            {heading}
-          </h2>
-        </div>
-
-        {/* Right Column: Children (Collapsible) */}
-        <div 
-          onClick={(e) => e.stopPropagation()}
-          className="col-span-12 lg:col-span-4 mt-6 lg:mt-0 overflow-hidden cursor-default"
-        >
-          <motion.div
-            initial={false}
-            animate={{ 
-              height: isOpen ? "auto" : 0,
-              opacity: isOpen ? 1 : 0
-            }}
-            transition={{ duration: 0.5, ease: editorialEase }}
-            className="w-full origin-top"
-          >
-            <div className="pt-2 lg:pt-0">
-              {children}
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Desktop dropdown indicator */}
-        <div className="hidden lg:flex lg:col-span-1 justify-end items-start pt-1">
-          <motion.span 
-            animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ duration: 0.4, ease: editorialEase }}
-            className="text-[14px] opacity-40 group-hover:opacity-100 text-text-primary transition-opacity duration-300"
-          >
-            ↓
-          </motion.span>
-        </div>
-      </div>
-    </motion.section>
-  );
 };
 
 export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => void }) => {
@@ -159,7 +76,7 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
   const heroText = "Making things work, then making them matter.";
 
   // Fetch and format real portfolio projects dynamically in active language
-  const rawProjects = getProjects(language);
+  const rawProjects = getProjects(language as any);
   const galleryItems = rawProjects.map(proj => ({
     id: proj.title.toLowerCase().replace(/\s+/g, "-"),
     title: proj.title,
@@ -570,11 +487,17 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
         style={{ willChange: "transform, opacity" }}
         className="w-full relative h-[500px] md:h-[650px] overflow-hidden bg-black border-t border-b border-neutral-800 flex flex-col justify-start pt-12"
       >
-        {/* Floating Centered Minimalist Header */}
-        <div className="absolute top-12 left-0 right-0 z-10 w-full flex flex-col items-center justify-center text-center px-4 pointer-events-none">
-          <h2 className="text-[22px] md:text-[28px] font-light tracking-tight text-text-primary">
+        {/* Floating Centered 120% Blurred Background Header */}
+        <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 z-10 w-full flex flex-col items-center justify-center text-center px-4 pointer-events-none">
+          <motion.h2 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 0.5, scale: 1 }}
+            viewport={{ once: false, margin: "-10% 0px -10% 0px" }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+            className="text-[11vw] sm:text-[14vw] md:text-[11.6vw] lg:text-[10.4vw] xl:text-[10.2vw] font-medium tracking-tighter font-helvetica text-text-primary whitespace-nowrap blur-[5px] md:blur-[12px]"
+          >
             {language === 'id' ? "Konstelasi" : "Constellation"}
-          </h2>
+          </motion.h2>
         </div>
 
         {/* Interactive Constellation Canvas */}
@@ -622,6 +545,17 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
             ];
           })()}
         />
+      </motion.div>
+
+      {/* SECTION 5.8: COMMUNITY CONNECT (Interactive stats & profiles) */}
+      <motion.div
+        initial={{ opacity: 0.25, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, margin: "-18% 0px -18% 0px" }}
+        transition={{ duration: 1.0, ease: editorialEase }}
+        style={{ willChange: "transform, opacity" }}
+      >
+        <CommunityConnect />
       </motion.div>
 
       {/* SECTION 6: CONNECT WITH WEBGL BACKGROUND */}

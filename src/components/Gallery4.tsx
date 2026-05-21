@@ -23,8 +23,6 @@ export interface Gallery4Props {
   items?: Gallery4Item[];
 }
 
-const editorialEase = [0.22, 1, 0.36, 1];
-
 const Gallery4 = ({
   title = "Case Studies",
   description = "Discover how leading companies and developers are leveraging modern web technologies to build exceptional digital experiences.",

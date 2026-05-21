@@ -1,14 +1,16 @@
 // Preload gallery images
 export const galleryPhotos = [
-  "/Gallery/Photography/imgi_440_2f7c22177718225.658c4f9026390.jpg",
-  "/Gallery/Photography/imgi_489_f2245c177718225.666eade4ca4bf.png",
-  "/Gallery/Photography/imgi_498_b94f29177718225.666eade4c8cca.png",
-  "/Gallery/Photography/imgi_516_e1f17b177718225.666eade4c87cd.png",
-  "/Gallery/Photography/imgi_588_313050177718225.666eade7d4dd0.png",
-  "/Gallery/Photography/imgi_624_c56c26177718225.666eadea3d400.png",
-  "/Gallery/Photography/imgi_651_5c8cc4177718225.67e0fca615e09.jpg",
-  "/Gallery/Photography/imgi_691_b98968177718225.67e0fca617465.jpg",
-  "/Gallery/Photography/imgi_983_ff56d9177718225.658c4f8f3f7ae.jpg",
+  "/Gallery/Photography/imgi_440_2f7c22177718225.658c4f9026390.webp",
+  "/Gallery/Photography/imgi_489_f2245c177718225.666eade4ca4bf.webp",
+  "/Gallery/Photography/imgi_498_b94f29177718225.666eade4c8cca.webp",
+  "/Gallery/Photography/imgi_516_e1f17b177718225.666eade4c87cd.webp",
+  "/Gallery/Photography/imgi_588_313050177718225.666eade7d4dd0.webp",
+  "/Gallery/Photography/imgi_624_c56c26177718225.666eadea3d400.webp",
+  "/Gallery/Photography/imgi_651_5c8cc4177718225.67e0fca615e09.webp",
+  "/Gallery/Photography/imgi_691_b98968177718225.67e0fca617465.webp",
+  "/Gallery/Photography/imgi_983_ff56d9177718225.658c4f8f3f7ae.webp",
+  "/Gallery/Photography/DSC06308.webp",
+  "/Gallery/Photography/DSC06329.webp",
 ];
 
 // Home page images
@@ -31,9 +33,9 @@ const chunkedPreload = async (srcArray: string[], chunkSize: number = 2) => {
     await Promise.all(
       chunk.map((src) => {
         return new Promise<void>((resolve) => {
-          const img = new Image();
+          const img = new Image() as HTMLImageElement;
           img.src = src;
-          if ('decode' in img) {
+          if (typeof img.decode === 'function') {
             img.decode().then(() => resolve()).catch(() => resolve());
           } else {
             img.onload = () => resolve();

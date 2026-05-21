@@ -1,6 +1,5 @@
 import { contactInfo } from "../../data";
 import { memo } from "react";
-import { Github, Linkedin, FileText, Instagram } from "lucide-react";
 
 // --- CONTACT COMPONENT (Revision 12.0: Solid Pure White Theme for WebGL Dark Footer) ---
 export const Contact = memo(() => {
@@ -27,51 +26,11 @@ export const Contact = memo(() => {
             {contactInfo.email}
           </a>
 
-          {/* Bottom Element: Tagline & Social Logos stacked vertically */}
+          {/* Bottom Element: Tagline only */}
           <div className="flex flex-col items-start lg:items-end gap-3 mt-6 lg:mt-0">
             <p className="text-editorial-body text-[14px] leading-relaxed !text-white">
               Making things work, then making them matter.
             </p>
-            
-            {/* Horizontal social logos */}
-            <div className="flex gap-6 items-center">
-              <a 
-                href="https://github.com/MDwihardikKPutra" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-white hover:opacity-70 hover:scale-110 transition-all duration-300 block"
-                aria-label="GitHub"
-              >
-                <Github size={16} strokeWidth={1.5} />
-              </a>
-              <a 
-                href="https://www.linkedin.com/in/mokhamad-dwihardik-kusuma-putra-470854190/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-white hover:opacity-70 hover:scale-110 transition-all duration-300 block"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={16} strokeWidth={1.5} />
-              </a>
-              <a 
-                href="https://www.instagram.com/dykoputra_/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-white hover:opacity-70 hover:scale-110 transition-all duration-300 block"
-                aria-label="Instagram"
-              >
-                <Instagram size={16} strokeWidth={1.5} />
-              </a>
-              <a 
-                href="https://medium.com/@dykoputra" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-white hover:opacity-70 hover:scale-110 transition-all duration-300 block"
-                aria-label="Medium"
-              >
-                <FileText size={16} strokeWidth={1.5} />
-              </a>
-            </div>
           </div>
 
         </div>

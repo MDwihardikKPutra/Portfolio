@@ -1,8 +1,6 @@
 import { useLocation, Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import { useEffect, useState, useCallback, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useAppContext } from "./context/AppContext";
-
 // Components & Pages (Lazy loaded for high performance bundle splitting)
 const Home = lazy(() => import("./pages/Home/Home").then(m => ({ default: m.Home })));
 const VisualArchive = lazy(() => import("./pages/Gallery/VisualArchive"));
@@ -26,11 +24,11 @@ const AppRoutes = () => {
     initial: { opacity: 0 },
     animate: {
       opacity: 1,
-      transition: { duration: 0.4, ease: "easeInOut" },
+      transition: { duration: 0.4, ease: "easeInOut" as any },
     },
     exit: {
       opacity: 0,
-      transition: { duration: 0.2, ease: "easeInOut" },
+      transition: { duration: 0.2, ease: "easeInOut" as any },
     },
   };
 

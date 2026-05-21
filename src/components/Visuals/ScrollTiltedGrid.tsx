@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useMemo, memo } from "react";
-import { useAppContext } from "../../context/AppContext";
 import { galleryPhotos } from "../../utils/preloadImages";
 
 export const DEFAULT_GRID_IMAGES: readonly string[] = galleryPhotos;
@@ -58,7 +57,6 @@ export const ScrollTiltedGrid = memo(({
   images = DEFAULT_GRID_IMAGES,
   className,
 }: ScrollTiltedGridProps = {}) => {
-  const { language } = useAppContext();
 
   // Create infinite buffer stream
   const doubleImages = useMemo(() => [...images, ...images], [images]);

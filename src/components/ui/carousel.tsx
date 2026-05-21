@@ -15,6 +15,7 @@ interface CarouselProps {
   setApi?: (api: CarouselApi) => void;
   children: React.ReactNode;
   opts?: any;
+  options?: any;
 }
 
 const CarouselContext = React.createContext<{
@@ -149,7 +150,7 @@ export const Carousel: React.FC<CarouselProps> = ({ setApi, children }) => {
 export const CarouselContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className = "", children, ...props }, ref) => {
+>(({ className = "", children, ...props }, _ref) => {
   const context = React.useContext(CarouselContext);
   if (!context) throw new Error("CarouselContent must be used within Carousel");
 
@@ -169,10 +170,10 @@ CarouselContent.displayName = "CarouselContent";
 export const CarouselItem = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className = "", ...props }, ref) => {
+>(({ className = "", ...props }, _ref) => {
   return (
     <div
-      ref={ref}
+      ref={_ref}
       role="group"
       aria-roledescription="slide"
       className={`shrink-0 snap-start snap-always ${className}`}

@@ -1,6 +1,4 @@
-"use client"
-
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 const defaultShaderSource = `#version 300 es
 /*********
@@ -94,8 +92,8 @@ const useShaderBackground = () => {
       buffer: WebGLBuffer | null = null;
       scale: number;
       shaderSource: string;
-      mouseMove = [0, 0];
-      mouseCoords = [0, 0];
+      mouseMove: [number, number] = [0, 0];
+      mouseCoords: [number, number] = [0, 0];
       pointerCoords = [0, 0];
       nbrOfPointers = 0;
 
@@ -111,7 +109,12 @@ void main(){gl_Position=position;}`;
         this.scale = scale;
         this.gl = canvas.getContext('webgl2')!;
         this.gl.viewport(0, 0, canvas.width * scale, canvas.height * scale);
-        this.shaderSource = defaultShaderSource;
+        
+        // Detect mobile viewports to reduce loops in shader
+        const isMobile = window.innerWidth < 768;
+        this.shaderSource = isMobile 
+          ? defaultShaderSource.replace("i<12.", "i<7.") 
+          : defaultShaderSource;
       }
 
       updateShader(source: string) {
@@ -122,11 +125,11 @@ void main(){gl_Position=position;}`;
       }
 
       updateMove(deltas: number[]) {
-        this.mouseMove = deltas;
+        this.mouseMove = [deltas[0] || 0, deltas[1] || 0];
       }
 
       updateMouse(coords: number[]) {
-        this.mouseCoords = coords;
+        this.mouseCoords = [coords[0] || 0, coords[1] || 0];
       }
 
       updatePointerCoords(coords: number[]) {
@@ -318,9 +321,10 @@ void main(){gl_Position=position;}`;
     rendererRef.current.init();
 
     const resize = () => {
-      if (!canvasRef.current || !canvasRef.current.parentElement) return;
       const cvs = canvasRef.current;
+      if (!cvs) return;
       const parent = cvs.parentElement;
+      if (!parent) return;
       const currentDpr = Math.max(1, 0.5 * window.devicePixelRatio);
       
       cvs.width = parent.clientWidth * currentDpr;
@@ -331,7 +335,22 @@ void main(){gl_Position=position;}`;
       }
     };
 
+    let isInView = false;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const wasInView = isInView;
+          isInView = entry.isIntersecting;
+          if (isInView && !wasInView) {
+            loop(performance.now());
+          }
+        });
+      },
+      { threshold: 0.05 }
+    );
+
     const loop = (now: number) => {
+      if (!isInView) return;
       if (!rendererRef.current || !pointersRef.current) return;
       
       rendererRef.current.updateMouse(pointersRef.current.first);
@@ -344,16 +363,19 @@ void main(){gl_Position=position;}`;
     
     resize();
     
-    if (rendererRef.current.test(defaultShaderSource) === null) {
-      rendererRef.current.updateShader(defaultShaderSource);
+    if (rendererRef.current.test(rendererRef.current.shaderSource) === null) {
+      rendererRef.current.updateShader(rendererRef.current.shaderSource);
     }
     
-    loop(0);
+    if (canvas) {
+      observer.observe(canvas);
+    }
     
     window.addEventListener('resize', resize);
     
     return () => {
       window.removeEventListener('resize', resize);
+      observer.disconnect();
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }

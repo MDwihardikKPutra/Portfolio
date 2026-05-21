@@ -1,7 +1,5 @@
 "use client"
 
-import { ArrowRight } from "lucide-react"
-import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 import { useState } from "react"
 
@@ -33,7 +31,7 @@ interface PortfolioGalleryProps {
 
 export function PortfolioGallery({
   title = "Browse my library",
-  archiveButton = {
+  archiveButton: _archiveButton = {
     text: "View gallery",
     href: "/projects"
   },
@@ -94,7 +92,7 @@ export function PortfolioGallery({
   return (
     <section
       aria-label={title}
-      className={`relative py-16 px-0 bg-bg-primary border-b border-border-primary ${className}`}
+      className={`relative pt-16 pb-2 px-0 bg-bg-primary border-b border-border-primary ${className}`}
       id="archives"
     >
       {/* Self-contained marquee style declaration */}
@@ -116,7 +114,7 @@ export function PortfolioGallery({
         
         {/* Centered Minimalist Header */}
         <div className="w-full flex flex-col items-center justify-center text-center mb-10 px-4">
-          <h2 className="text-[22px] md:text-[28px] font-light tracking-tight text-text-primary">
+          <h2 className="text-[4.75vw] sm:text-[3.75vw] md:text-[2.9vw] lg:text-[2.6vw] xl:text-[2.55vw] font-medium tracking-tighter font-helvetica text-text-primary">
             Explore it
           </h2>
         </div>

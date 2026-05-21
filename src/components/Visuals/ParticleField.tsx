@@ -1,9 +1,6 @@
 import { memo, useRef, useEffect } from "react";
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
+import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass } from 'three-stdlib';
 
 export const ParticleField = memo(() => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -42,7 +39,6 @@ export const ParticleField = memo(() => {
     // ── Keyboard Zoom (Smooth Lerped) ───────────────────────────────────
     let targetDist = 15; // The 'normal' zoom out distance
     const onKeyDown = (e: KeyboardEvent) => {
-      const zoomFactor = 0.25;
       if (e.key === 'ArrowUp') {
         targetDist = Math.min(targetDist * 1.25, controls.maxDistance);
       } else if (e.key === 'ArrowDown') {
@@ -63,16 +59,20 @@ export const ParticleField = memo(() => {
     };
     window.addEventListener('galaxy-zoom-trigger', onZoomTrigger);
 
+    const isMobile = window.innerWidth < 768;
     // Very subtle bloom — just for bar glow, prevent whiteout
-    const composer = new EffectComposer(renderer);
-    composer.addPass(new RenderPass(scene, camera));
-    const bloom = new UnrealBloomPass(
-      new THREE.Vector2(window.innerWidth, window.innerHeight),
-      0.40,  // Re-ignited for luminous golden core
-      0.6,
-      0.85   // Lower threshold: dense gold now triggers bloom
-    );
-    composer.addPass(bloom);
+    let composer: EffectComposer | null = null;
+    if (!isMobile) {
+      composer = new EffectComposer(renderer);
+      composer.addPass(new RenderPass(scene, camera));
+      const bloom = new UnrealBloomPass(
+        new THREE.Vector2(window.innerWidth, window.innerHeight),
+        0.40,  // Re-ignited for luminous golden core
+        0.6,
+        0.85   // Lower threshold: dense gold now triggers bloom
+      );
+      composer.addPass(bloom);
+    }
 
     // Soft glow alpha texture
     const makeTex = () => {
@@ -96,24 +96,16 @@ export const ParticleField = memo(() => {
     };
 
     // ── Neutral/Electric Cinematic Palette (No Yellow) ───────────────────────
-    const C_SING  = new THREE.Color('#FFFFFF'); 
-    const C_BULGE = new THREE.Color('#00BFFF'); 
-    const C_BAR   = new THREE.Color('#00BFFF'); 
-    const C_INNER = new THREE.Color('#FFFFFF'); 
     const C_GOLD  = new THREE.Color('#E6F2FF'); 
     const C_ARM   = new THREE.Color('#00BFFF'); 
     const C_OUTER = new THREE.Color('#1E90FF'); 
     const C_HAZE  = new THREE.Color('#4B0082'); 
     const C_H2    = new THREE.Color('#FF00FF'); 
-    const C_DUST  = new THREE.Color('#000000'); 
 
     const ARMS  = 4;
     const B     = 0.28;
     const R0    = 1.8; // Shrunked to match smaller core
     const RMAX  = 16.0;
-
-    const armTheta = (r: number, arm: number) =>
-      (arm / ARMS) * Math.PI * 2 + Math.log(r / R0) / B;
 
     const N     = 140000; // Optimized for performance (was 280000)
     const pos   = new Float32Array(N * 3);
@@ -373,10 +365,11 @@ export const ParticleField = memo(() => {
       mat.uniforms.uSuckStrength.value = suckVal;
       camera.lookAt(0, 0, 0);
 
-      // Additive subtle spin
-      pts.rotation.y += 0.0005;
-      
-      composer.render();
+      if (composer) {
+        composer.render();
+      } else {
+        renderer.render(scene, camera);
+      }
     };
     // tick(); // Handled by observer
 
@@ -387,7 +380,9 @@ export const ParticleField = memo(() => {
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
-      composer.setSize(width, height);
+      if (composer) {
+        composer.setSize(width, height);
+      }
     };
 
     updateSize();

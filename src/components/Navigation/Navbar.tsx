@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useAppContext } from "../../context/AppContext";
 
 export const Navbar = ({ activeTab, setActiveTab }: any) => {
   const navigate = useNavigate();
@@ -54,16 +53,22 @@ export const Navbar = ({ activeTab, setActiveTab }: any) => {
     }
   };
 
-  const isExpPage = location.pathname === "/exp";
+  const isJournalPage = location.pathname.startsWith("/journal");
 
   return (
     <nav className="fixed top-0 left-0 w-full z-[200] pointer-events-none">
-      <div className="w-full transition-all duration-500 py-4 bg-black/80 backdrop-blur-md">
+      <div className={`w-full transition-all duration-500 py-4 ${
+        isJournalPage 
+          ? "bg-white border-b border-neutral-100" 
+          : "bg-black"
+      }`}>
         <div className="w-full px-6 md:px-10 flex items-center justify-between pointer-events-auto">
           
           <div className="flex items-center">
-            <span className={`text-[12px] md:text-[14px] font-normal tracking-tight transition-colors duration-500 ${
-              isExpPage ? "text-white" : "text-text-primary"
+            <span className={`text-[12px] md:text-[14px] font-medium tracking-tight font-helvetica transition-colors duration-500 ${
+              isJournalPage 
+                ? "text-black" 
+                : "text-white"
             }`}>
               M. Dwihardik
             </span>
@@ -74,10 +79,10 @@ export const Navbar = ({ activeTab, setActiveTab }: any) => {
                 <button
                   key={item.id}
                   onClick={() => handleNav(item.id)}
-                  className={`transition-all text-[11px] font-normal tracking-tight relative pb-1 duration-500 ${
-                    isExpPage 
-                      ? (currentActiveTab === item.id ? "text-white" : "text-white/40 hover:text-white")
-                      : (currentActiveTab === item.id ? "text-text-primary" : "text-text-primary/40 hover:text-text-primary")
+                  className={`transition-all text-[11px] font-medium tracking-tight font-helvetica relative pb-1 duration-500 ${
+                    isJournalPage
+                      ? "text-black"
+                      : "text-white"
                   }`}
                 >
                   {item.label}
@@ -85,7 +90,9 @@ export const Navbar = ({ activeTab, setActiveTab }: any) => {
                     <motion.div 
                       layoutId="activeTabIndicator"
                       className={`absolute bottom-0 left-0 right-0 h-[1.5px] transition-colors duration-500 ${
-                        isExpPage ? "bg-white" : "bg-text-primary"
+                        isJournalPage 
+                          ? "bg-black" 
+                          : "bg-white"
                       }`}
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
