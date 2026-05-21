@@ -167,16 +167,18 @@ export const ConstellationBg = memo(({
         if (this.x < boundary || this.x > width - boundary) { this.vx *= -1; }
         if (this.y < boundary || this.y > height - boundary) { this.vy *= -1; }
 
-        // Mouse repulsion
-        const dx = mouse.x - this.x;
-        const dy = mouse.y - this.y;
-        const distSq = dx * dx + dy * dy;
-        if (distSq < mouse.radius * mouse.radius) {
-          const dist = Math.sqrt(distSq);
-          const angle = Math.atan2(dy, dx);
-          const force = (mouse.radius - dist) / mouse.radius;
-          this.x -= Math.cos(angle) * force * 1.5;
-          this.y -= Math.sin(angle) * force * 1.5;
+        // Mouse repulsion (only for background particles without labels, so labeled nodes don't flee the cursor)
+        if (!this.label) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const distSq = dx * dx + dy * dy;
+          if (distSq < mouse.radius * mouse.radius) {
+            const dist = Math.sqrt(distSq);
+            const angle = Math.atan2(dy, dx);
+            const force = (mouse.radius - dist) / mouse.radius;
+            this.x -= Math.cos(angle) * force * 1.5;
+            this.y -= Math.sin(angle) * force * 1.5;
+          }
         }
       }
     }
