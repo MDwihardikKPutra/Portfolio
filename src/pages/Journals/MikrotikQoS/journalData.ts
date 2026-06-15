@@ -1,6 +1,8 @@
 export interface ContentSection {
   heading: string;
   paragraphs: string[];
+  listItems?: string[];
+  postParagraphs?: string[];
 }
 
 export interface JournalArticle {
@@ -41,14 +43,32 @@ export const articleData: JournalArticle = {
         heading: "CPU-Efficient Traffic Identification (RAW Firewall & SNI)",
         paragraphs: [
           "Traditional Layer-7 packet inspection using regular expressions consumes significant CPU resources, leading to potential router bottlenecks. To solve this, I designed a traffic identification system leveraging the Server Name Indication (SNI) feature via the 'TLS Host' matcher in the MikroTik RAW firewall.",
-          "By inspecting the TLS handshake on port 443, the router dynamically identifies specific domains—such as '*whatsapp*', '*youtube.com*', '*tiktok*', and '*netflix*'—and automatically adds the destination IPs to dynamic Address Lists. This pre-routing capture mechanism classifies traffic like E-commerce Live Streaming, Audio Streaming, and OS Updates efficiently before it even reaches the main firewall engine."
+          "By inspecting the TLS handshake on port 443, the router dynamically identifies specific domains and automatically adds the destination IPs to dynamic Address Lists. For example:"
+        ],
+        listItems: [
+          "Communications: *whatsapp*, *discord*",
+          "Video Streaming: *youtube.com*, *netflix*",
+          "Social Media: *tiktok*, *instagram*",
+          "E-commerce Live Streaming — *live.shopee*, *tokopedia.tv*"
+        ],
+        postParagraphs: [
+          "This pre-routing capture mechanism classifies traffic like E-commerce Live Streaming, Audio Streaming, and OS Updates efficiently before it even reaches the main firewall engine."
         ]
       },
       id: {
         heading: "Identifikasi Lalu Lintas Hemat CPU (Firewall RAW & SNI)",
         paragraphs: [
           "Inspeksi paket Layer-7 tradisional menggunakan ekspresi reguler memakan sumber daya CPU yang signifikan, yang berpotensi menyebabkan bottleneck pada router. Untuk mengatasinya, saya merancang sistem identifikasi lalu lintas yang memanfaatkan fitur Server Name Indication (SNI) melalui pencocokan 'TLS Host' di firewall RAW MikroTik.",
-          "Dengan menginspeksi handshake TLS pada port 443, router secara dinamis mengidentifikasi domain spesifik—seperti '*whatsapp*', '*youtube.com*', '*tiktok*', dan '*netflix*'—serta secara otomatis menambahkan IP tujuan ke dalam Address Lists dinamis. Mekanisme penangkapan pre-routing ini mengklasifikasikan lalu lintas seperti Live Streaming E-commerce, Audio Streaming, dan Update OS secara efisien bahkan sebelum mencapai mesin firewall utama."
+          "Dengan menginspeksi handshake TLS pada port 443, router secara dinamis mengidentifikasi domain spesifik dan secara otomatis menambahkan IP tujuan ke dalam Address Lists dinamis. Sebagai contoh:"
+        ],
+        listItems: [
+          "Komunikasi: *whatsapp*, *discord*",
+          "Streaming Video: *youtube.com*, *netflix*",
+          "Media Sosial: *tiktok*, *instagram*",
+          "E-commerce Live Streaming — *live.shopee*, *tokopedia.tv*"
+        ],
+        postParagraphs: [
+          "Mekanisme penangkapan pre-routing ini mengklasifikasikan lalu lintas seperti Live Streaming E-commerce, Audio Streaming, dan Update OS secara efisien bahkan sebelum mencapai mesin firewall utama."
         ]
       }
     },

@@ -52,6 +52,20 @@ export const MikrotikQoS = () => {
                 {s.trafficId[langKey].paragraphs.map((p, idx) => (
                   <p key={idx} className="text-justify">{p}</p>
                 ))}
+                {s.trafficId[langKey].listItems && (
+                  <ul className="list-disc pl-5 space-y-1.5 text-justify">
+                    {s.trafficId[langKey].listItems.map((item, idx) => (
+                      <li key={idx}>
+                        <span dangerouslySetInnerHTML={{
+                          __html: item.replace(/\*(.*?)\*/g, "<em>$1</em>")
+                        }} />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {s.trafficId[langKey].postParagraphs && s.trafficId[langKey].postParagraphs.map((p, idx) => (
+                  <p key={`post-${idx}`} className="text-justify">{p}</p>
+                ))}
               </div>
 
               <div className="flex flex-col gap-2 pt-4">
@@ -77,6 +91,20 @@ export const MikrotikQoS = () => {
               <div className="space-y-4">
                 {s.hierarchicalQoS[langKey].paragraphs.map((p, idx) => (
                   <p key={idx} className="text-justify">{p}</p>
+                ))}
+                {s.hierarchicalQoS[langKey].listItems && (
+                  <ul className="list-disc pl-5 space-y-1.5 text-justify">
+                    {s.hierarchicalQoS[langKey].listItems.map((item, idx) => (
+                      <li key={idx}>
+                        <span dangerouslySetInnerHTML={{
+                          __html: item.replace(/\*(.*?)\*/g, "<em>$1</em>")
+                        }} />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {s.hierarchicalQoS[langKey].postParagraphs && s.hierarchicalQoS[langKey].postParagraphs.map((p, idx) => (
+                  <p key={`post-${idx}`} className="text-justify">{p}</p>
                 ))}
               </div>
 
@@ -122,6 +150,20 @@ export const MikrotikQoS = () => {
                 {s.bittorrentFilter[langKey].paragraphs.map((p, idx) => (
                   <p key={idx} className="text-justify">{p}</p>
                 ))}
+                {s.bittorrentFilter[langKey].listItems && (
+                  <ul className="list-disc pl-5 space-y-1.5 text-justify">
+                    {s.bittorrentFilter[langKey].listItems.map((item, idx) => (
+                      <li key={idx}>
+                        <span dangerouslySetInnerHTML={{
+                          __html: item.replace(/\*(.*?)\*/g, "<em>$1</em>")
+                        }} />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {s.bittorrentFilter[langKey].postParagraphs && s.bittorrentFilter[langKey].postParagraphs.map((p, idx) => (
+                  <p key={`post-${idx}`} className="text-justify">{p}</p>
+                ))}
               </div>
 
               <div className="flex flex-col gap-2 pt-4">
@@ -147,6 +189,20 @@ export const MikrotikQoS = () => {
               <div className="space-y-4">
                 {s.securityHardening[langKey].paragraphs.map((p, idx) => (
                   <p key={idx} className="text-justify">{p}</p>
+                ))}
+                {s.securityHardening[langKey].listItems && (
+                  <ul className="list-disc pl-5 space-y-1.5 text-justify">
+                    {s.securityHardening[langKey].listItems.map((item, idx) => (
+                      <li key={idx}>
+                        <span dangerouslySetInnerHTML={{
+                          __html: item.replace(/\*(.*?)\*/g, "<em>$1</em>")
+                        }} />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {s.securityHardening[langKey].postParagraphs && s.securityHardening[langKey].postParagraphs.map((p, idx) => (
+                  <p key={`post-${idx}`} className="text-justify">{p}</p>
                 ))}
               </div>
 
