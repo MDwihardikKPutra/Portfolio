@@ -8,6 +8,7 @@ const ProjectsPage = lazy(() => import("./pages/Projects/ProjectsPage"));
 const Exp = lazy(() => import("./pages/Exp/Exp"));
 const IoTKeyManagement = lazy(() => import("./pages/Journals/IoTKeyManagement").then(m => ({ default: m.IoTKeyManagement })));
 const TrueNASZeroTrust = lazy(() => import("./pages/Journals/TrueNASZeroTrust").then(m => ({ default: m.TrueNASZeroTrust })));
+const UbuntuAAPanel = lazy(() => import("./pages/Journals/UbuntuAAPanel").then(m => ({ default: m.UbuntuAAPanel })));
 
 import { MainLayout } from "./components/Layout/MainLayout";
 import { preloadAll } from "./utils/preloadImages";
@@ -63,6 +64,7 @@ const AppRoutes = () => {
                       <Route path="/exp" element={<Exp />} />
                       <Route path="/journal/iot-key-management" element={<IoTKeyManagement />} />
                       <Route path="/journal/truenas-zero-trust" element={<TrueNASZeroTrust />} />
+                      <Route path="/journal/ubuntu-aapanel" element={<UbuntuAAPanel />} />
                       <Route path="*" element={<Home setActiveTab={handleSetActiveTab} />} />
                     </Routes>
                   </Suspense>

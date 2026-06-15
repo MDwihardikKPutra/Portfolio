@@ -42,6 +42,19 @@ const articles = [
       id: "8 mnt baca"
     },
     link: "/journal/iot-key-management"
+  },
+  {
+    id: 4,
+    date: "29 Oct, 2025",
+    title: {
+      en: "Deploying Internal Dashboards with Ubuntu and aaPanel",
+      id: "Deployment Dashboard Internal dengan Ubuntu dan aaPanel"
+    },
+    readTime: {
+      en: "10 min read",
+      id: "10 mnt baca"
+    },
+    link: "/journal/ubuntu-aapanel"
   }
 ];
 
