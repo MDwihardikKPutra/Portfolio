@@ -6,16 +6,16 @@ import { useAppContext } from "../../context/AppContext";
 const articles = [
   {
     id: 1,
-    date: "12 Oct, 2025",
+    date: "14 Jan, 2026",
     title: {
-      en: "Optimizing MikroTik BGP for Enterprise Scale",
-      id: "Optimasi BGP MikroTik untuk Skala Enterprise"
+      en: "Advanced Traffic Management and Security with MikroTik QoS",
+      id: "Manajemen Lalu Lintas Lanjutan dan Keamanan dengan MikroTik QoS"
     },
     readTime: {
-      en: "8 min read",
-      id: "8 mnt baca"
+      en: "12 min read",
+      id: "12 mnt baca"
     },
-    link: "#"
+    link: "/journal/mikrotik-qos"
   },
   {
     id: 2,

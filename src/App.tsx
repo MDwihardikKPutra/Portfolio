@@ -9,6 +9,7 @@ const Exp = lazy(() => import("./pages/Exp/Exp"));
 const IoTKeyManagement = lazy(() => import("./pages/Journals/IoTKeyManagement").then(m => ({ default: m.IoTKeyManagement })));
 const TrueNASZeroTrust = lazy(() => import("./pages/Journals/TrueNASZeroTrust").then(m => ({ default: m.TrueNASZeroTrust })));
 const UbuntuAAPanel = lazy(() => import("./pages/Journals/UbuntuAAPanel").then(m => ({ default: m.UbuntuAAPanel })));
+const MikrotikQoS = lazy(() => import("./pages/Journals/MikrotikQoS").then(m => ({ default: m.MikrotikQoS })));
 
 import { MainLayout } from "./components/Layout/MainLayout";
 import { preloadAll } from "./utils/preloadImages";
@@ -65,6 +66,7 @@ const AppRoutes = () => {
                       <Route path="/journal/iot-key-management" element={<IoTKeyManagement />} />
                       <Route path="/journal/truenas-zero-trust" element={<TrueNASZeroTrust />} />
                       <Route path="/journal/ubuntu-aapanel" element={<UbuntuAAPanel />} />
+                      <Route path="/journal/mikrotik-qos" element={<MikrotikQoS />} />
                       <Route path="*" element={<Home setActiveTab={handleSetActiveTab} />} />
                     </Routes>
                   </Suspense>
