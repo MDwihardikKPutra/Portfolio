@@ -21,14 +21,14 @@ const articles = [
     id: 2,
     date: "28 Aug, 2025",
     title: {
-      en: "Deploying Zero-Trust Architecture on TrueNAS",
-      id: "Implementasi Arsitektur Zero-Trust di TrueNAS"
+      en: "Building a Centralized Office Server with TrueNAS, Nextcloud, and Cloudflare Tunnel",
+      id: "Membangun Server Kantor Terpusat dengan TrueNAS, Nextcloud, dan Cloudflare Tunnel"
     },
     readTime: {
       en: "12 min read",
       id: "12 mnt baca"
     },
-    link: "#"
+    link: "/journal/truenas-zero-trust"
   },
   {
     id: 3,

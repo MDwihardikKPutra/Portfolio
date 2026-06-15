@@ -180,6 +180,7 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
         {/* Accordion Header Row (Full 12-Column Grid) */}
         <motion.div 
           onClick={() => toggleSection("profile")}
+          whileHover="hover"
           whileTap={{ scale: 0.995 }}
           transition={{ duration: 0.3, ease: editorialEase }}
           className="editorial-grid items-center py-10 cursor-pointer select-none group origin-center"
@@ -187,7 +188,9 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
           {/* Column 1: Label */}
           <div className="col-span-12 lg:col-span-3 flex justify-between items-center">
             <motion.span 
-              whileHover={{ scale: 1.03 }}
+              variants={{
+                hover: { scale: 1.03 }
+              }}
               transition={{ duration: 0.2, ease: "easeOut" }}
               className="editorial-label font-normal origin-left inline-block"
             >
@@ -198,7 +201,9 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
           {/* Column 2: Full Name Heading */}
           <div className="col-span-12 lg:col-span-4 mt-2 lg:mt-0 lg:pr-20">
             <motion.h2 
-              whileHover={{ scale: 1.02 }}
+              variants={{
+                hover: { scale: 1.02 }
+              }}
               transition={{ duration: 0.2, ease: "easeOut" }}
               className="text-[15px] md:text-[16px] leading-relaxed font-normal tracking-tight text-text-primary group-hover:text-text-primary/70 transition-colors duration-300 origin-left inline-block"
             >
@@ -209,7 +214,9 @@ export const Home = memo(({ setActiveTab }: { setActiveTab?: (tab: string) => vo
           {/* Column 3: Metadata Text & Rotate Arrow Icon */}
           <div className="col-span-12 lg:col-span-5 flex justify-between items-center mt-4 lg:mt-0">
             <motion.span 
-              whileHover={{ scale: 1.02 }}
+              variants={{
+                hover: { scale: 1.02 }
+              }}
               transition={{ duration: 0.2, ease: "easeOut" }}
               className="text-[15px] md:text-[16px] leading-relaxed font-normal tracking-tight text-text-primary/40 group-hover:text-text-primary/70 transition-colors duration-300 origin-right inline-block"
             >

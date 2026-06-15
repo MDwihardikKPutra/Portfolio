@@ -7,6 +7,7 @@ const VisualArchive = lazy(() => import("./pages/Gallery/VisualArchive"));
 const ProjectsPage = lazy(() => import("./pages/Projects/ProjectsPage"));
 const Exp = lazy(() => import("./pages/Exp/Exp"));
 const IoTKeyManagement = lazy(() => import("./pages/Journals/IoTKeyManagement").then(m => ({ default: m.IoTKeyManagement })));
+const TrueNASZeroTrust = lazy(() => import("./pages/Journals/TrueNASZeroTrust").then(m => ({ default: m.TrueNASZeroTrust })));
 
 import { MainLayout } from "./components/Layout/MainLayout";
 import { preloadAll } from "./utils/preloadImages";
@@ -61,6 +62,7 @@ const AppRoutes = () => {
                       <Route path="/projects" element={<ProjectsPage />} />
                       <Route path="/exp" element={<Exp />} />
                       <Route path="/journal/iot-key-management" element={<IoTKeyManagement />} />
+                      <Route path="/journal/truenas-zero-trust" element={<TrueNASZeroTrust />} />
                       <Route path="*" element={<Home setActiveTab={handleSetActiveTab} />} />
                     </Routes>
                   </Suspense>
